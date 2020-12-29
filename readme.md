@@ -12,10 +12,11 @@ THX is based on the phrase *thank you* and represents the gratitude.
 # RELEASE PHASES
 ## ONE
 We are going to create a very simple app just to enable the user to create new liquid. The users are creating like 10 liters of THX every day they start the process in the app.  
-The users can also refer other users and can earn 1 liter of THX for every referred user per day. Every user can add up to 10 other users. 
+The users can also refer other users and can earn 1 liter of THX for every referred user per day. Every user can add up to 10 other users (otherwise it would become a snowball system, which is unfair, because the one on te top will earn the most)
 
 ## TWO
 When we reach 1.000.000 users, we are going to develop a gratitude function in the app. Every user will then be able to show gratitude giving THX from one app to the other. So the user is able to give the liquid which has been created to someone else.  
+The mark 1.000.000 will motivate some developers to join in, because they see that the people want this app and the devlopers will be kind of payed with THX instead of money. 
 
 ## THREE
 There will be a chat function.  
@@ -25,7 +26,7 @@ There will also be a micro blogging engine, so that you are able to share things
 There will be the possibility to implement plugins, so that we all are able to create new content for a new **time shift**.  
 
 ## FIVE
-After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 10 liters a day, so that all users are getting an equal amount. 
+After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 10 liters a day, so that all users are getting an equal amount per day. 
 At that point we will cut the connection to the server and the platform will running totally decentral.
 
 
@@ -39,3 +40,7 @@ Just fair ins'nt it.
 
 # Inflation / Deflation
 So that we will not flood the planet, the liquid will vaporate every day a small percentage until it's gone fully after 7 years. So it will be created, used and destroy in a full circle.
+
+# Design Preview
+
+[Design preview](https://xd.adobe.com/view/108626b6-ec96-459f-8325-dcf45ba4bfa4-45d5/)
