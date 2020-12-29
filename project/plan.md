@@ -17,7 +17,7 @@
 ## Phase I 
 This phase shall just mint THX on a daily base for the user.
 The user should open the app once a day to start minting, that keeps the user focusing on the app and motivates to invite more people to mint even more THX.
-It should also be there to invite other people to the circle.
+It should also be there to invite other people to the circle of trust.
 
 When we reach a circle of 1.000.000 members we will start phase II.
 ## Phase II
