@@ -24,9 +24,37 @@
 #include <QSettings>
 #include <QQuickStyle>
 #include <QIcon>
+#include "backend.h"
 
 
+BackEnd backend;
 
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QByteArray localMsg = msg.toLocal8Bit();
+    const char *file = context.file ? context.file : "";
+    const char *function = context.function ? context.function : "";
+
+    switch (type) 
+    {
+    case QtDebugMsg:
+        backend.setLastError("Debug:" + QString(localMsg.constData()));
+        break;
+    case QtInfoMsg:
+        backend.setLastError("Info:" + QString(localMsg.constData()));
+        break;
+    case QtWarningMsg:
+        backend.setLastError("Warning: " + QString(localMsg.constData()));
+        break;
+    case QtCriticalMsg:
+        backend.setLastError("Critical:" + QString(localMsg.constData()));
+        break;
+    case QtFatalMsg:
+        backend.setLastError("Fatal:" + QString(localMsg.constData()));
+        //sprintf(msg, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        break;
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -34,8 +62,9 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("CrowdWare");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
-
+    qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
     QIcon::setThemeName("shift");
 
     QSettings settings;
@@ -46,7 +75,7 @@ int main(int argc, char *argv[])
         QQuickStyle::setStyle(settings.value("style").toString());
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("availableStyles", QQuickStyle::availableStyles());
+    engine.rootContext()->setContextProperty("backend", &backend);
     engine.load(QUrl("qrc:/shift.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;

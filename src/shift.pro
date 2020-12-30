@@ -3,7 +3,11 @@ TARGET = shift
 QT += quick quickcontrols2
 
 SOURCES += \
-    shift.cpp
+    shift.cpp \
+    backend.cpp 
+
+HEADERS += \
+    backend.h
 
 RESOURCES += \
     shift.qml \
@@ -27,6 +31,9 @@ RESOURCES += \
 target.path = $$PWD/quickcontrols2/shift
 INSTALLS += target
 
+CONFIG += qmltypes
+QML_IMPORT_NAME = at.crowdware.backend
+QML_IMPORT_MAJOR_VERSION = 1
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

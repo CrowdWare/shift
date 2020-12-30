@@ -24,6 +24,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Universal 2.12
 import Qt.labs.settings 1.0
+import at.crowdware.backend 1.0
 
 ApplicationWindow 
 {
@@ -109,6 +110,11 @@ ApplicationWindow
                         text: "About"
                         onTriggered: aboutDialog.open()
                     }
+                    MenuItem 
+                    {
+                        text: "Last Error"
+                        onTriggered: errorDialog.open()
+                    }
                 }
             }
         }
@@ -177,7 +183,7 @@ ApplicationWindow
                 anchors.top: logo.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.bottom: arrow.top
+                //anchors.bottom: arrow.top
                 horizontalAlignment: Label.AlignHCenter
                 verticalAlignment: Label.AlignVCenter
                 wrapMode: Label.Wrap
@@ -226,6 +232,37 @@ ApplicationWindow
                     + " No registration needed."
                     + " No server means, also no censorship. No ads."
                     + " SHIFT also creates a universal basic income and can be used to show gratitude."
+                wrapMode: Label.Wrap
+                font.pixelSize: 15
+            }
+        }
+    }
+
+    /*BackEnd 
+    {
+        id: backend
+    }*/
+    
+    Dialog 
+    {
+        id: errorDialog
+        modal: true
+        focus: true
+        title: "Last Error"
+        x: (window.width - width) / 2
+        y: window.height / 6
+        width: Math.min(window.width, window.height) / 3 * 2
+        contentHeight: errorColumn.height
+
+        Column 
+        {
+            id: errorColumn
+            spacing: 20
+
+            Label 
+            {
+                width: aboutDialog.availableWidth
+                text: backend.lastError
                 wrapMode: Label.Wrap
                 font.pixelSize: 15
             }

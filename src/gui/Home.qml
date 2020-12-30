@@ -26,7 +26,7 @@ import QtQuick.Controls.Material 2.12
 Page 
 {
 	id: page
-	title: "SHIFT2"
+	title: "HOME"
 
 	Rectangle 
 	{
@@ -67,8 +67,7 @@ Page
 		anchors.rightMargin: page.width / 10
 		height: page.height / 6
     	Material.background: Material.Green
-		anchors.top: display.bottom
-		anchors.left: display.left
+		
     	Text 
 		{
     		anchors.centerIn: parent
