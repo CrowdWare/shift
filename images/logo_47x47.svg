@@ -7,14 +7,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="360"
-   height="360"
-   viewBox="0 0 95.250003 95.250003"
+   width="47"
+   height="47"
+   viewBox="0 0 12.435417 12.435417"
    version="1.1"
    id="svg8"
-   sodipodi:docname="logo.svg"
+   sodipodi:docname="logo_47x47.svg"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
-   inkscape:export-filename="/Users/art/SourceCode/Shift/src/images/logo.png"
+   inkscape:export-filename="/Users/art/SourceCode/Shift/src/android/res/drawable-mdpi/icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -29,9 +29,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.449675"
-     inkscape:cx="187.16428"
-     inkscape:cy="273.18708"
+     inkscape:zoom="5.048471"
+     inkscape:cx="39.500223"
+     inkscape:cy="40.048837"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -54,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -64,35 +64,29 @@
      id="layer1"
      style="opacity:0.681093"
      transform="translate(41.502036,14.632894)">
+    <ellipse
+       style="fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.0102632;stroke-opacity:1"
+       id="path1009"
+       cx="-35.300255"
+       cy="-8.4277067"
+       rx="6.0598121"
+       ry="6.1472874" />
+    <ellipse
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.0102632;stroke-opacity:1"
+       id="path992"
+       cx="-35.300255"
+       cy="-8.4277067"
+       rx="5.2899513"
+       ry="5.5347571" />
     <g
-       id="g848"
-       transform="matrix(0.29921265,0,0,0.29604822,-26.922068,-9.7595973)"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96">
-      <ellipse
-         style="fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         id="path1009"
-         cx="110.79039"
-         cy="144.95657"
-         rx="155.39159"
-         ry="159.31967" />
-      <ellipse
-         style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         id="path992"
-         cx="110.79041"
-         cy="144.95659"
-         rx="135.65007"
-         ry="143.44469" />
-      <g
-         id="g986"
-         transform="translate(-19.276781,-5.2916671)"
-         style="fill:#28a9e0;fill-opacity:1">
-        <path
-           id="rect917"
-           style="fill:#28a9e0;fill-opacity:1;stroke-width:1.04978"
-           d="M 514.16602,132.12305 405.06836,241.2207 764.68359,600.83594 405.06836,960.44922 514.16602,1069.5449 873.7793,709.93164 982.87695,600.83398 873.7793,491.73828 Z M 330.92383,315.76953 221.82617,424.86719 399.61328,602.65234 221.82617,780.43945 330.92383,889.53711 508.71094,711.75 617.80664,602.65234 508.71094,493.55664 Z"
-           transform="matrix(0.26458333,0,0,0.26458333,-25.456707,-9.2037229)" />
-      </g>
+       id="g986"
+       transform="matrix(0.03899704,0,0,0.03858461,-40.37249,-14.224977)"
+       style="fill:#28a9e0;fill-opacity:1">
+      <path
+         id="rect917"
+         style="fill:#28a9e0;fill-opacity:1;stroke-width:1.04978"
+         d="M 514.16602,132.12305 405.06836,241.2207 764.68359,600.83594 405.06836,960.44922 514.16602,1069.5449 873.7793,709.93164 982.87695,600.83398 873.7793,491.73828 Z M 330.92383,315.76953 221.82617,424.86719 399.61328,602.65234 221.82617,780.43945 330.92383,889.53711 508.71094,711.75 617.80664,602.65234 508.71094,493.55664 Z"
+         transform="matrix(0.26458333,0,0,0.26458333,-25.456707,-9.2037229)" />
     </g>
     <path
        style="fill:#000000;stroke-width:0.264583"
