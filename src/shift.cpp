@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
     QIcon::setThemeName("shift");
+    QQuickStyle::setStyle("Material");
 
     QSettings settings;
     QString style = QQuickStyle::name();

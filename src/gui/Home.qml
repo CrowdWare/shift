@@ -31,10 +31,10 @@ Page
 	Rectangle 
 	{
     	id: display
-    	height: page.height / 4
+    	height: page.height / 6
     	color: "#C0C0C0"
     	anchors.top: parent.top
-    	anchors.right: parent. right
+    	anchors.right: parent.right
     	anchors.left: parent.left
     	anchors.margins: page.width / 10
     	Text 
@@ -45,7 +45,7 @@ Page
     	Text 
 		{
     		font.pixelSize: page.width / 5
-    		text: 1130 - 60
+    		text: "1234"
     		anchors.centerIn: parent
     	} 
     	Text 
@@ -59,21 +59,44 @@ Page
 
 	Button 
 	{
-		id: pay
+        id: start
     	anchors.top: display.bottom
-        anchors.left: parent.left
+        font.pointSize: 20
+        anchors.margins: page.width / 10
+     	anchors.left: parent.left
         anchors.right: parent.right
-		anchors.leftMargin: page.width / 10
-		anchors.rightMargin: page.width / 10
-		height: page.height / 6
-    	Material.background: Material.Green
-		
-    	Text 
+		height: page.height / 8
+        text: "Start Scooping"
+		Material.background: Material.Green
+		onClicked: start.enabled = false
+    }
+
+	ScrollView 
+	{
+    	id: view
+    	anchors.top: start.bottom
+		anchors.margins: page.width / 10
+     	anchors.left: parent.left
+        anchors.right: parent.right
+		height: page.height / 3
+    	TextArea 
 		{
-    		anchors.centerIn: parent
-    		font.pixelSize: page.height / 30
-    		color: "#ffffff"
-    		text: "Create"
-    	} 
+        	text: "Message of the day\n...\n...\n...\n...\n...\n...\n"
+			readOnly: true
+    	}
+	}
+
+	Button 
+	{
+        id: invite
+    	anchors.top: view.bottom
+        font.pointSize: 20
+        anchors.margins: page.width / 10
+     	anchors.left: parent.left
+        anchors.right: parent.right
+		height: page.height / 8
+        text: "Invite Friends"
+		//Material.background: Material.Green
+		//onClicked: start.enabled = false
     }
 } 

@@ -12,6 +12,7 @@ HEADERS += \
 RESOURCES += \
     shift.qml \
     gui/Home.qml \
+    gui/Friends.qml \
     qtquickcontrols2.conf \
     icons/shift/index.theme \
     icons/shift/20x20/back.png \

@@ -22,7 +22,6 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
-import QtQuick.Controls.Universal 2.12
 import Qt.labs.settings 1.0
 import at.crowdware.backend 1.0
 
@@ -68,7 +67,9 @@ ApplicationWindow
 
             ToolButton 
             {
-                icon.name: stackView.depth > 2 ? "back" : "drawer"
+                id: drawerButton
+                visible: false
+                icon.name: stackView.depth > 1 ? "back" : "drawer"
                 onClicked: 
                 {
                     if (stackView.depth > 1) 
@@ -142,8 +143,11 @@ ApplicationWindow
                 highlighted: ListView.isCurrentItem
                 onClicked: 
                 {
-                    listView.currentIndex = index
-                    stackView.push(model.source)
+                    if (model.title != "Home")
+                    {
+                        listView.currentIndex = index
+                        stackView.push(model.source)
+                    }
                     drawer.close()
                 }
             }
@@ -151,6 +155,7 @@ ApplicationWindow
             model: ListModel 
             {
                 ListElement { title: "Home"; source: "qrc:/gui/Home.qml" }
+                ListElement { title: "Friends"; source: "qrc:/gui/Friends.qml" }
             }
 
             ScrollIndicator.vertical: ScrollIndicator { }
@@ -183,7 +188,6 @@ ApplicationWindow
                 anchors.top: logo.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                //anchors.bottom: arrow.top
                 horizontalAlignment: Label.AlignHCenter
                 verticalAlignment: Label.AlignVCenter
                 wrapMode: Label.Wrap
@@ -194,7 +198,8 @@ ApplicationWindow
                 anchors.fill: parent
                 onClicked:
                 {
-                    stackView.push("qrc:/gui/Home.qml")
+                    stackView.replace("qrc:/gui/Home.qml")
+                    drawerButton.visible = true
                 }
             }
         }
@@ -237,11 +242,6 @@ ApplicationWindow
             }
         }
     }
-
-    /*BackEnd 
-    {
-        id: backend
-    }*/
     
     Dialog 
     {
