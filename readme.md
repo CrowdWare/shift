@@ -2,7 +2,7 @@
 ![olaf](./images/logo.png "olaf")  
 The idea behind **shift** is the possibily to create a universal basic income with a new virtual liquid made by men. The possibilities to have an own liquid to use as energy exchange, makes it easy for us all to share things, give services and to express our gratitude.  
 We will never be forced to pay taxes on it, because it's not money at all.  
-It's just virtual.
+It's just a virtual liquid. 
 
 # GOAL
 We are going to create an app which the users can use to create new liquid on a daily base.   
