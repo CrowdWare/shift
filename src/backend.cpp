@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "backend.h"
+#include <QCryptographicHash>
 
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)

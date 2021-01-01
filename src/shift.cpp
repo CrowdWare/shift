@@ -32,8 +32,8 @@ BackEnd backend;
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
-    const char *file = context.file ? context.file : "";
-    const char *function = context.function ? context.function : "";
+    // const char *file = context.file ? context.file : "";
+    // const char *function = context.function ? context.function : "";
 
     switch (type) 
     {
@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     backend.setBalance(1001);
+    backend.setLastError("No errors");
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
