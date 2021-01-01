@@ -78,6 +78,7 @@ Page
 		onClicked: 
 		{
 			start.enabled = false
+			start.text = "Scooping..."
 			backend.balance = backend.balance + 1
 		}
     }
