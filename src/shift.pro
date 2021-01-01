@@ -4,10 +4,12 @@ QT += quick quickcontrols2
 
 SOURCES += \
     shift.cpp \
-    backend.cpp 
+    backend.cpp \ 
+    shareutils.cpp
 
 HEADERS += \
-    backend.h
+    backend.h \ 
+    shareutils.h
 
 RESOURCES += \
     shift.qml \
@@ -37,10 +39,23 @@ QML_IMPORT_NAME = at.crowdware.backend
 QML_IMPORT_MAJOR_VERSION = 1
 
 android {
+    QT += androidextras
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+    OTHER_FILES += android/src/com/lasconic/QShareUtils.java
+    SOURCES += android/androidshareutils.cpp
+    HEADERS += android/androidshareutils.h
 
     DISTFILES += \
         android/AndroidManifest.xml \
         android/build.gradle \
         android/res/values/libs.xml
+}
+
+ios {
+    OBJECTIVE_SOURCES += ios/iosshareutils.mm
+    HEADERS += ios/iosshareutils.h
+
+    Q_ENABLE_BITCODE.name = ENABLE_BITCODE
+    Q_ENABLE_BITCODE.value = NO
+    QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
 }

@@ -22,11 +22,18 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
+import at.crowdware.backend 1.0
+import com.lasconic 1.0
 
 Page 
 {
 	id: page
 	title: "HOME"
+
+	ShareUtils 
+	{
+        id: shareUtils
+    }
 
 	Rectangle 
 	{
@@ -45,7 +52,7 @@ Page
     	Text 
 		{
     		font.pixelSize: page.width / 5
-    		text: "1234"
+    		text: backend.balance
     		anchors.centerIn: parent
     	} 
     	Text 
@@ -68,7 +75,11 @@ Page
 		height: page.height / 8
         text: "Start Scooping"
 		Material.background: Material.Green
-		onClicked: start.enabled = false
+		onClicked: 
+		{
+			start.enabled = false
+			backend.balance = backend.balance + 1
+		}
     }
 
 	ScrollView 
@@ -96,7 +107,8 @@ Page
         anchors.right: parent.right
 		height: page.height / 8
         text: "Invite Friends"
-		//Material.background: Material.Green
-		//onClicked: start.enabled = false
+		onClicked: {
+            shareUtils.share("My awesome text", "http://www.shifting.site")
+        }
     }
 } 

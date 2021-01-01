@@ -29,6 +29,7 @@ class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
+    Q_PROPERTY(int balance READ balance WRITE setBalance NOTIFY balanceChanged)
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -36,11 +37,16 @@ public:
     QString lastError();
     void setLastError(const QString &lastError);
 
+    int balance();
+    void setBalance(int newBalance);
+
 signals:
     void lastErrorChanged();
+    void balanceChanged();
 
 private:
     QString m_lastError;
+    int m_balance;
 };
 
 #endif // BACKEND_H

@@ -38,3 +38,17 @@ void BackEnd::setLastError(const QString &lastError)
     m_lastError = lastError;
     emit lastErrorChanged();
 }
+
+int BackEnd::balance()
+{
+    return m_balance;
+}
+
+void BackEnd::setBalance(int newBalance)
+{
+    if (newBalance == m_balance)
+        return;
+
+    m_balance = newBalance;
+    emit balanceChanged();
+}

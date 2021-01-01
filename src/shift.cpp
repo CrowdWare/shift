@@ -25,7 +25,7 @@
 #include <QQuickStyle>
 #include <QIcon>
 #include "backend.h"
-
+#include "shareutils.h"
 
 BackEnd backend;
 
@@ -62,9 +62,13 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("CrowdWare");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    backend.setBalance(1001);
+
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
+    qmlRegisterType<ShareUtils> ("com.lasconic", 1, 0, "ShareUtils");
+
     QIcon::setThemeName("shift");
     QQuickStyle::setStyle("Material");
 
