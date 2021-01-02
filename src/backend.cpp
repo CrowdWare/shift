@@ -53,3 +53,8 @@ void BackEnd::setBalance(int newBalance)
     m_balance = newBalance;
     emit balanceChanged();
 }
+
+void BackEnd::startScooping()
+{
+    m_db.startScooping();
+}

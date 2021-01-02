@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QString>
 #include <qqml.h>
+#include "database.h"
 
 class BackEnd : public QObject
 {
@@ -33,6 +34,8 @@ class BackEnd : public QObject
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
+
+    Q_INVOKABLE void startScooping(); 
 
     QString lastError();
     void setLastError(const QString &lastError);
@@ -47,6 +50,7 @@ signals:
 private:
     QString m_lastError;
     int m_balance;
+    Database m_db;
 };
 
 #endif // BACKEND_H

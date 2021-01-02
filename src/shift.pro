@@ -1,15 +1,19 @@
 TEMPLATE = app
 TARGET = shift
-QT += quick quickcontrols2
+QT += quick quickcontrols2 sql core
 
 SOURCES += \
     shift.cpp \
     backend.cpp \ 
-    shareutils.cpp
+    shareutils.cpp \
+    simplecrypt.cpp \
+    database.cpp
 
 HEADERS += \
     backend.h \ 
-    shareutils.h
+    shareutils.h \
+    simplecrypt.h \
+    database.h
 
 RESOURCES += \
     shift.qml \

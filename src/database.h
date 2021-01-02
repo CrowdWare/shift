@@ -23,6 +23,8 @@
 
 #include <QObject>
 #include <QString>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 class Database : public QObject
 {
@@ -30,8 +32,15 @@ class Database : public QObject
     
 public:
     explicit Database(QObject *parent = nullptr);
+    ~Database();
 
     QString hash(const QString &text);
+    QString encrypt(const QString &text);
+    QString decrypt(const QString &text);
+    void startScooping();
+
+private:
+    QSqlDatabase m_db;
 };
 
 #endif // DATABASE_H
