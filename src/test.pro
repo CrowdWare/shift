@@ -14,3 +14,5 @@ HEADERS += \
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/qtestlib/tutorial1
 INSTALLS += target
+
+DEFINES += TEST

@@ -42,6 +42,11 @@ void BackEnd::setLastError(const QString &lastError)
     emit lastErrorChanged();
 }
 
+void BackEnd::setBalance(int balance)
+{
+    m_settings.setValue("balance", balance);
+}
+
 int BackEnd::balance()
 {
     qint64 time = QDateTime::currentSecsSinceEpoch();

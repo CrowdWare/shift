@@ -43,8 +43,8 @@ void TestBackend::minted()
     BackEnd backend;
 
     qint64 time = QDateTime::currentSecsSinceEpoch();
-    backend.startScooping(time);
     backend.setBalance(10);
+    backend.startScooping(time);
     // 4 hours * 60 minutes * 60 seconds = 2 THX added
     int minted = backend.mintedBalance(time + 4 * 60 * 60);
     QCOMPARE(minted, 12);
@@ -52,7 +52,6 @@ void TestBackend::minted()
     // 21 hours should be treated as 20 hours = 10 THX added
     int minted2 = backend.mintedBalance(time + 21 * 60 * 60);
     QCOMPARE(minted2, 20);
-
 }
 
 

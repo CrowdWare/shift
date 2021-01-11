@@ -43,9 +43,12 @@ public:
     int balance();
     qint64 lastScooping();
 
+#ifndef TEST
 private:
+#endif
     int mintedBalance(qint64 time);
     void startScooping(qint64 time);
+    void setBalance(int balance);
 
 signals:
     void lastErrorChanged();
