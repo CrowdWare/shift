@@ -62,7 +62,6 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("CrowdWare");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    backend.setBalance(1001);
     backend.setLastError("No errors");
 
     qInstallMessageHandler(myMessageOutput);

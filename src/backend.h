@@ -23,14 +23,14 @@
 
 #include <QObject>
 #include <QString>
+#include <QSettings>
 #include <qqml.h>
-#include "database.h"
 
 class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
-    Q_PROPERTY(int balance READ balance WRITE setBalance NOTIFY balanceChanged)
+    Q_PROPERTY(int balance READ balance)
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -41,16 +41,18 @@ public:
     void setLastError(const QString &lastError);
 
     int balance();
-    void setBalance(int newBalance);
+    qint64 lastScooping();
+
+private:
+    int mintedBalance(qint64 time);
+    void startScooping(qint64 time);
 
 signals:
     void lastErrorChanged();
-    void balanceChanged();
 
 private:
     QString m_lastError;
-    int m_balance;
-    Database m_db;
+    QSettings m_settings;
 };
 
 #endif // BACKEND_H

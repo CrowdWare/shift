@@ -19,11 +19,13 @@
 ****************************************************************************/
 
 #include "backend.h"
+#include <QDebug>
+#include <QDateTime>
 #include <QCryptographicHash>
 
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
-{
+{   
 }
 
 QString BackEnd::lastError()
@@ -42,19 +44,39 @@ void BackEnd::setLastError(const QString &lastError)
 
 int BackEnd::balance()
 {
-    return m_balance;
+    qint64 time = QDateTime::currentSecsSinceEpoch();
+    return mintedBalance(time);
 }
 
-void BackEnd::setBalance(int newBalance)
+int BackEnd::mintedBalance(qint64 time)
 {
-    if (newBalance == m_balance)
-        return;
+    int balance = m_settings.value("balance","0").toInt();
+    qint64 scooping = m_settings.value("lastScooping", "0").toInt();
+    if(scooping == 0)
+        return balance;
+    int seconds = (time - scooping);
+    int hours = seconds / 60 / 60;
+    if(hours > 20)
+    {
+        hours = 20;
+        m_settings.setValue("lastScooping", 0);
+        m_settings.setValue("balance", balance + 10);
+    }
+    return balance + (hours / 2);
+}
 
-    m_balance = newBalance;
-    emit balanceChanged();
+qint64 BackEnd::lastScooping()
+{
+    return m_settings.value("lastScooping", "0").toInt();
 }
 
 void BackEnd::startScooping()
 {
-    m_db.startScooping();
+    qint64 time = QDateTime::currentSecsSinceEpoch();   
+    startScooping(time);
+}
+
+void BackEnd::startScooping(qint64 time)
+{
+    m_settings.setValue("lastScooping", time);
 }

@@ -1,14 +1,14 @@
-QT += widgets testlib sql
+QT += widgets testlib sql quick quickcontrols2
 
 CONFIG += c++11
 
 SOURCES += \
     test.cpp \
-    database.cpp \
+    backend.cpp \ 
     simplecrypt.cpp
 
 HEADERS += \
-    database.h \ 
+    backend.h \ 
     simplecrypt.h 
 
 # install

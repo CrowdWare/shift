@@ -6,14 +6,12 @@ SOURCES += \
     shift.cpp \
     backend.cpp \ 
     shareutils.cpp \
-    simplecrypt.cpp \
-    database.cpp
+    simplecrypt.cpp
 
 HEADERS += \
     backend.h \ 
     shareutils.h \
-    simplecrypt.h \
-    database.h
+    simplecrypt.h
 
 RESOURCES += \
     shift.qml \

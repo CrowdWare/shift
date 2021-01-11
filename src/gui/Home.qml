@@ -51,8 +51,9 @@ Page
     	} 
     	Text 
 		{
+			id: balance
     		font.pixelSize: page.width / 5
-    		text: backend.balance
+    		text: backend.mintedBalance
     		anchors.centerIn: parent
     	} 
     	Text 
@@ -62,6 +63,14 @@ Page
 			font.pixelSize: page.width / 20
     		text: "THX"
     	} 
+		Timer 
+		{
+			id: timer
+        	interval: 1000
+			running: false 
+			repeat: true
+        	onTriggered: balance.text = backend.mintedBalance
+    	}
 	}
 
 	Button 
@@ -77,6 +86,7 @@ Page
 		Material.background: Material.Green
 		onClicked: 
 		{
+			timer.running = true
 			start.enabled = false
 			start.text = "Scooping..."
 			backend.startScooping();
