@@ -32,28 +32,29 @@ BackEnd backend;
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
-    // const char *file = context.file ? context.file : "";
-    // const char *function = context.function ? context.function : "";
+    QString typ = "Undefined";
+    const char *file = context.file ? context.file : "undefined";
+    const char *function = context.function ? context.function : "undefined";
 
     switch (type) 
     {
     case QtDebugMsg:
-        backend.setLastError("Debug:" + QString(localMsg.constData()));
+        typ = "Debug";
         break;
     case QtInfoMsg:
-        backend.setLastError("Info:" + QString(localMsg.constData()));
+        typ = "Info";
         break;
     case QtWarningMsg:
-        backend.setLastError("Warning: " + QString(localMsg.constData()));
+        typ = "Warning";
         break;
     case QtCriticalMsg:
-        backend.setLastError("Critical:" + QString(localMsg.constData()));
+        typ = "Critical";
         break;
     case QtFatalMsg:
-        backend.setLastError("Fatal:" + QString(localMsg.constData()));
-        //sprintf(msg, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        typ = "Fatal";
         break;
     }
+    backend.setLastError(typ + ":" + QString(localMsg.constData()) + " (" + file + ":" + QString(context.line) + "," + function + ")");
 }
 
 int main(int argc, char *argv[])
@@ -63,6 +64,8 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     backend.setLastError("No errors");
+    //backend.saveSettings();
+    //backend.readSettings();
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);

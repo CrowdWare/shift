@@ -30,32 +30,32 @@ class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
-    Q_PROPERTY(int balance READ balance)
+    Q_PROPERTY(int balance READ getBalance)
+    Q_PROPERTY(qint64 scooping READ scooping NOTIFY scoopingChanged)
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
 
-    Q_INVOKABLE void startScooping(); 
+    Q_INVOKABLE void start(); 
 
     QString lastError();
     void setLastError(const QString &lastError);
-
-    int balance();
-    qint64 lastScooping();
+    int getBalance();
+    qint64 scooping();
 
 #ifndef TEST
 private:
 #endif
     int mintedBalance(qint64 time);
-    void startScooping(qint64 time);
     void setBalance(int balance);
 
 signals:
     void lastErrorChanged();
+    void scoopingChanged();
 
 private:
     QString m_lastError;
-    QSettings m_settings;
+    QSettings *m_settings;
 };
 
 #endif // BACKEND_H

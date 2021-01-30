@@ -53,7 +53,7 @@ Page
 		{
 			id: balance
     		font.pixelSize: page.width / 5
-    		text: backend.mintedBalance
+    		text: backend.balance
     		anchors.centerIn: parent
     	} 
     	Text 
@@ -63,13 +63,14 @@ Page
 			font.pixelSize: page.width / 20
     		text: "THX"
     	} 
+
 		Timer 
 		{
 			id: timer
         	interval: 1000
 			running: false 
 			repeat: true
-        	onTriggered: balance.text = backend.mintedBalance
+        	onTriggered: balance.text = backend.balance
     	}
 	}
 
@@ -82,14 +83,16 @@ Page
      	anchors.left: parent.left
         anchors.right: parent.right
 		height: page.height / 8
-        text: "Start Scooping"
+        text: backend.scooping == 0 ? "Start Scooping" : "Scooping..."
+		enabled: backend.scooping == 0
 		Material.background: Material.Green
 		onClicked: 
 		{
-			timer.running = true
-			start.enabled = false
-			start.text = "Scooping..."
-			backend.startScooping();
+			timer.running = true;
+			start.enabled = false;
+			start.text = "Scooping...";
+			backend.start();
+			msg.text = "You are creating new liquid..." + backend.scooping + "/" + backend.balance;
 		}
     }
 
@@ -103,7 +106,8 @@ Page
 		height: page.height / 3
     	TextArea 
 		{
-        	text: "Message of the day\n...\n...\n...\n...\n...\n...\n"
+			id: msg
+        	text: "Hallo\nnice to see you again..." + backend.scooping + "/" + backend.balance
 			readOnly: true
     	}
 	}

@@ -8,7 +8,7 @@ private slots:
     void hash();
     void scooping();
     void balance();
-    void minted();
+    void minted();.
 };
 
 void TestBackend::hash()
