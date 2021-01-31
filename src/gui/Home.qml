@@ -53,7 +53,7 @@ Page
 		{
 			id: balance
     		font.pixelSize: page.width / 5
-    		text: backend.balance
+    		text: Number(backend.balance / 1000.0).toLocaleString(Qt.locale("de_DE"), 'f', 3)
     		anchors.centerIn: parent
     	} 
     	Text 
@@ -68,9 +68,9 @@ Page
 		{
 			id: timer
         	interval: 1000
-			running: false 
+			running: backend.scooping == 0 ? false : true 
 			repeat: true
-        	onTriggered: balance.text = backend.balance
+        	onTriggered: balance.text =  Number(backend.balance / 1000.0).toLocaleString(Qt.locale("de_DE"), 'f', 3)
     	}
 	}
 
@@ -96,6 +96,111 @@ Page
 		}
     }
 
+	Text 
+	{
+		id: caption
+		anchors.top: start.bottom
+		anchors.left: start.left
+		anchors.topMargin: page.height / 100
+		text: "Latest Bookings"
+	} 
+
+	Rectangle 
+	{
+		id: list
+		anchors.top: start.bottom
+		anchors.margins: page.width / 10
+     	anchors.left: parent.left
+        anchors.right: parent.right
+		height: page.height / 3
+	    color: "#EEEEEE"
+	   	ListView 
+		{
+	   		clip: true
+	    	anchors.fill: parent
+	   		anchors.margins: page.width / 100
+	   		spacing: page.width / 100
+	    	
+	    	delegate: listDelegate
+	    	
+	   		Component 
+			{
+	   			id: listDelegate
+	    		
+	   			Rectangle 
+				{
+	 				width: parent.width 
+	   				height: page.height / 20
+	   				Text 
+					{
+	   					id: date
+	   					text: model.date
+	   					font.pixelSize: page.height / 40
+	   				} 
+	   				Text 
+					{
+	   					anchors.left: date.right
+	   					anchors.leftMargin: 15
+	   					text: model.text 
+	   					font.pixelSize: page.height / 40
+	 				} 
+	 				Text 
+					{
+						anchors.right: parent.right
+	 					text: model.amount + " THX"
+	 					font.pixelSize: page.height / 40
+	 				} 
+	    		} 
+	    	} 
+	    	
+	   		model: ListModel 
+			{
+                ListElement 
+				{
+                	date: "23.04.2020"
+               	   	text: "Liquid created"
+               	   	amount: 10
+       	       	}
+               	ListElement 
+				{
+               		date: "22.04.2020"
+               		text: "Liquid created"
+               		amount: 10
+       	       	}
+              	ListElement 
+				{
+              		date: "21.04.2020"
+               		text: "Liquid created"
+               		amount: 10
+       	      	}
+       	      	ListElement 
+				{
+              		date: "21.04.2020"
+               		text: "Payment"
+               		amount: - 60
+       	      	}
+       	      	ListElement 
+				{
+              		date: "21.04.2020"
+               		text: "Massage"
+               		amount: 90
+       	      	}
+       	      	ListElement 
+				{
+              		date: "20.04.2020"
+               		text: "Liquid created"
+               		amount: 10
+       	      	}
+				ListElement 
+				{
+              		date: "19.04.2020"
+               		text: "In App Purch."
+              		amount: 1000
+       	      	}	
+	   		}
+        }
+	}
+	/*
 	ScrollView 
 	{
     	id: view
@@ -111,11 +216,11 @@ Page
 			readOnly: true
     	}
 	}
-
+	*/
 	Button 
 	{
         id: invite
-    	anchors.top: view.bottom
+    	anchors.top: list.bottom
         font.pointSize: 20
         anchors.margins: page.width / 10
      	anchors.left: parent.left

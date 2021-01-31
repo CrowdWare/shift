@@ -66,7 +66,7 @@ int BackEnd::mintedBalance(qint64 time)
     if(scooping == 0) // not scooping
         return balance;
     int seconds = (time - scooping);
-    int hours = seconds / 60 / 60;
+    qreal hours = seconds / 60.0 / 60.0;
     if(hours > 20)
     {
         hours = 20;
@@ -75,7 +75,7 @@ int BackEnd::mintedBalance(qint64 time)
         m_settings->setValue("balance", balance + hours * .5);
         m_settings->sync();
     }
-    return balance + (hours * .5);
+    return balance * 1000 + (hours * 500.0);
 }
 
 qint64 BackEnd::scooping()
