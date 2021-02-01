@@ -225,11 +225,11 @@ ApplicationWindow
             Label 
             {
                 width: aboutDialog.availableWidth
-                text: "SHIFT will be decentral and is not using a single server only."
-                    + " SHIFT is anonymous, only your real friends you connect with know your account."
+                text: "SHIFT will be decentral and is not running on servers."
+                    + " Your SHIFT account is anonymous, only your real friends you connect with know account who is behind your account."
                     + " No registration needed."
                     + " No server means, also no censorship. No ads."
-                    + " SHIFT also creates a universal basic income and can be used to show gratitude."
+                    + " SHIFT also creates a universal basic income and can be used to show gratitude to other members."
                 wrapMode: Label.Wrap
                 font.pixelSize: 15
             }

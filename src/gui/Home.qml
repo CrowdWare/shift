@@ -52,8 +52,8 @@ Page
     	Text 
 		{
 			id: balance
-    		font.pixelSize: page.width / 5
-    		text: Number(backend.balance / 1000.0).toLocaleString(Qt.locale("de_DE"), 'f', 3)
+    		font.pixelSize: balancePixelSize(backend.balance)
+    		text: formatBalance(backend.balance)
     		anchors.centerIn: parent
     	} 
     	Text 
@@ -70,7 +70,7 @@ Page
         	interval: 1000
 			running: backend.scooping == 0 ? false : true 
 			repeat: true
-        	onTriggered: balance.text =  Number(backend.balance / 1000.0).toLocaleString(Qt.locale("de_DE"), 'f', 3)
+        	onTriggered: balance.text =  formatBalance(backend.balance)
     	}
 	}
 
@@ -92,7 +92,6 @@ Page
 			start.enabled = false;
 			start.text = "Scooping...";
 			backend.start();
-			msg.text = "You are creating new liquid..." + backend.scooping + "/" + backend.balance;
 		}
     }
 
@@ -157,66 +156,26 @@ Page
 			{
                 ListElement 
 				{
-                	date: "23.04.2020"
+                	date: "31.01.2021"
                	   	text: "Liquid created"
                	   	amount: 10
        	       	}
                	ListElement 
 				{
-               		date: "22.04.2020"
+               		date: "30.01.2021"
                		text: "Liquid created"
                		amount: 10
        	       	}
-              	ListElement 
-				{
-              		date: "21.04.2020"
-               		text: "Liquid created"
-               		amount: 10
-       	      	}
-       	      	ListElement 
-				{
-              		date: "21.04.2020"
-               		text: "Payment"
-               		amount: - 60
-       	      	}
-       	      	ListElement 
-				{
-              		date: "21.04.2020"
-               		text: "Massage"
-               		amount: 90
-       	      	}
-       	      	ListElement 
-				{
-              		date: "20.04.2020"
-               		text: "Liquid created"
-               		amount: 10
-       	      	}
 				ListElement 
 				{
-              		date: "19.04.2020"
-               		text: "In App Purch."
-              		amount: 1000
-       	      	}	
+               		date: "29.01.2021"
+               		text: "App installed"
+               		amount: 1
+       	       	}
 	   		}
         }
 	}
-	/*
-	ScrollView 
-	{
-    	id: view
-    	anchors.top: start.bottom
-		anchors.margins: page.width / 10
-     	anchors.left: parent.left
-        anchors.right: parent.right
-		height: page.height / 3
-    	TextArea 
-		{
-			id: msg
-        	text: "Hallo\nnice to see you again..." + backend.scooping + "/" + backend.balance
-			readOnly: true
-    	}
-	}
-	*/
+
 	Button 
 	{
         id: invite
@@ -228,7 +187,23 @@ Page
 		height: page.height / 8
         text: "Invite Friends"
 		onClicked: {
+			//notificationClient.notification = "User wants to invite!"
             shareUtils.share("My awesome text", "http://www.shifting.site")
         }
     }
+
+	function formatBalance(balance)
+	{
+		return Number(balance / 1000.0).toLocaleString(Qt.locale("de_DE"), 'f', 3);
+	}
+
+	function balancePixelSize(balance)
+	{
+		var normalPixelSize = page.width / 5.5;
+		var textLength = formatBalance(balance).length;
+		if(textLength < 9)
+			return normalPixelSize;
+		else
+			return normalPixelSize / (1 + (textLength - 8) * .16);	
+	}
 } 

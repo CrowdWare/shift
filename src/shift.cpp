@@ -26,9 +26,11 @@
 #include <QIcon>
 #include "backend.h"
 #include "shareutils.h"
+#include "notificationclient.h"
 
 BackEnd backend;
-
+NotificationClient notificationClient;
+    
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
@@ -64,8 +66,6 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     backend.setLastError("No errors");
-    //backend.saveSettings();
-    //backend.readSettings();
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("backend", &backend);
+    engine.rootContext()->setContextProperty("notificationClient", &notificationClient);
     engine.load(QUrl("qrc:/shift.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;

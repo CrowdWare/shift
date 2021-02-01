@@ -25,6 +25,7 @@
 #include <QString>
 #include <QSettings>
 #include <qqml.h>
+#include "simplecrypt.h"
 
 class BackEnd : public QObject
 {
@@ -56,6 +57,7 @@ signals:
 private:
     QString m_lastError;
     QSettings *m_settings;
+    SimpleCrypt m_crypto;
 };
 
 #endif // BACKEND_H

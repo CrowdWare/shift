@@ -31,6 +31,8 @@ BackEnd::BackEnd(QObject *parent) :
     m_lastError = "No Error";
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     m_settings = new QSettings(path.append("/settings.txt"), QSettings::IniFormat);
+    // todo, change and hide key
+    m_crypto.setKey(1313);
 }
 
 QString BackEnd::lastError()
@@ -49,7 +51,8 @@ void BackEnd::setLastError(const QString &lastError)
 
 void BackEnd::setBalance(int balance)
 {
-    m_settings->setValue("balance", balance);
+    QString enc = m_crypto.encryptToString(QString::number(balance));
+    m_settings->setValue("balance", enc);
     m_settings->sync();
 }
 
@@ -61,31 +64,44 @@ int BackEnd::getBalance()
 
 int BackEnd::mintedBalance(qint64 time)
 {
-    int balance = m_settings->value("balance","1").toInt();
-    qint64 scooping = m_settings->value("scooping", "0").toInt();
-    if(scooping == 0) // not scooping
-        return balance;
-    int seconds = (time - scooping);
-    qreal hours = seconds / 60.0 / 60.0;
-    if(hours > 20)
+    bool ok;
+    QString b = m_settings->value("balance","1").toString();
+    QString s = m_settings->value("scooping", "0").toString();
+    QString decB = m_crypto.decryptToString(b);
+    QString decS = m_crypto.decryptToString(s);
+    int balance = decB.toInt(&ok);
+    qint64 scooping = decS.toInt(&ok);
+    qreal hours = 0.0;
+    if(scooping > 0) // still scooping
     {
-        hours = 20;
-        // stop scooping after 20 hours
-        m_settings->setValue("scooping", 0);
-        m_settings->setValue("balance", balance + hours * .5);
-        m_settings->sync();
+        int seconds = (time - scooping);
+        hours = seconds / 60.0 / 60.0;
+        if(hours > 20.0)
+        {
+            hours = 20;
+            balance = balance + 10; // 10 THX per day added (20 hours / 2)
+            // stop scooping after 20 hours
+            QString encS = m_crypto.encryptToString(QString::number(0));
+            QString encB = m_crypto.encryptToString(QString::number(balance));
+            m_settings->setValue("scooping", encS);
+            m_settings->setValue("balance", encB);
+            m_settings->sync();
+        }
     }
     return balance * 1000 + (hours * 500.0);
 }
 
 qint64 BackEnd::scooping()
 {
-    return m_settings->value("scooping", "0").toInt();
+    QString s = m_settings->value("scooping","0").toString();
+    QString dec = m_crypto.decryptToString(s);
+    return dec.toInt();
 }
 
 void BackEnd::start()
 {
-    qint64 scooping = QDateTime::currentSecsSinceEpoch();   
-    m_settings->setValue("scooping", scooping);
+    qint64 scooping = QDateTime::currentSecsSinceEpoch();
+    QString enc = m_crypto.encryptToString(QString::number(scooping));   
+    m_settings->setValue("scooping", enc);
     m_settings->sync();
 }

@@ -1,16 +1,18 @@
 TEMPLATE = app
 TARGET = shift
-QT += quick quickcontrols2 sql core
+QT += quick quickcontrols2 sql core androidextras
 
 SOURCES += \
     shift.cpp \
     backend.cpp \ 
     shareutils.cpp \
+    notificationclient.cpp \
     simplecrypt.cpp
 
 HEADERS += \
     backend.h \ 
     shareutils.h \
+    notificationclient.h \
     simplecrypt.h
 
 RESOURCES += \
@@ -43,7 +45,10 @@ QML_IMPORT_MAJOR_VERSION = 1
 android {
     QT += androidextras
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-    OTHER_FILES += android/src/com/lasconic/QShareUtils.java
+    OTHER_FILES += \
+        android/src/com/lasconic/QShareUtils.java \
+        android/src/org/qtproject/example/notification/NotificationClient.java
+    
     SOURCES += android/androidshareutils.cpp
     HEADERS += android/androidshareutils.h
 
