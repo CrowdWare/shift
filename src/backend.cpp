@@ -86,6 +86,7 @@ int BackEnd::mintedBalance(qint64 time)
             m_settings->setValue("scooping", encS);
             m_settings->setValue("balance", encB);
             m_settings->sync();
+            emit scoopingChanged();
         }
     }
     return balance * 1000 + (hours * 500.0);
