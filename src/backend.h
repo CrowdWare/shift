@@ -27,12 +27,20 @@
 #include <qqml.h>
 #include "simplecrypt.h"
 
+#define BAD_FILE_FORMAT -1
+#define UNSUPPORTED_VERSION -2
+#define FILE_COULD_NOT_OPEN -3
+#define CRYPTO_ERROR -4
+#define CHAIN_NOT_LOADED_BEFORE_SAVE -5
+#define CHAIN_LOADED 0
+#define CHAIN_SAVED 0
+
 class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
     Q_PROPERTY(int balance READ getBalance)
-    Q_PROPERTY(qint64 scooping READ scooping NOTIFY scoopingChanged)
+    Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -42,13 +50,22 @@ public:
     QString lastError();
     void setLastError(const QString &lastError);
     int getBalance();
-    qint64 scooping();
+    qint64 getScooping();
+    int saveChain();
+    int loadChain();
 
 #ifndef TEST
 private:
 #endif
     int mintedBalance(qint64 time);
-    void setBalance(int balance);
+
+#ifdef TEST
+public:
+    void setBalance_test(quint64 balance);
+    void setScooping_test(qint64 time);
+    quint64 getBalance_test();
+    qint64 getScooping_test();
+#endif
 
 signals:
     void lastErrorChanged();
@@ -58,6 +75,9 @@ private:
     QString m_lastError;
     QSettings *m_settings;
     SimpleCrypt m_crypto;
+    bool m_chainLoaded = false;
+    quint64 m_balance;
+    qint64 m_scooping;
 };
 
 #endif // BACKEND_H

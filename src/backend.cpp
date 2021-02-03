@@ -24,6 +24,9 @@
 #include <QFile>
 #include <QCryptographicHash>
 #include <QStandardPaths>
+#include <QDataStream>
+#include <QBuffer>
+
 
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
@@ -33,6 +36,8 @@ BackEnd::BackEnd(QObject *parent) :
     m_settings = new QSettings(path.append("/settings.txt"), QSettings::IniFormat);
     // todo, change and hide key
     m_crypto.setKey(1313);
+    m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
+    m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
 }
 
 QString BackEnd::lastError()
@@ -49,13 +54,6 @@ void BackEnd::setLastError(const QString &lastError)
     emit lastErrorChanged();
 }
 
-void BackEnd::setBalance(int balance)
-{
-    QString enc = m_crypto.encryptToString(QString::number(balance));
-    m_settings->setValue("balance", enc);
-    m_settings->sync();
-}
-
 int BackEnd::getBalance()
 {
     qint64 time = QDateTime::currentSecsSinceEpoch();
@@ -64,45 +62,147 @@ int BackEnd::getBalance()
 
 int BackEnd::mintedBalance(qint64 time)
 {
-    bool ok;
-    QString b = m_settings->value("balance","1").toString();
-    QString s = m_settings->value("scooping", "0").toString();
-    QString decB = m_crypto.decryptToString(b);
-    QString decS = m_crypto.decryptToString(s);
-    int balance = decB.toInt(&ok);
-    qint64 scooping = decS.toInt(&ok);
+    if(!m_chainLoaded)
+        loadChain();
+
     qreal hours = 0.0;
-    if(scooping > 0) // still scooping
+    if(m_scooping > 0) // still scooping
     {
-        int seconds = (time - scooping);
+        int seconds = (time - m_scooping);
         hours = seconds / 60.0 / 60.0;
         if(hours > 20.0)
         {
-            hours = 20;
-            balance = balance + 10; // 10 THX per day added (20 hours / 2)
+            hours = 0;
+            m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
             // stop scooping after 20 hours
-            QString encS = m_crypto.encryptToString(QString::number(0));
-            QString encB = m_crypto.encryptToString(QString::number(balance));
-            m_settings->setValue("scooping", encS);
-            m_settings->setValue("balance", encB);
-            m_settings->sync();
+            saveChain();
             emit scoopingChanged();
         }
     }
-    return balance * 1000 + (hours * 500.0);
+    return m_balance * 1000 + (hours * 500.0);
 }
 
-qint64 BackEnd::scooping()
+qint64 BackEnd::getScooping()
 {
-    QString s = m_settings->value("scooping","0").toString();
-    QString dec = m_crypto.decryptToString(s);
-    return dec.toInt();
+    if(!m_chainLoaded)
+        loadChain();
+    return m_scooping;
 }
 
 void BackEnd::start()
 {
-    qint64 scooping = QDateTime::currentSecsSinceEpoch();
-    QString enc = m_crypto.encryptToString(QString::number(scooping));   
-    m_settings->setValue("scooping", enc);
-    m_settings->sync();
+    m_scooping = QDateTime::currentSecsSinceEpoch();
+    saveChain();
 }
+
+int BackEnd::saveChain()
+{
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    QDataStream out(&buffer);
+
+    if(!m_chainLoaded)
+        return CHAIN_NOT_LOADED_BEFORE_SAVE;
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation).append("/shift.db");
+    QFile file(path);
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        if (file.error() != QFile::NoError) 
+        {
+            setLastError(file.errorString() + ":" + path);
+            return FILE_COULD_NOT_OPEN;
+        }
+    }
+    out << (quint16)0x3113; // magic number
+    out << (quint16)100;    // version
+    out << m_scooping;
+    out << m_balance;
+
+    QByteArray cypherText = m_crypto.encryptToByteArray(buffer.data());
+    if (m_crypto.lastError() == SimpleCrypt::ErrorNoError) 
+    {
+        file.write(cypherText);
+    }
+    else
+    {
+        buffer.close();
+        file.close();
+        return CRYPTO_ERROR;
+    }
+    
+    buffer.close();
+    file.close();
+    return CHAIN_SAVED;
+}
+
+int BackEnd::loadChain()
+{
+    quint16 magic;
+    quint16 version;
+
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QFile file(path.append("/shift.db"));
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        if (file.error() != QFile::NoError) 
+        {
+            setLastError(file.errorString());
+            return FILE_COULD_NOT_OPEN;
+        }
+    }
+    QByteArray cypherText = file.readAll();
+    file.close();
+
+    QByteArray plaintext = m_crypto.decryptToByteArray(cypherText);
+    if(m_crypto.lastError() == SimpleCrypt::ErrorNoError) 
+    {
+        QBuffer buffer(&plaintext);
+        buffer.open(QIODevice::ReadOnly);
+        QDataStream in(&buffer);
+        in >> magic;
+        if (magic != 0x3113)
+        {
+            qDebug() << "Magic number is:" << magic;
+            file.close();
+            return BAD_FILE_FORMAT;
+        }
+        // check the version
+        in >> version;
+        if (version < 100)
+        {
+            file.close();
+            return UNSUPPORTED_VERSION;
+        }
+        in >> m_scooping;
+        in >> m_balance;
+        buffer.close();
+    }
+    else
+        return CRYPTO_ERROR;
+
+    m_chainLoaded = true;
+    return CHAIN_LOADED;
+}
+
+// used for unit tests only
+#ifdef TEST
+void BackEnd::setBalance_test(quint64 balance)
+{
+    m_balance = balance;
+}
+
+void BackEnd::setScooping_test(qint64 time)
+{
+    m_scooping = time;
+}
+
+quint64 BackEnd::getBalance_test()
+{
+    return m_balance;
+}
+
+qint64 BackEnd::getScooping_test()
+{
+    return m_scooping;
+}
+#endif
