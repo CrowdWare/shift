@@ -164,14 +164,14 @@ int BackEnd::saveChain()
     out << m_scooping;
     out << m_balance;
 
-    /*out << m_bookings.count();
-    Booking *booking;
-    foreach(booking, m_bookings)
+    out << m_bookings.count();
+    for(int i = 0; i < m_bookings.count(); i++)
     {
+        Booking *booking = qobject_cast<Booking *>(m_bookings.at(i));
         out << booking->amount();
         out << booking->date();
         out << booking->description();
-    }*/
+    }
 
     QByteArray cypherText = m_crypto.encryptToByteArray(buffer.data());
     if (m_crypto.lastError() == SimpleCrypt::ErrorNoError) 
@@ -194,6 +194,7 @@ int BackEnd::loadChain()
 {
     quint16 magic;
     quint16 version;
+    int count;
 
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     QFile file(path.append("/shift.db"));
@@ -230,6 +231,17 @@ int BackEnd::loadChain()
         }
         in >> m_scooping;
         in >> m_balance;
+        in >> count;
+        for(int i = 0; i < count; i++)
+        {
+            quint64 amount;
+            QDate date;
+            QString description;
+            in >> amount;
+            in >> date;
+            in >> description;
+            m_bookings.append(new Booking(description, amount, date));
+        }
         buffer.close();
     }
     else
@@ -237,12 +249,6 @@ int BackEnd::loadChain()
 
     m_chainLoaded = true;
 
-    m_bookings = {
-        new Booking("Liquid scooped", 10, QDate(2021,2,3)),
-        new Booking("Liquid scooped", 10, QDate(2021,2,2)),
-        new Booking("Liquid scooped", 10, QDate(2021,2,1)),
-        new Booking("Liquid scooped", 10, QDate(2021,1,31))
-    };
     return CHAIN_LOADED;
 }
 
