@@ -7,14 +7,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="360"
-   height="360"
-   viewBox="0 0 95.250003 95.250003"
+   width="240"
+   height="45"
+   viewBox="0 0 63.500002 11.90625"
    version="1.1"
    id="svg8"
    sodipodi:docname="logo.svg"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
-   inkscape:export-filename="/Users/art/SourceCode/Shift/src/images/logo.png"
+   inkscape:export-filename="/Users/art/SourceCode/Shift/images/logo.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -29,9 +29,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.449675"
-     inkscape:cx="187.16428"
-     inkscape:cy="273.18708"
+     inkscape:zoom="2.0361079"
+     inkscape:cx="130.72214"
+     inkscape:cy="-12.930929"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -66,7 +66,7 @@
      transform="translate(41.502036,14.632894)">
     <g
        id="g848"
-       transform="matrix(0.29921265,0,0,0.29604822,-26.922068,-9.7595973)"
+       transform="matrix(0.03701492,0,0,0.03662345,-39.709421,-14.049228)"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96">
       <ellipse
@@ -98,5 +98,16 @@
        style="fill:#000000;stroke-width:0.264583"
        id="path915"
        d="" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.33720999999999979px;line-height:1.25;font-family:sans-serif;fill:#c9c9c9;fill-opacity:1;stroke:none;stroke-width:0.13343;"
+       x="-28.461353"
+       y="-4.0694761"
+       id="text878"><tspan
+         sodipodi:role="line"
+         id="tspan876"
+         x="-28.461353"
+         y="-4.0694761"
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.80930000000000035px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold Italic';fill:#c9c9c9;stroke-width:0.13343;fill-opacity:1;">SHIFT</tspan></text>
   </g>
 </svg>
