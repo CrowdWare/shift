@@ -54,6 +54,7 @@ void TestBackend::chain()
     backend.loadChain();
     backend.setBalance_test(15);
     backend.setScooping_test(1234567890);
+    
     int rc = backend.saveChain();
     QCOMPARE(rc, 0);
     if(rc != 0)

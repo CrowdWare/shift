@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
+#include <QDate>
 #include <qqml.h>
 #include "simplecrypt.h"
 
@@ -35,12 +36,42 @@
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
 
+class Booking : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
+    Q_PROPERTY(quint64 amount READ amount WRITE setAmount NOTIFY amountChanged)
+    Q_PROPERTY(QDate date READ date WRITE setDate NOTIFY dateChanged)
+    
+public:
+    explicit Booking(QString description, quint64 amount, QDate date, QObject *parent = nullptr);
+
+    QString description();
+    quint64 amount();
+    QDate date();
+    void setDescription(const QString &description);
+    void setAmount(quint64 amount);
+    void setDate(QDate date);
+
+signals:
+    void descriptionChanged();
+    void amountChanged();
+    void dateChanged();
+
+private:
+    QString m_description;
+    quint64 m_amount;
+    QDate m_date;
+};
+
+
 class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
     Q_PROPERTY(int balance READ getBalance)
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
+    Q_PROPERTY(QVariant bookings READ getBookings NOTIFY bookingsChanged)
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -53,6 +84,7 @@ public:
     qint64 getScooping();
     int saveChain();
     int loadChain();
+    QVariant getBookings();
 
 #ifndef TEST
 private:
@@ -70,6 +102,7 @@ public:
 signals:
     void lastErrorChanged();
     void scoopingChanged();
+    void bookingsChanged();
 
 private:
     QString m_lastError;
@@ -78,6 +111,6 @@ private:
     bool m_chainLoaded = false;
     quint64 m_balance;
     qint64 m_scooping;
+    QList<QObject *> m_bookings;
 };
-
 #endif // BACKEND_H

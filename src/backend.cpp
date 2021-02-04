@@ -28,6 +28,47 @@
 #include <QBuffer>
 
 
+Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
+    QObject(parent)
+{ 
+    m_description = description;
+    m_amount = amount;
+    m_date = date;
+}
+
+QString Booking::description()
+{
+    return m_description;
+}
+
+quint64 Booking::amount()
+{
+    return m_amount;
+}
+
+QDate Booking::date()
+{
+    return m_date;
+}
+
+void Booking::setDescription(const QString &description)
+{
+    m_description = description;
+    emit descriptionChanged();
+}
+
+void Booking::setAmount(quint64 amount)
+{
+    m_amount = amount;
+    emit amountChanged();
+}
+
+void Booking:: setDate(QDate date)
+{
+    m_date = date;
+    emit dateChanged();
+}
+
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
 {   
@@ -95,6 +136,11 @@ void BackEnd::start()
     saveChain();
 }
 
+QVariant BackEnd::getBookings()
+{
+    return QVariant::fromValue(m_bookings);
+}
+
 int BackEnd::saveChain()
 {
     QBuffer buffer;
@@ -117,6 +163,15 @@ int BackEnd::saveChain()
     out << (quint16)100;    // version
     out << m_scooping;
     out << m_balance;
+
+    /*out << m_bookings.count();
+    Booking *booking;
+    foreach(booking, m_bookings)
+    {
+        out << booking->amount();
+        out << booking->date();
+        out << booking->description();
+    }*/
 
     QByteArray cypherText = m_crypto.encryptToByteArray(buffer.data());
     if (m_crypto.lastError() == SimpleCrypt::ErrorNoError) 
@@ -181,6 +236,14 @@ int BackEnd::loadChain()
         return CRYPTO_ERROR;
 
     m_chainLoaded = true;
+
+    m_bookings = {
+        new Booking("Liquid scooped", 10, QDate(2021,2,3)),
+        new Booking("Liquid scooped", 10, QDate(2021,2,2)),
+        new Booking("Liquid scooped", 10, QDate(2021,2,1)),
+        new Booking("Liquid scooped", 10, QDate(2021,1,31))
+    };
+    emit bookingsChanged();
     return CHAIN_LOADED;
 }
 

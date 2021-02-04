@@ -119,13 +119,13 @@ Page
 	    	anchors.fill: parent
 	   		anchors.margins: page.width / 100
 	   		spacing: page.width / 100
-	    	
+			model: bookings
 	    	delegate: listDelegate
 	    	
 	   		Component 
 			{
 	   			id: listDelegate
-	    		
+
 	   			Rectangle 
 				{
 	 				width: parent.width 
@@ -133,14 +133,14 @@ Page
 	   				Text 
 					{
 	   					id: date
-	   					text: model.date
+	   					text: Qt.formatDate(model.date, "dd.MM.yyyy")
 	   					font.pixelSize: page.height / 40
 	   				} 
 	   				Text 
 					{
 	   					anchors.left: date.right
 	   					anchors.leftMargin: 15
-	   					text: model.text 
+	   					text: model.description
 	   					font.pixelSize: page.height / 40
 	 				} 
 	 				Text 
@@ -151,28 +151,6 @@ Page
 	 				} 
 	    		} 
 	    	} 
-	    	
-	   		model: ListModel 
-			{
-                ListElement 
-				{
-                	date: "31.01.2021"
-               	   	text: "Liquid created"
-               	   	amount: 10
-       	       	}
-               	ListElement 
-				{
-               		date: "30.01.2021"
-               		text: "Liquid created"
-               		amount: 10
-       	       	}
-				ListElement 
-				{
-               		date: "29.01.2021"
-               		text: "App installed"
-               		amount: 1
-       	       	}
-	   		}
         }
 	}
 
