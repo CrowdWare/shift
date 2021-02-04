@@ -116,6 +116,7 @@ int BackEnd::mintedBalance(qint64 time)
             hours = 0;
             m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
             // stop scooping after 20 hours
+            m_bookings.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
         }
