@@ -40,9 +40,6 @@ Content {
 	&lt;strong&gt;Welcome&lt;/strong&gt; to SHIFT
 &lt;/h1&gt;
 &lt;p&gt;SHIFT is a project from &lt;a href=&quot;https://www.crowdware.at&quot;&gt;CrowdWare&lt;/a&gt;&lt;/p&gt;
-&lt;p class=&quot;lead&quot;&gt;
-	Our goal is to create universal basic income for everybody.	
-&lt;/p&gt;
 
 "
                 }
@@ -114,6 +111,28 @@ Content {
                 }
             }
         }
+
+        Row {
+
+            Column {
+                span: 12
+
+                Text {
+                    text: "&lt;p class=&quot;lead&quot;&gt;
+	The idea behind shift is the possibily to create a universal basic income with a new virtual liquid made by men. The possibilities to have an own liquid to use as energy exchange, makes it easy for us all to share things, give services and to express our gratitude.
+	We will never be forced to pay taxes on it, because it&#x27;s not money at all.
+	It&#x27;s just a virtual liquid.
+&lt;/p&gt;
+
+&lt;h3&gt;Goal&lt;/h3&gt;
+&lt;p class=&quot;lead&quot;&gt;
+We are going to create an app which the users can use to create new liquid on a daily base.
+We gave the name THX to this new virtual liquid.
+THX is based on the phrase thank you and represents the gratitude.
+&lt;/p&gt;"
+                }
+            }
+        }
     }
 
     Section {
@@ -147,7 +166,7 @@ Content {
     }
 
     Section {
-        cssclass: "margin-top80"
+        cssclass: "container margin-top80"
 
         Row {
 
@@ -169,12 +188,40 @@ Content {
 &lt;p class=&quot;lead&quot;&gt;
 	The first app for Android is almost ready and will be released shortly.
 &lt;/p&gt;
+&lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
-	In the first phase the app doesn&#x27;t have that much functionality.
-	You can start to scoop liquid, which we call THX and you can invite your friends to 
-	join the circle of trusted users.
+	We are going to create a very simple app just to enable the user to create new liquid. 
+	The users are creating like 10 liters of THX every day they start the process in the app.
+	The users can also refer other users and can earn 1 liter of THX for every referred user per day. 
+	Every user can add up to 10 other users (otherwise it would become a snowball system, which is unfair, 
+	because the one on te top will earn the most)
+&lt;/p&gt;
+&lt;h4&gt;Phase II&lt;/h4&gt;
+&lt;p&gt;
+	When we reach 1.000.000 users, we are going to develop a gratitude function in the app. 
+	Every user will then be able to show gratitude giving THX from one app to the other. 
+	So the user is able to give the liquid which has been created to someone else.
+	The mark 1.000.000 will motivate some developers to join in, because they see that the people 
+	want this app and the devlopers will be kind of payed with THX instead of money.
+&lt;/p&gt;
 
-&lt;/p&gt;"
+&lt;h4&gt;Phase III&lt;/h4&gt;
+&lt;p&gt;
+	There will be a chat function.
+	There will also be a micro blogging engine, so that you are able to share things and services.
+&lt;/p&gt;
+&lt;h4&gt;Phase IV&lt;/h4&gt;
+&lt;p&gt;
+	There will be the possibility to implement plugins, so that we all are able to create new content for a new time shift.
+&lt;/p&gt;
+&lt;h4&gt;Phase V&lt;/h4&gt;
+&lt;p&gt;
+	After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 10 liters a day, 
+	so that all users are getting an equal amount per day. 
+	At that point we will cut the connection to the server and the platform will running totally decentral.
+&lt;/p&gt;
+
+"
                 }
             }
         }
@@ -194,6 +241,52 @@ Content {
 &lt;/div&gt;
 &lt;!-- /CALLOUT --&gt;"
                     adminlabel: "callout"
+                }
+            }
+        }
+    }
+
+    Section {
+
+        Row {
+
+            Column {
+                span: 12
+
+                Text {
+                    text: "&lt;h3&gt;About the liquid&lt;/h3&gt;
+&lt;p&gt;
+When we are talking about salaries and money, then we also talk about liquidity. So when you have got enough money you are liquid.
+In fact we don&#x27;t wanne use money anymore, because in the old system as we knew it from before 2020, some people abused money to hort it. With this action they stopped the free flow of energy. So they created a blockade to keep much money for themselves. All other people where dryed out and had to suffer.
+
+With THX all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 liters of THX. So one liter per minute.
+So a softwaredeveloper in Norway will get 60 liters of THX every hour and so does a hairdresser in India.
+Just fair ins&#x27;nt it.
+&lt;/p&gt;
+&lt;h3&gt;Inflation/Deflation&lt;/h3&gt;
+&lt;p&gt;
+	So that we will not flood the planet, the liquid will vaporate every day a small percentage until it&#x27;s gone 
+	fully after 7 years. So it will be created, used and destroy in a full circle.
+&lt;/p&gt;
+
+&lt;h3&gt;FAQ&lt;/h3&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		Sounds weird that you scoop liquid? We cannot call money. &lt;/br&gt;
+		When you create money, then you would have to pay taxes ;-)
+	&lt;/li&gt;
+	&lt;li&gt;
+		Will there be a version for iPhone? &lt;/br&gt;
+		Yes, when we get the hands on an iPhone to test it. (believe it or not, we are on a very low budget)
+	&lt;/li&gt;
+	&lt;li&gt;
+		When will you go into phase II?&lt;/br&gt;
+		We will go into phase II after reaching 1.000.000 people using the app. Then there will be a critical mass
+		who will accept THX as an energy exchange. Then we also will find developers who we can pay out with THX.
+		Another possibilty will be that we find sponsors to finance the development costs.
+	&lt;/li&gt;
+&lt;/ul&gt;"
+                    adminlabel: "FAQ"
                 }
             }
         }
