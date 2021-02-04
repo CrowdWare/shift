@@ -68,16 +68,8 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     backend.setLastError("No errors");
-    //backend.loadChain();
+    backend.loadChain();
     //backend.saveChain();
-
-    QList <QObject *> bookings = {
-        new Booking("Liquid scooped", 10, QDate(2021,2,4)),
-        new Booking("Liquid scooped", 10, QDate(2021,2,3)),
-        new Booking("Liquid scooped", 10, QDate(2021,2,2)),
-        new Booking("Liquid scooped", 10, QDate(2021,2,1)),
-        new Booking("Liquid scooped", 10, QDate(2021,1,31))
-    };
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
@@ -95,7 +87,7 @@ int main(int argc, char *argv[])
         QQuickStyle::setStyle(settings.value("style").toString());
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("bookings", QVariant::fromValue(bookings));
+    engine.rootContext()->setContextProperty("bookings", QVariant::fromValue(backend.getBookings()));
     engine.rootContext()->setContextProperty("backend", &backend);
     engine.rootContext()->setContextProperty("notificationClient", &notificationClient);
     engine.load(QUrl("qrc:/shift.qml"));

@@ -136,9 +136,9 @@ void BackEnd::start()
     saveChain();
 }
 
-QVariant BackEnd::getBookings()
+QList<QObject *> BackEnd::getBookings()
 {
-    return QVariant::fromValue(m_bookings);
+    return m_bookings;
 }
 
 int BackEnd::saveChain()
@@ -243,7 +243,6 @@ int BackEnd::loadChain()
         new Booking("Liquid scooped", 10, QDate(2021,2,1)),
         new Booking("Liquid scooped", 10, QDate(2021,1,31))
     };
-    emit bookingsChanged();
     return CHAIN_LOADED;
 }
 

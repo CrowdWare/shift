@@ -71,8 +71,7 @@ class BackEnd : public QObject
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
     Q_PROPERTY(int balance READ getBalance)
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
-    Q_PROPERTY(QVariant bookings READ getBookings NOTIFY bookingsChanged)
-
+ 
 public:
     explicit BackEnd(QObject *parent = nullptr);
 
@@ -84,7 +83,7 @@ public:
     qint64 getScooping();
     int saveChain();
     int loadChain();
-    QVariant getBookings();
+    QList<QObject *> getBookings();
 
 #ifndef TEST
 private:
@@ -102,7 +101,6 @@ public:
 signals:
     void lastErrorChanged();
     void scoopingChanged();
-    void bookingsChanged();
 
 private:
     QString m_lastError;
