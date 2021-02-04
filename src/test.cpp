@@ -24,7 +24,8 @@ void TestBackend::balance()
     BackEnd backend;
 
     backend.loadChain();
-    backend.setBalance_test(10);
+    backend.resetBookings();
+    backend.addBooking_test(new Booking("test", 10, QDate(1900,1,1)));
     backend.setScooping_test(0);
     int balance = backend.getBalance();
     QCOMPARE(balance, 10000);
@@ -36,7 +37,8 @@ void TestBackend::minted()
 
     qint64 time = QDateTime::currentSecsSinceEpoch();
     backend.loadChain();
-    backend.setBalance_test(10);
+    backend.resetBookings();
+    backend.addBooking_test(new Booking("test", 10, QDate(1900,1,1)));
     backend.setScooping_test(time);
     // 4 hours * 60 minutes * 60 seconds = 2 THX added
     int minted = backend.mintedBalance(time + 4 * 60 * 60);
@@ -52,7 +54,8 @@ void TestBackend::chain()
     BackEnd backend;
 
     backend.loadChain();
-    backend.setBalance_test(15);
+    backend.resetBookings();
+    backend.addBooking_test(new Booking("test", 15, QDate(1900,1,1)));
     backend.setScooping_test(1234567890);
     
     int rc = backend.saveChain();

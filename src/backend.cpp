@@ -75,6 +75,7 @@ BackEnd::BackEnd(QObject *parent) :
     m_lastError = "No Error";
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     m_settings = new QSettings(path.append("/settings.txt"), QSettings::IniFormat);
+    m_balance = 0;
     // todo, change and hide key
     m_crypto.setKey(1313);
     m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
@@ -103,9 +104,6 @@ int BackEnd::getBalance()
 
 int BackEnd::mintedBalance(qint64 time)
 {
-    if(!m_chainLoaded)
-        loadChain();
-
     qreal hours = 0.0;
     if(m_scooping > 0) // still scooping
     {
@@ -116,6 +114,7 @@ int BackEnd::mintedBalance(qint64 time)
             hours = 0;
             m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
             // stop scooping after 20 hours
+            m_scooping = 0;
             m_bookings.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
@@ -126,8 +125,6 @@ int BackEnd::mintedBalance(qint64 time)
 
 qint64 BackEnd::getScooping()
 {
-    if(!m_chainLoaded)
-        loadChain();
     return m_scooping;
 }
 
@@ -148,8 +145,6 @@ int BackEnd::saveChain()
     buffer.open(QIODevice::WriteOnly);
     QDataStream out(&buffer);
 
-    if(!m_chainLoaded)
-        return CHAIN_NOT_LOADED_BEFORE_SAVE;
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation).append("/shift.db");
     QFile file(path);
     if(!file.open(QIODevice::WriteOnly))
@@ -163,7 +158,6 @@ int BackEnd::saveChain()
     out << (quint16)0x3113; // magic number
     out << (quint16)100;    // version
     out << m_scooping;
-    out << m_balance;
 
     out << m_bookings.count();
     for(int i = 0; i < m_bookings.count(); i++)
@@ -231,8 +225,9 @@ int BackEnd::loadChain()
             return UNSUPPORTED_VERSION;
         }
         in >> m_scooping;
-        in >> m_balance;
         in >> count;
+        m_bookings.clear();
+        m_balance = 0;
         for(int i = 0; i < count; i++)
         {
             quint64 amount;
@@ -242,24 +237,18 @@ int BackEnd::loadChain()
             in >> date;
             in >> description;
             m_bookings.append(new Booking(description, amount, date));
+            m_balance += amount;
         }
         buffer.close();
     }
     else
         return CRYPTO_ERROR;
 
-    m_chainLoaded = true;
-
     return CHAIN_LOADED;
 }
 
 // used for unit tests only
 #ifdef TEST
-void BackEnd::setBalance_test(quint64 balance)
-{
-    m_balance = balance;
-}
-
 void BackEnd::setScooping_test(qint64 time)
 {
     m_scooping = time;
@@ -273,5 +262,17 @@ quint64 BackEnd::getBalance_test()
 qint64 BackEnd::getScooping_test()
 {
     return m_scooping;
+}
+
+void BackEnd::addBooking_test(Booking *booking)
+{
+    m_balance += booking->amount();
+    m_bookings.insert(0, booking);
+}
+
+void BackEnd::resetBookings()
+{
+    m_bookings.clear();
+    m_balance = 0;
 }
 #endif

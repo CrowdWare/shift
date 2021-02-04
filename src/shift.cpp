@@ -69,7 +69,6 @@ int main(int argc, char *argv[])
 
     backend.setLastError("No errors");
     backend.loadChain();
-    //backend.saveChain();
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);

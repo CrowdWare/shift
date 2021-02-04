@@ -92,10 +92,11 @@ private:
 
 #ifdef TEST
 public:
-    void setBalance_test(quint64 balance);
     void setScooping_test(qint64 time);
     quint64 getBalance_test();
     qint64 getScooping_test();
+    void addBooking_test(Booking *booking);
+    void resetBookings();
 #endif
 
 signals:
@@ -106,7 +107,6 @@ private:
     QString m_lastError;
     QSettings *m_settings;
     SimpleCrypt m_crypto;
-    bool m_chainLoaded = false;
     quint64 m_balance;
     qint64 m_scooping;
     QList<QObject *> m_bookings;
