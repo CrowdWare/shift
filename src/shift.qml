@@ -226,7 +226,7 @@ ApplicationWindow
             {
                 width: aboutDialog.availableWidth
                 text: "SHIFT will be decentral and is not running on servers."
-                    + " Your SHIFT account is anonymous, only your real friends you connect with know account who is behind your account."
+                    + " Your SHIFT account is anonymous, only your real friends know who is behind your account."
                     + " No registration needed."
                     + " No server means, also no censorship. No ads."
                     + " SHIFT also creates a universal basic income and can be used to show gratitude to other members."

@@ -104,7 +104,7 @@ void BackEnd::initDatabase()
 void BackEnd::loadMessage()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message"));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?name=" + m_name));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
@@ -191,6 +191,11 @@ int BackEnd::mintedBalance(qint64 time)
 qint64 BackEnd::getScooping()
 {
     return m_scooping;
+}
+
+QString BackEnd::getUuid()
+{
+    return m_uuid;
 }
 
 void BackEnd::start()

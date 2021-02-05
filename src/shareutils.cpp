@@ -1,5 +1,6 @@
 //=============================================================================
 // Copyright (c) 2014 Nicolas Froment
+// Copyright (c) 2021 Olaf Japp
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +43,7 @@ ShareUtils::ShareUtils(QQuickItem *parent)
 #endif
 }
 
-void ShareUtils::share(const QString &text, const QUrl &url)
+void ShareUtils::share(const QString &text)
 {
-    _pShareUtils->share(text, url);
+    _pShareUtils->share(text);
 }

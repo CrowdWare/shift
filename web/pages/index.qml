@@ -59,7 +59,7 @@ Content {
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
 		&lt;h4&gt;&lt;strong&gt;Basic Income&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;We are facing real hard times right now. What if we craete our own basic income.&lt;/p&gt;
+		&lt;p&gt;We are facing real hard times right now. What if we create our own basic income.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
                     adminlabel: "Basic Income"

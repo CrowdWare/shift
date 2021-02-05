@@ -1,5 +1,6 @@
 //=============================================================================
 // Copyright (c) 2014 Nicolas Froment
+// Copyright (c) 2021 Olaf Japp
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,15 +33,15 @@ public class QShareUtils
 {
     protected QShareUtils()
     {
-       //Log.d("lasconic", "QShareUtils()");
     }
 
-    public static void share(String text, String url) {
+    public static void share(String text) 
+    {
         if (QtNative.activity() == null)
             return;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, text + " " + url);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
         sendIntent.setType("text/plain");
         QtNative.activity().startActivity(sendIntent);
     }

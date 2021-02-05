@@ -73,7 +73,8 @@ class BackEnd : public QObject
     Q_PROPERTY(int balance READ getBalance)
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
     Q_PROPERTY(QString message READ getMessage NOTIFY messageChanged)
- 
+    Q_PROPERTY(QString uuid READ getUuid)
+
 public:
     explicit BackEnd(QObject *parent = nullptr);
 
@@ -82,6 +83,7 @@ public:
     QString lastError();
     void setLastError(const QString &lastError);
     int getBalance();
+    QString getUuid();
     qint64 getScooping();
     QString getMessage();
     int saveChain();
