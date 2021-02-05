@@ -95,10 +95,7 @@ void BackEnd::initDatabase()
     m_balance = 1;
     m_scooping = 0;
     m_bookings.append(new Booking("Initial booking", 1, QDate::currentDate()));
-    saveChain();
-
-    // send post to the server to add the user
-    // todo
+    registerAccount();
 }
 
 void BackEnd::loadMessage()
@@ -123,6 +120,47 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
     		    {
     			    m_message = QString::fromUtf8(reply->readAll().data());
                     emit messageChanged();
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                setLastError("Response error from webserver: " + QString::number(httpstatuscode));
+    			break;
+    	}
+    }
+    else
+    {
+        setLastError("Reply error from webserver");
+    }
+     
+    reply->deleteLater();
+}
+
+void BackEnd::registerAccount()
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register?name=" + m_name));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onRegisterReply(QNetworkReply*)));
+    networkManager->get(request);
+}
+
+void BackEnd::onRegisterReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+                    // acount is now registered
+                    saveChain();
     		    }
                 else
                 {

@@ -96,6 +96,7 @@ private:
 #endif
     int mintedBalance(qint64 time);
     void initDatabase();
+    void registerAccount();
 
 #ifdef TEST
 public:
@@ -115,6 +116,7 @@ signals:
 
 public slots:
     void onNetworkReply(QNetworkReply* reply);
+    void onRegisterReply(QNetworkReply* reply);
 
 private:
     QString m_lastError;
