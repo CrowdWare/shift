@@ -34,6 +34,7 @@
 #define FILE_COULD_NOT_OPEN -3
 #define CRYPTO_ERROR -4
 #define CHAIN_NOT_LOADED_BEFORE_SAVE -5
+#define FILE_NOT_EXISTS -6
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
 
@@ -88,13 +89,16 @@ class BackEnd : public QObject
     Q_PROPERTY(int balance READ getBalance)
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
     Q_PROPERTY(QString message READ getMessage NOTIFY messageChanged)
-    Q_PROPERTY(QString uuid READ getUuid)
+    Q_PROPERTY(QString uuid READ getUuid NOTIFY uuidChanged)
 
 public:
     explicit BackEnd(QObject *parent = nullptr);
 
-    Q_INVOKABLE void start(); 
+    Q_INVOKABLE void start();
+    Q_INVOKABLE void createAccount(QString name, QString ruuid);
 
+    void setName(QString name);
+    void setRuuid(QString ruuid);
     QString lastError();
     void setLastError(const QString &lastError);
     int getBalance();
@@ -112,7 +116,6 @@ public:
 private:
 #endif
     int mintedBalance(qint64 time);
-    void initDatabase();
     void registerAccount();
 
 #ifdef TEST
@@ -131,6 +134,7 @@ signals:
     void lastErrorChanged();
     void scoopingChanged();
     void messageChanged();
+    void uuidChanged();
 
 public slots:
     void onNetworkReply(QNetworkReply* reply);

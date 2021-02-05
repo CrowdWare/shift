@@ -23,6 +23,7 @@
 #include <QQmlContext>
 #include <QSettings>
 #include <QQuickStyle>
+#include <QStandardPaths>
 #include <QIcon>
 #include <QList>
 #include <QQuickView>
@@ -71,7 +72,9 @@ int main(int argc, char *argv[])
     backend.setLastError("No errors");
     backend.loadChain();
     backend.loadMessage();
-
+    //QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    //QFile file(path.append("/shift.db"));
+    //file.remove();
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");

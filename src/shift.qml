@@ -169,15 +169,16 @@ ApplicationWindow
                 width: pane.availableWidth / 2
                 height: pane.availableHeight / 2
                 anchors.centerIn: parent
-                anchors.verticalCenterOffset: -50
+                anchors.verticalCenterOffset: -90
                 fillMode: Image.PreserveAspectFit
                 source: "images/logo.png"
             }
 
             Label 
             {
+                id: label
                 text: backend.message
-                anchors.margins: 20
+                anchors.margins: 0
                 anchors.top: logo.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -186,8 +187,64 @@ ApplicationWindow
                 wrapMode: Label.Wrap
             }
 
+            TextField 
+            {
+                id: name
+                anchors.margins: 10
+                font.pointSize: 20
+                visible: backend.uuid == ""
+                anchors.top: label.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                placeholderText: "enter your name or nickname"
+            }
+            
+            Label 
+            {
+                id: labelRuuid
+                text: "Enter the referer id"
+                visible: backend.uuid == ""
+                anchors.margins: 10
+                anchors.top: name.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Label.AlignHCenter
+                verticalAlignment: Label.AlignVCenter
+                wrapMode: Label.Wrap
+            }
+
+            TextField 
+            {
+                id: ruuid
+                anchors.margins: 10
+                font.pointSize: 20
+                visible: backend.uuid == ""
+                anchors.top: labelRuuid.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                placeholderText: "enter the referer id"
+            }
+
+            Button
+            {
+                visible: backend.uuid == ""
+                anchors.top: ruuid.bottom
+                font.pointSize: 20
+                anchors.margins: 10
+     	        anchors.left: parent.left
+                anchors.right: parent.right
+		        height: 50
+                text: "Create Account"
+                Material.background: Material.Blue
+		        onClicked: {
+                    if (ruuid.text != "" && name.text != "")
+                        backend.createAccount(name.text, ruuid.text);
+                }
+            }
+
             MouseArea
             {
+                enabled: backend.uuid != ""
                 anchors.fill: parent
                 onClicked:
                 {

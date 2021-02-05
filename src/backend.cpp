@@ -93,10 +93,8 @@ BackEnd::BackEnd(QObject *parent) :
 {   
     m_lastError = "No Error";
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    m_message = "WELCOME BACK";
-    QFile file(path.append("/shift.db"));
-    if(!file.exists())
-        initDatabase();
+    m_message = "Welcome, please enter your name";
+    m_name = "";
     // todo, change and hide key
     m_key = "1234";
     // todo, change and hide key
@@ -105,16 +103,79 @@ BackEnd::BackEnd(QObject *parent) :
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
 }
 
-void BackEnd::initDatabase()
+void BackEnd::setRuuid(QString ruuid)
+{
+    m_ruuid = ruuid;
+}
+
+void BackEnd::setName(QString name)
+{
+    m_name = name;
+}
+
+void BackEnd::createAccount(QString name, QString ruuid)
 {
     m_uuid = QUuid::createUuid().toString();
-    // todo, user has to enter the ruuid
-    m_ruuid = QUuid::createUuid().toString();
-    m_name = "Unknown";
+    m_ruuid = ruuid;
+    m_name = name;
     m_balance = 1;
     m_scooping = 0;
     m_bookings.append(new Booking("Initial booking", 1, QDate::currentDate()));
     registerAccount();
+}
+
+void BackEnd::registerAccount()
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    obj["key"] = m_key;
+    obj["name"] = m_name;
+    obj["uuid"] = m_uuid;
+    obj["ruuid"] = m_ruuid;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onRegisterReply(QNetworkReply*)));
+    networkManager->post(request, data);
+}
+
+void BackEnd::onRegisterReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+                    // acount is now registered
+                    QString contents = QString::fromUtf8(reply->readAll());
+                    qDebug() << contents;
+                    saveChain();
+                    emit uuidChanged();
+                    m_message = "Welcome, " + m_name;
+                    emit messageChanged();
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                setLastError("Response error from webserver: " + QString::number(httpstatuscode));
+    			break;
+    	}
+    }
+    else
+    {
+        setLastError("Reply error from webserver");
+    }
+     
+    reply->deleteLater();
 }
 
 void BackEnd::loadMessage()
@@ -194,58 +255,6 @@ void BackEnd::onFriendlistReply(QNetworkReply* reply)
                     //qDebug() << "name:" << map["name"].toString();
                     //qDebug() << "uuid:" << map["uuid"].toString();
                     */
-    		    }
-                else
-                {
-                    setLastError("Reply not readable");
-                }
-    		    break;
-    		default:
-                setLastError("Response error from webserver: " + QString::number(httpstatuscode));
-    			break;
-    	}
-    }
-    else
-    {
-        setLastError("Reply error from webserver");
-    }
-     
-    reply->deleteLater();
-}
-
-void BackEnd::registerAccount()
-{
-    QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
-    request.setRawHeader("User-Agent", "Shift 1.0");
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QJsonObject obj;
-    obj["key"] = m_key;
-    obj["name"] = m_name;
-    obj["uuid"] = m_uuid;
-    obj["ruuid"] = m_ruuid;
-    QJsonDocument doc(obj);
-    QByteArray data = doc.toJson();
-    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
-    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onRegisterReply(QNetworkReply*)));
-    networkManager->post(request, data);
-
-}
-
-void BackEnd::onRegisterReply(QNetworkReply* reply)
-{
-    if(reply->error() == QNetworkReply::NoError)
-    {
-    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
-    	switch(httpstatuscode)
-    	{
-    		case 200:
-    		    if (reply->isReadable()) 
-    		    {
-                    // acount is now registered
-                    QString contents = QString::fromUtf8(reply->readAll());
-                    qDebug() << contents;
-                    saveChain();
     		    }
                 else
                 {
@@ -389,6 +398,8 @@ int BackEnd::loadChain()
 
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     QFile file(path.append("/shift.db"));
+    if(!file.exists())
+        return FILE_NOT_EXISTS;
     if(!file.open(QIODevice::ReadOnly))
     {
         if (file.error() != QFile::NoError) 
