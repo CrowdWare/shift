@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     backend.setLastError("No errors");
+    backend.loadMessage();
     backend.loadChain();
 
     qInstallMessageHandler(myMessageOutput);

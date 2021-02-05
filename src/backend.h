@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QDate>
 #include <qqml.h>
+#include <QNetworkReply>
 #include "simplecrypt.h"
 
 #define BAD_FILE_FORMAT -1
@@ -71,6 +72,7 @@ class BackEnd : public QObject
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
     Q_PROPERTY(int balance READ getBalance)
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
+    Q_PROPERTY(QString message READ getMessage NOTIFY messageChanged)
  
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -81,9 +83,11 @@ public:
     void setLastError(const QString &lastError);
     int getBalance();
     qint64 getScooping();
+    QString getMessage();
     int saveChain();
     int loadChain();
     QList<QObject *> getBookings();
+    void loadMessage();
 
 #ifndef TEST
 private:
@@ -102,6 +106,10 @@ public:
 signals:
     void lastErrorChanged();
     void scoopingChanged();
+    void messageChanged();
+
+public slots:
+    void onNetworkReply(QNetworkReply* reply);
 
 private:
     QString m_lastError;
@@ -110,5 +118,6 @@ private:
     quint64 m_balance;
     qint64 m_scooping;
     QList<QObject *> m_bookings;
+    QString m_message;
 };
 #endif // BACKEND_H

@@ -26,6 +26,8 @@
 #include <QStandardPaths>
 #include <QDataStream>
 #include <QBuffer>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
 
 
 Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
@@ -76,16 +78,64 @@ BackEnd::BackEnd(QObject *parent) :
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     m_settings = new QSettings(path.append("/settings.txt"), QSettings::IniFormat);
     m_balance = 0;
+    m_message = "WELCOME BACK";
+
     // todo, change and hide key
     m_crypto.setKey(1313);
     m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
 }
 
+void BackEnd::loadMessage()
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message"));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
+    networkManager->get(request);
+}
+
+void BackEnd::onNetworkReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+    			    m_message = QString::fromUtf8(reply->readAll().data());
+                    emit messageChanged();
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                setLastError("Response error from webserver: " + QString::number(httpstatuscode));
+    			break;
+    	}
+    }
+    else
+    {
+        setLastError("Reply error from webserver");
+    }
+     
+    reply->deleteLater();
+}
+
 QString BackEnd::lastError()
 {
     return m_lastError;
 } 
+
+QString BackEnd::getMessage()
+{
+    return m_message;
+}
 
 void BackEnd::setLastError(const QString &lastError)
 {

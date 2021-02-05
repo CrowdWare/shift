@@ -176,7 +176,7 @@ ApplicationWindow
 
             Label 
             {
-                text: "THANK YOU FOR BEING AN EARLY ADOPTER !"
+                text: backend.message
                 anchors.margins: 20
                 anchors.top: logo.bottom
                 anchors.left: parent.left
