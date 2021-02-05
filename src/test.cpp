@@ -8,6 +8,7 @@ private slots:
     void balance();
     void minted();
     void chain();
+    void initDatabase();
 };
 
 void TestBackend::balance()
@@ -62,6 +63,13 @@ void TestBackend::chain()
     QCOMPARE(backend.getScooping_test(), (qint64)1234567890);
 }
 
+void TestBackend::initDatabase()
+{
+    BackEnd backend;
+
+    backend.initDatabase();
+    QCOMPARE(backend.getBalance_test(), (quint64)1);
+}
 
 QTEST_MAIN(TestBackend)
 #include "test.moc"
