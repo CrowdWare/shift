@@ -8,6 +8,7 @@ private slots:
     void balance();
     void minted();
     void chain();
+    void friendlist();
     void initDatabase();
 };
 
@@ -63,11 +64,21 @@ void TestBackend::chain()
     QCOMPARE(backend.getScooping_test(), (qint64)1234567890);
 }
 
+void TestBackend::friendlist()
+{
+    BackEnd backend;
+
+    backend.loadFriendlist();
+    QTest::qWait(3000);
+    QCOMPARE(0, (quint64)1);
+}
+
 void TestBackend::initDatabase()
 {
     BackEnd backend;
 
     backend.initDatabase();
+    QTest::qWait(3000);
     QCOMPARE(backend.getBalance_test(), (quint64)1);
 }
 

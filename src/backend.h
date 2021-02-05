@@ -37,6 +37,21 @@
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
 
+/*
+class Friend : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString name READ getName)
+ 
+public:
+    explicit Friend(QString name, QObject *parent = nullptr);
+
+    QString getName();
+  
+private:
+    QString m_name;
+};
+*/
 class Booking : public QObject
 {
     Q_OBJECT
@@ -89,7 +104,9 @@ public:
     int saveChain();
     int loadChain();
     QList<QObject *> getBookings();
+    QList<QObject *> getFriends();
     void loadMessage();
+    void loadFriendlist();
 
 #ifndef TEST
 private:
@@ -106,6 +123,7 @@ public:
     void addBooking_test(Booking *booking);
     void resetBookings_test();
     void setUuid_test(QString uuid);
+    void setRuuid_test(QString ruuid);
     void setName_test(QString name);
 #endif
 
@@ -116,6 +134,7 @@ signals:
 
 public slots:
     void onNetworkReply(QNetworkReply* reply);
+    void onFriendlistReply(QNetworkReply* reply);
     void onRegisterReply(QNetworkReply* reply);
 
 private:
@@ -124,8 +143,11 @@ private:
     quint64 m_balance;
     qint64 m_scooping;
     QList<QObject *> m_bookings;
+    QList<QObject *> m_friends;
     QString m_message;
     QString m_name;
     QString m_uuid;
+    QString m_ruuid;
+    QString m_key;
 };
 #endif // BACKEND_H
