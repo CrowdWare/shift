@@ -58,8 +58,8 @@ void TestBackend::chain()
         return;
     int rc2 = backend.loadChain();
     QCOMPARE(rc2, 0);
-    QCOMPARE(backend.getBalance_test(), 20);
-    QCOMPARE(backend.getScooping_test(), 1234567890);
+    QCOMPARE(backend.getBalance_test(), (quint64)20);
+    QCOMPARE(backend.getScooping_test(), (qint64)1234567890);
 }
 
 
