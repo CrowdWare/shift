@@ -4,8 +4,8 @@ import TextEditor 1.0
 import ImageEditor 1.0
 
 Content {
-    title: "Index"
-    menu: "Shift"
+    title: "Shift"
+    menu: "default"
     author: "Adam"
     layout: "default"
     date: "2021-02-04"
