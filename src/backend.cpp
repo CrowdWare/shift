@@ -28,6 +28,7 @@
 #include <QBuffer>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QUuid>
 
 
 Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
@@ -76,14 +77,28 @@ BackEnd::BackEnd(QObject *parent) :
 {   
     m_lastError = "No Error";
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    m_settings = new QSettings(path.append("/settings.txt"), QSettings::IniFormat);
-    m_balance = 0;
     m_message = "WELCOME BACK";
+    QFile file(path.append("/shift.db"));
+    if(!file.exists())
+        initDatabase();
 
     // todo, change and hide key
     m_crypto.setKey(1313);
     m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
+}
+
+void BackEnd::initDatabase()
+{
+    m_uuid = QUuid::createUuid().toString();
+    m_name = "Unknown";
+    m_balance = 1;
+    m_scooping = 0;
+    m_bookings.append(new Booking("Initial booking", 1, QDate::currentDate()));
+    saveChain();
+
+    // send post to the server to add the user
+    // todo
 }
 
 void BackEnd::loadMessage()
@@ -208,6 +223,8 @@ int BackEnd::saveChain()
     out << (quint16)0x3113; // magic number
     out << (quint16)100;    // version
     out << m_scooping;
+    out << m_uuid;
+    out << m_name;
 
     out << m_bookings.count();
     for(int i = 0; i < m_bookings.count(); i++)
@@ -275,6 +292,8 @@ int BackEnd::loadChain()
             return UNSUPPORTED_VERSION;
         }
         in >> m_scooping;
+        in >> m_uuid;
+        in >> m_name;
         in >> count;
         m_bookings.clear();
         m_balance = 0;
@@ -320,9 +339,19 @@ void BackEnd::addBooking_test(Booking *booking)
     m_bookings.insert(0, booking);
 }
 
-void BackEnd::resetBookings()
+void BackEnd::resetBookings_test()
 {
     m_bookings.clear();
     m_balance = 0;
+}
+
+void BackEnd::setUuid_test(QString uuid)
+{
+    m_uuid = uuid;
+}
+
+void BackEnd::setName_test(QString name)
+{
+    m_name = name;
 }
 #endif

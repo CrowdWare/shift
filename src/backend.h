@@ -93,6 +93,7 @@ public:
 private:
 #endif
     int mintedBalance(qint64 time);
+    void initDatabase();
 
 #ifdef TEST
 public:
@@ -100,7 +101,9 @@ public:
     quint64 getBalance_test();
     qint64 getScooping_test();
     void addBooking_test(Booking *booking);
-    void resetBookings();
+    void resetBookings_test();
+    void setUuid_test(QString uuid);
+    void setName_test(QString name);
 #endif
 
 signals:
@@ -113,11 +116,12 @@ public slots:
 
 private:
     QString m_lastError;
-    QSettings *m_settings;
     SimpleCrypt m_crypto;
     quint64 m_balance;
     qint64 m_scooping;
     QList<QObject *> m_bookings;
     QString m_message;
+    QString m_name;
+    QString m_uuid;
 };
 #endif // BACKEND_H
