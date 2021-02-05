@@ -4,7 +4,7 @@ import TextEditor 1.0
 import ImageEditor 1.0
 
 Content {
-    title: "Index"
+    title: "Shift"
     menu: "default"
     author: "Adam"
     layout: "default"
