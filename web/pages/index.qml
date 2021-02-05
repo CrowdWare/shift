@@ -5,7 +5,7 @@ import ImageEditor 1.0
 
 Content {
     title: "Index"
-    menu: "default"
+    menu: "Shift"
     author: "Adam"
     layout: "default"
     date: "2021-02-04"
