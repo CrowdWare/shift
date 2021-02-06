@@ -35,8 +35,8 @@
 #include <QJsonDocument>
 #include <QMap>
 
-/*
-Friend::Friend(QString name) :
+
+Friend::Friend(QString name, QObject *parent) :
     QObject(parent)
 { 
     m_name = name;
@@ -46,7 +46,7 @@ QString Friend::getName()
 {
     return m_name;
 }
-*/
+
 Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
     QObject(parent)
 { 
@@ -152,7 +152,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
     		case 200:
     		    if (reply->isReadable()) 
     		    {
-                    // acount is now registered
+                    // account is now registered
                     QString contents = QString::fromUtf8(reply->readAll());
                     qDebug() << contents;
                     saveChain();
@@ -255,6 +255,7 @@ void BackEnd::onFriendlistReply(QNetworkReply* reply)
                     //qDebug() << "name:" << map["name"].toString();
                     //qDebug() << "uuid:" << map["uuid"].toString();
                     */
+                   m_friends.append(new Friend("test"));
     		    }
                 else
                 {
@@ -339,6 +340,11 @@ void BackEnd::start()
 QList<QObject *> BackEnd::getBookings()
 {
     return m_bookings;
+}
+
+QList<QObject *> BackEnd::getFriends()
+{
+    return m_friends;
 }
 
 int BackEnd::saveChain()

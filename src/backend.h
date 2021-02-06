@@ -38,7 +38,7 @@
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
 
-/*
+
 class Friend : public QObject
 {
     Q_OBJECT
@@ -52,7 +52,7 @@ public:
 private:
     QString m_name;
 };
-*/
+
 class Booking : public QObject
 {
     Q_OBJECT

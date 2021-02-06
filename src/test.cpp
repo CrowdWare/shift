@@ -9,7 +9,7 @@ private slots:
     void minted();
     void chain();
     void friendlist();
-    void initDatabase();
+    void createAccount();
 };
 
 void TestBackend::balance()
@@ -70,14 +70,15 @@ void TestBackend::friendlist()
 
     backend.loadFriendlist();
     QTest::qWait(3000);
-    QCOMPARE(0, (quint64)1);
+    QList<QObject *> friends = backend.getFriends();
+    QCOMPARE(friends.count(), 1);
 }
 
-void TestBackend::initDatabase()
+void TestBackend::createAccount()
 {
     BackEnd backend;
 
-    backend.initDatabase();
+    backend.createAccount("name", "refuuid");
     QTest::qWait(3000);
     QCOMPARE(backend.getBalance_test(), (quint64)1);
 }
