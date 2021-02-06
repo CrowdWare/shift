@@ -576,12 +576,12 @@ qint64 BackEnd::getScooping_test()
 void BackEnd::addBooking_test(Booking *booking)
 {
     m_balance += booking->amount();
-    m_bookings.insert(0, booking);
+    m_bookingModel.insert(0, booking);
 }
 
 void BackEnd::resetBookings_test()
 {
-    m_bookings.clear();
+    m_bookingModel.clear();
     m_balance = 0;
 }
 

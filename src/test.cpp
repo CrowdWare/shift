@@ -80,6 +80,8 @@ void TestBackend::createAccount()
 {
     BackEnd backend;
 
+qint64 time = QDateTime::currentSecsSinceEpoch();
+qDebug() << time;
     backend.createAccount("name", "refuuid");
     QTest::qWait(3000);
     QCOMPARE(backend.getBalance_test(), (quint64)1);
