@@ -129,10 +129,6 @@ void BackEnd::setName(QString name)
 void BackEnd::createAccount(QString name, QString ruuid)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
-    if (ruuid == "me")
-        m_ruuid = m_uuid;
-    else
-        m_ruuid = ruuid;
     m_name = name;
     m_balance = 1;
     m_scooping = 0;

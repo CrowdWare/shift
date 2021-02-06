@@ -190,7 +190,7 @@ THX is based on the phrase thank you and represents the gratitude.
 &lt;/p&gt;
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
-	We are going to create a very simple app just to enable the user to create new liquid. 
+	We are going to create a very simple app just to enable the user to scoop new liquid. 
 	The users are creating like 10 liters of THX every day they start the process in the app.
 	The users can also refer other users and can earn 1 liter of THX for every referred user per day. 
 	Every user can add up to 10 other users (otherwise it would become a snowball system, which is unfair, 
@@ -198,7 +198,7 @@ THX is based on the phrase thank you and represents the gratitude.
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;
 &lt;p&gt;
-	When we reach 1.000.000 users, we are going to develop a gratitude function in the app. 
+	When we reach 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. 
 	Every user will then be able to show gratitude giving THX from one app to the other. 
 	So the user is able to give the liquid which has been created to someone else.
 	The mark 1.000.000 will motivate some developers to join in, because they see that the people 
