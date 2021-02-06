@@ -89,7 +89,6 @@ int main(int argc, char *argv[])
         QQuickStyle::setStyle(settings.value("style").toString());
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("bookings", QVariant::fromValue(backend.getBookings()));
     engine.rootContext()->setContextProperty("backend", &backend);
     engine.rootContext()->setContextProperty("notificationClient", &notificationClient);
     engine.load(QUrl("qrc:/shift.qml"));

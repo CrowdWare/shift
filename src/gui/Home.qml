@@ -119,7 +119,7 @@ Page
 	    	anchors.fill: parent
 	   		anchors.margins: page.width / 100
 	   		spacing: page.width / 100
-			model: bookings
+			model: backend.bookingModel
 			delegate: listDelegate
 	    	
 	   		Component 

@@ -104,6 +104,9 @@ public:
 
     Q_INVOKABLE void insert(int index, Booking *booking);
     Q_INVOKABLE void append(Booking *booking);
+    Q_INVOKABLE void clear();
+    Q_INVOKABLE int count();
+    Q_INVOKABLE Booking *get(int index);
 
 protected:
     virtual QHash<int, QByteArray> roleNames() const override;
@@ -126,6 +129,7 @@ class BackEnd : public QObject
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
     Q_PROPERTY(QString message READ getMessage NOTIFY messageChanged)
     Q_PROPERTY(QString uuid READ getUuid NOTIFY uuidChanged)
+    Q_PROPERTY(BookingModel *bookingModel READ getBookingModel)
     
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -143,10 +147,10 @@ public:
     QString getMessage();
     int saveChain();
     int loadChain();
-    QList<QObject *> getBookings();
     QList<QObject *> getFriends();
     void loadMessage();
     void loadFriendlist();
+    BookingModel *getBookingModel();
 
 #ifndef TEST
 private:
@@ -183,12 +187,12 @@ private:
     SimpleCrypt m_crypto;
     quint64 m_balance;
     qint64 m_scooping;
-    QList<QObject *> m_bookings;
     QList<QObject *> m_friends;
     QString m_message;
     QString m_name;
     QString m_uuid;
     QString m_ruuid;
     QString m_key;
+    BookingModel m_bookingModel;
 };
 #endif // BACKEND_H

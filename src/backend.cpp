@@ -135,6 +135,21 @@ void BookingModel::append(Booking *booking)
     insert(m_bookings.count(), booking);
 }
 
+void BookingModel::clear()
+{
+    m_bookings.clear();
+}
+
+int BookingModel::count()
+{
+    return m_bookings.count();
+}
+
+Booking *BookingModel::get(int index)
+{
+    return m_bookings.at(index);
+}
+
 int BookingModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
@@ -178,6 +193,11 @@ BackEnd::BackEnd(QObject *parent) :
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
 }
 
+BookingModel *BackEnd::getBookingModel()
+{
+    return &m_bookingModel;
+}
+
 void BackEnd::setRuuid(QString ruuid)
 {
     m_ruuid = ruuid;
@@ -195,7 +215,7 @@ void BackEnd::createAccount(QString name, QString ruuid)
     m_name = name;
     m_balance = 1;
     m_scooping = 0;
-    m_bookings.append(new Booking("Initial booking", 1, QDate::currentDate()));
+    m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
     registerAccount();
 }
 
@@ -391,7 +411,7 @@ int BackEnd::mintedBalance(qint64 time)
             m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
             // stop scooping after 20 hours
             m_scooping = 0;
-            m_bookings.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
+            m_bookingModel.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
         }
@@ -413,11 +433,6 @@ void BackEnd::start()
 {
     m_scooping = QDateTime::currentSecsSinceEpoch();
     saveChain();
-}
-
-QList<QObject *> BackEnd::getBookings()
-{
-    return m_bookings;
 }
 
 QList<QObject *> BackEnd::getFriends()
@@ -448,10 +463,10 @@ int BackEnd::saveChain()
     out << m_ruuid;
     out << m_name;
 
-    out << m_bookings.count();
-    for(int i = 0; i < m_bookings.count(); i++)
+    out << m_bookingModel.count();
+    for(int i = 0; i < m_bookingModel.count(); i++)
     {
-        Booking *booking = qobject_cast<Booking *>(m_bookings.at(i));
+        Booking *booking = qobject_cast<Booking *>(m_bookingModel.get(i));
         out << booking->amount();
         out << booking->date();
         out << booking->description();
@@ -520,7 +535,7 @@ int BackEnd::loadChain()
         in >> m_ruuid;
         in >> m_name;
         in >> count;
-        m_bookings.clear();
+        m_bookingModel.clear();
         m_balance = 0;
         for(int i = 0; i < count; i++)
         {
@@ -530,7 +545,7 @@ int BackEnd::loadChain()
             in >> amount;
             in >> date;
             in >> description;
-            m_bookings.append(new Booking(description, amount, date));
+            m_bookingModel.append(new Booking(description, amount, date));
             m_balance += amount;
         }
         buffer.close();
