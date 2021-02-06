@@ -50,7 +50,7 @@ def friendlist():
     uuid = request.form.get('uuid')
 
     list = [
-            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': 0},
-            {'uuid': 'bcd', 'name': 'Bern Hofmann', 'scooping': 12345678}
+            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"},
+            {'uuid': 'bcd', 'name': 'Bern Hofmann', 'scooping': "12345678"}
            ]
     return jsonify(isError = False, message = "Success", statusCode = 200, data = list)

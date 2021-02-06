@@ -71,7 +71,9 @@ void TestBackend::friendlist()
     backend.loadFriendlist();
     QTest::qWait(3000);
     QList<QObject *> friends = backend.getFriends();
-    QCOMPARE(friends.count(), 1);
+    Friend *f = qobject_cast<Friend *>(friends[0]);
+    QCOMPARE(friends.count(), 2);
+    QCOMPARE(f->getName(), "Hans Meiser");
 }
 
 void TestBackend::createAccount()

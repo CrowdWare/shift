@@ -43,14 +43,20 @@ class Friend : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ getName)
+    Q_PROPERTY(QString uuid READ getUuid)
+    Q_PROPERTY(QString scooping READ getScooping)
  
 public:
-    explicit Friend(QString name, QObject *parent = nullptr);
+    explicit Friend(QString name, QString uuid, qint64 scooping, QObject *parent = nullptr);
 
     QString getName();
+    QString getUuid();
+    qint64 getScooping();
   
 private:
     QString m_name;
+    QString m_uuid;
+    qint64 m_scooping;
 };
 
 class Booking : public QObject

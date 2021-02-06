@@ -34,17 +34,30 @@
 #include <QJsonParseError>
 #include <QJsonDocument>
 #include <QMap>
+#include <QJsonArray>
 
 
-Friend::Friend(QString name, QObject *parent) :
+Friend::Friend(QString name, QString uuid, qint64 scooping, QObject *parent) :
     QObject(parent)
 { 
     m_name = name;
+    m_uuid = uuid;
+    m_scooping = scooping;
 }
 
 QString Friend::getName()
 {
     return m_name;
+}
+
+QString Friend::getUuid()
+{
+    return m_uuid;
+}
+
+qint64 Friend::getScooping()
+{
+    return m_scooping;
 }
 
 Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
@@ -152,9 +165,15 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
     		case 200:
     		    if (reply->isReadable()) 
     		    {
+                    QJsonDocument json = QJsonDocument::fromJson(reply->readAll().data());
+                    QJsonObject json_obj = json.object();
+                    if (json_obj["isError"].toBool())
+                    {
+                        setLastError(json_obj["message"].toString());
+                        reply->deleteLater();
+                        return;
+                    }
                     // account is now registered
-                    QString contents = QString::fromUtf8(reply->readAll());
-                    qDebug() << contents;
                     saveChain();
                     emit uuidChanged();
                     m_message = "Welcome, " + m_name;
@@ -239,24 +258,21 @@ void BackEnd::onFriendlistReply(QNetworkReply* reply)
     		case 200:
     		    if (reply->isReadable()) 
     		    {
-    			    QString data = QString::fromUtf8(reply->readAll().data());
-                    qDebug() << data;
-                    /*
-                    QJsonParseError jsonError;
-                    QJsonDocument flowerJson = QJsonDocument::fromJson(reply->readAll(),&jsonError);
-                    if (jsonError.error != QJsonParseError::NoError)
+    			    QJsonDocument json = QJsonDocument::fromJson(reply->readAll().data());
+                    QJsonObject json_obj = json.object();
+                    if (json_obj["isError"].toBool())
                     {
-                        setLastError(jsonError.errorString());
+                        setLastError(json_obj["message"].toString());
+                        reply->deleteLater();
                         return;
                     }
-                    QList<QVariant> list = flowerJson.toVariant().toList();
-                    //QMap<QString, QVariant> map = list[0].toMap();
-                    qDebug() << list.count();
-                    //qDebug() << "name:" << map["name"].toString();
-                    //qDebug() << "uuid:" << map["uuid"].toString();
-                    */
-                   m_friends.append(new Friend("test"));
-    		    }
+                    QJsonArray data = json_obj.value("data").toArray();
+                    foreach (const QJsonValue & value, data)
+                    {
+                        QJsonObject obj = value.toObject();
+                        m_friends.append(new Friend(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
+    		        }
+                }    
                 else
                 {
                     setLastError("Reply not readable");
