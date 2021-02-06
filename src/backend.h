@@ -134,6 +134,7 @@ public:
     void setUuid_test(QString uuid);
     void setRuuid_test(QString ruuid);
     void setName_test(QString name);
+    void resetAccount_test();
 #endif
 
 signals:

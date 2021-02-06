@@ -165,10 +165,7 @@ Page
 		height: page.height / 8
         text: "Invite Friends"
 		Material.background: Material.Blue
-		onClicked: {
-			//notificationClient.notification = "User wants to invite!"
-            shareUtils.share("SHIFT is a new app to create worldwide universal basic income. Get your first THX now, by following this link http://www.shifting.site. Download the app, start it and use this id (" + backend.uuid + ") as invitation code.")
-        }
+		onClicked: shareUtils.share("SHIFT is a new app to create worldwide universal basic income. Get your first THX now, by following this link http://www.shifting.site. Download the app, start it and use this id " + backend.uuid + " as invitation code.")
     }
 
 	function formatBalance(balance)
