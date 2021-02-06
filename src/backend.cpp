@@ -1,5 +1,5 @@
 /****************************************************************************
-# Copyright (C) 2020 Olaf Japp
+# Copyright (C) 2021 CrowdWare
 #
 # This file is part of SHIFT.
 #
