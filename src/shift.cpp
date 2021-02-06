@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
     qmlRegisterType<ShareUtils> ("com.lasconic", 1, 0, "ShareUtils");
-
+   
     QIcon::setThemeName("shift");
     QQuickStyle::setStyle("Material");
 

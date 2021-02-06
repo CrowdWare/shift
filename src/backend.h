@@ -27,6 +27,8 @@
 #include <QDate>
 #include <qqml.h>
 #include <QNetworkReply>
+#include <QAbstractListModel>
+#include <QColor>
 #include "simplecrypt.h"
 
 #define BAD_FILE_FORMAT -1
@@ -37,7 +39,6 @@
 #define FILE_NOT_EXISTS -6
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
-
 
 class Friend : public QObject
 {
@@ -87,6 +88,35 @@ private:
     QDate m_date;
 };
 
+class BookingModel : public QAbstractListModel
+{
+    Q_OBJECT 
+public:
+    enum RoleNames
+    {
+        DescriptionRole = Qt::UserRole,
+        AmountRole = Qt::UserRole + 2,
+        DateRole = Qt::UserRole + 3
+    };
+
+    explicit BookingModel(QObject*parent = 0);
+    ~BookingModel();
+
+    Q_INVOKABLE void insert(int index, Booking *booking);
+    Q_INVOKABLE void append(Booking *booking);
+
+protected:
+    virtual QHash<int, QByteArray> roleNames() const override;
+
+public:
+    virtual int rowCount(const QModelIndex &parent) const override;
+    virtual QVariant data(const QModelIndex &index, int role) const override;
+
+private:
+    QList<Booking *> m_bookings;
+    QHash<int, QByteArray> m_roleNames;
+};
+
 
 class BackEnd : public QObject
 {
@@ -96,7 +126,7 @@ class BackEnd : public QObject
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
     Q_PROPERTY(QString message READ getMessage NOTIFY messageChanged)
     Q_PROPERTY(QString uuid READ getUuid NOTIFY uuidChanged)
-
+    
 public:
     explicit BackEnd(QObject *parent = nullptr);
 

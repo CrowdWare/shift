@@ -120,7 +120,7 @@ Page
 	   		anchors.margins: page.width / 100
 	   		spacing: page.width / 100
 			model: bookings
-	    	delegate: listDelegate
+			delegate: listDelegate
 	    	
 	   		Component 
 			{
