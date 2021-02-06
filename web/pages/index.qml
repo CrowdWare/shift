@@ -25,6 +25,11 @@ Content {
                 src: "/Users/user/SourceCode/Shift/assets/images/gull.png"
                 adminlabel: "Gull"
             }
+
+            Slide {
+                src: "/Users/user/SourceCode/Shift/assets/images/butterfly.png"
+                adminlabel: "Butterfly"
+            }
         }
     }
 
@@ -129,7 +134,8 @@ Content {
 We are going to create an app which the users can use to create new liquid on a daily base.
 We gave the name THX to this new virtual liquid.
 THX is based on the phrase thank you and represents the gratitude.
-&lt;/p&gt;"
+&lt;/p&gt;
+"
                 }
             }
         }
