@@ -28,20 +28,20 @@ from shift_keys import SHIFT_DB_USER
 from shift_keys import SHIFT_DATABASE
 import mysql.connector
 
-try:
-    mydb = mysql.connector.connect(host=SHIFT_DB_HOST,
-                                   user=SHIFT_DB_USER,
-                                   password=SHIFT_DB_PWD,
-                                   database=SHIFT_DATABASE)
-except mysql.connector.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    return "Something is wrong with your user name or password"
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    return "Database does not exist"
-  else:
-    return err
-else:
-  mydb.close()
+#try:
+#    mydb = mysql.connector.connect(host=SHIFT_DB_HOST,
+#                                   user=SHIFT_DB_USER,
+#                                   password=SHIFT_DB_PWD,
+#                                   database=SHIFT_DATABASE)
+#except mysql.connector.Error as err:
+#  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+#    return "Something is wrong with your user name or password"
+#  elif err.errno == errorcode.ER_BAD_DB_ERROR:
+#    return "Database does not exist"
+#  else:
+#    return err
+#else:
+#  mydb.close()
 
 app = Flask(__name__)
 
