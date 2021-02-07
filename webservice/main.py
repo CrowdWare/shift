@@ -60,10 +60,10 @@ def register():
                    message = "Success",
                    statusCode = 200)
 
-@app.route('/friendlist', methods=['GET'])
+@app.route('/matelist', methods=['GET'])
 def friendlist():
-    key = request.form.get('key')
-    uuid = request.form.get('uuid')
+    key = request.args.get('key', default = '', type = str)
+    uuid = request.args.get('uuid', default = '', type = str)
 
     if key != SHIFT_API_KEY:
         return jsonify(isError = True,
@@ -72,7 +72,7 @@ def friendlist():
 
     list = [
             {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"},
-            {'uuid': 'bcd', 'name': 'Bern Hofmann', 'scooping': "12345678"}
+            {'uuid': 'bcd', 'name': 'Bernd Hofmann', 'scooping': "12345678"}
            ]
     return jsonify(isError = False,
                    message = "Success",

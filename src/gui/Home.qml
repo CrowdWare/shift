@@ -133,21 +133,27 @@ Page
 	   				Text 
 					{
 	   					id: date
+						height: parent.height
 	   					text: Qt.formatDate(model.date, "dd.MM.yyyy")
 	   					font.pixelSize: page.height / 40
+						verticalAlignment: Text.AlignVCenter
 	   				} 
 	   				Text 
 					{
+						height: parent.height
 	   					anchors.left: date.right
 	   					anchors.leftMargin: 15
 	   					text: model.description
 	   					font.pixelSize: page.height / 40
+						verticalAlignment: Text.AlignVCenter
 	 				} 
 	 				Text 
 					{
+						height: parent.height
 						anchors.right: parent.right
 	 					text: model.amount + " THX"
 	 					font.pixelSize: page.height / 40
+						verticalAlignment: Text.AlignVCenter
 	 				} 
 	    		} 
 	    	} 

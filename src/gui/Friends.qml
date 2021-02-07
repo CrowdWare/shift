@@ -22,9 +22,62 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
+import at.crowdware.backend 1.0
 
 Page 
 {
 	id: page
-	title: "Friends"
+	title: "Mates"
+
+	Rectangle 
+	{
+		id: list
+		anchors.top: parent.top
+		anchors.margins: page.width / 10
+     	anchors.left: parent.left
+        anchors.right: parent.right
+		height: page.height / 3
+	    color: "#EEEEEE"
+	   	ListView 
+		{
+	   		clip: true
+	    	anchors.fill: parent
+	   		anchors.margins: page.width / 100
+	   		spacing: page.width / 100
+			model: backend.mateModel
+			delegate: listDelegate
+	    	
+	   		Component 
+			{
+	   			id: listDelegate
+
+	   			Rectangle 
+				{
+	 				width: parent.width 
+	   				height: page.height / 20
+					
+					Image 
+            		{
+						id: icon
+						visible: model.scooping > 0
+                		width: 32
+                		height: 32
+                		fillMode: Image.PreserveAspectFit
+                		source: "qrc:/images/checked.png"
+					}
+					
+	   				Text 
+					{
+	   					id: name
+						height: parent.height
+						anchors.left: icon.right
+	   					anchors.leftMargin: 5
+	   					text: model.name
+						verticalAlignment: Text.AlignVCenter
+	   					font.pixelSize: page.height / 40
+	   				}  
+	    		} 
+	    	} 
+        }
+	}
 }
