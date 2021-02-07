@@ -172,12 +172,24 @@ ApplicationWindow
                 anchors.verticalCenterOffset: -90
                 fillMode: Image.PreserveAspectFit
                 source: "images/logo.png"
+
+                MouseArea
+                {
+                    enabled: backend.uuid != ""
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        stackView.replace("qrc:/gui/Home.qml")
+                        drawerButton.visible = true
+                    }
+                }
             }
 
-            Label 
+            Text 
             {
                 id: label
                 text: backend.message
+                textFormat: Text.RichText
                 anchors.margins: 0
                 anchors.top: logo.bottom
                 anchors.left: parent.left
@@ -185,6 +197,7 @@ ApplicationWindow
                 horizontalAlignment: Label.AlignHCenter
                 verticalAlignment: Label.AlignVCenter
                 wrapMode: Label.Wrap
+                onLinkActivated: Qt.openUrlExternally(link)
             }
 
             TextField 
@@ -239,17 +252,6 @@ ApplicationWindow
 		        onClicked: {
                     if (ruuid.text != "" && name.text != "")
                         backend.createAccount(name.text, ruuid.text);
-                }
-            }
-
-            MouseArea
-            {
-                enabled: backend.uuid != ""
-                anchors.fill: parent
-                onClicked:
-                {
-                    stackView.replace("qrc:/gui/Home.qml")
-                    drawerButton.visible = true
                 }
             }
         }

@@ -21,6 +21,7 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+from shift_keys import SHIFT_API_KEY
 
 app = Flask(__name__)
 
@@ -30,8 +31,18 @@ def hello_world():
 
 @app.route('/message', methods=['GET'])
 def message():
+    key = request.args.get('key', default = '', type = str)
     name = request.args.get('name', default = '', type = str)
-    return "Hello " + name + ", welcome back"
+
+    if key != SHIFT_API_KEY:
+        return jsonify(isError = True,
+                       message = "wrong api key",
+                       statusCode = 200)
+
+    return jsonify(isError = False,
+                   message = "Success",
+                   data ='<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://www.shifting.site">www.shifting.site</a> for news.</html>',
+                   statusCode = 200)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -40,17 +51,29 @@ def register():
     uuid = request.form.get('uuid')
     ruuid = request.form.get('ruuid')
 
+    if key != SHIFT_API_KEY:
+        return jsonify(isError = True, message = "wrong api key", statusCode = 200)
+
     # todo
     # save record to db
-    return jsonify(isError = False, message = "Success", statusCode = 200)
+    return jsonify(isError = False,
+                   message = "Success",
+                   statusCode = 200)
 
 @app.route('/friendlist', methods=['GET'])
 def friendlist():
     key = request.form.get('key')
     uuid = request.form.get('uuid')
 
+    if key != SHIFT_API_KEY:
+        return jsonify(isError = True,
+                       message = "wrong api key",
+                       statusCode = 200)
+
     list = [
             {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"},
             {'uuid': 'bcd', 'name': 'Bern Hofmann', 'scooping': "12345678"}
            ]
-    return jsonify(isError = False, message = "Success", statusCode = 200, data = list)
+    return jsonify(isError = False,
+                   message = "Success",
+                   statusCode = 200, data = list)

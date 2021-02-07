@@ -296,7 +296,17 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
     		case 200:
     		    if (reply->isReadable()) 
     		    {
-    			    m_message = QString::fromUtf8(reply->readAll().data());
+                    QJsonDocument json = QJsonDocument::fromJson(reply->readAll().data());
+                    QJsonObject json_obj = json.object();
+                    if (json_obj["isError"].toBool())
+                    {
+                        setLastError(json_obj["message"].toString());
+                        reply->deleteLater();
+                        m_message = "Welcome back";
+                        emit messageChanged();
+                        return;
+                    }
+                    m_message = json_obj.value("data").toString();
                     emit messageChanged();
     		    }
                 else
