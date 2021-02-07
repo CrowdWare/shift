@@ -300,7 +300,7 @@ void BackEnd::createAccount(QString name, QString ruuid)
 void BackEnd::setScooping(qint64 scooping)
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -356,7 +356,7 @@ void BackEnd::onSetScoopingReply(QNetworkReply* reply)
 void BackEnd::registerAccount()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/register"));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -416,7 +416,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
 void BackEnd::loadMessage()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
@@ -467,7 +467,7 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
 void BackEnd::loadMatelist()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onMatelistReply(QNetworkReply*)));
