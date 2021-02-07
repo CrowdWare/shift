@@ -62,11 +62,19 @@ def message():
 
 @app.route('/register', methods=['GET'])
 def register():
+<<<<<<< HEAD
     key = request.args.get('key')
     name = request.args.get('name')
     uuid = request.args.get('uuid')
     ruuid = request.args.get('ruuid')
     print(ruuid)
+=======
+    key = content['key']
+    name = content['name']
+    uuid = content['uuid']
+    ruuid = content['ruuid']
+
+>>>>>>> 6f9facb79eaf879bc7d55956ed666c54723227aa
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key", statusCode = 200)
     
@@ -81,10 +89,26 @@ def register():
                    message = "Success",
                    statusCode = 200)
 
-@app.route('/friendlist', methods=['GET'])
+@app.route('/setscooping', methods=['POST'])
+def scooping():
+    content = request.json
+    key = content['key']
+    uuid = content['uuid']
+    scooping = content['scooping']
+
+    if key != SHIFT_API_KEY:
+        return jsonify(isError = True, message = "wrong api key: ", statusCode = 200)
+
+    # update account table, set scooping
+
+    return jsonify(isError = False,
+                   message = "Success",
+                   statusCode = 200)
+
+@app.route('/matelist', methods=['GET'])
 def friendlist():
-    key = request.form.get('key')
-    uuid = request.form.get('uuid')
+    key = request.args.get('key', default = '', type = str)
+    uuid = request.args.get('uuid', default = '', type = str)
 
     if key != SHIFT_API_KEY:
         return jsonify(isError = True,
@@ -92,8 +116,9 @@ def friendlist():
                        statusCode = 200)
 
     list = [
-            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"},
-            {'uuid': 'bcd', 'name': 'Bern Hofmann', 'scooping': "12345678"}
+            {'uuid': 'bcd', 'name': 'Helga Hofmann', 'scooping': "12345676"},
+            {'uuid': 'bcd', 'name': 'Bernd Hofmann', 'scooping': "12345678"},
+            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"}
            ]
     return jsonify(isError = False,
                    message = "Success",

@@ -69,10 +69,6 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("CrowdWare");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    backend.setLastError("No errors");
-    backend.loadChain();
-    backend.loadMessage();
-
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
@@ -87,6 +83,10 @@ int main(int argc, char *argv[])
         settings.setValue("style", style);
     else
         QQuickStyle::setStyle(settings.value("style").toString());
+
+    backend.loadChain();
+    backend.loadMessage();
+    backend.loadMatelist();
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("backend", &backend);

@@ -33,7 +33,8 @@ RESOURCES += \
     icons/shift/20x20@4/back.png \
     icons/shift/20x20@4/drawer.png \
     icons/shift/20x20@4/menu.png \
-    images/logo.png
+    images/logo.png \
+    images/checked.png
 
 target.path = $$PWD/quickcontrols2/shift
 INSTALLS += target

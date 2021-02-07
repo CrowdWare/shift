@@ -148,7 +148,7 @@ ApplicationWindow
             model: ListModel 
             {
                 ListElement { title: "Home"; source: "qrc:/gui/Home.qml" }
-                ListElement { title: "Friends"; source: "qrc:/gui/Friends.qml" }
+                ListElement { title: "Mates"; source: "qrc:/gui/Friends.qml" }
             }
 
             ScrollIndicator.vertical: ScrollIndicator { }
@@ -300,23 +300,24 @@ ApplicationWindow
         id: errorDialog
         modal: true
         focus: true
-        title: "Last Error"
+        title: "Last Errors"
         x: (window.width - width) / 2
         y: window.height / 6
         width: Math.min(window.width, window.height) / 3 * 2
-        contentHeight: errorColumn.height
+        contentHeight: Math.min(window.width, window.height) / 3 * 2
 
-        Column 
+        ScrollView 
         {
-            id: errorColumn
-            spacing: 20
-
-            Label 
+            width: parent.width
+            anchors.fill: parent
+            clip: true
+            
+            Text
             {
-                width: aboutDialog.availableWidth
+                anchors.fill: parent
                 text: backend.lastError
-                wrapMode: Label.Wrap
                 font.pixelSize: 15
+                wrapMode: Text.Wrap
             }
         }
     }

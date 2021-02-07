@@ -40,20 +40,20 @@
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
 
-class Friend : public QObject
+class Mate : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ getName)
-    Q_PROPERTY(QString uuid READ getUuid)
-    Q_PROPERTY(QString scooping READ getScooping)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString uuid READ uuid CONSTANT)
+    Q_PROPERTY(qint64 scooping READ scooping CONSTANT)
  
 public:
-    explicit Friend(QString name, QString uuid, qint64 scooping, QObject *parent = nullptr);
+    explicit Mate(QString name, QString uuid, qint64 scooping, QObject *parent = nullptr);
 
-    QString getName();
-    QString getUuid();
-    qint64 getScooping();
-  
+    QString name();
+    QString uuid();
+    qint64 scooping();
+
 private:
     QString m_name;
     QString m_uuid;
@@ -120,16 +120,49 @@ private:
     QHash<int, QByteArray> m_roleNames;
 };
 
+class MateModel : public QAbstractListModel
+{
+    Q_OBJECT 
+public:
+    enum RoleNames
+    {
+        NameRole = Qt::UserRole,
+        UuidRole = Qt::UserRole + 1,
+        ScoopingRole = Qt::UserRole + 2
+    };
+
+    explicit MateModel(QObject*parent = 0);
+    ~MateModel();
+
+    Q_INVOKABLE void insert(int index, Mate *fr);
+    Q_INVOKABLE void append(Mate *fr);
+    Q_INVOKABLE void clear();
+    Q_INVOKABLE int count();
+    Q_INVOKABLE Mate *get(int index);
+
+protected:
+    virtual QHash<int, QByteArray> roleNames() const override;
+
+public:
+    virtual int rowCount(const QModelIndex &parent) const override;
+    virtual QVariant data(const QModelIndex &index, int role) const override;
+
+private:
+    QList<Mate *> m_mates;
+    QHash<int, QByteArray> m_roleNames;
+};
+
 
 class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString lastError READ lastError WRITE setLastError NOTIFY lastErrorChanged)
-    Q_PROPERTY(int balance READ getBalance)
+    Q_PROPERTY(int balance READ getBalance NOTIFY balanceChanged)
     Q_PROPERTY(qint64 scooping READ getScooping NOTIFY scoopingChanged)
     Q_PROPERTY(QString message READ getMessage NOTIFY messageChanged)
     Q_PROPERTY(QString uuid READ getUuid NOTIFY uuidChanged)
-    Q_PROPERTY(BookingModel *bookingModel READ getBookingModel)
+    Q_PROPERTY(BookingModel *bookingModel READ getBookingModel CONSTANT)
+    Q_PROPERTY(MateModel *mateModel READ getMateModel CONSTANT)
     
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -147,16 +180,18 @@ public:
     QString getMessage();
     int saveChain();
     int loadChain();
-    QList<QObject *> getFriends();
+    
     void loadMessage();
-    void loadFriendlist();
+    void loadMatelist();
     BookingModel *getBookingModel();
+    MateModel *getMateModel();
 
 #ifndef TEST
 private:
 #endif
     int mintedBalance(qint64 time);
     void registerAccount();
+    void setScooping(qint64 time);
 
 #ifdef TEST
 public:
@@ -169,6 +204,7 @@ public:
     void setRuuid_test(QString ruuid);
     void setName_test(QString name);
     void resetAccount_test();
+    QString getCheck() {return m_check;};
 #endif
 
 signals:
@@ -176,23 +212,26 @@ signals:
     void scoopingChanged();
     void messageChanged();
     void uuidChanged();
+    void balanceChanged();
 
 public slots:
     void onNetworkReply(QNetworkReply* reply);
-    void onFriendlistReply(QNetworkReply* reply);
+    void onMatelistReply(QNetworkReply* reply);
     void onRegisterReply(QNetworkReply* reply);
+    void onSetScoopingReply(QNetworkReply* reply);
 
 private:
     QString m_lastError;
     SimpleCrypt m_crypto;
     quint64 m_balance;
     qint64 m_scooping;
-    QList<QObject *> m_friends;
     QString m_message;
     QString m_name;
     QString m_uuid;
     QString m_ruuid;
     QString m_key;
     BookingModel m_bookingModel;
+    MateModel m_mateModel;
+    QString m_check;
 };
 #endif // BACKEND_H

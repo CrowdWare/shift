@@ -37,7 +37,7 @@
 
 #include "../../private/shift.keys"
 
-Friend::Friend(QString name, QString uuid, qint64 scooping, QObject *parent) :
+Mate::Mate(QString name, QString uuid, qint64 scooping, QObject *parent) :
     QObject(parent)
 { 
     m_name = name;
@@ -45,17 +45,17 @@ Friend::Friend(QString name, QString uuid, qint64 scooping, QObject *parent) :
     m_scooping = scooping;
 }
 
-QString Friend::getName()
+QString Mate::name()
 {
     return m_name;
 }
 
-QString Friend::getUuid()
+QString Mate::uuid()
 {
     return m_uuid;
 }
 
-qint64 Friend::getScooping()
+qint64 Mate::scooping()
 {
     return m_scooping;
 }
@@ -177,10 +177,86 @@ QVariant BookingModel::data(const QModelIndex &index,int role) const
     return QVariant();
 }
 
+
+MateModel::MateModel(QObject*parent): 
+    QAbstractListModel(parent)
+{
+    m_roleNames[NameRole] = "name";
+    m_roleNames[UuidRole] = "uuid";
+    m_roleNames[ScoopingRole] = "scooping";
+}
+
+MateModel::~MateModel()
+{
+}
+
+QHash<int, QByteArray> MateModel::roleNames() const
+{
+    return m_roleNames;
+}
+
+void MateModel::insert(int index, Mate *mate)
+{
+    if(index < 0 || index > m_mates.count()) 
+        return;
+
+    emit beginInsertRows(QModelIndex(), index, index);
+    m_mates.insert(index, mate);
+    emit endInsertRows();
+}
+
+void MateModel::append(Mate *mate)
+{
+    insert(m_mates.count(), mate);
+}
+
+void MateModel::clear()
+{
+    m_mates.clear();
+}
+
+int MateModel::count()
+{
+    return m_mates.count();
+}
+
+Mate *MateModel::get(int index)
+{
+    return m_mates.at(index);
+}
+
+int MateModel::rowCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return m_mates.count();
+}
+ 
+QVariant MateModel::data(const QModelIndex &index,int role) const
+{
+    int row = index.row();
+
+    if(row < 0 || row >= m_mates.count()) 
+    {
+        return QVariant();
+    }
+    Mate *mate = qobject_cast<Mate *>(m_mates.at(row));
+    switch(role) 
+    {
+        case NameRole:
+            return mate->name();
+        case UuidRole:
+            return mate->uuid();
+        case ScoopingRole:
+            return mate->scooping();
+    }
+    return QVariant();
+}
+
+
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
 {   
-    m_lastError = "No Error";
+    m_lastError = "";
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     m_message = "Welcome, please enter your name";
     m_name = "";
@@ -193,6 +269,11 @@ BackEnd::BackEnd(QObject *parent) :
 BookingModel *BackEnd::getBookingModel()
 {
     return &m_bookingModel;
+}
+
+MateModel *BackEnd::getMateModel()
+{
+    return &m_mateModel;
 }
 
 void BackEnd::setRuuid(QString ruuid)
@@ -216,10 +297,66 @@ void BackEnd::createAccount(QString name, QString ruuid)
     registerAccount();
 }
 
+void BackEnd::setScooping(qint64 scooping)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    qDebug() << "key" << m_key;
+    obj["key"] = m_key;
+    obj["uuid"] = m_uuid;
+    obj["scooping"] = QString::number(scooping);
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onSetScoopingReply(QNetworkReply*)));
+    networkManager->post(request, data);
+}
+
+void BackEnd::onSetScoopingReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+                    QJsonDocument json = QJsonDocument::fromJson(reply->readAll().data());
+                    QJsonObject json_obj = json.object();
+                    if (json_obj["isError"].toBool())
+                    {
+                        setLastError(json_obj["message"].toString());
+                        reply->deleteLater();
+                        return;
+                    }
+                    m_check = "setScooping: ok";
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                setLastError("Response error from webserver: " + QString::number(httpstatuscode));
+                break;
+    	}
+    }
+    else
+    {
+        setLastError("Reply error from webserver:" + QString::number(reply->error()));
+    }
+     
+    reply->deleteLater();
+}
+
 void BackEnd::registerAccount()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/register"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -279,7 +416,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
 void BackEnd::loadMessage()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
@@ -327,17 +464,17 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
     reply->deleteLater();
 }
 
-void BackEnd::loadFriendlist()
+void BackEnd::loadMatelist()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/friendlist?key=" + m_key + "&uuid=" + m_uuid));
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
-    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFriendlistReply(QNetworkReply*)));
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onMatelistReply(QNetworkReply*)));
     networkManager->get(request);
 }
 
-void BackEnd::onFriendlistReply(QNetworkReply* reply)
+void BackEnd::onMatelistReply(QNetworkReply* reply)
 {
     if(reply->error() == QNetworkReply::NoError)
     {
@@ -356,10 +493,11 @@ void BackEnd::onFriendlistReply(QNetworkReply* reply)
                         return;
                     }
                     QJsonArray data = json_obj.value("data").toArray();
+                    m_mateModel.clear();
                     foreach (const QJsonValue & value, data)
                     {
                         QJsonObject obj = value.toObject();
-                        m_friends.append(new Friend(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
+                        m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
     		        }
                 }    
                 else
@@ -392,10 +530,7 @@ QString BackEnd::getMessage()
 
 void BackEnd::setLastError(const QString &lastError)
 {
-    if (lastError == m_lastError)
-        return;
-
-    m_lastError = lastError;
+    m_lastError += lastError + "\n";
     emit lastErrorChanged();
 }
 
@@ -421,6 +556,7 @@ int BackEnd::mintedBalance(qint64 time)
             m_bookingModel.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
+            emit balanceChanged();
         }
     }
     return m_balance * 1000 + (hours * 500.0);
@@ -439,12 +575,8 @@ QString BackEnd::getUuid()
 void BackEnd::start()
 {
     m_scooping = QDateTime::currentSecsSinceEpoch();
+    setScooping(m_scooping);
     saveChain();
-}
-
-QList<QObject *> BackEnd::getFriends()
-{
-    return m_friends;
 }
 
 int BackEnd::saveChain()
@@ -555,6 +687,7 @@ int BackEnd::loadChain()
             m_balance += amount;
         }
         buffer.close();
+        emit balanceChanged();
     }
     else
         return CRYPTO_ERROR;
