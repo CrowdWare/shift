@@ -297,10 +297,66 @@ void BackEnd::createAccount(QString name, QString ruuid)
     registerAccount();
 }
 
+void BackEnd::setScooping(qint64 scooping)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    qDebug() << "key" << m_key;
+    obj["key"] = m_key;
+    obj["uuid"] = m_uuid;
+    obj["scooping"] = QString::number(scooping);
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onSetScoopingReply(QNetworkReply*)));
+    networkManager->post(request, data);
+}
+
+void BackEnd::onSetScoopingReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+                    QJsonDocument json = QJsonDocument::fromJson(reply->readAll().data());
+                    QJsonObject json_obj = json.object();
+                    if (json_obj["isError"].toBool())
+                    {
+                        setLastError(json_obj["message"].toString());
+                        reply->deleteLater();
+                        return;
+                    }
+                    m_check = "setScooping: ok";
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                setLastError("Response error from webserver: " + QString::number(httpstatuscode));
+                break;
+    	}
+    }
+    else
+    {
+        setLastError("Reply error from webserver:" + QString::number(reply->error()));
+    }
+     
+    reply->deleteLater();
+}
+
 void BackEnd::registerAccount()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/register"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -360,7 +416,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
 void BackEnd::loadMessage()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
@@ -411,7 +467,7 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
 void BackEnd::loadMatelist()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
+    request.setUrl(QUrl("https://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
     request.setRawHeader("User-Agent", "Shift 1.0");
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onMatelistReply(QNetworkReply*)));
@@ -474,9 +530,6 @@ QString BackEnd::getMessage()
 
 void BackEnd::setLastError(const QString &lastError)
 {
-    //if (lastError == m_lastError)
-    //    return;
-
     m_lastError += lastError + "\n";
     emit lastErrorChanged();
 }
@@ -522,6 +575,7 @@ QString BackEnd::getUuid()
 void BackEnd::start()
 {
     m_scooping = QDateTime::currentSecsSinceEpoch();
+    setScooping(m_scooping);
     saveChain();
 }
 

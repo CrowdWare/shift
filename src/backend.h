@@ -191,6 +191,7 @@ private:
 #endif
     int mintedBalance(qint64 time);
     void registerAccount();
+    void setScooping(qint64 time);
 
 #ifdef TEST
 public:
@@ -203,6 +204,7 @@ public:
     void setRuuid_test(QString ruuid);
     void setName_test(QString name);
     void resetAccount_test();
+    QString getCheck() {return m_check;};
 #endif
 
 signals:
@@ -216,6 +218,7 @@ public slots:
     void onNetworkReply(QNetworkReply* reply);
     void onMatelistReply(QNetworkReply* reply);
     void onRegisterReply(QNetworkReply* reply);
+    void onSetScoopingReply(QNetworkReply* reply);
 
 private:
     QString m_lastError;
@@ -229,5 +232,6 @@ private:
     QString m_key;
     BookingModel m_bookingModel;
     MateModel m_mateModel;
+    QString m_check;
 };
 #endif // BACKEND_H

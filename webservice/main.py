@@ -46,16 +46,32 @@ def message():
 
 @app.route('/register', methods=['POST'])
 def register():
-    key = request.form.get('key')
-    name = request.form.get('name')
-    uuid = request.form.get('uuid')
-    ruuid = request.form.get('ruuid')
+    key = content['key']
+    name = content['name']
+    uuid = content['uuid']
+    ruuid = content['ruuid']
 
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key", statusCode = 200)
 
     # todo
     # save record to db
+    return jsonify(isError = False,
+                   message = "Success",
+                   statusCode = 200)
+
+@app.route('/setscooping', methods=['POST'])
+def scooping():
+    content = request.json
+    key = content['key']
+    uuid = content['uuid']
+    scooping = content['scooping']
+
+    if key != SHIFT_API_KEY:
+        return jsonify(isError = True, message = "wrong api key: ", statusCode = 200)
+
+    # update account table, set scooping
+
     return jsonify(isError = False,
                    message = "Success",
                    statusCode = 200)
@@ -71,8 +87,9 @@ def friendlist():
                        statusCode = 200)
 
     list = [
-            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"},
-            {'uuid': 'bcd', 'name': 'Bernd Hofmann', 'scooping': "12345678"}
+            {'uuid': 'bcd', 'name': 'Helga Hofmann', 'scooping': "12345676"},
+            {'uuid': 'bcd', 'name': 'Bernd Hofmann', 'scooping': "12345678"},
+            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"}
            ]
     return jsonify(isError = False,
                    message = "Success",
