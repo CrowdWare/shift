@@ -289,11 +289,13 @@ void BackEnd::setName(QString name)
 void BackEnd::createAccount(QString name, QString ruuid)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
-    m_ruuid = ruuid;
+    if (m_ruuid == "me")
+        m_ruuid = m_uuid;
+    else
+        m_ruuid = ruuid;
     m_name = name;
-    m_balance = 1;
+    m_balance = 0;
     m_scooping = 0;
-    m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
     registerAccount();
 }
 
@@ -390,6 +392,8 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                         return;
                     }
                     // account is now registered
+                    m_balance = 1;
+                    m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
                     saveChain();
                     emit uuidChanged();
                     m_message = "Welcome, " + m_name;
@@ -407,7 +411,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
     }
     else
     {
-        setLastError("Reply error from webserver");
+        setLastError("Reply error from webserver: " + QString::number(reply->error()));
     }
      
     reply->deleteLater();
@@ -415,6 +419,9 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
 
 void BackEnd::loadMessage()
 {
+    // don't run right after installation
+    if (m_name == "")
+        return;
     QNetworkRequest request;
     request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
     request.setRawHeader("User-Agent", "Shift 1.0");
@@ -458,7 +465,7 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
     }
     else
     {
-        setLastError("Reply error from webserver");
+        setLastError("Reply error from webserver: " + QString::number(reply->error()));
     }
      
     reply->deleteLater();
@@ -466,6 +473,9 @@ void BackEnd::onNetworkReply(QNetworkReply* reply)
 
 void BackEnd::loadMatelist()
 {
+    // don't run right after installation
+    if (m_uuid == "")
+        return;
     QNetworkRequest request;
     request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
     request.setRawHeader("User-Agent", "Shift 1.0");
@@ -512,7 +522,7 @@ void BackEnd::onMatelistReply(QNetworkReply* reply)
     }
     else
     {
-        setLastError("Reply error from webserver");
+        setLastError("Reply error from webserver: " + QString::number(reply->error()));
     }
      
     reply->deleteLater();
