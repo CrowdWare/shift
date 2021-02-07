@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     backend.loadChain();
     backend.loadMessage();
     backend.loadMatelist();
-
+   
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("backend", &backend);
     engine.rootContext()->setContextProperty("notificationClient", &notificationClient);

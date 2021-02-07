@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 #############################################################################
 # Copyright (C) 2021 CrowdWare
 #
@@ -24,26 +22,32 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from shift_keys import SHIFT_API_KEY
-import sys
-import sqlite3
-
+from shift_keys import SHIFT_DB_PWD
+from shift_keys import SHIFT_DB_HOST
+from shift_keys import SHIFT_DB_USER
+from shift_keys import SHIFT_DATABASE
+import mysql.connector
 
 try:
-    conn = sqlite3.connect("main.db",check_same_thread=False)
-except Exception as e:
-    print(str(e))
-    sys.exit("DATABASE ERROR")
+    mydb = mysql.connector.connect(host=SHIFT_DB_HOST,
+                                   user=SHIFT_DB_USER,
+                                   password=SHIFT_DB_PWD,
+                                   database=SHIFT_DATABASE)
+except mysql.connector.Error as err:
+  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+    return "Something is wrong with your user name or password"
+  elif err.errno == errorcode.ER_BAD_DB_ERROR:
+    return "Database does not exist"
+  else:
+    return err
+else:
+  mydb.close()
 
 app = Flask(__name__)
 
-
-def checkruid(ruuid):
-    print(ruuid)
-    c = conn.execute("SELECT * FROM users WHERE uuid=(?)",(ruuid,))
-    a = 0
-    for row in c:
-        a += 1
-    return (True if a> 0 else False)
+@app.route('/')
+def hello_world():
+    return 'Hello here is the webservice of Shift!' + str(mydb.get_server_version())
 
 @app.route('/message', methods=['GET'])
 def message():
@@ -60,30 +64,18 @@ def message():
                    data ='<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://www.shifting.site">www.shifting.site</a> for news.</html>',
                    statusCode = 200)
 
-@app.route('/register', methods=['GET'])
+@app.route('/register', methods=['POST'])
 def register():
-<<<<<<< HEAD
-    key = request.args.get('key')
-    name = request.args.get('name')
-    uuid = request.args.get('uuid')
-    ruuid = request.args.get('ruuid')
-    print(ruuid)
-=======
+    content = request.json
     key = content['key']
     name = content['name']
     uuid = content['uuid']
     ruuid = content['ruuid']
 
->>>>>>> 6f9facb79eaf879bc7d55956ed666c54723227aa
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key", statusCode = 200)
-    
+
     # todo
-    if checkruid(ruuid):
-        c = conn.execute("INSERT INTO users VALUES(?,?,?,?)",(uuid,ruuid,name,0))
-        conn.commit()
-    else:
-        return jsonify(isError = True,message = "invalid ruuid",statusCode=200)
     # save record to db
     return jsonify(isError = False,
                    message = "Success",
@@ -123,6 +115,3 @@ def friendlist():
     return jsonify(isError = False,
                    message = "Success",
                    statusCode = 200, data = list)
-
-
-app.run(debug=True)
