@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 #############################################################################
 # Copyright (C) 2021 CrowdWare
 #
@@ -22,12 +24,26 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from shift_keys import SHIFT_API_KEY
+import sys
+import sqlite3
+
+
+try:
+    conn = sqlite3.connect("main.db",check_same_thread=False)
+except Exception as e:
+    print(str(e))
+    sys.exit("DATABASE ERROR")
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello here is the webservice of Shift!'
+
+def checkruid(ruuid):
+    print(ruuid)
+    c = conn.execute("SELECT * FROM users WHERE uuid=(?)",(ruuid,))
+    a = 0
+    for row in c:
+        a += 1
+    return (True if a> 0 else False)
 
 @app.route('/message', methods=['GET'])
 def message():
@@ -44,17 +60,30 @@ def message():
                    data ='<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://www.shifting.site">www.shifting.site</a> for news.</html>',
                    statusCode = 200)
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['GET'])
 def register():
+<<<<<<< HEAD
+    key = request.args.get('key')
+    name = request.args.get('name')
+    uuid = request.args.get('uuid')
+    ruuid = request.args.get('ruuid')
+    print(ruuid)
+=======
     key = content['key']
     name = content['name']
     uuid = content['uuid']
     ruuid = content['ruuid']
 
+>>>>>>> 6f9facb79eaf879bc7d55956ed666c54723227aa
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key", statusCode = 200)
-
+    
     # todo
+    if checkruid(ruuid):
+        c = conn.execute("INSERT INTO users VALUES(?,?,?,?)",(uuid,ruuid,name,0))
+        conn.commit()
+    else:
+        return jsonify(isError = True,message = "invalid ruuid",statusCode=200)
     # save record to db
     return jsonify(isError = False,
                    message = "Success",
@@ -94,3 +123,6 @@ def friendlist():
     return jsonify(isError = False,
                    message = "Success",
                    statusCode = 200, data = list)
+
+
+app.run(debug=True)
