@@ -36,7 +36,7 @@ Page
 		anchors.margins: page.width / 10
      	anchors.left: parent.left
         anchors.right: parent.right
-		height: page.height / 3
+		height: page.height - page.width / 5
 	    color: "#EEEEEE"
 	   	ListView 
 		{
