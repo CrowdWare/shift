@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = shift
-QT += quick quickcontrols2 sql core androidextras
+QT += quick quickcontrols2 core androidextras
 
 SOURCES += \
     shift.cpp \

@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 #include "backend.h"
-#include <QDebug>
 #include <QDateTime>
 #include <QFile>
 #include <QCryptographicHash>
@@ -36,6 +35,7 @@
 #include <QMap>
 #include <QJsonArray>
 
+#include "../../private/shift.keys"
 
 Friend::Friend(QString name, QString uuid, qint64 scooping, QObject *parent) :
     QObject(parent)
@@ -177,7 +177,6 @@ QVariant BookingModel::data(const QModelIndex &index,int role) const
     return QVariant();
 }
 
-
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
 {   
@@ -185,10 +184,8 @@ BackEnd::BackEnd(QObject *parent) :
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     m_message = "Welcome, please enter your name";
     m_name = "";
-    // todo, change and hide key
-    m_key = "1234";
-    // todo, change and hide key
-    m_crypto.setKey(1313);
+    m_key = SHIFT_API_KEY;
+    m_crypto.setKey(SHIFT_ENCRYPT_KEY);
     m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
 }
@@ -519,7 +516,6 @@ int BackEnd::loadChain()
         in >> magic;
         if (magic != 0x3113)
         {
-            qDebug() << "Magic number is:" << magic;
             file.close();
             return BAD_FILE_FORMAT;
         }

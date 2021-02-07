@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     backend.setLastError("No errors");
     backend.loadChain();
     backend.loadMessage();
-    
+
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
