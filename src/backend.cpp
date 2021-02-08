@@ -518,7 +518,6 @@ void BackEnd::onMatelistReply(QNetworkReply* reply)
                     foreach (const QJsonValue & value, data)
                     {
                         QJsonObject obj = value.toObject();
-                        setLastError("scooping " +obj["scooping"].toString());
                         m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
     		        }
                 }    
