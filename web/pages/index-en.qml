@@ -277,7 +277,7 @@ Just fair ins&#x27;nt it.
 &lt;/p&gt;
 &lt;h3&gt;Security / Integrity&lt;/h3&gt;
 &lt;p&gt;	
-	The local database has been encrypted with a 128 bytes key.
+	The local database has been encrypted with a 1024 bits key.
 	So this makes it impossible for someone to change any data in the local database.
 	Which of course is also true for the balance.
 	When we are transfering THX between two mobile phones, also the data will be encrypted with this 128 
@@ -293,8 +293,8 @@ Just fair ins&#x27;nt it.
 &lt;h3&gt;FAQ&lt;/h3&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Sounds weird that you scoop liquid? We cannot call money. &lt;/br&gt;
-		When you create money, then you would have to pay taxes ;-)
+		Sounds weird that you scoop liquid?&lt;/br&gt; 
+		We cannot call money. When you create money, then you would have to pay taxes ;-)
 	&lt;/li&gt;
 	&lt;li&gt;
 		Will there be a version for iPhone? &lt;/br&gt;

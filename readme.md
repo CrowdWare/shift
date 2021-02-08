@@ -42,7 +42,7 @@ Just fair ins'nt it.
 So that we will not flood the planet, the liquid will vaporate every day a small percentage until it's gone fully after 7 years. So it will be created, used and destroy in a full circle.
 
 # Security / Integrity
-The local database has been encrypted with a 128 bytes key. So this makes it impossible for someone to change any data in the local database. Which of course is also true for the balance.
+The local database has been encrypted with a 1024 bits key. So this makes it impossible for someone to change any data in the local database. Which of course is also true for the balance.
 When we are transfering THX between two mobile phones, also the data will be encrypted with this 128 bytes key. So this transer data can only be decrypted with the original app.
 
 If you transfer an amount of THX to a faked mobile app. It doesn't matter. The guy with the faked mobile app will not tell you that the transfer has been aborted.

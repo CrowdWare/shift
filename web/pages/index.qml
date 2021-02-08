@@ -287,7 +287,7 @@ Content {
 &lt;/p&gt;
 &lt;h3&gt;Sicherheit / Integrität&lt;/h3&gt;
 &lt;p&gt;
-	Die lokale Datenbank wurde mit einem 128-Byte-Schlüssel verschlüsselt. 
+	Die lokale Datenbank wurde mit einem 1024 Bits Schlüssel verschlüsselt. 
 	Dies macht es für jemanden unmöglich, Daten in der lokalen Datenbank zu ändern. 
 	Was natürlich auch für die Balance gilt.
 	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 128-Byte-Schlüssel 
@@ -302,8 +302,8 @@ Content {
 &lt;h3&gt;FAQ&lt;/h3&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Klingt komisch, dass Sie Flüssigkeit schöpfen? Wir können das Wort Geld nicht benutzen.&lt;/br&gt;
-		Wenn du Geld erschaffst, müsstest du Steuern zahlen ;-)
+		Klingt komisch, dass Sie Flüssigkeit schöpfen?&lt;/br&gt;
+		Wir können das Wort Geld nicht benutzen. Wenn du Geld erschaffst, müsstest du Steuern zahlen ;-)
 	&lt;/li&gt;
 	&lt;li&gt;
 		Wird es eine Version für das iPhone geben? &lt;/br&gt;
