@@ -293,7 +293,7 @@ Content {
 	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 1024 Bits Schlüssel 
 	verschlüsselt. Diese Transer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
 
-	Wenn Sie eine Menge THX auf eine gefälschte mobile App übertragen. Es spielt keine Rolle. 
+	Wenn Sie THX auf eine gefälschte mobile App übertragen, spielt es keine Rolle. 
 	Der Typ mit der gefälschten mobilen App wird Ihnen nicht mitteilen, dass die Übertragung abgebrochen wurde.&lt;/br&gt;&lt;/br&gt;
 
 	Wenn jemand THX auf Ihr Konto übertragen möchte, akzeptiert Ihre App diese Übertragung aufgrund falsch entschlüsselter Daten nicht.
