@@ -281,9 +281,9 @@ Just fair ins&#x27;nt it.
 	So this makes it impossible for someone to change any data in the local database.
 	Which of course is also true for the balance.
 	When we are transfering THX between two mobile phones, also the data will be encrypted with this 1024 
-	bits key. So this transer data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
+	bits key. So this tranfser data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
 
-	If you transfer an amount of THX to a faked mobile app. It doesn&#x27;t matter. The guy with the faked mobile 
+	If you transfer an amount of THX to a faked mobile app, it doesn&#x27;t matter. The guy with the faked mobile 
 	app will not tell you that the transfer has been aborted.&lt;/br&gt;&lt;/br&gt;
 
 	If someone wants to transfer THX to your account, then your app will not accept this transfer due 
