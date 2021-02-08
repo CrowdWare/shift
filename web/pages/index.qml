@@ -285,6 +285,19 @@ Content {
 	bis sie nach 7 Jahren komplett verschwunden ist. So wird es in einem vollen Zyklus erstellt, 
 	verwendet und wieder zerstört.
 &lt;/p&gt;
+&lt;h3&gt;Sicherheit / Integrität&lt;/h3&gt;
+&lt;p&gt;
+	Die lokale Datenbank wurde mit einem 128-Byte-Schlüssel verschlüsselt. 
+	Dies macht es für jemanden unmöglich, Daten in der lokalen Datenbank zu ändern. 
+	Was natürlich auch für die Balance gilt.
+	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 128-Byte-Schlüssel 
+	verschlüsselt. Diese Transer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
+
+	Wenn Sie eine Menge THX auf eine gefälschte mobile App übertragen. Es spielt keine Rolle. 
+	Der Typ mit der gefälschten mobilen App wird Ihnen nicht mitteilen, dass die Übertragung abgebrochen wurde.&lt;/br&gt;&lt;/br&gt;
+
+	Wenn jemand THX auf Ihr Konto übertragen möchte, akzeptiert Ihre App diese Übertragung aufgrund falsch entschlüsselter Daten nicht.
+&lt;/p&gt;
 
 &lt;h3&gt;FAQ&lt;/h3&gt;
 &lt;ul&gt;
