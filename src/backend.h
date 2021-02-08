@@ -106,6 +106,7 @@ public:
     Q_INVOKABLE void append(Booking *booking);
     Q_INVOKABLE void clear();
     Q_INVOKABLE int count();
+    Q_INVOKABLE void remove(int index);
     Q_INVOKABLE Booking *get(int index);
 
 protected:

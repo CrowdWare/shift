@@ -140,6 +140,17 @@ void BookingModel::clear()
     m_bookings.clear();
 }
 
+void BookingModel::remove(int index)
+{
+    if(index < 0 || index >= m_bookings.count()) 
+    {
+        return;
+    }
+    emit beginRemoveRows(QModelIndex(), index, index);
+    m_bookings.removeAt(index);
+    emit endRemoveRows();
+}
+
 int BookingModel::count()
 {
     return m_bookings.count();
@@ -257,8 +268,7 @@ BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
 {   
     m_lastError = "";
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    m_message = "Welcome, please fill in all fields and tap on CREATE ACCOUNT";
+    m_message = "Welcome, wait a few seconds to load the database";
     m_name = "";
     m_key = SHIFT_API_KEY;
     m_crypto.setKey(SHIFT_ENCRYPT_KEY);
@@ -578,6 +588,15 @@ int BackEnd::mintedBalance(qint64 time)
             m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
             // stop scooping after 20 hours
             m_scooping = 0;
+            if (m_bookingModel.count() > 29)
+            {
+                // combine the last two bookings
+                Booking *last = m_bookingModel.get(m_bookingModel.count() - 1);
+                Booking *prev = m_bookingModel.get(m_bookingModel.count() - 2);
+                prev->setAmount(prev->amount() + last->amount());
+                prev->setDescription("Subtotal");
+                m_bookingModel.remove(m_bookingModel.count() - 1);
+            }
             m_bookingModel.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
@@ -664,7 +683,11 @@ int BackEnd::loadChain()
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     QFile file(path.append("/shift.db"));
     if(!file.exists())
+    {
+        m_message = "Welcome, please fill in all fields and tap on CREATE ACCOUNT";
+        emit messageChanged();
         return FILE_NOT_EXISTS;
+    }
     if(!file.open(QIODevice::ReadOnly))
     {
         if (file.error() != QFile::NoError) 
@@ -715,6 +738,8 @@ int BackEnd::loadChain()
             m_bookingModel.append(new Booking(description, amount, date));
             m_balance += amount;
         }
+        m_message = "Welcome, back " + m_name;
+        emit messageChanged();
         buffer.close();
         emit balanceChanged();
     }

@@ -8,9 +8,10 @@ private slots:
     void balance();
     void minted();
     void chain();
-    void createAccount();
-    void matelist();
-    void setScooping();
+    //void createAccount();
+    //void matelist();
+    //void setScooping();
+    void subtotal();
 };
 
 void TestBackend::balance()
@@ -64,7 +65,7 @@ void TestBackend::chain()
     QCOMPARE(backend.getBalance_test(), (quint64)20);
     QCOMPARE(backend.getScooping_test(), (qint64)1234567890);
 }
-
+/*
 void TestBackend::createAccount()
 {
     BackEnd backend;
@@ -93,6 +94,25 @@ void TestBackend::setScooping()
     backend.setScooping(13);
     QTest::qWait(3000);
     QCOMPARE(backend.getCheck(), "setScooping: ok");
+}
+*/
+void TestBackend::subtotal()
+{
+    BackEnd backend;
+    qint64 time = QDateTime::currentSecsSinceEpoch();
+    backend.loadChain();
+    backend.setScooping_test(time);
+    backend.resetBookings_test();
+    for(int i = 0; i < 30; i++)
+    {
+        backend.addBooking_test(new Booking("test", 10, QDate(1900,1,1 + i)));
+    }
+    // trigger a new record creation
+    int minted = backend.mintedBalance(time + 21 * 60 * 60);
+    QCOMPARE(minted, 310000);
+    QCOMPARE(backend.getBookingModel()->count(), 30);
+    Booking *b = backend.getBookingModel()->get(29);
+    QCOMPARE(b->amount(), 20);
 }
 
 QTEST_MAIN(TestBackend)
