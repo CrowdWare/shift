@@ -64,6 +64,8 @@ def register():
     name = content['name']
     uuid = content['uuid']
     ruuid = content['ruuid']
+    country = content['country']
+    language = content['language']
 
     if key != SHIFT_API_KEY:
         return jsonify(isError=True, message="wrong api key", statusCode=200)
@@ -71,7 +73,7 @@ def register():
     try:
         conn = dbConnect()
         curs = conn.cursor()
-        query = 'INSERT INTO account(name, uuid, ruuid, scooping) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0)'
+        query = 'INSERT INTO account(name, uuid, ruuid, scooping, country, language) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0, "' + country + '","' + language +'")'
         curs.execute(query)
         conn.commit()
     except IntegrityError as error:

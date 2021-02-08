@@ -258,7 +258,7 @@ BackEnd::BackEnd(QObject *parent) :
 {   
     m_lastError = "";
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    m_message = "Welcome, please enter your name";
+    m_message = "Welcome, please fill in all fields and tap on CREATE ACCOUNT";
     m_name = "";
     m_key = SHIFT_API_KEY;
     m_crypto.setKey(SHIFT_ENCRYPT_KEY);
@@ -286,7 +286,7 @@ void BackEnd::setName(QString name)
     m_name = name;
 }
 
-void BackEnd::createAccount(QString name, QString ruuid)
+void BackEnd::createAccount(QString name, QString ruuid, QString country, QString language)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
     if (ruuid == "me")
@@ -294,6 +294,8 @@ void BackEnd::createAccount(QString name, QString ruuid)
     else
         m_ruuid = ruuid;
     m_name = name;
+    m_country = country;
+    m_language = language;
     m_balance = 0;
     m_scooping = 0;
     registerAccount();
@@ -365,6 +367,8 @@ void BackEnd::registerAccount()
     obj["name"] = m_name;
     obj["uuid"] = m_uuid;
     obj["ruuid"] = m_ruuid;
+    obj["country"] = m_country;
+    obj["language"] = m_language;
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
@@ -395,7 +399,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                     m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
                     saveChain();
                     emit uuidChanged();
-                    m_message = "Welcome, " + m_name;
+                    m_message = "Welcome, " + m_name + " please tap on the logo.";
                     emit messageChanged();
     		    }
                 else
@@ -622,6 +626,8 @@ int BackEnd::saveChain()
     out << m_uuid;
     out << m_ruuid;
     out << m_name;
+    out << m_country;
+    out << m_language;
 
     out << m_bookingModel.count();
     for(int i = 0; i < m_bookingModel.count(); i++)
@@ -693,6 +699,8 @@ int BackEnd::loadChain()
         in >> m_uuid;
         in >> m_ruuid;
         in >> m_name;
+        in >> m_country;
+        in >> m_language;
         in >> count;
         m_bookingModel.clear();
         m_balance = 0;
@@ -758,6 +766,16 @@ void BackEnd::setRuuid_test(QString ruuid)
 void BackEnd::setName_test(QString name)
 {
     m_name = name;
+}
+
+void BackEnd::setCountry_test(QString country)
+{
+    m_country = country;
+}
+
+void BackEnd::setLanguage_test(QString language)
+{
+    m_language = language;
 }
 
 void BackEnd::resetAccount_test()

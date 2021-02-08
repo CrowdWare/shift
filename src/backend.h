@@ -168,7 +168,7 @@ public:
     explicit BackEnd(QObject *parent = nullptr);
 
     Q_INVOKABLE void start();
-    Q_INVOKABLE void createAccount(QString name, QString ruuid);
+    Q_INVOKABLE void createAccount(QString name, QString ruuid, QString country, QString language);
 
     void setName(QString name);
     void setRuuid(QString ruuid);
@@ -203,6 +203,8 @@ public:
     void setUuid_test(QString uuid);
     void setRuuid_test(QString ruuid);
     void setName_test(QString name);
+    void setCountry_test(QString country);
+    void setLanguage_test(QString language);
     void resetAccount_test();
     QString getCheck() {return m_check;};
 #endif
@@ -230,6 +232,8 @@ private:
     QString m_uuid;
     QString m_ruuid;
     QString m_key;
+    QString m_country;
+    QString m_language;
     BookingModel m_bookingModel;
     MateModel m_mateModel;
     QString m_check;
