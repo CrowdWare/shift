@@ -8,8 +8,8 @@ private slots:
     void balance();
     void minted();
     void chain();
-    void matelist();
     void createAccount();
+    void matelist();
     void setScooping();
 };
 
@@ -65,25 +65,26 @@ void TestBackend::chain()
     QCOMPARE(backend.getScooping_test(), (qint64)1234567890);
 }
 
-void TestBackend::matelist()
-{
-    BackEnd backend;
-
-    backend.loadMatelist();
-    QTest::qWait(3000);
-    MateModel *model = backend.getMateModel();
-    Mate *mate = model->get(0);
-    QCOMPARE(model->count(), 3);
-    QCOMPARE(mate->name(), "Helga Hofmann");
-}
-
 void TestBackend::createAccount()
 {
     BackEnd backend;
 
-    backend.createAccount("name", "refuuid");
+    backend.createAccount("name", "me");
     QTest::qWait(3000);
     QCOMPARE(backend.getBalance_test(), (quint64)1);
+}
+
+void TestBackend::matelist()
+{
+    BackEnd backend;
+
+    backend.loadChain();
+    backend.loadMatelist();
+    QTest::qWait(3000);
+    MateModel *model = backend.getMateModel();
+    Mate *mate = model->get(0);
+    QCOMPARE(model->count(), 1);
+    QCOMPARE(mate->name(), "name");
 }
 
 void TestBackend::setScooping()
@@ -91,7 +92,6 @@ void TestBackend::setScooping()
     BackEnd backend;
     backend.setScooping(13);
     QTest::qWait(3000);
-    qInfo() << backend.lastError();
     QCOMPARE(backend.getCheck(), "setScooping: ok");
 }
 

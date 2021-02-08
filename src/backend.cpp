@@ -289,7 +289,7 @@ void BackEnd::setName(QString name)
 void BackEnd::createAccount(QString name, QString ruuid)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
-    if (m_ruuid == "me")
+    if (ruuid == "me")
         m_ruuid = m_uuid;
     else
         m_ruuid = ruuid;
@@ -306,7 +306,6 @@ void BackEnd::setScooping(qint64 scooping)
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
-    qDebug() << "key" << m_key;
     obj["key"] = m_key;
     obj["uuid"] = m_uuid;
     obj["scooping"] = QString::number(scooping);
@@ -423,11 +422,17 @@ void BackEnd::loadMessage()
     if (m_name == "")
         return;
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message"));
     request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    obj["key"] = m_key;
+    obj["name"] = m_name;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
-    networkManager->get(request);
+    networkManager->post(request, data);
 }
 
 void BackEnd::onNetworkReply(QNetworkReply* reply)
@@ -477,11 +482,17 @@ void BackEnd::loadMatelist()
     if (m_uuid == "")
         return;
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist"));
     request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    obj["key"] = m_key;
+    obj["uuid"] = m_uuid;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onMatelistReply(QNetworkReply*)));
-    networkManager->get(request);
+    networkManager->post(request, data);
 }
 
 void BackEnd::onMatelistReply(QNetworkReply* reply)
@@ -507,6 +518,7 @@ void BackEnd::onMatelistReply(QNetworkReply* reply)
                     foreach (const QJsonValue & value, data)
                     {
                         QJsonObject obj = value.toObject();
+                        setLastError("scooping " +obj["scooping"].toString());
                         m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
     		        }
                 }    

@@ -26,38 +26,31 @@ from shift_keys import SHIFT_DB_PWD
 from shift_keys import SHIFT_DB_HOST
 from shift_keys import SHIFT_DB_USER
 from shift_keys import SHIFT_DATABASE
-import mysql.connector
+from mysql.connector import connect
+from mysql.connector.errors import IntegrityError
 
-#try:
-#    mydb = mysql.connector.connect(host=SHIFT_DB_HOST,
-#                                   user=SHIFT_DB_USER,
-#                                   password=SHIFT_DB_PWD,
-#                                   database=SHIFT_DATABASE)
-#except mysql.connector.Error as err:
-#  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-#    return "Something is wrong with your user name or password"
-#  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-#    return "Database does not exist"
-#  else:
-#    return err
-#else:
-#  mydb.close()
+
+def dbConnect():
+    db = connect(host=SHIFT_DB_HOST,
+                 user=SHIFT_DB_USER,
+                 password=SHIFT_DB_PWD,
+                 database=SHIFT_DATABASE)
+    return db
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello here is the webservice of Shift!' + str(mydb.get_server_version())
+    return 'Hello here is the webservice of Shift!'
 
-@app.route('/message', methods=['GET'])
+@app.route('/message', methods=['POST'])
 def message():
-    key = request.args.get('key', default = '', type = str)
-    name = request.args.get('name', default = '', type = str)
+    content = request.json
+    key = content['key']
+    name = content['name']
 
     if key != SHIFT_API_KEY:
-        return jsonify(isError = True,
-                       message = "wrong api key",
-                       statusCode = 200)
+        return jsonify(isError=True, message="wrong api key", statusCode=200)
 
     return jsonify(isError = False,
                    message = "Success",
@@ -73,13 +66,20 @@ def register():
     ruuid = content['ruuid']
 
     if key != SHIFT_API_KEY:
-        return jsonify(isError = True, message = "wrong api key", statusCode = 200)
+        return jsonify(isError=True, message="wrong api key", statusCode=200)
 
-    # todo
-    # save record to db
-    return jsonify(isError = False,
-                   message = "Success",
-                   statusCode = 200)
+    try:
+        conn = dbConnect()
+        curs = conn.cursor()
+        query = 'INSERT INTO account(name, uuid, ruuid, scooping) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0)'
+        curs.execute(query)
+        conn.commit()
+    except IntegrityError as error:
+        return jsonify(isError=True, message=error.msg, statusCode=200)
+    finally:
+        conn.close()
+
+    return jsonify(isError=False, message="Success", statusCode=200)
 
 @app.route('/setscooping', methods=['POST'])
 def scooping():
@@ -91,27 +91,45 @@ def scooping():
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key: ", statusCode = 200)
 
-    # update account table, set scooping
+    try:
+        conn = dbConnect()
+        curs = conn.cursor()
+        query = 'UPDATE account SET scooping = ' + scooping + ' WHERE uuid = "' + uuid + '"'
+        curs.execute(query)
+        conn.commit()
+    except IntegrityError as error:
+        return jsonify(isError=True, message=error.msg, statusCode=200)
+    finally:
+        conn.close()
 
     return jsonify(isError = False,
                    message = "Success",
                    statusCode = 200)
 
-@app.route('/matelist', methods=['GET'])
+@app.route('/matelist', methods=['POST'])
 def friendlist():
-    key = request.args.get('key', default = '', type = str)
-    uuid = request.args.get('uuid', default = '', type = str)
+    content = request.json
+    key = content['key']
+    uuid = content['uuid']
 
     if key != SHIFT_API_KEY:
-        return jsonify(isError = True,
-                       message = "wrong api key",
-                       statusCode = 200)
+        return jsonify(isError=True,
+                       message="wrong api key",
+                       statusCode=200)
+    
+    accounts = []
+    try:
+        conn = dbConnect()
+        curs = conn.cursor(dictionary=True)
+        query = 'SELECT uuid, name, CONVERT(scooping, char) AS scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
+        curs.execute(query)
+        for row in curs:
+            accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'scooping' : row['scooping']})
+    except IntegrityError as error:
+        return jsonify(isError=True, message=error.msg, statusCode=200)
+    finally:
+        conn.close()
 
-    list = [
-            {'uuid': 'bcd', 'name': 'Helga Hofmann', 'scooping': "12345676"},
-            {'uuid': 'bcd', 'name': 'Bernd Hofmann', 'scooping': "12345678"},
-            {'uuid': 'abc', 'name': 'Hans Meiser', 'scooping': "0"}
-           ]
-    return jsonify(isError = False,
-                   message = "Success",
-                   statusCode = 200, data = list)
+    return jsonify(isError=False,
+                   message="Success",
+                   statusCode=200, data=accounts)
