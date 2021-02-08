@@ -290,7 +290,7 @@ Content {
 	Die lokale Datenbank wurde mit einem 1024 Bits Schlüssel verschlüsselt. 
 	Dies macht es für jemanden unmöglich, Daten in der lokalen Datenbank zu ändern. 
 	Was natürlich auch für die Balance gilt.
-	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 128-Byte-Schlüssel 
+	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 1024 Bits Schlüssel 
 	verschlüsselt. Diese Transer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
 
 	Wenn Sie eine Menge THX auf eine gefälschte mobile App übertragen. Es spielt keine Rolle. 

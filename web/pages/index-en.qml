@@ -280,8 +280,8 @@ Just fair ins&#x27;nt it.
 	The local database has been encrypted with a 1024 bits key.
 	So this makes it impossible for someone to change any data in the local database.
 	Which of course is also true for the balance.
-	When we are transfering THX between two mobile phones, also the data will be encrypted with this 128 
-	bytes key. So this transer data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
+	When we are transfering THX between two mobile phones, also the data will be encrypted with this 1024 
+	bits key. So this transer data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
 
 	If you transfer an amount of THX to a faked mobile app. It doesn&#x27;t matter. The guy with the faked mobile 
 	app will not tell you that the transfer has been aborted.&lt;/br&gt;&lt;/br&gt;
