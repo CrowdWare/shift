@@ -23,17 +23,17 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import at.crowdware.backend 1.0
-//import com.lasconic 1.0
+import com.lasconic 1.0
 
 Page 
 {
 	id: page
 	title: "HOME"
 
-	//ShareUtils 
-	//{
-    //    id: shareUtils
-    //}
+	ShareUtils 
+	{
+        id: shareUtils
+    }
 
 	Rectangle 
 	{
@@ -176,7 +176,7 @@ Page
 		height: page.height / 8
         text: "Invite Friends"
 		Material.background: Material.Blue
-		//onClicked: shareUtils.share("SHIFT is a new app to create worldwide universal basic income. Get your first THX now, by following this link http://www.shifting.site. Download the app, start it and use this id " + backend.uuid + " as invitation code.")
+		onClicked: shareUtils.share("SHIFT is a new app to create worldwide universal basic income. Get your first THX now, by following this link http://www.shifting.site. Download the app, start it and use this id " + backend.uuid + " as invitation code.")
 		//notificationClient.notification = "User is much happier!"
 	}
 
