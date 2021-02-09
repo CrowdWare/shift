@@ -14,7 +14,7 @@
    id="svg8"
    sodipodi:docname="icon.svg"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
-   inkscape:export-filename="/Users/art/SourceCode/Shift/src/images/logo.png"
+   inkscape:export-filename="/Users/art/SourceCode/Shift/src/android/res/drawable-xhdpi/icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -54,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

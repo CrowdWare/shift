@@ -48,14 +48,20 @@ def message():
     content = request.json
     key = content['key']
     name = content['name']
+    test = content["test"] # used only for unit testing
 
     if key != SHIFT_API_KEY:
         return jsonify(isError=True, message="wrong api key", statusCode=200)
 
-    return jsonify(isError = False,
-                   message = "Success",
-                   data ='<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://www.shifting.site">www.shifting.site</a> for news.</html>',
-                   statusCode = 200)
+    if test == "true":
+        message = "Message from server"
+    else:
+        message = '<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://www.shifting.site">www.shifting.site</a> for news.</html>'
+    
+    return jsonify(isError=False,
+                   message="Success",
+                   data=message,
+                   statusCode=200)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -66,20 +72,22 @@ def register():
     ruuid = content['ruuid']
     country = content['country']
     language = content['language']
+    test = content["test"] # used only for unit testing
 
     if key != SHIFT_API_KEY:
         return jsonify(isError=True, message="wrong api key", statusCode=200)
 
-    try:
-        conn = dbConnect()
-        curs = conn.cursor()
-        query = 'INSERT INTO account(name, uuid, ruuid, scooping, country, language) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0, "' + country + '","' + language +'")'
-        curs.execute(query)
-        conn.commit()
-    except IntegrityError as error:
-        return jsonify(isError=True, message=error.msg, statusCode=200)
-    finally:
-        conn.close()
+    if test != "true":
+        try:
+            conn = dbConnect()
+            curs = conn.cursor()
+            query = 'INSERT INTO account(name, uuid, ruuid, scooping, country, language) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0, "' + country + '","' + language +'")'
+            curs.execute(query)
+            conn.commit()
+        except IntegrityError as error:
+            return jsonify(isError=True, message=error.msg, statusCode=200)
+        finally:
+            conn.close()
 
     return jsonify(isError=False, message="Success", statusCode=200)
 
@@ -89,20 +97,22 @@ def scooping():
     key = content['key']
     uuid = content['uuid']
     scooping = content['scooping']
+    test = content["test"] # used only for unit testing
 
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key: ", statusCode = 200)
 
-    try:
-        conn = dbConnect()
-        curs = conn.cursor()
-        query = 'UPDATE account SET scooping = ' + scooping + ' WHERE uuid = "' + uuid + '"'
-        curs.execute(query)
-        conn.commit()
-    except IntegrityError as error:
-        return jsonify(isError=True, message=error.msg, statusCode=200)
-    finally:
-        conn.close()
+    if test != "true":
+        try:
+            conn = dbConnect()
+            curs = conn.cursor()
+            query = 'UPDATE account SET scooping = ' + scooping + ' WHERE uuid = "' + uuid + '"'
+            curs.execute(query)
+            conn.commit()
+        except IntegrityError as error:
+            return jsonify(isError=True, message=error.msg, statusCode=200)
+        finally:
+            conn.close()
 
     return jsonify(isError = False,
                    message = "Success",
@@ -113,6 +123,7 @@ def friendlist():
     content = request.json
     key = content['key']
     uuid = content['uuid']
+    test = content["test"] # used only for unit testing
 
     if key != SHIFT_API_KEY:
         return jsonify(isError=True,
@@ -120,17 +131,22 @@ def friendlist():
                        statusCode=200)
     
     accounts = []
-    try:
-        conn = dbConnect()
-        curs = conn.cursor(dictionary=True)
-        query = 'SELECT uuid, name, CONVERT(scooping, char) AS scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
-        curs.execute(query)
-        for row in curs:
-            accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'scooping' : row['scooping']})
-    except IntegrityError as error:
-        return jsonify(isError=True, message=error.msg, statusCode=200)
-    finally:
-        conn.close()
+    if test == "true":
+        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'scooping' : '0'})
+        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'scooping' : '1'})
+        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'scooping' : '1'})
+    else:
+        try:
+            conn = dbConnect()
+            curs = conn.cursor(dictionary=True)
+            query = 'SELECT uuid, name, CONVERT(scooping, char) AS scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
+            curs.execute(query)
+            for row in curs:
+                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'scooping' : row['scooping']})
+        except IntegrityError as error:
+            return jsonify(isError=True, message=error.msg, statusCode=200)
+        finally:
+            conn.close()
 
     return jsonify(isError=False,
                    message="Success",

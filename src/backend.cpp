@@ -321,6 +321,11 @@ void BackEnd::setScooping(qint64 scooping)
     obj["key"] = m_key;
     obj["uuid"] = m_uuid;
     obj["scooping"] = QString::number(scooping);
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
@@ -379,6 +384,11 @@ void BackEnd::registerAccount()
     obj["ruuid"] = m_ruuid;
     obj["country"] = m_country;
     obj["language"] = m_language;
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
@@ -442,6 +452,11 @@ void BackEnd::loadMessage()
     QJsonObject obj;
     obj["key"] = m_key;
     obj["name"] = m_name;
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
@@ -502,6 +517,11 @@ void BackEnd::loadMatelist()
     QJsonObject obj;
     obj["key"] = m_key;
     obj["uuid"] = m_uuid;
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
