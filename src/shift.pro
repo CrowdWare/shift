@@ -6,11 +6,11 @@ CONFIG += c++11
 SOURCES += \
     shift.cpp \
     backend.cpp \ 
-    simplecrypt.cpp
+    simplecrypt.cpp \
 
 HEADERS += \
     backend.h \ 
-    simplecrypt.h
+    simplecrypt.h \
 
 RESOURCES += \
     shift.qml \
@@ -48,12 +48,15 @@ android {
         android/src/com/lasconic/QShareUtils.java \
         android/src/org/qtproject/example/notification/NotificationClient.java
     
-    SOURCES += android/androidshareutils.cpp \
+    SOURCES += \
+        android/androidshareutils.cpp \
         shareutils.cpp \
-        notificationclient.cpp \
-    HEADERS += android/androidshareutils.h \
+        notificationclient.cpp
+
+    HEADERS += \
+        android/androidshareutils.h \
         shareutils.h \
-        notificationclient.h \
+        notificationclient.h
 
     DISTFILES += \
         android/AndroidManifest.xml \
