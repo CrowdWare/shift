@@ -45,19 +45,19 @@ class Mate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name CONSTANT)
     Q_PROPERTY(QString uuid READ uuid CONSTANT)
-    Q_PROPERTY(qint64 scooping READ scooping CONSTANT)
+    Q_PROPERTY(bool scooping READ scooping CONSTANT)
  
 public:
-    explicit Mate(QString name, QString uuid, qint64 scooping, QObject *parent = nullptr);
+    explicit Mate(QString name, QString uuid, bool scooping, QObject *parent = nullptr);
 
     QString name();
     QString uuid();
-    qint64 scooping();
+    bool scooping();
 
 private:
     QString m_name;
     QString m_uuid;
-    qint64 m_scooping;
+    bool m_scooping;
 };
 
 class Booking : public QObject
@@ -192,7 +192,7 @@ private:
 #endif
     int mintedBalance(qint64 time);
     void registerAccount();
-    void setScooping(qint64 time);
+    void setScooping();
 
 #ifdef TEST
 public:

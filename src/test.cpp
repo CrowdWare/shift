@@ -83,15 +83,19 @@ void TestBackend::matelist()
     backend.loadMatelist();
     QTest::qWait(3000);
     MateModel *model = backend.getMateModel();
-    Mate *mate = model->get(2);
+    Mate *mate = model->get(0);
+    Mate *mateNotScooping = model->get(1);
+    Mate *mateScooping = model->get(2);
+    QCOMPARE(mate->name(), "Testuser 1");
     QCOMPARE(model->count(), 3);
-    QCOMPARE(mate->name(), "Testuser 3");
+    QCOMPARE(mateNotScooping->scooping(), false);
+    QCOMPARE(mateScooping->scooping(), true);
 }
 
 void TestBackend::setScooping()
 {
     BackEnd backend;
-    backend.setScooping(13);
+    backend.setScooping();
     QTest::qWait(3000);
     QCOMPARE(backend.getCheck(), "setScooping: ok");
 }

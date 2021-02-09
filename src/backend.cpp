@@ -37,7 +37,7 @@
 
 #include "../../private/shift.keys"
 
-Mate::Mate(QString name, QString uuid, qint64 scooping, QObject *parent) :
+Mate::Mate(QString name, QString uuid, bool scooping, QObject *parent) :
     QObject(parent)
 { 
     m_name = name;
@@ -55,7 +55,7 @@ QString Mate::uuid()
     return m_uuid;
 }
 
-qint64 Mate::scooping()
+bool Mate::scooping()
 {
     return m_scooping;
 }
@@ -311,7 +311,7 @@ void BackEnd::createAccount(QString name, QString ruuid, QString country, QStrin
     registerAccount();
 }
 
-void BackEnd::setScooping(qint64 scooping)
+void BackEnd::setScooping()
 {
     QNetworkRequest request;
     request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
@@ -320,7 +320,6 @@ void BackEnd::setScooping(qint64 scooping)
     QJsonObject obj;
     obj["key"] = m_key;
     obj["uuid"] = m_uuid;
-    obj["scooping"] = QString::number(scooping);
 #ifdef TEST
     obj["test"] = "true";
 #else
@@ -552,7 +551,7 @@ void BackEnd::onMatelistReply(QNetworkReply* reply)
                     foreach (const QJsonValue & value, data)
                     {
                         QJsonObject obj = value.toObject();
-                        m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
+                        m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toBool()));
     		        }
                 }    
                 else
@@ -639,7 +638,7 @@ QString BackEnd::getUuid()
 void BackEnd::start()
 {
     m_scooping = QDateTime::currentSecsSinceEpoch();
-    setScooping(m_scooping);
+    setScooping();
     saveChain();
 }
 

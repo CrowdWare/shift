@@ -18,6 +18,7 @@
 #
 #############################################################################
 
+from datetime import datetime, timedelta
 from flask import Flask
 from flask import request
 from flask import jsonify
@@ -36,6 +37,14 @@ def dbConnect():
                  password=SHIFT_DB_PWD,
                  database=SHIFT_DATABASE)
     return db
+
+def isScooping(scoop):
+    scoop_date = datetime(1970, 1, 1) + timedelta(seconds=scoop)
+    time_since = datetime.now() - scoop_date
+    seconds = int(time_since.total_seconds())
+    if (seconds / 60.0 / 60.0) > 20:
+        return False
+    return True
 
 app = Flask(__name__)
 
@@ -96,17 +105,20 @@ def scooping():
     content = request.json
     key = content['key']
     uuid = content['uuid']
-    scooping = content['scooping']
     test = content["test"] # used only for unit testing
 
     if key != SHIFT_API_KEY:
         return jsonify(isError = True, message = "wrong api key: ", statusCode = 200)
 
+    first_date = datetime(1970, 1, 1)
+    time_since = datetime.now() - first_date
+    seconds = int(time_since.total_seconds())
+
     if test != "true":
         try:
             conn = dbConnect()
             curs = conn.cursor()
-            query = 'UPDATE account SET scooping = ' + scooping + ' WHERE uuid = "' + uuid + '"'
+            query = 'UPDATE account SET scooping = ' + seconds + ' WHERE uuid = "' + uuid + '"'
             curs.execute(query)
             conn.commit()
         except IntegrityError as error:
@@ -132,17 +144,19 @@ def friendlist():
     
     accounts = []
     if test == "true":
-        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'scooping' : '0'})
-        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'scooping' : '1'})
-        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'scooping' : '1'})
+        not_scooping = int((datetime.now() - timedelta(seconds=72001) - datetime(1970, 1, 1)).total_seconds())
+        scooping = int((datetime.now() - timedelta(seconds=71999) - datetime(1970, 1, 1)).total_seconds())
+        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'scooping' : isScooping(0)})
+        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'scooping' : isScooping(not_scooping)})
+        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'scooping' : isScooping(scooping)})
     else:
         try:
             conn = dbConnect()
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT uuid, name, CONVERT(scooping, char) AS scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
+            query = 'SELECT uuid, name, scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
             curs.execute(query)
             for row in curs:
-                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'scooping' : row['scooping']})
+                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'scooping' : isScooping(row['scooping'])})
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:
