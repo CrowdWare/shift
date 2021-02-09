@@ -108,6 +108,8 @@ ApplicationWindow
                     {
                         text: "Last Error"
                         onTriggered: errorDialog.open()
+                        visible: backend.lastError != ""
+                        height: visible ? implicitHeight : 0
                     }
                 }
             }
@@ -166,10 +168,9 @@ ApplicationWindow
             Image 
             {
                 id: logo
-                width: pane.availableWidth / 2
-                height: pane.availableHeight / 2
-                anchors.centerIn: parent
-                anchors.verticalCenterOffset: -90
+                anchors.top: parent.top
+                anchors.bottom: label.top
+                anchors.horizontalCenter: parent.horizontalCenter
                 fillMode: Image.PreserveAspectFit
                 source: "images/logo.png"
 
@@ -191,7 +192,7 @@ ApplicationWindow
                 text: backend.message
                 textFormat: Text.RichText
                 anchors.margins: 0
-                anchors.top: logo.bottom
+                anchors.bottom: name.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Label.AlignHCenter
@@ -206,7 +207,8 @@ ApplicationWindow
                 anchors.margins: 10
                 font.pointSize: 20
                 visible: backend.uuid == ""
-                anchors.top: label.bottom
+                height: visible ? implicitHeight : 0
+                anchors.bottom: labelRuuid.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 placeholderText: "enter your name or nickname"
@@ -217,8 +219,9 @@ ApplicationWindow
                 id: labelRuuid
                 text: "Enter the referer id"
                 visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
                 anchors.margins: 10
-                anchors.top: name.bottom
+                anchors.bottom: ruuid.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Label.AlignHCenter
@@ -232,27 +235,276 @@ ApplicationWindow
                 anchors.margins: 10
                 font.pointSize: 20
                 visible: backend.uuid == ""
-                anchors.top: labelRuuid.bottom
+                height: visible ? implicitHeight : 0
+                anchors.bottom: labelCountry.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 placeholderText: "enter the referer id"
             }
 
+            Label 
+            {
+                id: labelCountry
+                text: "Select your country"
+                visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
+                anchors.margins: 10
+                anchors.bottom: country.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Label.AlignHCenter
+                verticalAlignment: Label.AlignVCenter
+                wrapMode: Label.Wrap
+            }
+            ComboBox 
+            {
+                id: country
+                width: 200
+                visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
+                anchors.bottom: labelLanguage.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                model: ['',
+                    'Afghanistan',
+                    'Albania',
+                    'Algeria',
+                    'Andorra',
+                    'Angola',
+                    'Antigua & Deps',
+                    'Argentina',
+                    'Armenia',
+                    'Australia',
+                    'Austria',
+                    'Azerbaijan',
+                    'Bahamas',
+                    'Bahrain',
+                    'Bangladesh',
+                    'Barbados',
+                    'Belarus',
+                    'Belgium',
+                    'Belize',
+                    'Benin',
+                    'Bhutan',
+                    'Bolivia',
+                    'Bosnia Herzegovina',
+                    'Botswana',
+                    'Brazil',
+                    'Brunei',
+                    'Bulgaria',
+                    'Burkina',
+                    'Burundi',
+                    'Cambodia',
+                    'Cameroon',
+                    'Canada',
+                    'Cape Verde',
+                    'Central African Rep',
+                    'Chad',
+                    'Chile',
+                    'China',
+                    'Colombia',
+                    'Comoros',
+                    'Congo',
+                    'Costa Rica',
+                    'Croatia',
+                    'Cuba',
+                    'Cyprus',
+                    'Czech Republic',
+                    'Denmark',
+                    'Djibouti',
+                    'Dominica',
+                    'Dominican Republic',
+                    'East Timor',
+                    'Ecuador',
+                    'Egypt',
+                    'El Salvador',
+                    'Equatorial Guinea',
+                    'Eritrea',
+                    'Estonia',
+                    'Ethiopia',
+                    'Fiji',
+                    'Finland',
+                    'France',
+                    'Gabon',
+                    'Gambia',
+                    'Georgia',
+                    'Germany',
+                    'Ghana',
+                    'Greece',
+                    'Grenada',
+                    'Guatemala',
+                    'Guinea',
+                    'Guinea-Bissau',
+                    'Guyana',
+                    'Haiti',
+                    'Honduras',
+                    'Hungary',
+                    'Iceland',
+                    'India',
+                    'Indonesia',
+                    'Iran',
+                    'Iraq',
+                    'Ireland',
+                    'Israel',
+                    'Italy',
+                    'Ivory Coast',
+                    'Jamaica',
+                    'Japan',
+                    'Jordan',
+                    'Kazakhstan',
+                    'Kenya',
+                    'Kiribati',
+                    'Korea North',
+                    'Korea South',
+                    'Kosovo',
+                    'Kuwait',
+                    'Kyrgyzstan',
+                    'Laos',
+                    'Latvia',
+                    'Lebanon',
+                    'Lesotho',
+                    'Liberia',
+                    'Libya',
+                    'Liechtenstein',
+                    'Lithuania',
+                    'Luxembourg',
+                    'Macedonia',
+                    'Madagascar',
+                    'Malawi',
+                    'Malaysia',
+                    'Maldives',
+                    'Mali',
+                    'Malta',
+                    'Marshall Islands',
+                    'Mauritania',
+                    'Mauritius',
+                    'Mexico',
+                    'Micronesia',
+                    'Moldova',
+                    'Monaco',
+                    'Mongolia',
+                    'Montenegro',
+                    'Morocco',
+                    'Mozambique',
+                    'Myanmar',
+                    'Namibia',
+                    'Nauru',
+                    'Nepal',
+                    'Netherlands',
+                    'New Zealand',
+                    'Nicaragua',
+                    'Niger',
+                    'Nigeria',
+                    'Norway',
+                    'Oman',
+                    'Pakistan',
+                    'Palau',
+                    'Panama',
+                    'Papua New Guinea',
+                    'Paraguay',
+                    'Peru',
+                    'Philippines',
+                    'Poland',
+                    'Portugal',
+                    'Qatar',
+                    'Romania',
+                    'Russian Federation',
+                    'Rwanda',
+                    'St Kitts & Nevis',
+                    'St Lucia',
+                    'Saint Vincent & the Grenadines',
+                    'Samoa',
+                    'San Marino',
+                    'Sao Tome & Principe',
+                    'Saudi Arabia',
+                    'Senegal',
+                    'Serbia',
+                    'Seychelles',
+                    'Sierra Leone',
+                    'Singapore',
+                    'Slovakia',
+                    'Slovenia',
+                    'Solomon Islands',
+                    'Somalia',
+                    'South Africa',
+                    'South Sudan',
+                    'Spain',
+                    'Sri Lanka',
+                    'Sudan',
+                    'Suriname',
+                    'Swaziland',
+                    'Sweden',
+                    'Switzerland',
+                    'Syria',
+                    'Taiwan',
+                    'Tajikistan',
+                    'Tanzania',
+                    'Thailand',
+                    'Togo',
+                    'Tonga',
+                    'Trinidad & Tobago',
+                    'Tunisia',
+                    'Turkey',
+                    'Turkmenistan',
+                    'Tuvalu',
+                    'Uganda',
+                    'Ukraine',
+                    'United Arab Emirates',
+                    'United Kingdom',
+                    'United States',
+                    'Uruguay',
+                    'Uzbekistan',
+                    'Vanuatu',
+                    'Vatican City',
+                    'Venezuela',
+                    'Vietnam',
+                    'Yemen',
+                    'Zambia',
+                    'Zimbabwe'
+                ] 
+            }
+
+            Label 
+            {
+                id: labelLanguage
+                text: "Select preferred language"
+                visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
+                anchors.margins: 10
+                anchors.bottom: language.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Label.AlignHCenter
+                verticalAlignment: Label.AlignVCenter
+                wrapMode: Label.Wrap
+            }
+
+            ComboBox 
+            {
+                id: language
+                width: 200
+                visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
+                anchors.bottom: create.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                model: ['', 'English', 'Deutsch', 'Español', 'Français', 'Português']
+            }
+
             Button
             {
+                id: create
                 visible: backend.uuid == ""
-                anchors.top: ruuid.bottom
+                height: visible ? 50 : 0
+                enabled: (ruuid.text != "" && name.text != "" && country.currentText != "" && language.currentText != "")
+                anchors.bottom: parent.bottom
                 font.pointSize: 20
                 anchors.margins: 10
      	        anchors.left: parent.left
                 anchors.right: parent.right
-		        height: 50
                 text: "Create Account"
                 Material.background: Material.Blue
-		        onClicked: {
-                    if (ruuid.text != "" && name.text != "")
-                        backend.createAccount(name.text, ruuid.text);
-                }
+		        onClicked: backend.createAccount(name.text, ruuid.text, country.currentText, language.currentText);
             }
         }
     }

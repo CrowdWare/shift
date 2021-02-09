@@ -45,19 +45,19 @@ class Mate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name CONSTANT)
     Q_PROPERTY(QString uuid READ uuid CONSTANT)
-    Q_PROPERTY(qint64 scooping READ scooping CONSTANT)
+    Q_PROPERTY(bool scooping READ scooping CONSTANT)
  
 public:
-    explicit Mate(QString name, QString uuid, qint64 scooping, QObject *parent = nullptr);
+    explicit Mate(QString name, QString uuid, bool scooping, QObject *parent = nullptr);
 
     QString name();
     QString uuid();
-    qint64 scooping();
+    bool scooping();
 
 private:
     QString m_name;
     QString m_uuid;
-    qint64 m_scooping;
+    bool m_scooping;
 };
 
 class Booking : public QObject
@@ -106,6 +106,7 @@ public:
     Q_INVOKABLE void append(Booking *booking);
     Q_INVOKABLE void clear();
     Q_INVOKABLE int count();
+    Q_INVOKABLE void remove(int index);
     Q_INVOKABLE Booking *get(int index);
 
 protected:
@@ -168,7 +169,7 @@ public:
     explicit BackEnd(QObject *parent = nullptr);
 
     Q_INVOKABLE void start();
-    Q_INVOKABLE void createAccount(QString name, QString ruuid);
+    Q_INVOKABLE void createAccount(QString name, QString ruuid, QString country, QString language);
 
     void setName(QString name);
     void setRuuid(QString ruuid);
@@ -191,7 +192,7 @@ private:
 #endif
     int mintedBalance(qint64 time);
     void registerAccount();
-    void setScooping(qint64 time);
+    void setScooping();
 
 #ifdef TEST
 public:
@@ -203,6 +204,8 @@ public:
     void setUuid_test(QString uuid);
     void setRuuid_test(QString ruuid);
     void setName_test(QString name);
+    void setCountry_test(QString country);
+    void setLanguage_test(QString language);
     void resetAccount_test();
     QString getCheck() {return m_check;};
 #endif
@@ -230,8 +233,11 @@ private:
     QString m_uuid;
     QString m_ruuid;
     QString m_key;
+    QString m_country;
+    QString m_language;
     BookingModel m_bookingModel;
     MateModel m_mateModel;
     QString m_check;
+    int m_mates;
 };
 #endif // BACKEND_H

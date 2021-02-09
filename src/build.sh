@@ -8,3 +8,4 @@ make
 make install INSTALL_ROOT=/Users/art/SourceCode/Shift/src/build-project/
 /Users/art/qt/5.12.3/android_armv7/bin/androiddeployqt --input /Users/art/SourceCode/Shift/src/build-project/android-libshift.so-deployment-settings.json --output /Users/art/SourceCode/Shift/src/build-project --android-platform android-28 --jdk /home/art/Software/jdk1.8.0_231/bin/java --gradle
 cd ..
+

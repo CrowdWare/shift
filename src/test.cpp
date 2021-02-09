@@ -8,9 +8,11 @@ private slots:
     void balance();
     void minted();
     void chain();
-    void matelist();
     void createAccount();
+    void matelist();
     void setScooping();
+    void subtotal();
+    void scooping();
 };
 
 void TestBackend::balance()
@@ -65,34 +67,76 @@ void TestBackend::chain()
     QCOMPARE(backend.getScooping_test(), (qint64)1234567890);
 }
 
-void TestBackend::matelist()
-{
-    BackEnd backend;
-
-    backend.loadMatelist();
-    QTest::qWait(3000);
-    MateModel *model = backend.getMateModel();
-    Mate *mate = model->get(0);
-    QCOMPARE(model->count(), 3);
-    QCOMPARE(mate->name(), "Helga Hofmann");
-}
-
 void TestBackend::createAccount()
 {
     BackEnd backend;
 
-    backend.createAccount("name", "refuuid");
+    backend.createAccount("name", "me", "Germany", "English");
     QTest::qWait(3000);
     QCOMPARE(backend.getBalance_test(), (quint64)1);
+}
+
+void TestBackend::matelist()
+{
+    BackEnd backend;
+
+    backend.loadChain();
+    backend.loadMatelist();
+    QTest::qWait(3000);
+    MateModel *model = backend.getMateModel();
+    Mate *mate = model->get(0);
+    Mate *mateNotScooping = model->get(1);
+    Mate *mateScooping = model->get(2);
+    QCOMPARE(mate->name(), "Testuser 1");
+    QCOMPARE(model->count(), 3);
+    QCOMPARE(mateNotScooping->scooping(), false);
+    QCOMPARE(mateScooping->scooping(), true);
 }
 
 void TestBackend::setScooping()
 {
     BackEnd backend;
-    backend.setScooping(13);
+    backend.setScooping();
     QTest::qWait(3000);
-    qInfo() << backend.lastError();
     QCOMPARE(backend.getCheck(), "setScooping: ok");
+}
+
+void TestBackend::subtotal()
+{
+    BackEnd backend;
+    qint64 time = QDateTime::currentSecsSinceEpoch();
+    backend.loadChain();
+    backend.setScooping_test(time);
+    backend.resetBookings_test();
+    for(int i = 0; i < 30; i++)
+    {
+        backend.addBooking_test(new Booking("test", 10, QDate(1900,1,1 + i)));
+    }
+    // trigger a new record creation
+    int minted = backend.mintedBalance(time + 21 * 60 * 60);
+    QCOMPARE(minted, 310000);
+    QCOMPARE(backend.getBookingModel()->count(), 30);
+    Booking *b = backend.getBookingModel()->get(29);
+    QCOMPARE(b->amount(), 20);
+}
+
+void TestBackend::scooping()
+{
+    BackEnd backend;
+    qint64 time = QDateTime::currentSecsSinceEpoch();
+    backend.loadChain();
+    backend.loadMatelist();
+    QTest::qWait(3000);
+    backend.setScooping_test(time);
+    backend.resetBookings_test();
+    for(int i = 0; i < 3; i++)
+    {
+        backend.addBooking_test(new Booking("test", 10, QDate(1900,1,1 + i)));
+    }
+    int minted = backend.mintedBalance(time + 4 * 60 * 60);
+    QCOMPARE(minted, 32600);
+    int minted2 = backend.mintedBalance(time + 21 * 60 * 60);
+    QCOMPARE(minted2, 43000);
 }
 
 QTEST_MAIN(TestBackend)

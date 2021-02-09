@@ -247,7 +247,7 @@ Content {
                 Text {
                     text: "&lt;!-- CALLOUT --&gt;
 &lt;div class=&quot;bs-callout text-center styleBackground&quot;&gt;
-	&lt;h3&gt;Willst Du die &lt;strong&gt;APP&lt;/strong&gt; für Android haben and anfangen Flüsigkeit zu schöpfen?&lt;a href=&quot;javascript:alert(&#x27;We are still working on that.&#x27;)&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD&lt;/a&gt;&lt;/h3&gt;
+	&lt;h3&gt;Willst Du die &lt;strong&gt;APP&lt;/strong&gt; für Android haben and anfangen Flüsigkeit zu schöpfen?&lt;a href=&quot;http://www.shifting.site/shift-1.0.0-signed.apk&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
 &lt;!-- /CALLOUT --&gt;"
                     adminlabel: "callout"
@@ -285,12 +285,25 @@ Content {
 	bis sie nach 7 Jahren komplett verschwunden ist. So wird es in einem vollen Zyklus erstellt, 
 	verwendet und wieder zerstört.
 &lt;/p&gt;
+&lt;h3&gt;Sicherheit / Integrität&lt;/h3&gt;
+&lt;p&gt;
+	Die lokale Datenbank wurde mit einem 1024 Bits Schlüssel verschlüsselt. 
+	Dies macht es für jemanden unmöglich, Daten in der lokalen Datenbank zu ändern. 
+	Was natürlich auch für die Balance gilt.
+	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 1024 Bits Schlüssel 
+	verschlüsselt. Diese Transer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
+
+	Wenn Sie THX auf eine gefälschte mobile App übertragen, spielt es keine Rolle. 
+	Der Typ mit der gefälschten mobilen App wird Ihnen nicht mitteilen, dass die Übertragung abgebrochen wurde.&lt;/br&gt;&lt;/br&gt;
+
+	Wenn jemand THX auf Ihr Konto übertragen möchte, akzeptiert Ihre App diese Übertragung aufgrund falsch entschlüsselter Daten nicht.
+&lt;/p&gt;
 
 &lt;h3&gt;FAQ&lt;/h3&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Klingt komisch, dass Sie Flüssigkeit schöpfen? Wir können das Wort Geld nicht benutzen.&lt;/br&gt;
-		Wenn du Geld erschaffst, müsstest du Steuern zahlen ;-)
+		Klingt komisch, dass Sie Flüssigkeit schöpfen?&lt;/br&gt;
+		Wir können das Wort Geld nicht benutzen. Wenn du Geld erschaffst, müsstest du Steuern zahlen ;-)
 	&lt;/li&gt;
 	&lt;li&gt;
 		Wird es eine Version für das iPhone geben? &lt;/br&gt;

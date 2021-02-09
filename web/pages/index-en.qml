@@ -244,7 +244,7 @@ THX is based on the phrase thank you and represents the gratitude.
                 Text {
                     text: "&lt;!-- CALLOUT --&gt;
 &lt;div class=&quot;bs-callout text-center styleBackground&quot;&gt;
-	&lt;h3&gt;Do you want to get the &lt;strong&gt;APP&lt;/strong&gt; for Android and start to scoop liquid?&lt;a href=&quot;javascript:alert(&#x27;We are still working on that.&#x27;)&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD&lt;/a&gt;&lt;/h3&gt;
+	&lt;h3&gt;Do you want to get the &lt;strong&gt;APP&lt;/strong&gt; for Android and start to scoop liquid?&lt;a href=&quot;http://www.shifting.site/shift-1.0.0-signed.apk&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
 &lt;!-- /CALLOUT --&gt;"
                     adminlabel: "callout"
@@ -275,12 +275,26 @@ Just fair ins&#x27;nt it.
 	So that we will not flood the planet, the liquid will vaporate every day a small percentage until it&#x27;s gone 
 	fully after 7 years. So it will be created, used and destroy in a full circle.
 &lt;/p&gt;
+&lt;h3&gt;Security / Integrity&lt;/h3&gt;
+&lt;p&gt;	
+	The local database has been encrypted with a 1024 bits key.
+	So this makes it impossible for someone to change any data in the local database.
+	Which of course is also true for the balance.
+	When we are transfering THX between two mobile phones, also the data will be encrypted with this 1024 
+	bits key. So this tranfser data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
+
+	If you transfer an amount of THX to a faked mobile app, it doesn&#x27;t matter. The guy with the faked mobile 
+	app will not tell you that the transfer has been aborted.&lt;/br&gt;&lt;/br&gt;
+
+	If someone wants to transfer THX to your account, then your app will not accept this transfer due 
+	to incorrect decrypted data.
+&lt;/p&gt;
 
 &lt;h3&gt;FAQ&lt;/h3&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Sounds weird that you scoop liquid? We cannot call money. &lt;/br&gt;
-		When you create money, then you would have to pay taxes ;-)
+		Sounds weird that you scoop liquid?&lt;/br&gt; 
+		We cannot call money. When you create money, then you would have to pay taxes ;-)
 	&lt;/li&gt;
 	&lt;li&gt;
 		Will there be a version for iPhone? &lt;/br&gt;

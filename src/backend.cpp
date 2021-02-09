@@ -34,10 +34,11 @@
 #include <QJsonDocument>
 #include <QMap>
 #include <QJsonArray>
+#include <QDir>
 
 #include "../../private/shift.keys"
 
-Mate::Mate(QString name, QString uuid, qint64 scooping, QObject *parent) :
+Mate::Mate(QString name, QString uuid, bool scooping, QObject *parent) :
     QObject(parent)
 { 
     m_name = name;
@@ -55,7 +56,7 @@ QString Mate::uuid()
     return m_uuid;
 }
 
-qint64 Mate::scooping()
+bool Mate::scooping()
 {
     return m_scooping;
 }
@@ -138,6 +139,17 @@ void BookingModel::append(Booking *booking)
 void BookingModel::clear()
 {
     m_bookings.clear();
+}
+
+void BookingModel::remove(int index)
+{
+    if(index < 0 || index >= m_bookings.count()) 
+    {
+        return;
+    }
+    emit beginRemoveRows(QModelIndex(), index, index);
+    m_bookings.removeAt(index);
+    emit endRemoveRows();
 }
 
 int BookingModel::count()
@@ -257,8 +269,7 @@ BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
 {   
     m_lastError = "";
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    m_message = "Welcome, please enter your name";
+    m_message = "Welcome, wait a few seconds to load the database";
     m_name = "";
     m_key = SHIFT_API_KEY;
     m_crypto.setKey(SHIFT_ENCRYPT_KEY);
@@ -286,30 +297,35 @@ void BackEnd::setName(QString name)
     m_name = name;
 }
 
-void BackEnd::createAccount(QString name, QString ruuid)
+void BackEnd::createAccount(QString name, QString ruuid, QString country, QString language)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
-    if (m_ruuid == "me")
+    if (ruuid == "me")
         m_ruuid = m_uuid;
     else
         m_ruuid = ruuid;
     m_name = name;
+    m_country = country;
+    m_language = language;
     m_balance = 0;
     m_scooping = 0;
     registerAccount();
 }
 
-void BackEnd::setScooping(qint64 scooping)
+void BackEnd::setScooping()
 {
     QNetworkRequest request;
     request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
-    qDebug() << "key" << m_key;
     obj["key"] = m_key;
     obj["uuid"] = m_uuid;
-    obj["scooping"] = QString::number(scooping);
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
@@ -366,6 +382,13 @@ void BackEnd::registerAccount()
     obj["name"] = m_name;
     obj["uuid"] = m_uuid;
     obj["ruuid"] = m_ruuid;
+    obj["country"] = m_country;
+    obj["language"] = m_language;
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
@@ -396,7 +419,7 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                     m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
                     saveChain();
                     emit uuidChanged();
-                    m_message = "Welcome, " + m_name;
+                    m_message = "Welcome, " + m_name + " please tap on the logo.";
                     emit messageChanged();
     		    }
                 else
@@ -423,11 +446,22 @@ void BackEnd::loadMessage()
     if (m_name == "")
         return;
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message?key=" + m_key + "&name=" + m_name));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message"));
     request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    obj["key"] = m_key;
+    obj["name"] = m_name;
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
-    networkManager->get(request);
+    networkManager->post(request, data);
 }
 
 void BackEnd::onNetworkReply(QNetworkReply* reply)
@@ -477,11 +511,22 @@ void BackEnd::loadMatelist()
     if (m_uuid == "")
         return;
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist?key=" + m_key + "&uuid=" + m_uuid));
+    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist"));
     request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj;
+    obj["key"] = m_key;
+    obj["uuid"] = m_uuid;
+#ifdef TEST
+    obj["test"] = "true";
+#else
+    obj["test"] = "false";
+#endif
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
     QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onMatelistReply(QNetworkReply*)));
-    networkManager->get(request);
+    networkManager->post(request, data);
 }
 
 void BackEnd::onMatelistReply(QNetworkReply* reply)
@@ -504,10 +549,14 @@ void BackEnd::onMatelistReply(QNetworkReply* reply)
                     }
                     QJsonArray data = json_obj.value("data").toArray();
                     m_mateModel.clear();
+                    m_mates = 0;
                     foreach (const QJsonValue & value, data)
                     {
+                        // only count up to 10 mates
+                        if(m_mates < 10)
+                            m_mates++;
                         QJsonObject obj = value.toObject();
-                        m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toString().toLongLong()));
+                        m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toBool()));
     		        }
                 }    
                 else
@@ -540,8 +589,11 @@ QString BackEnd::getMessage()
 
 void BackEnd::setLastError(const QString &lastError)
 {
-    m_lastError += lastError + "\n";
-    emit lastErrorChanged();
+    if (m_lastError.length() < 200)
+    {
+        m_lastError += lastError + "\n";
+        emit lastErrorChanged();
+    }
 }
 
 int BackEnd::getBalance()
@@ -560,16 +612,26 @@ int BackEnd::mintedBalance(qint64 time)
         if(hours > 20.0)
         {
             hours = 0;
-            m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
+            int grow = 10 + m_mates;
+            m_balance = m_balance + grow; // 10 + 1 (per mate) THX per day added (20 hours / 2) + 
             // stop scooping after 20 hours
             m_scooping = 0;
-            m_bookingModel.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
+            if (m_bookingModel.count() > 29)
+            {
+                // combine the last two bookings
+                Booking *last = m_bookingModel.get(m_bookingModel.count() - 1);
+                Booking *prev = m_bookingModel.get(m_bookingModel.count() - 2);
+                prev->setAmount(prev->amount() + last->amount());
+                prev->setDescription("Subtotal");
+                m_bookingModel.remove(m_bookingModel.count() - 1);
+            }
+            m_bookingModel.insert(0, new Booking("Liquid scooped", grow, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
             emit balanceChanged();
         }
     }
-    return m_balance * 1000 + (hours * 500.0);
+    return m_balance * 1000 + (hours * 500.0) + (hours * m_mates * 50.0);
 }
 
 qint64 BackEnd::getScooping()
@@ -585,7 +647,7 @@ QString BackEnd::getUuid()
 void BackEnd::start()
 {
     m_scooping = QDateTime::currentSecsSinceEpoch();
-    setScooping(m_scooping);
+    setScooping();
     saveChain();
 }
 
@@ -595,7 +657,12 @@ int BackEnd::saveChain()
     buffer.open(QIODevice::WriteOnly);
     QDataStream out(&buffer);
 
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation).append("/shift.db");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QDir dir(path);
+    if (!dir.exists())
+        dir.mkpath(path);
+
+    path.append("/shift.db");
     QFile file(path);
     if(!file.open(QIODevice::WriteOnly))
     {
@@ -611,6 +678,8 @@ int BackEnd::saveChain()
     out << m_uuid;
     out << m_ruuid;
     out << m_name;
+    out << m_country;
+    out << m_language;
 
     out << m_bookingModel.count();
     for(int i = 0; i < m_bookingModel.count(); i++)
@@ -647,7 +716,11 @@ int BackEnd::loadChain()
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     QFile file(path.append("/shift.db"));
     if(!file.exists())
+    {
+        m_message = "Welcome, please fill in all fields and tap on CREATE ACCOUNT";
+        emit messageChanged();
         return FILE_NOT_EXISTS;
+    }
     if(!file.open(QIODevice::ReadOnly))
     {
         if (file.error() != QFile::NoError) 
@@ -682,6 +755,8 @@ int BackEnd::loadChain()
         in >> m_uuid;
         in >> m_ruuid;
         in >> m_name;
+        in >> m_country;
+        in >> m_language;
         in >> count;
         m_bookingModel.clear();
         m_balance = 0;
@@ -696,6 +771,8 @@ int BackEnd::loadChain()
             m_bookingModel.append(new Booking(description, amount, date));
             m_balance += amount;
         }
+        m_message = "Welcome, back " + m_name;
+        emit messageChanged();
         buffer.close();
         emit balanceChanged();
     }
@@ -747,6 +824,16 @@ void BackEnd::setRuuid_test(QString ruuid)
 void BackEnd::setName_test(QString name)
 {
     m_name = name;
+}
+
+void BackEnd::setCountry_test(QString country)
+{
+    m_country = country;
+}
+
+void BackEnd::setLanguage_test(QString language)
+{
+    m_language = language;
 }
 
 void BackEnd::resetAccount_test()
