@@ -1,18 +1,15 @@
 TEMPLATE = app
 TARGET = shift
-QT += quick quickcontrols2 core androidextras
+QT += quick quickcontrols2 core 
+CONFIG += c++11
 
 SOURCES += \
     shift.cpp \
     backend.cpp \ 
-    shareutils.cpp \
-    notificationclient.cpp \
     simplecrypt.cpp
 
 HEADERS += \
     backend.h \ 
-    shareutils.h \
-    notificationclient.h \
     simplecrypt.h
 
 RESOURCES += \
@@ -44,14 +41,19 @@ QML_IMPORT_NAME = at.crowdware.backend
 QML_IMPORT_MAJOR_VERSION = 1
 
 android {
+    DEFINES += ANDROID
     QT += androidextras
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += \
         android/src/com/lasconic/QShareUtils.java \
         android/src/org/qtproject/example/notification/NotificationClient.java
     
-    SOURCES += android/androidshareutils.cpp
-    HEADERS += android/androidshareutils.h
+    SOURCES += android/androidshareutils.cpp \
+        shareutils.cpp \
+        notificationclient.cpp \
+    HEADERS += android/androidshareutils.h \
+        shareutils.h \
+        notificationclient.h \
 
     DISTFILES += \
         android/AndroidManifest.xml \

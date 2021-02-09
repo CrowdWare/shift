@@ -29,11 +29,15 @@
 #include <QQuickView>
 #include <QUuid>
 #include "backend.h"
+#ifdef ANDROID
 #include "shareutils.h"
 #include "notificationclient.h"
+#endif
 
 BackEnd backend;
+#ifdef ANDROID
 NotificationClient notificationClient;
+#endif
     
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -72,7 +76,9 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
+#ifdef ANDROID
     qmlRegisterType<ShareUtils> ("com.lasconic", 1, 0, "ShareUtils");
+#endif
    
     QIcon::setThemeName("shift");
     QQuickStyle::setStyle("Material");
@@ -90,7 +96,9 @@ int main(int argc, char *argv[])
    
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("backend", &backend);
+#ifdef ANDROID
     engine.rootContext()->setContextProperty("notificationClient", &notificationClient);
+#endif
     engine.load(QUrl("qrc:/shift.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;

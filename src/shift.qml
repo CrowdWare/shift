@@ -108,6 +108,8 @@ ApplicationWindow
                     {
                         text: "Last Error"
                         onTriggered: errorDialog.open()
+                        visible: backend.lastError != ""
+                        height: visible ? implicitHeight : 0
                     }
                 }
             }
@@ -166,10 +168,9 @@ ApplicationWindow
             Image 
             {
                 id: logo
-                width: pane.availableWidth / 3
-                height: pane.availableHeight / 3
-                anchors.centerIn: parent
-                anchors.verticalCenterOffset: -200
+                anchors.top: parent.top
+                anchors.bottom: label.top
+                anchors.horizontalCenter: parent.horizontalCenter
                 fillMode: Image.PreserveAspectFit
                 source: "images/logo.png"
 
@@ -191,7 +192,7 @@ ApplicationWindow
                 text: backend.message
                 textFormat: Text.RichText
                 anchors.margins: 0
-                anchors.top: logo.bottom
+                anchors.bottom: name.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Label.AlignHCenter
@@ -206,7 +207,8 @@ ApplicationWindow
                 anchors.margins: 10
                 font.pointSize: 20
                 visible: backend.uuid == ""
-                anchors.top: label.bottom
+                height: visible ? implicitHeight : 0
+                anchors.bottom: labelRuuid.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 placeholderText: "enter your name or nickname"
@@ -217,8 +219,9 @@ ApplicationWindow
                 id: labelRuuid
                 text: "Enter the referer id"
                 visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
                 anchors.margins: 10
-                anchors.top: name.bottom
+                anchors.bottom: ruuid.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Label.AlignHCenter
@@ -232,7 +235,8 @@ ApplicationWindow
                 anchors.margins: 10
                 font.pointSize: 20
                 visible: backend.uuid == ""
-                anchors.top: labelRuuid.bottom
+                height: visible ? implicitHeight : 0
+                anchors.bottom: labelCountry.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 placeholderText: "enter the referer id"
@@ -243,8 +247,9 @@ ApplicationWindow
                 id: labelCountry
                 text: "Select your country"
                 visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
                 anchors.margins: 10
-                anchors.top: ruuid.bottom
+                anchors.bottom: country.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Label.AlignHCenter
@@ -256,7 +261,8 @@ ApplicationWindow
                 id: country
                 width: 200
                 visible: backend.uuid == ""
-                anchors.top: labelCountry.bottom
+                height: visible ? implicitHeight : 0
+                anchors.bottom: labelLanguage.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 model: ['',
@@ -463,8 +469,9 @@ ApplicationWindow
                 id: labelLanguage
                 text: "Select preferred language"
                 visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
                 anchors.margins: 10
-                anchors.top: country.bottom
+                anchors.bottom: language.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Label.AlignHCenter
@@ -477,22 +484,24 @@ ApplicationWindow
                 id: language
                 width: 200
                 visible: backend.uuid == ""
-                anchors.top: labelLanguage.bottom
+                height: visible ? implicitHeight : 0
+                anchors.bottom: create.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                model: ['', 'English', 'Deutsch', 'Español', 'Português']
+                model: ['', 'English', 'Deutsch', 'Español', 'Français', 'Português']
             }
 
             Button
             {
+                id: create
                 visible: backend.uuid == ""
+                height: visible ? 50 : 0
                 enabled: (ruuid.text != "" && name.text != "" && country.currentText != "" && language.currentText != "")
-                anchors.top: language.bottom
+                anchors.bottom: parent.bottom
                 font.pointSize: 20
                 anchors.margins: 10
      	        anchors.left: parent.left
                 anchors.right: parent.right
-		        height: 50
                 text: "Create Account"
                 Material.background: Material.Blue
 		        onClicked: backend.createAccount(name.text, ruuid.text, country.currentText, language.currentText);

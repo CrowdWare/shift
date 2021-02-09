@@ -118,7 +118,7 @@ def scooping():
         try:
             conn = dbConnect()
             curs = conn.cursor()
-            query = 'UPDATE account SET scooping = ' + seconds + ' WHERE uuid = "' + uuid + '"'
+            query = 'UPDATE account SET scooping = ' + str(seconds) + ' WHERE uuid = "' + uuid + '"'
             curs.execute(query)
             conn.commit()
         except IntegrityError as error:

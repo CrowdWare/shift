@@ -238,5 +238,6 @@ private:
     BookingModel m_bookingModel;
     MateModel m_mateModel;
     QString m_check;
+    int m_mates;
 };
 #endif // BACKEND_H

@@ -29,14 +29,28 @@ Page
 	id: page
 	title: "Mates"
 
+	Text 
+	{	
+		id: caption	
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.right: parent.right
+	   	text: "Here you can see whow of your mates is actually scooping."
+	   	font.pixelSize: page.height / 40
+		anchors.topMargin: page.width / 20
+		anchors.leftMargin: page.width / 10
+		anchors.rightMargin: page.width / 10
+		wrapMode: Text.WordWrap
+	}
+
 	Rectangle 
 	{
 		id: list
-		anchors.top: parent.top
+		anchors.top: caption.bottom
 		anchors.margins: page.width / 10
      	anchors.left: parent.left
         anchors.right: parent.right
-		height: page.height - page.width / 5
+		height: page.height - page.width / 5 - caption.height
 	    color: "#EEEEEE"
 	   	ListView 
 		{
@@ -46,7 +60,39 @@ Page
 	   		spacing: page.width / 100
 			model: backend.mateModel
 			delegate: listDelegate
-	    	
+	    	header: headerComponent
+
+			Component 
+			{
+        		id: headerComponent
+
+        		Rectangle 
+				{
+            		width: parent.width 
+            		height: page.height / 20
+					color: "#C0C0C0"
+            		Text 
+					{
+						id: headerScooping
+						height: parent.height
+	   					x: 5
+	   					text: "Scooping"
+	   					font.pixelSize: page.height / 40
+						verticalAlignment: Text.AlignVCenter
+	   				}  
+					Text 
+					{
+						id: headerName
+						height: parent.height
+						x: 100
+	   					anchors.leftMargin: 5
+	   					text: "Name"
+	   					font.pixelSize: page.height / 40
+						verticalAlignment: Text.AlignVCenter
+	   				}  
+        		}
+    		}
+
 	   		Component 
 			{
 	   			id: listDelegate
@@ -59,6 +105,7 @@ Page
 					Image 
             		{
 						id: icon
+						x: 20
 						visible: model.scooping > 0
                 		width: 32
                 		height: 32
@@ -70,8 +117,7 @@ Page
 					{
 	   					id: name
 						height: parent.height
-						anchors.left: icon.right
-	   					anchors.leftMargin: 5
+						x: 100
 	   					text: model.name
 						verticalAlignment: Text.AlignVCenter
 	   					font.pixelSize: page.height / 40

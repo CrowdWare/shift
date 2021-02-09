@@ -34,6 +34,7 @@
 #include <QJsonDocument>
 #include <QMap>
 #include <QJsonArray>
+#include <QDir>
 
 #include "../../private/shift.keys"
 
@@ -548,8 +549,12 @@ void BackEnd::onMatelistReply(QNetworkReply* reply)
                     }
                     QJsonArray data = json_obj.value("data").toArray();
                     m_mateModel.clear();
+                    m_mates = 0;
                     foreach (const QJsonValue & value, data)
                     {
+                        // only count up to 10 mates
+                        if(m_mates < 10)
+                            m_mates++;
                         QJsonObject obj = value.toObject();
                         m_mateModel.append(new Mate(obj["name"].toString(), obj["uuid"].toString(), obj["scooping"].toBool()));
     		        }
@@ -584,8 +589,11 @@ QString BackEnd::getMessage()
 
 void BackEnd::setLastError(const QString &lastError)
 {
-    m_lastError += lastError + "\n";
-    emit lastErrorChanged();
+    if (m_lastError.length() < 200)
+    {
+        m_lastError += lastError + "\n";
+        emit lastErrorChanged();
+    }
 }
 
 int BackEnd::getBalance()
@@ -604,7 +612,8 @@ int BackEnd::mintedBalance(qint64 time)
         if(hours > 20.0)
         {
             hours = 0;
-            m_balance = m_balance + 10; // 10 THX per day added (20 hours / 2)
+            int grow = 10 + m_mates;
+            m_balance = m_balance + grow; // 10 + 1 (per mate) THX per day added (20 hours / 2) + 
             // stop scooping after 20 hours
             m_scooping = 0;
             if (m_bookingModel.count() > 29)
@@ -616,13 +625,13 @@ int BackEnd::mintedBalance(qint64 time)
                 prev->setDescription("Subtotal");
                 m_bookingModel.remove(m_bookingModel.count() - 1);
             }
-            m_bookingModel.insert(0, new Booking("Liquid scooped", 10, QDate::currentDate()));
+            m_bookingModel.insert(0, new Booking("Liquid scooped", grow, QDate::currentDate()));
             saveChain();
             emit scoopingChanged();
             emit balanceChanged();
         }
     }
-    return m_balance * 1000 + (hours * 500.0);
+    return m_balance * 1000 + (hours * 500.0) + (hours * m_mates * 50.0);
 }
 
 qint64 BackEnd::getScooping()
@@ -648,7 +657,12 @@ int BackEnd::saveChain()
     buffer.open(QIODevice::WriteOnly);
     QDataStream out(&buffer);
 
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation).append("/shift.db");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QDir dir(path);
+    if (!dir.exists())
+        dir.mkpath(path);
+
+    path.append("/shift.db");
     QFile file(path);
     if(!file.open(QIODevice::WriteOnly))
     {
