@@ -177,7 +177,6 @@ Page
         text: "Invite Friends"
 		Material.background: Material.Blue
 		onClicked: shareUtils.share("SHIFT is a new app to create worldwide universal basic income. Get your first THX now, by following this link http://www.shifting.site. Download the app, start it and use this id " + backend.uuid + " as invitation code.")
-		//notificationClient.notification = "User is much happier!"
 	}
 
 	function formatBalance(balance)
