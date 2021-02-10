@@ -89,6 +89,14 @@ def register():
     if test != "true":
         try:
             conn = dbConnect()
+            if uuid != ruuid:
+                curs = conn.cursor(dictionary=True)
+                query = 'SELECT COUNT(*) AS count FROM account WHERE uuid = "' + ruuid + '"'
+                curs.execute(query)
+                row = curs.fetchone()
+                count = row['count']
+                if count != 1:
+                    return jsonify(isError=True, message="The referer id is not correct.", statusCode=200)
             curs = conn.cursor()
             query = 'INSERT INTO account(name, uuid, ruuid, scooping, country, language) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0, "' + country + '","' + language +'")'
             curs.execute(query)

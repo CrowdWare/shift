@@ -272,6 +272,7 @@ BackEnd::BackEnd(QObject *parent) :
     m_message = "Welcome, wait a few seconds to load the database";
     m_name = "";
     m_key = SHIFT_API_KEY;
+    m_registerError = "";
     m_crypto.setKey(SHIFT_ENCRYPT_KEY);
     m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
@@ -310,6 +311,11 @@ void BackEnd::createAccount(QString name, QString ruuid, QString country, QStrin
     m_balance = 0;
     m_scooping = 0;
     registerAccount();
+}
+
+QString BackEnd::getRegisterError()
+{
+    return m_registerError;
 }
 
 void BackEnd::setScooping()
@@ -373,6 +379,9 @@ void BackEnd::onSetScoopingReply(QNetworkReply* reply)
 
 void BackEnd::registerAccount()
 {
+    m_registerError = "";
+    emit registerErrorChanged();
+
     QNetworkRequest request;
     request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
     request.setRawHeader("User-Agent", "Shift 1.0");
@@ -410,11 +419,15 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                     QJsonObject json_obj = json.object();
                     if (json_obj["isError"].toBool())
                     {
-                        setLastError(json_obj["message"].toString());
+                        m_registerError = json_obj["message"].toString();
+                        emit registerErrorChanged();
                         reply->deleteLater();
                         return;
                     }
                     // account is now registered
+                    m_registerError = "";
+                    emit registerErrorChanged();
+
                     m_balance = 1;
                     m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
                     saveChain();
@@ -425,16 +438,22 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                 else
                 {
                     setLastError("Reply not readable");
+                    m_registerError = "An error occured. Please try again later.";
+                    emit registerErrorChanged();
                 }
     		    break;
     		default:
                 setLastError("Response error from webserver: " + QString::number(httpstatuscode));
-    			break;
+    			m_registerError = "An error occured. Please try again later.";
+                emit registerErrorChanged();
+                break;
     	}
     }
     else
     {
         setLastError("Reply error from webserver: " + QString::number(reply->error()));
+        m_registerError = "An error occured. Please try again later.";
+        emit registerErrorChanged();
     }
      
     reply->deleteLater();

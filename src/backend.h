@@ -164,6 +164,7 @@ class BackEnd : public QObject
     Q_PROPERTY(QString uuid READ getUuid NOTIFY uuidChanged)
     Q_PROPERTY(BookingModel *bookingModel READ getBookingModel CONSTANT)
     Q_PROPERTY(MateModel *mateModel READ getMateModel CONSTANT)
+    Q_PROPERTY(QString registerError READ getRegisterError NOTIFY registerErrorChanged)
     
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -179,6 +180,7 @@ public:
     QString getUuid();
     qint64 getScooping();
     QString getMessage();
+    QString getRegisterError();
     int saveChain();
     int loadChain();
     
@@ -216,6 +218,7 @@ signals:
     void messageChanged();
     void uuidChanged();
     void balanceChanged();
+    void registerErrorChanged();
 
 public slots:
     void onNetworkReply(QNetworkReply* reply);
@@ -235,6 +238,7 @@ private:
     QString m_key;
     QString m_country;
     QString m_language;
+    QString m_registerError;
     BookingModel m_bookingModel;
     MateModel m_mateModel;
     QString m_check;

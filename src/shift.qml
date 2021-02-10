@@ -485,10 +485,26 @@ ApplicationWindow
                 width: 200
                 visible: backend.uuid == ""
                 height: visible ? implicitHeight : 0
-                anchors.bottom: create.top
+                anchors.bottom: labelError.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 model: ['', 'English', 'Deutsch', 'Español', 'Français', 'Português']
+            }
+
+            Label
+            {
+                id: labelError
+                text: backend.registerError
+                visible: backend.uuid == ""
+                height: visible ? implicitHeight : 0
+                anchors.margins: 10
+                anchors.bottom: create.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Label.AlignHCenter
+                verticalAlignment: Label.AlignVCenter
+                wrapMode: Label.Wrap
+                color: "red"
             }
 
             Button
