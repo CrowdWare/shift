@@ -12,3 +12,14 @@ class Block:
         self.amount = amount
         self.timestamp = timestamp
         self.version = version
+
+
+class Blockchain:
+    def __init__(self):
+        self.block = block
+        self.blocks = list()
+    
+    def addBlock(self,block)
+        self.blocks.append(block)
+
+
