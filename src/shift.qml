@@ -530,7 +530,7 @@ ApplicationWindow
         id: aboutDialog
         modal: true
         focus: true
-        title: "About"
+        title: "About SHIFT " + backend.version
         x: (window.width - width) / 2
         y: window.height / 6
         width: Math.min(window.width, window.height) / 3 * 2

@@ -165,6 +165,7 @@ class BackEnd : public QObject
     Q_PROPERTY(BookingModel *bookingModel READ getBookingModel CONSTANT)
     Q_PROPERTY(MateModel *mateModel READ getMateModel CONSTANT)
     Q_PROPERTY(QString registerError READ getRegisterError NOTIFY registerErrorChanged)
+    Q_PROPERTY(QString version READ getVersion CONSTANT)
     
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -181,6 +182,7 @@ public:
     qint64 getScooping();
     QString getMessage();
     QString getRegisterError();
+    QString getVersion();
     int saveChain();
     int loadChain();
     

@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "backend.h"
+#include <QGuiApplication>
 #include <QDateTime>
 #include <QFile>
 #include <QCryptographicHash>
@@ -313,6 +314,11 @@ void BackEnd::createAccount(QString name, QString ruuid, QString country, QStrin
 QString BackEnd::getRegisterError()
 {
     return m_registerError;
+}
+
+QString BackEnd::getVersion()
+{
+    return QGuiApplication::applicationVersion();
 }
 
 void BackEnd::setScooping()
