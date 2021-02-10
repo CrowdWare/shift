@@ -301,10 +301,7 @@ void BackEnd::setName(QString name)
 void BackEnd::createAccount(QString name, QString ruuid, QString country, QString language)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
-    if (ruuid == "me")
-        m_ruuid = m_uuid;
-    else
-        m_ruuid = ruuid;
+    m_ruuid = ruuid;
     m_name = name;
     m_country = country;
     m_language = language;
