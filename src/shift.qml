@@ -176,7 +176,7 @@ ApplicationWindow
 
                 MouseArea
                 {
-                    enabled: backend.uuid != ""
+                    enabled: backend.uuid != "" && backend.writepermission
                     anchors.fill: parent
                     onClicked:
                     {
@@ -206,7 +206,7 @@ ApplicationWindow
                 id: name
                 anchors.margins: 10
                 font.pointSize: 20
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelRuuid.top
                 anchors.left: parent.left
@@ -218,7 +218,7 @@ ApplicationWindow
             {
                 id: labelRuuid
                 text: "Enter the referer id"
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: ruuid.top
@@ -234,7 +234,7 @@ ApplicationWindow
                 id: ruuid
                 anchors.margins: 10
                 font.pointSize: 20
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelCountry.top
                 anchors.left: parent.left
@@ -246,7 +246,7 @@ ApplicationWindow
             {
                 id: labelCountry
                 text: "Select your country"
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: country.top
@@ -260,7 +260,7 @@ ApplicationWindow
             {
                 id: country
                 width: 200
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelLanguage.top
                 anchors.left: parent.left
@@ -468,7 +468,7 @@ ApplicationWindow
             {
                 id: labelLanguage
                 text: "Select preferred language"
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: language.top
@@ -483,7 +483,7 @@ ApplicationWindow
             {
                 id: language
                 width: 200
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelError.top
                 anchors.left: parent.left
@@ -495,7 +495,7 @@ ApplicationWindow
             {
                 id: labelError
                 text: backend.registerError
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: create.top
@@ -510,7 +510,7 @@ ApplicationWindow
             Button
             {
                 id: create
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? 50 : 0
                 enabled: (ruuid.text != "" && name.text != "" && country.currentText != "" && language.currentText != "")
                 anchors.bottom: parent.bottom

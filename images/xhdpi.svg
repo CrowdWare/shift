@@ -7,20 +7,33 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="360"
-   height="360"
-   viewBox="0 0 95.250003 95.250003"
+   width="96"
+   height="96"
+   viewBox="0 0 25.4 25.4"
    version="1.1"
    id="svg8"
-   sodipodi:docname="icon.svg"
+   sodipodi:docname="xhdpi.svg"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
-   inkscape:export-filename="/Users/art/SourceCode/Shift/src/android/res/drawable-nodpi/logo.png"
+   inkscape:export-filename="/Users/art/SourceCode/Shift/src/android/res/drawable-xhdpi/icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <style
        id="style1767">.cls-1{fill:#e42b2b;fill-rule:evenodd;}</style>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter849"
+       x="-0.00012086612"
+       width="1.0002418"
+       y="-0.00011914621"
+       height="1.0002383">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.00093692884"
+         id="feGaussianBlur851" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -29,9 +42,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.51253751"
-     inkscape:cx="-45.989387"
-     inkscape:cy="374.64307"
+     inkscape:zoom="5.048471"
+     inkscape:cx="52.573488"
+     inkscape:cy="59.658735"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -62,37 +75,31 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     style="opacity:1"
+     style="opacity:1;filter:url(#filter849)"
      transform="translate(41.502036,14.632894)">
+    <ellipse
+       style="fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.0210439;stroke-opacity:1"
+       id="path1009"
+       cx="-28.929516"
+       cy="-1.965115"
+       rx="12.425143"
+       ry="12.604505" />
+    <ellipse
+       style="fill:#ffffff;stroke:none;stroke-width:0.0210439;stroke-opacity:1"
+       id="path992"
+       cx="-28.929516"
+       cy="-1.9651138"
+       rx="10.846608"
+       ry="11.34856" />
     <g
-       id="g848"
-       transform="matrix(0.29921265,0,0,0.29604822,-26.922068,-9.7595973)"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96">
-      <ellipse
-         style="fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         id="path1009"
-         cx="110.79039"
-         cy="144.95657"
-         rx="155.39159"
-         ry="159.31967" />
-      <ellipse
-         style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         id="path992"
-         cx="110.79041"
-         cy="144.95659"
-         rx="135.65007"
-         ry="143.44469" />
-      <g
-         id="g986"
-         transform="translate(-19.276781,-5.2916671)"
-         style="fill:#28a9e0;fill-opacity:1">
-        <path
-           id="rect917"
-           style="fill:#28a9e0;fill-opacity:1;stroke-width:1.04978"
-           d="M 514.16602,132.12305 405.06836,241.2207 764.68359,600.83594 405.06836,960.44922 514.16602,1069.5449 873.7793,709.93164 982.87695,600.83398 873.7793,491.73828 Z M 330.92383,315.76953 221.82617,424.86719 399.61328,602.65234 221.82617,780.43945 330.92383,889.53711 508.71094,711.75 617.80664,602.65234 508.71094,493.55664 Z"
-           transform="matrix(0.26458333,0,0,0.26458333,-25.456707,-9.2037229)" />
-      </g>
+       id="g986"
+       transform="matrix(0.07996021,0,0,0.07911455,-39.329718,-13.851937)"
+       style="fill:#28a9e0;fill-opacity:1">
+      <path
+         id="rect917"
+         style="fill:#28a9e0;fill-opacity:1;stroke-width:1.04978"
+         d="M 514.16602,132.12305 405.06836,241.2207 764.68359,600.83594 405.06836,960.44922 514.16602,1069.5449 873.7793,709.93164 982.87695,600.83398 873.7793,491.73828 Z M 330.92383,315.76953 221.82617,424.86719 399.61328,602.65234 221.82617,780.43945 330.92383,889.53711 508.71094,711.75 617.80664,602.65234 508.71094,493.55664 Z"
+         transform="matrix(0.26458333,0,0,0.26458333,-25.456707,-9.2037229)" />
     </g>
     <path
        style="fill:#000000;stroke-width:0.264583"

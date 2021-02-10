@@ -302,13 +302,52 @@ void BackEnd::setName(QString name)
 void BackEnd::createAccount(QString name, QString ruuid, QString country, QString language)
 {
     m_uuid = QUuid::createUuid().toByteArray().toBase64();
-    m_ruuid = ruuid;
+    if (ruuid == "me")
+        m_ruuid = m_uuid;
+    else
+        m_ruuid = ruuid;
     m_name = name;
     m_country = country;
     m_language = language;
     m_balance = 0;
     m_scooping = 0;
     registerAccount();
+}
+
+bool BackEnd::getWritepermission()
+{
+    return m_writepermission;
+}
+
+bool BackEnd::checkPermission()
+{
+    m_writepermission = false;
+    QString msg_text = "Welcome, please set the permission to write to external storage in the settings of your mobile phone and restart the app.<br><br>You will find it under: Settings -> Apps -> Apps -> Shift -> Permission -> Memory";
+            
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
+    QDir dir(path);
+    if (!dir.exists())
+    {
+        if (!dir.mkpath(path))
+        {
+            m_message = msg_text;
+            return false;
+        }
+    }
+    path.append("/test.txt");
+    QFile file(path);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        file.close();
+        file.remove();
+        m_writepermission = true;
+        return true;
+    }
+    else
+    {   
+        m_message = msg_text;
+        return false;
+    }
 }
 
 QString BackEnd::getRegisterError()
@@ -679,7 +718,7 @@ int BackEnd::saveChain()
     buffer.open(QIODevice::WriteOnly);
     QDataStream out(&buffer);
 
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
     QDir dir(path);
     if (!dir.exists())
         dir.mkpath(path);
@@ -735,7 +774,7 @@ int BackEnd::loadChain()
     quint16 version;
     int count;
 
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
     QFile file(path.append("/shift.db"));
     if(!file.exists())
     {
@@ -860,7 +899,7 @@ void BackEnd::setLanguage_test(QString language)
 
 void BackEnd::resetAccount_test()
 {
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     QFile file(path.append("/shift.db"));
     file.remove();
 }

@@ -166,6 +166,7 @@ class BackEnd : public QObject
     Q_PROPERTY(MateModel *mateModel READ getMateModel CONSTANT)
     Q_PROPERTY(QString registerError READ getRegisterError NOTIFY registerErrorChanged)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
+    Q_PROPERTY(bool writepermission READ getWritepermission CONSTANT)
     
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -183,6 +184,8 @@ public:
     QString getMessage();
     QString getRegisterError();
     QString getVersion();
+    bool getWritepermission();
+    bool checkPermission();
     int saveChain();
     int loadChain();
     
@@ -245,5 +248,6 @@ private:
     MateModel m_mateModel;
     QString m_check;
     int m_mates;
+    bool m_writepermission;
 };
 #endif // BACKEND_H

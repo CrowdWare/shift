@@ -7,10 +7,12 @@ SOURCES += \
     shift.cpp \
     backend.cpp \ 
     simplecrypt.cpp \
+    shareutils.cpp
 
 HEADERS += \
     backend.h \ 
     simplecrypt.h \
+    shareutils.h
 
 RESOURCES += \
     shift.qml \
@@ -43,20 +45,18 @@ QML_IMPORT_MAJOR_VERSION = 1
 android {
     DEFINES += ANDROID
     QT += androidextras
+    ANDROID_VERSION_CODE = "1"
+    ANDROID_VERSION_NAME = "1.0.2"
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += \
-        android/src/com/lasconic/QShareUtils.java \
-        android/src/org/qtproject/example/notification/NotificationClient.java
+        android/src/com/lasconic/QShareUtils.java
     
     SOURCES += \
-        android/androidshareutils.cpp \
-        shareutils.cpp \
-        notificationclient.cpp
+        android/androidshareutils.cpp
+        
 
     HEADERS += \
-        android/androidshareutils.h \
-        shareutils.h \
-        notificationclient.h
+        android/androidshareutils.h
 
     DISTFILES += \
         android/AndroidManifest.xml \
