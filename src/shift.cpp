@@ -29,6 +29,7 @@
 #include <QQuickView>
 #include <QUuid>
 #include "backend.h"
+#include "plugin.h"
 #include "shareutils.h"
 
 BackEnd backend;
@@ -71,6 +72,7 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     qmlRegisterType<BackEnd>("at.crowdware.backend", 1, 0, "BackEnd");
+    qmlRegisterType<Plugin>("at.crowdware.backend", 1, 0, "Plugin");
     qmlRegisterType<ShareUtils> ("com.lasconic", 1, 0, "ShareUtils");
    
     QIcon::setThemeName("shift");
@@ -88,6 +90,8 @@ int main(int argc, char *argv[])
         backend.loadChain();
         backend.loadMessage();
         backend.loadMatelist();
+        backend.loadMenu();
+        backend.loadPlugins();
     }
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("backend", &backend);

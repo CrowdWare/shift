@@ -146,13 +146,7 @@ ApplicationWindow
                     drawer.close()
                 }
             }
-
-            model: ListModel 
-            {
-                ListElement { title: "Home"; source: "qrc:/gui/Home.qml" }
-                ListElement { title: "Mates"; source: "qrc:/gui/Friends.qml" }
-            }
-
+            model: backend.menuModel
             ScrollIndicator.vertical: ScrollIndicator { }
         }
     }

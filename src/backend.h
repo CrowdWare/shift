@@ -30,6 +30,9 @@
 #include <QAbstractListModel>
 #include <QColor>
 #include "simplecrypt.h"
+#include "bookingmodel.h"
+#include "matemodel.h"
+#include "menumodel.h" 
 
 #define BAD_FILE_FORMAT -1
 #define UNSUPPORTED_VERSION -2
@@ -39,119 +42,6 @@
 #define FILE_NOT_EXISTS -6
 #define CHAIN_LOADED 0
 #define CHAIN_SAVED 0
-
-class Mate : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString name READ name CONSTANT)
-    Q_PROPERTY(QString uuid READ uuid CONSTANT)
-    Q_PROPERTY(bool scooping READ scooping CONSTANT)
- 
-public:
-    explicit Mate(QString name, QString uuid, bool scooping, QObject *parent = nullptr);
-
-    QString name();
-    QString uuid();
-    bool scooping();
-
-private:
-    QString m_name;
-    QString m_uuid;
-    bool m_scooping;
-};
-
-class Booking : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
-    Q_PROPERTY(quint64 amount READ amount WRITE setAmount NOTIFY amountChanged)
-    Q_PROPERTY(QDate date READ date WRITE setDate NOTIFY dateChanged)
-    
-public:
-    explicit Booking(QString description, quint64 amount, QDate date, QObject *parent = nullptr);
-
-    QString description();
-    quint64 amount();
-    QDate date();
-    void setDescription(const QString &description);
-    void setAmount(quint64 amount);
-    void setDate(QDate date);
-
-signals:
-    void descriptionChanged();
-    void amountChanged();
-    void dateChanged();
-
-private:
-    QString m_description;
-    quint64 m_amount;
-    QDate m_date;
-};
-
-class BookingModel : public QAbstractListModel
-{
-    Q_OBJECT 
-public:
-    enum RoleNames
-    {
-        DescriptionRole = Qt::UserRole,
-        AmountRole = Qt::UserRole + 2,
-        DateRole = Qt::UserRole + 3
-    };
-
-    explicit BookingModel(QObject*parent = 0);
-    ~BookingModel();
-
-    Q_INVOKABLE void insert(int index, Booking *booking);
-    Q_INVOKABLE void append(Booking *booking);
-    Q_INVOKABLE void clear();
-    Q_INVOKABLE int count();
-    Q_INVOKABLE void remove(int index);
-    Q_INVOKABLE Booking *get(int index);
-
-protected:
-    virtual QHash<int, QByteArray> roleNames() const override;
-
-public:
-    virtual int rowCount(const QModelIndex &parent) const override;
-    virtual QVariant data(const QModelIndex &index, int role) const override;
-
-private:
-    QList<Booking *> m_bookings;
-    QHash<int, QByteArray> m_roleNames;
-};
-
-class MateModel : public QAbstractListModel
-{
-    Q_OBJECT 
-public:
-    enum RoleNames
-    {
-        NameRole = Qt::UserRole,
-        UuidRole = Qt::UserRole + 1,
-        ScoopingRole = Qt::UserRole + 2
-    };
-
-    explicit MateModel(QObject*parent = 0);
-    ~MateModel();
-
-    Q_INVOKABLE void insert(int index, Mate *fr);
-    Q_INVOKABLE void append(Mate *fr);
-    Q_INVOKABLE void clear();
-    Q_INVOKABLE int count();
-    Q_INVOKABLE Mate *get(int index);
-
-protected:
-    virtual QHash<int, QByteArray> roleNames() const override;
-
-public:
-    virtual int rowCount(const QModelIndex &parent) const override;
-    virtual QVariant data(const QModelIndex &index, int role) const override;
-
-private:
-    QList<Mate *> m_mates;
-    QHash<int, QByteArray> m_roleNames;
-};
 
 
 class BackEnd : public QObject
@@ -164,6 +54,7 @@ class BackEnd : public QObject
     Q_PROPERTY(QString uuid READ getUuid NOTIFY uuidChanged)
     Q_PROPERTY(BookingModel *bookingModel READ getBookingModel CONSTANT)
     Q_PROPERTY(MateModel *mateModel READ getMateModel CONSTANT)
+    Q_PROPERTY(MenuModel *menuModel READ getMenuModel CONSTANT)
     Q_PROPERTY(QString registerError READ getRegisterError NOTIFY registerErrorChanged)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
     Q_PROPERTY(bool writepermission READ getWritepermission CONSTANT)
@@ -188,11 +79,13 @@ public:
     bool checkPermission();
     int saveChain();
     int loadChain();
-    
+    void loadMenu();
+    void loadPlugins();
     void loadMessage();
     void loadMatelist();
     BookingModel *getBookingModel();
     MateModel *getMateModel();
+    MenuModel *getMenuModel();
 
 #ifndef TEST
 private:
@@ -246,6 +139,7 @@ private:
     QString m_registerError;
     BookingModel m_bookingModel;
     MateModel m_mateModel;
+    MenuModel m_menuModel;
     QString m_check;
     int m_mates;
     bool m_writepermission;

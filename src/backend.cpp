@@ -36,234 +36,11 @@
 #include <QMap>
 #include <QJsonArray>
 #include <QDir>
+#include <QQmlComponent>
+#include <QQmlEngine>
+#include "plugin.h"
 
 #include "../../private/shift.keys"
-
-Mate::Mate(QString name, QString uuid, bool scooping, QObject *parent) :
-    QObject(parent)
-{ 
-    m_name = name;
-    m_uuid = uuid;
-    m_scooping = scooping;
-}
-
-QString Mate::name()
-{
-    return m_name;
-}
-
-QString Mate::uuid()
-{
-    return m_uuid;
-}
-
-bool Mate::scooping()
-{
-    return m_scooping;
-}
-
-Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
-    QObject(parent)
-{ 
-    m_description = description;
-    m_amount = amount;
-    m_date = date;
-}
-
-QString Booking::description()
-{
-    return m_description;
-}
-
-quint64 Booking::amount()
-{
-    return m_amount;
-}
-
-QDate Booking::date()
-{
-    return m_date;
-}
-
-void Booking::setDescription(const QString &description)
-{
-    m_description = description;
-    emit descriptionChanged();
-}
-
-void Booking::setAmount(quint64 amount)
-{
-    m_amount = amount;
-    emit amountChanged();
-}
-
-void Booking:: setDate(QDate date)
-{
-    m_date = date;
-    emit dateChanged();
-}
-
-
-BookingModel::BookingModel(QObject*parent): 
-    QAbstractListModel(parent)
-{
-    m_roleNames[DescriptionRole] = "description";
-    m_roleNames[AmountRole] = "amount";
-    m_roleNames[DateRole] = "date";
-}
-
-BookingModel::~BookingModel()
-{
-}
-
-QHash<int, QByteArray> BookingModel::roleNames() const
-{
-    return m_roleNames;
-}
-
-void BookingModel::insert(int index, Booking *booking)
-{
-    if(index < 0 || index > m_bookings.count()) 
-    {
-        return;
-    }
-    emit beginInsertRows(QModelIndex(), index, index);
-    m_bookings.insert(index, booking);
-    emit endInsertRows();
-}
-
-void BookingModel::append(Booking *booking)
-{
-    insert(m_bookings.count(), booking);
-}
-
-void BookingModel::clear()
-{
-    m_bookings.clear();
-}
-
-void BookingModel::remove(int index)
-{
-    if(index < 0 || index >= m_bookings.count()) 
-    {
-        return;
-    }
-    emit beginRemoveRows(QModelIndex(), index, index);
-    m_bookings.removeAt(index);
-    emit endRemoveRows();
-}
-
-int BookingModel::count()
-{
-    return m_bookings.count();
-}
-
-Booking *BookingModel::get(int index)
-{
-    return m_bookings.at(index);
-}
-
-int BookingModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return m_bookings.count();
-}
- 
-QVariant BookingModel::data(const QModelIndex &index,int role) const
-{
-    int row = index.row();
-
-    if(row < 0 || row >= m_bookings.count()) 
-    {
-        return QVariant();
-    }
-    Booking *booking = qobject_cast<Booking *>(m_bookings.at(row));
-    switch(role) 
-    {
-        case DescriptionRole:
-            return booking->description();
-        case AmountRole:
-            return booking->amount();
-        case DateRole:
-            return booking->date();
-    }
-    return QVariant();
-}
-
-
-MateModel::MateModel(QObject*parent): 
-    QAbstractListModel(parent)
-{
-    m_roleNames[NameRole] = "name";
-    m_roleNames[UuidRole] = "uuid";
-    m_roleNames[ScoopingRole] = "scooping";
-}
-
-MateModel::~MateModel()
-{
-}
-
-QHash<int, QByteArray> MateModel::roleNames() const
-{
-    return m_roleNames;
-}
-
-void MateModel::insert(int index, Mate *mate)
-{
-    if(index < 0 || index > m_mates.count()) 
-        return;
-
-    emit beginInsertRows(QModelIndex(), index, index);
-    m_mates.insert(index, mate);
-    emit endInsertRows();
-}
-
-void MateModel::append(Mate *mate)
-{
-    insert(m_mates.count(), mate);
-}
-
-void MateModel::clear()
-{
-    m_mates.clear();
-}
-
-int MateModel::count()
-{
-    return m_mates.count();
-}
-
-Mate *MateModel::get(int index)
-{
-    return m_mates.at(index);
-}
-
-int MateModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return m_mates.count();
-}
- 
-QVariant MateModel::data(const QModelIndex &index,int role) const
-{
-    int row = index.row();
-
-    if(row < 0 || row >= m_mates.count()) 
-    {
-        return QVariant();
-    }
-    Mate *mate = qobject_cast<Mate *>(m_mates.at(row));
-    switch(role) 
-    {
-        case NameRole:
-            return mate->name();
-        case UuidRole:
-            return mate->uuid();
-        case ScoopingRole:
-            return mate->scooping();
-    }
-    return QVariant();
-}
 
 
 BackEnd::BackEnd(QObject *parent) :
@@ -287,6 +64,11 @@ BookingModel *BackEnd::getBookingModel()
 MateModel *BackEnd::getMateModel()
 {
     return &m_mateModel;
+}
+
+MenuModel *BackEnd::getMenuModel()
+{
+    return &m_menuModel;
 }
 
 void BackEnd::setRuuid(QString ruuid)
@@ -841,6 +623,33 @@ int BackEnd::loadChain()
         return CRYPTO_ERROR;
 
     return CHAIN_LOADED;
+}
+
+void BackEnd::loadMenu()
+{
+    m_menuModel.append(new Menu("Home", "qrc:/gui/Home.qml"));
+    m_menuModel.append(new Menu("Mates", "qrc:/gui/Friends.qml"));
+}
+
+void BackEnd::loadPlugins()
+{
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
+    QDir dir(path + "/shift/plugins");
+    dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+    if (dir.exists())
+    {
+        QFileInfoList list = dir.entryInfoList();
+        for (int i = 0; i < list.size(); ++i) 
+        {
+            QFileInfo fileInfo = list.at(i);
+            QQmlEngine engine;
+            QQmlComponent component(&engine);
+            component.loadUrl(QUrl::fromLocalFile(path + "/shift/plugins/" + fileInfo.fileName() + "/plugin.qml"));
+            QObject *obj = component.create();
+            Plugin *plugin = qobject_cast<Plugin *>(obj);
+            m_menuModel.append(new Menu(plugin->title(), plugin->source()));
+        }
+    }
 }
 
 // used for unit tests only

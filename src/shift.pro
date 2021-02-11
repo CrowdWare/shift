@@ -5,12 +5,26 @@ CONFIG += c++11
 
 SOURCES += \
     shift.cpp \
-    backend.cpp \ 
+    backend.cpp \
+    mate.cpp \
+    matemodel.cpp \
+    booking.cpp \
+    bookingmodel.cpp \
+    menu.cpp \
+    plugin.cpp \
+    menumodel.cpp \ 
     simplecrypt.cpp \
     shareutils.cpp
 
 HEADERS += \
-    backend.h \ 
+    backend.h \
+    mate.h \
+    matemodel.h \ 
+    booking.h \
+    bookingmodel.h \
+    menu.h \
+    plugin.h \
+    menumodel.h \
     simplecrypt.h \
     shareutils.h
 
