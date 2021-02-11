@@ -657,6 +657,55 @@ void BackEnd::loadPlugins()
     }
 }
 
+void BackEnd::HttpGet(QString url)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl(url));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onGetReply(QNetworkReply*)));
+    networkManager->get(request);
+}
+
+void BackEnd::onGetReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+                    m_result = reply->readAll().data();
+                    emit resultChanged();
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                m_result = "Response error from webserver: " + QString::number(httpstatuscode);
+                emit resultChanged();
+                break;
+    	}
+    }
+    else
+    {
+        m_result = "Reply error from webserver: " + QString::number(reply->error());
+        emit resultChanged();
+    }
+     
+    reply->deleteLater();
+}
+
+QString BackEnd::getResult()
+{
+    return m_result;
+}
+
 // used for unit tests only
 #ifdef TEST
 void BackEnd::setScooping_test(qint64 time)

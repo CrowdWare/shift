@@ -58,12 +58,14 @@ class BackEnd : public QObject
     Q_PROPERTY(QString registerError READ getRegisterError NOTIFY registerErrorChanged)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
     Q_PROPERTY(bool writepermission READ getWritepermission CONSTANT)
+    Q_PROPERTY(QString result READ getResult NOTIFY resultChanged)
     
 public:
     explicit BackEnd(QObject *parent = nullptr);
 
     Q_INVOKABLE void start();
     Q_INVOKABLE void createAccount(QString name, QString ruuid, QString country, QString language);
+    Q_INVOKABLE void HttpGet(QString url);
 
     void setName(QString name);
     void setRuuid(QString ruuid);
@@ -75,6 +77,7 @@ public:
     QString getMessage();
     QString getRegisterError();
     QString getVersion();
+    QString getResult();
     bool getWritepermission();
     bool checkPermission();
     int saveChain();
@@ -117,12 +120,14 @@ signals:
     void uuidChanged();
     void balanceChanged();
     void registerErrorChanged();
+    void resultChanged();
 
 public slots:
     void onNetworkReply(QNetworkReply* reply);
     void onMatelistReply(QNetworkReply* reply);
     void onRegisterReply(QNetworkReply* reply);
     void onSetScoopingReply(QNetworkReply* reply);
+    void onGetReply(QNetworkReply* reply);
 
 private:
     QString m_lastError;
@@ -143,5 +148,6 @@ private:
     QString m_check;
     int m_mates;
     bool m_writepermission;
+    QString m_result;
 };
 #endif // BACKEND_H
