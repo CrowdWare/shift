@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="144"
+   height="144"
+   viewBox="0 0 38.1 38.1"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="xxhdpi.svg"
+   inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
+   inkscape:export-filename="/Users/art/SourceCode/Shift/src/android/res/drawable-xxhdpi/icon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2">
+    <style
+       id="style1767">.cls-1{fill:#e42b2b;fill-rule:evenodd;}</style>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter849"
+       x="-0.00012086612"
+       width="1.0002418"
+       y="-0.00011914621"
+       height="1.0002383">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.00093692884"
+         id="feGaussianBlur851" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.5698081"
+     inkscape:cx="72.360557"
+     inkscape:cy="97.089456"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1248"
+     inkscape:window-height="701"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="opacity:1;filter:url(#filter849)"
+     transform="translate(41.502036,14.632894)">
+    <ellipse
+       style="fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.0318005;stroke-opacity:1"
+       id="path1009"
+       cx="-22.573019"
+       cy="4.4830608"
+       rx="18.77626"
+       ry="19.047302" />
+    <ellipse
+       style="fill:#ffffff;stroke:none;stroke-width:0.0318005;stroke-opacity:1"
+       id="path992"
+       cx="-22.573019"
+       cy="4.4830627"
+       rx="16.390856"
+       ry="17.149382" />
+    <g
+       id="g986"
+       transform="matrix(0.1208319,0,0,0.11955398,-38.28929,-13.479715)"
+       style="fill:#28a9e0;fill-opacity:1">
+      <path
+         id="rect917"
+         style="fill:#28a9e0;fill-opacity:1;stroke-width:1.04978"
+         d="M 514.16602,132.12305 405.06836,241.2207 764.68359,600.83594 405.06836,960.44922 514.16602,1069.5449 873.7793,709.93164 982.87695,600.83398 873.7793,491.73828 Z M 330.92383,315.76953 221.82617,424.86719 399.61328,602.65234 221.82617,780.43945 330.92383,889.53711 508.71094,711.75 617.80664,602.65234 508.71094,493.55664 Z"
+         transform="matrix(0.26458333,0,0,0.26458333,-25.456707,-9.2037229)" />
+    </g>
+    <path
+       style="fill:#000000;stroke-width:0.264583"
+       id="path915"
+       d="" />
+  </g>
+</svg>

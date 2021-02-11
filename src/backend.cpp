@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "backend.h"
+#include <QGuiApplication>
 #include <QDateTime>
 #include <QFile>
 #include <QCryptographicHash>
@@ -35,234 +36,11 @@
 #include <QMap>
 #include <QJsonArray>
 #include <QDir>
+#include <QQmlComponent>
+#include <QQmlEngine>
+#include "plugin.h"
 
 #include "../../private/shift.keys"
-
-Mate::Mate(QString name, QString uuid, bool scooping, QObject *parent) :
-    QObject(parent)
-{ 
-    m_name = name;
-    m_uuid = uuid;
-    m_scooping = scooping;
-}
-
-QString Mate::name()
-{
-    return m_name;
-}
-
-QString Mate::uuid()
-{
-    return m_uuid;
-}
-
-bool Mate::scooping()
-{
-    return m_scooping;
-}
-
-Booking::Booking(QString description, quint64 amount, QDate date, QObject *parent) :
-    QObject(parent)
-{ 
-    m_description = description;
-    m_amount = amount;
-    m_date = date;
-}
-
-QString Booking::description()
-{
-    return m_description;
-}
-
-quint64 Booking::amount()
-{
-    return m_amount;
-}
-
-QDate Booking::date()
-{
-    return m_date;
-}
-
-void Booking::setDescription(const QString &description)
-{
-    m_description = description;
-    emit descriptionChanged();
-}
-
-void Booking::setAmount(quint64 amount)
-{
-    m_amount = amount;
-    emit amountChanged();
-}
-
-void Booking:: setDate(QDate date)
-{
-    m_date = date;
-    emit dateChanged();
-}
-
-
-BookingModel::BookingModel(QObject*parent): 
-    QAbstractListModel(parent)
-{
-    m_roleNames[DescriptionRole] = "description";
-    m_roleNames[AmountRole] = "amount";
-    m_roleNames[DateRole] = "date";
-}
-
-BookingModel::~BookingModel()
-{
-}
-
-QHash<int, QByteArray> BookingModel::roleNames() const
-{
-    return m_roleNames;
-}
-
-void BookingModel::insert(int index, Booking *booking)
-{
-    if(index < 0 || index > m_bookings.count()) 
-    {
-        return;
-    }
-    emit beginInsertRows(QModelIndex(), index, index);
-    m_bookings.insert(index, booking);
-    emit endInsertRows();
-}
-
-void BookingModel::append(Booking *booking)
-{
-    insert(m_bookings.count(), booking);
-}
-
-void BookingModel::clear()
-{
-    m_bookings.clear();
-}
-
-void BookingModel::remove(int index)
-{
-    if(index < 0 || index >= m_bookings.count()) 
-    {
-        return;
-    }
-    emit beginRemoveRows(QModelIndex(), index, index);
-    m_bookings.removeAt(index);
-    emit endRemoveRows();
-}
-
-int BookingModel::count()
-{
-    return m_bookings.count();
-}
-
-Booking *BookingModel::get(int index)
-{
-    return m_bookings.at(index);
-}
-
-int BookingModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return m_bookings.count();
-}
- 
-QVariant BookingModel::data(const QModelIndex &index,int role) const
-{
-    int row = index.row();
-
-    if(row < 0 || row >= m_bookings.count()) 
-    {
-        return QVariant();
-    }
-    Booking *booking = qobject_cast<Booking *>(m_bookings.at(row));
-    switch(role) 
-    {
-        case DescriptionRole:
-            return booking->description();
-        case AmountRole:
-            return booking->amount();
-        case DateRole:
-            return booking->date();
-    }
-    return QVariant();
-}
-
-
-MateModel::MateModel(QObject*parent): 
-    QAbstractListModel(parent)
-{
-    m_roleNames[NameRole] = "name";
-    m_roleNames[UuidRole] = "uuid";
-    m_roleNames[ScoopingRole] = "scooping";
-}
-
-MateModel::~MateModel()
-{
-}
-
-QHash<int, QByteArray> MateModel::roleNames() const
-{
-    return m_roleNames;
-}
-
-void MateModel::insert(int index, Mate *mate)
-{
-    if(index < 0 || index > m_mates.count()) 
-        return;
-
-    emit beginInsertRows(QModelIndex(), index, index);
-    m_mates.insert(index, mate);
-    emit endInsertRows();
-}
-
-void MateModel::append(Mate *mate)
-{
-    insert(m_mates.count(), mate);
-}
-
-void MateModel::clear()
-{
-    m_mates.clear();
-}
-
-int MateModel::count()
-{
-    return m_mates.count();
-}
-
-Mate *MateModel::get(int index)
-{
-    return m_mates.at(index);
-}
-
-int MateModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return m_mates.count();
-}
- 
-QVariant MateModel::data(const QModelIndex &index,int role) const
-{
-    int row = index.row();
-
-    if(row < 0 || row >= m_mates.count()) 
-    {
-        return QVariant();
-    }
-    Mate *mate = qobject_cast<Mate *>(m_mates.at(row));
-    switch(role) 
-    {
-        case NameRole:
-            return mate->name();
-        case UuidRole:
-            return mate->uuid();
-        case ScoopingRole:
-            return mate->scooping();
-    }
-    return QVariant();
-}
 
 
 BackEnd::BackEnd(QObject *parent) :
@@ -272,6 +50,7 @@ BackEnd::BackEnd(QObject *parent) :
     m_message = "Welcome, wait a few seconds to load the database";
     m_name = "";
     m_key = SHIFT_API_KEY;
+    m_registerError = "";
     m_crypto.setKey(SHIFT_ENCRYPT_KEY);
     m_crypto.setCompressionMode(SimpleCrypt::CompressionAlways);
     m_crypto.setIntegrityProtectionMode(SimpleCrypt::ProtectionHash);
@@ -285,6 +64,11 @@ BookingModel *BackEnd::getBookingModel()
 MateModel *BackEnd::getMateModel()
 {
     return &m_mateModel;
+}
+
+MenuModel *BackEnd::getMenuModel()
+{
+    return &m_menuModel;
 }
 
 void BackEnd::setRuuid(QString ruuid)
@@ -310,6 +94,52 @@ void BackEnd::createAccount(QString name, QString ruuid, QString country, QStrin
     m_balance = 0;
     m_scooping = 0;
     registerAccount();
+}
+
+bool BackEnd::getWritepermission()
+{
+    return m_writepermission;
+}
+
+bool BackEnd::checkPermission()
+{
+    m_writepermission = false;
+    QString msg_text = "Welcome, please set the permission to write to external storage in the settings of your mobile phone and restart the app.<br><br>You will find it under: Settings -> Apps -> Apps -> Shift -> Permission -> Memory";
+            
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware/shift/plugins";
+    QDir dir(path);
+    if (!dir.exists())
+    {
+        if (!dir.mkpath(path))
+        {
+            m_message = msg_text;
+            return false;
+        }
+    }
+    path.append("/test.txt");
+    QFile file(path);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        file.close();
+        file.remove();
+        m_writepermission = true;
+        return true;
+    }
+    else
+    {   
+        m_message = msg_text;
+        return false;
+    }
+}
+
+QString BackEnd::getRegisterError()
+{
+    return m_registerError;
+}
+
+QString BackEnd::getVersion()
+{
+    return QGuiApplication::applicationVersion();
 }
 
 void BackEnd::setScooping()
@@ -373,6 +203,9 @@ void BackEnd::onSetScoopingReply(QNetworkReply* reply)
 
 void BackEnd::registerAccount()
 {
+    m_registerError = "";
+    emit registerErrorChanged();
+
     QNetworkRequest request;
     request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
     request.setRawHeader("User-Agent", "Shift 1.0");
@@ -410,11 +243,15 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                     QJsonObject json_obj = json.object();
                     if (json_obj["isError"].toBool())
                     {
-                        setLastError(json_obj["message"].toString());
+                        m_registerError = json_obj["message"].toString();
+                        emit registerErrorChanged();
                         reply->deleteLater();
                         return;
                     }
                     // account is now registered
+                    m_registerError = "";
+                    emit registerErrorChanged();
+
                     m_balance = 1;
                     m_bookingModel.append(new Booking("Initial booking", 1, QDate::currentDate()));
                     saveChain();
@@ -425,16 +262,22 @@ void BackEnd::onRegisterReply(QNetworkReply* reply)
                 else
                 {
                     setLastError("Reply not readable");
+                    m_registerError = "An error occured. Please try again later.";
+                    emit registerErrorChanged();
                 }
     		    break;
     		default:
                 setLastError("Response error from webserver: " + QString::number(httpstatuscode));
-    			break;
+    			m_registerError = "An error occured. Please try again later.";
+                emit registerErrorChanged();
+                break;
     	}
     }
     else
     {
         setLastError("Reply error from webserver: " + QString::number(reply->error()));
+        m_registerError = "An error occured. Please try again later.";
+        emit registerErrorChanged();
     }
      
     reply->deleteLater();
@@ -657,7 +500,7 @@ int BackEnd::saveChain()
     buffer.open(QIODevice::WriteOnly);
     QDataStream out(&buffer);
 
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
     QDir dir(path);
     if (!dir.exists())
         dir.mkpath(path);
@@ -713,7 +556,7 @@ int BackEnd::loadChain()
     quint16 version;
     int count;
 
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
     QFile file(path.append("/shift.db"));
     if(!file.exists())
     {
@@ -782,6 +625,87 @@ int BackEnd::loadChain()
     return CHAIN_LOADED;
 }
 
+void BackEnd::loadMenu()
+{
+    m_menuModel.append(new Menu("Home", "qrc:/gui/Home.qml"));
+    m_menuModel.append(new Menu("Mates", "qrc:/gui/Friends.qml"));
+}
+
+void BackEnd::loadPlugins()
+{
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
+    QDir dir(path + "/shift/plugins");
+    dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+    if (dir.exists())
+    {
+        QFileInfoList list = dir.entryInfoList();
+        for (int i = 0; i < list.size(); ++i) 
+        {
+            QFileInfo fileInfo = list.at(i);
+            QQmlEngine engine;
+            QQmlComponent component(&engine);
+            QString fileName = path + "/shift/plugins/" + fileInfo.fileName() + "/plugin.qml";
+            QFile file(fileName);
+            if (file.exists())
+            {
+                component.loadUrl(QUrl::fromLocalFile(fileName));
+                QObject *obj = component.create();
+                Plugin *plugin = qobject_cast<Plugin *>(obj);
+                m_menuModel.append(new Menu(plugin->title(), plugin->source()));
+            }
+        }
+    }
+}
+
+void BackEnd::HttpGet(QString url)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl(url));
+    request.setRawHeader("User-Agent", "Shift 1.0");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkAccessManager* networkManager = new QNetworkAccessManager(this);
+    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onGetReply(QNetworkReply*)));
+    networkManager->get(request);
+}
+
+void BackEnd::onGetReply(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+    	int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toUInt();
+    	switch(httpstatuscode)
+    	{
+    		case 200:
+    		    if (reply->isReadable()) 
+    		    {
+                    m_result = reply->readAll().data();
+                    emit resultChanged();
+    		    }
+                else
+                {
+                    setLastError("Reply not readable");
+                }
+    		    break;
+    		default:
+                m_result = "Response error from webserver: " + QString::number(httpstatuscode);
+                emit resultChanged();
+                break;
+    	}
+    }
+    else
+    {
+        m_result = "Reply error from webserver: " + QString::number(reply->error());
+        emit resultChanged();
+    }
+     
+    reply->deleteLater();
+}
+
+QString BackEnd::getResult()
+{
+    return m_result;
+}
+
 // used for unit tests only
 #ifdef TEST
 void BackEnd::setScooping_test(qint64 time)
@@ -838,7 +762,7 @@ void BackEnd::setLanguage_test(QString language)
 
 void BackEnd::resetAccount_test()
 {
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     QFile file(path.append("/shift.db"));
     file.remove();
 }

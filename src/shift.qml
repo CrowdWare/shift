@@ -146,13 +146,7 @@ ApplicationWindow
                     drawer.close()
                 }
             }
-
-            model: ListModel 
-            {
-                ListElement { title: "Home"; source: "qrc:/gui/Home.qml" }
-                ListElement { title: "Mates"; source: "qrc:/gui/Friends.qml" }
-            }
-
+            model: backend.menuModel
             ScrollIndicator.vertical: ScrollIndicator { }
         }
     }
@@ -176,7 +170,7 @@ ApplicationWindow
 
                 MouseArea
                 {
-                    enabled: backend.uuid != ""
+                    enabled: backend.uuid != "" && backend.writepermission
                     anchors.fill: parent
                     onClicked:
                     {
@@ -206,7 +200,7 @@ ApplicationWindow
                 id: name
                 anchors.margins: 10
                 font.pointSize: 20
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelRuuid.top
                 anchors.left: parent.left
@@ -218,7 +212,7 @@ ApplicationWindow
             {
                 id: labelRuuid
                 text: "Enter the referer id"
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: ruuid.top
@@ -234,7 +228,7 @@ ApplicationWindow
                 id: ruuid
                 anchors.margins: 10
                 font.pointSize: 20
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelCountry.top
                 anchors.left: parent.left
@@ -246,7 +240,7 @@ ApplicationWindow
             {
                 id: labelCountry
                 text: "Select your country"
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: country.top
@@ -260,7 +254,7 @@ ApplicationWindow
             {
                 id: country
                 width: 200
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.bottom: labelLanguage.top
                 anchors.left: parent.left
@@ -468,7 +462,7 @@ ApplicationWindow
             {
                 id: labelLanguage
                 text: "Select preferred language"
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
                 anchors.margins: 10
                 anchors.bottom: language.top
@@ -483,18 +477,34 @@ ApplicationWindow
             {
                 id: language
                 width: 200
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? implicitHeight : 0
-                anchors.bottom: create.top
+                anchors.bottom: labelError.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 model: ['', 'English', 'Deutsch', 'Español', 'Français', 'Português']
             }
 
+            Label
+            {
+                id: labelError
+                text: backend.registerError
+                visible: backend.uuid == "" && backend.writepermission
+                height: visible ? implicitHeight : 0
+                anchors.margins: 10
+                anchors.bottom: create.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Label.AlignHCenter
+                verticalAlignment: Label.AlignVCenter
+                wrapMode: Label.Wrap
+                color: "red"
+            }
+
             Button
             {
                 id: create
-                visible: backend.uuid == ""
+                visible: backend.uuid == "" && backend.writepermission
                 height: visible ? 50 : 0
                 enabled: (ruuid.text != "" && name.text != "" && country.currentText != "" && language.currentText != "")
                 anchors.bottom: parent.bottom
@@ -514,7 +524,7 @@ ApplicationWindow
         id: aboutDialog
         modal: true
         focus: true
-        title: "About"
+        title: "About SHIFT " + backend.version
         x: (window.width - width) / 2
         y: window.height / 6
         width: Math.min(window.width, window.height) / 3 * 2
