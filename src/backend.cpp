@@ -635,6 +635,7 @@ void BackEnd::loadPlugins()
 {
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
     QDir dir(path + "/shift/plugins");
+    setLastError(path);
     dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
     if (dir.exists())
     {

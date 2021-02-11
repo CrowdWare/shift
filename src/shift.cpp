@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setApplicationName("SHIFT");
     QGuiApplication::setOrganizationName("CrowdWare");
-    QGuiApplication::setApplicationVersion("1.0.2");
+    QGuiApplication::setApplicationVersion("1.1.0");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     qInstallMessageHandler(myMessageOutput);

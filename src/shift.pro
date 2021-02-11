@@ -59,8 +59,8 @@ QML_IMPORT_MAJOR_VERSION = 1
 android {
     DEFINES += ANDROID
     QT += androidextras
-    ANDROID_VERSION_CODE = "1"
-    ANDROID_VERSION_NAME = "1.0.2"
+    ANDROID_VERSION_CODE = "2"
+    ANDROID_VERSION_NAME = "1.1.0"
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += \
         android/src/com/lasconic/QShareUtils.java
