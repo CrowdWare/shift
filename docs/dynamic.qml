@@ -8,7 +8,7 @@ import at.crowdware.backend 1.0
 Page 
 {
 	id: page
-	title: "Diaspora"
+	title: "Dynamic"
 
 	Connections
 	{
