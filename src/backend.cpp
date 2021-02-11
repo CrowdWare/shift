@@ -106,7 +106,7 @@ bool BackEnd::checkPermission()
     m_writepermission = false;
     QString msg_text = "Welcome, please set the permission to write to external storage in the settings of your mobile phone and restart the app.<br><br>You will find it under: Settings -> Apps -> Apps -> Shift -> Permission -> Memory";
             
-    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware/shift/plugins";
     QDir dir(path);
     if (!dir.exists())
     {
@@ -635,7 +635,6 @@ void BackEnd::loadPlugins()
 {
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/crowdware";
     QDir dir(path + "/shift/plugins");
-    setLastError(path);
     dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
     if (dir.exists())
     {
@@ -645,10 +644,15 @@ void BackEnd::loadPlugins()
             QFileInfo fileInfo = list.at(i);
             QQmlEngine engine;
             QQmlComponent component(&engine);
-            component.loadUrl(QUrl::fromLocalFile(path + "/shift/plugins/" + fileInfo.fileName() + "/plugin.qml"));
-            QObject *obj = component.create();
-            Plugin *plugin = qobject_cast<Plugin *>(obj);
-            m_menuModel.append(new Menu(plugin->title(), plugin->source()));
+            QString fileName = path + "/shift/plugins/" + fileInfo.fileName() + "/plugin.qml";
+            QFile file(fileName);
+            if (file.exists())
+            {
+                component.loadUrl(QUrl::fromLocalFile(fileName));
+                QObject *obj = component.create();
+                Plugin *plugin = qobject_cast<Plugin *>(obj);
+                m_menuModel.append(new Menu(plugin->title(), plugin->source()));
+            }
         }
     }
 }
