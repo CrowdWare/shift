@@ -21,7 +21,7 @@
         <item>Français</item>
         <item>Português</item>
     </string-array>
-    
+
     <string-array name="country_items">
         <item>Afghanistan</item>
         <item>Albania</item>
@@ -219,5 +219,8 @@
         <item>Zambia</item>
         <item>Zimbabwe</item>
     </string-array>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
 
 </resources>
