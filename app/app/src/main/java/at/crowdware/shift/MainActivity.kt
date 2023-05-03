@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.getItemId() == R.id.action_settings)
+        if(item.getItemId() == R.id.action_about)
         {
                 val builder = Builder(this)
                 builder.setTitle("About SHIFT")
