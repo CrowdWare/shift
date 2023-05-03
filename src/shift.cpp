@@ -59,7 +59,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
         typ = "Fatal";
         break;
     }
-    backend.setLastError(typ + ":" + QString(localMsg.constData()) + " (" + file + ":" + QString(context.line) + "," + function + ")");
+    backend.setLastError(typ + ":" + QString(localMsg.constData()) + " (" + file + ":" + QString::number(context.line) + "," + function + ")");
 }
 
 int main(int argc, char *argv[])
