@@ -1,12 +1,12 @@
 # unit tests for the webservice
 
 ## message of the day
-curl http://artanidosatcrowdwareat.pythonanywhere.com/message?name=Art
+curl http://128.140.48.116:8080/message?name=Art
 
 
 ## register account
-curl -d '{"key":"1234", "name":"Artanidos", "uuid":"00.00.00", "ruuid":"11.11.11"}' -H "Content-Type: application/json" -X POST http://artanidosatcrowdwareat.pythonanywhere.com/register
+curl -d '{"key":"1234", "name":"Artanidos", "uuid":"00.00.00", "ruuid":"11.11.11"}' -H "Content-Type: application/json" -X POST http://128.140.48.116:8080/register
 
 
 ## friendlist
-curl http://artanidosatcrowdwareat.pythonanywhere.com/friendlist
+curl http://128.140.48.116:8080/friendlist

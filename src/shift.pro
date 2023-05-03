@@ -56,33 +56,33 @@ CONFIG += qmltypes
 QML_IMPORT_NAME = at.crowdware.backend
 QML_IMPORT_MAJOR_VERSION = 1
 
-android {
-    DEFINES += ANDROID
-    QT += androidextras
-    ANDROID_VERSION_CODE = "2"
-    ANDROID_VERSION_NAME = "1.1.0"
-    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-    OTHER_FILES += \
-        android/src/com/lasconic/QShareUtils.java
-    
-    SOURCES += \
-        android/androidshareutils.cpp
-        
+#android {
+#    DEFINES += ANDROID
+#    #QT += androidextras
+#    ANDROID_VERSION_CODE = "2"
+#    ANDROID_VERSION_NAME = "1.1.0"
+#    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+#    OTHER_FILES += \
+#        android/src/com/lasconic/QShareUtils.java
+#
+#    SOURCES += \
+#        android/androidshareutils.cpp
+#
+#
+#    HEADERS += \
+#        android/androidshareutils.h
+#
+#    DISTFILES += \
+#        android/AndroidManifest.xml \
+#        android/build.gradle \
+#        android/res/values/libs.xml
+#}
 
-    HEADERS += \
-        android/androidshareutils.h
-
-    DISTFILES += \
-        android/AndroidManifest.xml \
-        android/build.gradle \
-        android/res/values/libs.xml
-}
-
-ios {
-    OBJECTIVE_SOURCES += ios/iosshareutils.mm
-    HEADERS += ios/iosshareutils.h
-
-    Q_ENABLE_BITCODE.name = ENABLE_BITCODE
-    Q_ENABLE_BITCODE.value = NO
-    QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
-}
+#ios {
+#    OBJECTIVE_SOURCES += ios/iosshareutils.mm
+#    HEADERS += ios/iosshareutils.h
+#
+#    Q_ENABLE_BITCODE.name = ENABLE_BITCODE
+#    Q_ENABLE_BITCODE.value = NO
+#    QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
+#}

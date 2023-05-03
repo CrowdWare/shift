@@ -1,5 +1,5 @@
 #############################################################################
-# Copyright (C) 2021 CrowdWare
+# Copyright (C) 2023 CrowdWare
 #
 # This file is part of SHIFT.
 #
@@ -32,7 +32,7 @@ from mysql.connector.errors import IntegrityError
 
 
 def dbConnect():
-    db = connect(host=SHIFT_DB_HOST,
+    db = connect(unix_socket="/var/run/mysqld/mysqld.sock",
                  user=SHIFT_DB_USER,
                  password=SHIFT_DB_PWD,
                  database=SHIFT_DATABASE)
@@ -65,7 +65,7 @@ def message():
     if test == "true":
         message = "Message from server"
     else:
-        message = '<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://www.shifting.site">www.shifting.site</a> for news.</html>'
+        message = '<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="https://crowdware.github.io/Shift/">crowdware.github.io/Shift/</a> for news.</html>'
     
     return jsonify(isError=False,
                    message="Success",
@@ -85,8 +85,9 @@ def register():
 
     if key != SHIFT_API_KEY:
         return jsonify(isError=True, message="wrong api key", statusCode=200)
-
+    
     if test != "true":
+        conn = None
         try:
             conn = dbConnect()
             if uuid != ruuid:
@@ -104,7 +105,8 @@ def register():
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:
-            conn.close()
+            if conn != None:
+                conn.close()
 
     return jsonify(isError=False, message="Success", statusCode=200)
 
@@ -123,6 +125,7 @@ def scooping():
     seconds = int(time_since.total_seconds())
 
     if test != "true":
+        conn = None
         try:
             conn = dbConnect()
             curs = conn.cursor()
@@ -132,7 +135,8 @@ def scooping():
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:
-            conn.close()
+            if conn != None:
+                conn.close()
 
     return jsonify(isError = False,
                    message = "Success",
@@ -158,6 +162,7 @@ def friendlist():
         accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'scooping' : isScooping(not_scooping)})
         accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'scooping' : isScooping(scooping)})
     else:
+        conn = None
         try:
             conn = dbConnect()
             curs = conn.cursor(dictionary=True)
@@ -168,7 +173,8 @@ def friendlist():
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:
-            conn.close()
+            if conn != None:
+                conn.close()
 
     return jsonify(isError=False,
                    message="Success",

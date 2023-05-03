@@ -42,6 +42,7 @@
 
 #include "../../private/shift.keys"
 
+#define URL QString("http://128.140.48.116:8080")
 
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent)
@@ -145,7 +146,7 @@ QString BackEnd::getVersion()
 void BackEnd::setScooping()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/setscooping"));
+    request.setUrl(QUrl(URL + "/setscooping"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -207,7 +208,7 @@ void BackEnd::registerAccount()
     emit registerErrorChanged();
 
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/register"));
+    request.setUrl(QUrl(URL + "/register"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -289,7 +290,7 @@ void BackEnd::loadMessage()
     if (m_name == "")
         return;
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/message"));
+    request.setUrl(QUrl(URL + "/message"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;
@@ -354,7 +355,7 @@ void BackEnd::loadMatelist()
     if (m_uuid == "")
         return;
     QNetworkRequest request;
-    request.setUrl(QUrl("http://artanidosatcrowdwareat.pythonanywhere.com/matelist"));
+    request.setUrl(QUrl(URL + "/matelist"));
     request.setRawHeader("User-Agent", "Shift 1.0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj;

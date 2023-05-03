@@ -1,0 +1,77 @@
+{
+    "classes": [
+        {
+            "className": "BookingModel",
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "int"
+                        },
+                        {
+                            "name": "booking",
+                            "type": "Booking*"
+                        }
+                    ],
+                    "name": "insert",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "booking",
+                            "type": "Booking*"
+                        }
+                    ],
+                    "name": "append",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "clear",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "count",
+                    "returnType": "int"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "int"
+                        }
+                    ],
+                    "name": "remove",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "int"
+                        }
+                    ],
+                    "name": "get",
+                    "returnType": "Booking*"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "BookingModel",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractListModel"
+                }
+            ]
+        }
+    ],
+    "inputFile": "bookingmodel.h",
+    "outputRevision": 67
+}

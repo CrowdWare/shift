@@ -3,3 +3,4 @@ https://medium.com/@benlaud/complete-guide-to-make-a-splash-screen-for-your-qml-
 
 # Implement a notifier 
 Implement a notifier that will be fired when scooping ends
+

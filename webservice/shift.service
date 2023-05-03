@@ -1,0 +1,15 @@
+[Unit]
+Description=SHIFT REST Webservice
+
+[Service]
+User=shift
+WorkingDirectory=/home/shift/webservice
+ExecStart=/usr/local/bin/uwsgi --ini /home/shift/webservice/uwsgi.ini
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardOutput=file:/var/log/shift.log
+StandardError=file:/var/log/shift.log
+
+[Install]
+WantedBy=multi-user.target

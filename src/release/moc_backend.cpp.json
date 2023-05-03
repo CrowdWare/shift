@@ -1,0 +1,306 @@
+{
+    "classes": [
+        {
+            "className": "BackEnd",
+            "methods": [
+                {
+                    "access": "public",
+                    "name": "start",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "name",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "ruuid",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "country",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "language",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "createAccount",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "url",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "HttpGet",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "lastError",
+                    "notify": "lastErrorChanged",
+                    "read": "lastError",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "write": "setLastError"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "balance",
+                    "notify": "balanceChanged",
+                    "read": "getBalance",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "scooping",
+                    "notify": "scoopingChanged",
+                    "read": "getScooping",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "qint64",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "message",
+                    "notify": "messageChanged",
+                    "read": "getMessage",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "uuid",
+                    "notify": "uuidChanged",
+                    "read": "getUuid",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": true,
+                    "designable": true,
+                    "final": false,
+                    "name": "bookingModel",
+                    "read": "getBookingModel",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "BookingModel*",
+                    "user": false
+                },
+                {
+                    "constant": true,
+                    "designable": true,
+                    "final": false,
+                    "name": "mateModel",
+                    "read": "getMateModel",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "MateModel*",
+                    "user": false
+                },
+                {
+                    "constant": true,
+                    "designable": true,
+                    "final": false,
+                    "name": "menuModel",
+                    "read": "getMenuModel",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "MenuModel*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "registerError",
+                    "notify": "registerErrorChanged",
+                    "read": "getRegisterError",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": true,
+                    "designable": true,
+                    "final": false,
+                    "name": "version",
+                    "read": "getVersion",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": true,
+                    "designable": true,
+                    "final": false,
+                    "name": "writepermission",
+                    "read": "getWritepermission",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "name": "result",
+                    "notify": "resultChanged",
+                    "read": "getResult",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "BackEnd",
+            "signals": [
+                {
+                    "access": "public",
+                    "name": "lastErrorChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "scoopingChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "messageChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "uuidChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "balanceChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "registerErrorChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "resultChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "reply",
+                            "type": "QNetworkReply*"
+                        }
+                    ],
+                    "name": "onNetworkReply",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "reply",
+                            "type": "QNetworkReply*"
+                        }
+                    ],
+                    "name": "onMatelistReply",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "reply",
+                            "type": "QNetworkReply*"
+                        }
+                    ],
+                    "name": "onRegisterReply",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "reply",
+                            "type": "QNetworkReply*"
+                        }
+                    ],
+                    "name": "onSetScoopingReply",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "reply",
+                            "type": "QNetworkReply*"
+                        }
+                    ],
+                    "name": "onGetReply",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "backend.h",
+    "outputRevision": 67
+}

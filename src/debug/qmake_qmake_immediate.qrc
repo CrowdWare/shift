@@ -1,0 +1,23 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+<file alias="shift.qml">E:/SourceCode/Shift/src/shift.qml</file>
+<file alias="gui/Home.qml">E:/SourceCode/Shift/src/gui/Home.qml</file>
+<file alias="gui/Friends.qml">E:/SourceCode/Shift/src/gui/Friends.qml</file>
+<file alias="qtquickcontrols2.conf">E:/SourceCode/Shift/src/qtquickcontrols2.conf</file>
+<file alias="icons/shift/index.theme">E:/SourceCode/Shift/src/icons/shift/index.theme</file>
+<file alias="icons/shift/20x20/back.png">E:/SourceCode/Shift/src/icons/shift/20x20/back.png</file>
+<file alias="icons/shift/20x20/drawer.png">E:/SourceCode/Shift/src/icons/shift/20x20/drawer.png</file>
+<file alias="icons/shift/20x20/menu.png">E:/SourceCode/Shift/src/icons/shift/20x20/menu.png</file>
+<file alias="icons/shift/20x20@2/back.png">E:/SourceCode/Shift/src/icons/shift/20x20@2/back.png</file>
+<file alias="icons/shift/20x20@2/drawer.png">E:/SourceCode/Shift/src/icons/shift/20x20@2/drawer.png</file>
+<file alias="icons/shift/20x20@2/menu.png">E:/SourceCode/Shift/src/icons/shift/20x20@2/menu.png</file>
+<file alias="icons/shift/20x20@3/back.png">E:/SourceCode/Shift/src/icons/shift/20x20@3/back.png</file>
+<file alias="icons/shift/20x20@3/drawer.png">E:/SourceCode/Shift/src/icons/shift/20x20@3/drawer.png</file>
+<file alias="icons/shift/20x20@3/menu.png">E:/SourceCode/Shift/src/icons/shift/20x20@3/menu.png</file>
+<file alias="icons/shift/20x20@4/back.png">E:/SourceCode/Shift/src/icons/shift/20x20@4/back.png</file>
+<file alias="icons/shift/20x20@4/drawer.png">E:/SourceCode/Shift/src/icons/shift/20x20@4/drawer.png</file>
+<file alias="icons/shift/20x20@4/menu.png">E:/SourceCode/Shift/src/icons/shift/20x20@4/menu.png</file>
+<file alias="images/logo.png">E:/SourceCode/Shift/src/images/logo.png</file>
+<file alias="images/checked.png">E:/SourceCode/Shift/src/images/checked.png</file>
+</qresource>
+</RCC>
