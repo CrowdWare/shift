@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="Enter name or nick"
+        android:hint="@string/name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="Id from a Friend"
+        android:hint="@string/id_from_friend"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +56,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:prompt="@string/spinner_country_prompt"
+        android:entries="@array/country_items"
         app:layout_constraintTop_toBottomOf="@+id/editTextFriend" />
 
     <Spinner
@@ -67,6 +69,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:prompt="@string/spinner_language_prompt"
+        android:entries="@array/language_items"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCountry" />
 
     <Button
