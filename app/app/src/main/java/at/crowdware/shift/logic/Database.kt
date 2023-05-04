@@ -65,5 +65,12 @@ class Database {
             }
             return account
         }
+
+        fun readTransactions(context: Context): MutableList<Transaction> {
+            var list: MutableList<Transaction> = mutableListOf()
+
+
+            return list
+        }
     }
 }

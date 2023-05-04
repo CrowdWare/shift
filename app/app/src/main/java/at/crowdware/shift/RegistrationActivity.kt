@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import at.crowdware.shift.logic.AccountManager
 import at.crowdware.shift.logic.Backend
 
 
@@ -23,6 +24,7 @@ class RegistrationActivity : AppCompatActivity() {
     }
     fun Joined()
     {
+        AccountManager.loadAccount(this)
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
@@ -31,7 +33,7 @@ class RegistrationActivity : AppCompatActivity() {
     {
         val tv = findViewById<TextView>(R.id.text_error)
         tv.visibility = View.VISIBLE
-        tv.text = "There was an error joining teh server!"
+        tv.text = "There was an error joining the server!"
         println(responseString)
     }
 }

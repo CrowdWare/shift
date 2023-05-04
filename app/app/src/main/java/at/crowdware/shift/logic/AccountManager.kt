@@ -5,12 +5,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object AccountManager {
-    private var account: Account? = null
+    private var _account: Account? = null
+    private var _transactions: MutableList<Transaction> = mutableListOf()
+    val Account get() = _account!!
+    val Transactions get() = _transactions
 
-    suspend fun loadAccount(context: Context) = withContext(Dispatchers.IO) {
+    suspend fun loadTransactions(context: Context) = withContext(Dispatchers.IO) {
         // Load the account from the database
-        account = Database.readAccount(context)
+        _transactions = Database.readTransactions(context)
     }
 
-    fun getAccount(): Account? = account
+    fun loadAccount(context: Context)
+    {
+        _account = Database.readAccount(context)
+    }
 }

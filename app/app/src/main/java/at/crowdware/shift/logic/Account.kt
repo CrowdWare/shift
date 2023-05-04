@@ -8,6 +8,5 @@ data class Account(val name: String,
                    val country: String,
                    val language: String,
                    var balance: Long = 0,
-                   var scooping: ULong = 0u,
-                   val transactions: MutableList<Transaction> = mutableListOf()
+                   var scooping: ULong = 0u
 ) : Serializable

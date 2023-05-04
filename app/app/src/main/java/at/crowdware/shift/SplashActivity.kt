@@ -22,9 +22,10 @@ class SplashActivity : AppCompatActivity() {
 
         val userJoined = isUserRegistered()
         if(userJoined) {
-            // load the account while waiting for the splash screen
+            AccountManager.loadAccount(applicationContext)
+            // load the transactions while waiting for the splash screen
             lifecycleScope.launch(Dispatchers.Main) {
-                AccountManager.loadAccount(applicationContext)
+                AccountManager.loadTransactions(applicationContext)
             }
         }
         val handler = Handler(Looper.getMainLooper())
