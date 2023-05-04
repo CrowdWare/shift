@@ -72,8 +72,19 @@
         android:entries="@array/language_items"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCountry" />
 
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/error_color"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLanguage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_join" />
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_join"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

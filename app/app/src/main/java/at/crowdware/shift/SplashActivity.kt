@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-
-import androidx.activity.ComponentActivity
+import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
+import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.logic.Database
+import java.io.File
 
 
 class SplashActivity : AppCompatActivity() {
@@ -31,9 +33,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun isUserRegistered(): Boolean {
-        // Query the database or shared preferences or any other storage mechanism
-        // to check whether the user is registered or not
-        // Return true if the user is registered, false otherwise
-        return true
+        val fileExtern = File(getExternalFilesDir(null), "shift.db")
+        if(fileExtern.exists())
+            return true
+        return File(applicationContext.filesDir, "shift.db").exists()
     }
 }
