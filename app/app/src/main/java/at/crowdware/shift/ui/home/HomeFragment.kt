@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
 
     fun getTransList(): MutableList<ListItem> {
         val list: MutableList<ListItem> = mutableListOf()
-        list.add(ListItem("30.05.2023", "Liquid scooped", "7 l"))
+        list.add(ListItem("30.05.2023", "Liquid scooped", "10 l"))
         list.add(ListItem("29.05.2023", "Liquid scooped", "10 l"))
         list.add(ListItem("28.05.2023", "Liquid scooped", "1 l"))
         return list
