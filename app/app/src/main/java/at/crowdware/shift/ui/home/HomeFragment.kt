@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import at.crowdware.shift.R
 import at.crowdware.shift.databinding.FragmentHomeBinding
+import at.crowdware.shift.ui.ListItem
+import at.crowdware.shift.ui.TransactionListAdapter
 
 
 class HomeFragment : Fragment() {
@@ -32,12 +34,18 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var array: Array<Any> = arrayOf("Melbourne", "Vienna", "Vancouver", "Toronto", "Calgary", "Adelaide", "Perth", "Auckland", "Helsinki", "Hamburg", "Munich", "New York", "Sydney", "Paris", "Cape Town", "Barcelona", "London", "Bangkok")
         val transactions: ListView = binding.transactions
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_view_item, array)
-
+        val adapter = TransactionListAdapter(requireContext(), inflater, getTransList())
         transactions.setAdapter(adapter)
         return root
+    }
+
+    fun getTransList(): MutableList<ListItem> {
+        val list: MutableList<ListItem> = mutableListOf()
+        list.add(ListItem("30.05.2023", "Liquid scooped", "7 l"))
+        list.add(ListItem("29.05.2023", "Liquid scooped", "10 l"))
+        list.add(ListItem("28.05.2023", "Liquid scooped", "1 l"))
+        return list
     }
 
     override fun onDestroyView() {
