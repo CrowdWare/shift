@@ -4,10 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
-import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.Database
+import androidx.lifecycle.lifecycleScope
+import at.crowdware.shift.logic.AccountManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -19,9 +20,16 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         supportActionBar?.hide()
 
+        val userJoined = isUserRegistered()
+        if(userJoined) {
+            // load the account while waiting for the splash screen
+            lifecycleScope.launch(Dispatchers.Main) {
+                AccountManager.loadAccount(applicationContext)
+            }
+        }
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            if (isUserRegistered()) {
+            if (userJoined) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else {

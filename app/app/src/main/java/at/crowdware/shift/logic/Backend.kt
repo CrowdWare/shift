@@ -1,41 +1,14 @@
 package at.crowdware.shift.logic
-import java.io.File
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
-import android.content.Context
-import android.os.Environment
 import android.util.Base64
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import at.crowdware.shift.R
 import at.crowdware.shift.RegistrationActivity
 import com.loopj.android.http.AsyncHttpClient
-import cz.msebera.android.httpclient.Header
 import com.loopj.android.http.TextHttpResponseHandler
+import cz.msebera.android.httpclient.Header
 import cz.msebera.android.httpclient.entity.ByteArrayEntity
 import cz.msebera.android.httpclient.message.BasicHeader
 import org.json.JSONObject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
-import java.util.Date
 import java.util.UUID
 
-data class Transaction(val amount: Long, val from: String, val date: Date, val description: String): Serializable
-
-data class Account(val name: String,
-                   val uuid: String,
-                   val ruuid: String,
-                   val country: String,
-                   val language: String,
-                   var balance: Long = 0,
-                   var scooping: ULong = 0u,
-                   val transactions: MutableList<Transaction> = mutableListOf()
-) : Serializable
 
 class Backend {
     companion object {
@@ -45,13 +18,13 @@ class Backend {
         fun createAccount(context: RegistrationActivity, name: String, ruuid: String, country: String, language: String) {
             val uuidBytes = UUID.randomUUID().toString().toByteArray()
             val uuid = Base64.encodeToString(uuidBytes, Base64.DEFAULT)
-            var ru: String
+            val ru: String
             if (ruuid == "me")
                 ru = uuid
             else
                 ru = ruuid
             val account = Account(name, uuid, ru, country, language)
-            registerAccount(context, account);
+            registerAccount(context, account)
         }
 
         private fun registerAccount(context: RegistrationActivity, account: Account) {
