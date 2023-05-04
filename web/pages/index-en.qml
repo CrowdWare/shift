@@ -80,7 +80,7 @@ Content {
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-lightbulb-o&quot;&gt;&lt;/i&gt;
 		&lt;h4&gt;&lt;strong&gt;Liquid&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;We are creating a virtual liquid called THX which can be used to show gratitude.&lt;/p&gt;
+		&lt;p&gt;We are creating a virtual liquid called LMC which can be used to show gratitude.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
                     adminlabel: "Liquid"
@@ -133,8 +133,8 @@ Content {
 &lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
 We are going to create an app which the users can use to create new liquid on a daily base.
-We gave the name THX to this new virtual liquid.
-THX is based on the phrase thank you and represents the gratitude.
+We gave the name LMC to this new virtual liquid.
+LMC is based on the phrase thank you and represents the gratitude.
 &lt;/p&gt;
 "
                 }
@@ -198,18 +198,18 @@ THX is based on the phrase thank you and represents the gratitude.
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
 	We are going to create a very simple app just to enable the user to scoop new liquid. 
-	The users are creating like 10 liters of THX every day they start the process in the app.
-	The users can also refer other users and can earn 1 liter of THX for every referred user per day. 
+	The users are creating like 10 liters of LMC every day they start the process in the app.
+	The users can also refer other users and can earn 1 liter of LMC for every referred user per day. 
 	Every user can add up to 10 other users (otherwise it would become a snowball system, which is unfair, 
 	because the one on te top will earn the most)
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;
 &lt;p&gt;
 	When we reach 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. 
-	Every user will then be able to show gratitude giving THX from one app to the other. 
+	Every user will then be able to show gratitude giving LMC from one app to the other. 
 	So the user is able to give the liquid which has been created to someone else.
 	The mark 1.000.000 will motivate some developers to join in, because they see that the people 
-	want this app and the devlopers will be kind of payed with THX instead of money.
+	want this app and the devlopers will be kind of payed with LMC instead of money.
 &lt;/p&gt;
 
 &lt;h4&gt;Phase III&lt;/h4&gt;
@@ -266,8 +266,8 @@ THX is based on the phrase thank you and represents the gratitude.
 When we are talking about salaries and money, then we also talk about liquidity. So when you have got enough money you are liquid.&lt;/br&gt;
 In fact we don&#x27;t wanne use money anymore, because in the old system as we knew it from before 2020, some people abused money to hoard it. With this action they stopped the free flow of energy. So they created a blockade to keep much money for themselves. All other people where dryed out and had to suffer.&lt;/br&gt;&lt;/br&gt;
 
-With THX all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 liters of THX.&lt;/br&gt; So one liter per minute.
-So a softwaredeveloper in Norway will get 60 liters of THX every hour and so does a hairdresser in India.&lt;/br&gt;
+With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 liters of LMC.&lt;/br&gt; So one liter per minute.
+So a softwaredeveloper in Norway will get 60 liters of LMC every hour and so does a hairdresser in India.&lt;/br&gt;
 Just fair ins&#x27;nt it.
 &lt;/p&gt;
 &lt;h3&gt;Inflation/Deflation&lt;/h3&gt;
@@ -277,16 +277,16 @@ Just fair ins&#x27;nt it.
 &lt;/p&gt;
 &lt;h3&gt;Security / Integrity&lt;/h3&gt;
 &lt;p&gt;	
-	The local database has been encrypted with a 1024 bits key.
+	The local database has been encrypted.
 	So this makes it impossible for someone to change any data in the local database.
 	Which of course is also true for the balance.
-	When we are transfering THX between two mobile phones, also the data will be encrypted with this 1024 
-	bits key. So this tranfser data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
+	When we are transfering LMC between two mobile phones, also the data will be encrypted. 
+So this tranfser data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
 
-	If you transfer an amount of THX to a faked mobile app, it doesn&#x27;t matter. The guy with the faked mobile 
+	If you transfer an amount of LMC to a faked mobile app, it doesn&#x27;t matter. The guy with the faked mobile 
 	app will not tell you that the transfer has been aborted.&lt;/br&gt;&lt;/br&gt;
 
-	If someone wants to transfer THX to your account, then your app will not accept this transfer due 
+	If someone wants to transfer LMC to your account, then your app will not accept this transfer due 
 	to incorrect decrypted data.
 &lt;/p&gt;
 
@@ -303,7 +303,7 @@ Just fair ins&#x27;nt it.
 	&lt;li&gt;
 		When will you go into phase II?&lt;/br&gt;
 		We will go into phase II after reaching 1.000.000 people using the app. Then there will be a critical mass
-		who will accept THX as an energy exchange. Then we also will find developers who we can pay out with THX.
+		who will accept LMC as an energy exchange. Then we also will find developers who we can pay out with LMC.
 		Another possibilty will be that we find sponsors to finance the development costs.
 	&lt;/li&gt;
 &lt;/ul&gt;"

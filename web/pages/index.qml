@@ -79,7 +79,7 @@ Content {
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-lightbulb-o&quot;&gt;&lt;/i&gt;
 		&lt;h4&gt;&lt;strong&gt;Dankbarkeit&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Wir erstellen eine virtuelle Flüssigkeit namens THX, mit der Dankbarkeit gezeigt werden kann.&lt;/p&gt;
+		&lt;p&gt;Wir erstellen eine virtuelle Flüssigkeit namens LMC, mit der Dankbarkeit gezeigt werden kann.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
                     adminlabel: "Dankbarkeit"
@@ -135,8 +135,8 @@ Content {
 &lt;h3&gt;Ziel&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
 	Wir werden eine App erstellen, mit der die Benutzer täglich neue Flüssigkeiten schöpfen können.
-	Wir haben dieser neuen virtuellen Flüssigkeit den Namen THX gegeben.
-	THX basiert auf dem Satz Thank You aus dem Englischen und repräsentiert die Dankbarkeit.
+	Wir haben dieser neuen virtuellen Flüssigkeit den Namen LMC gegeben.
+	LMC ist die Abkürzung für &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;b&gt;oins (flüssige mikro Münzen).
 &lt;/p&gt;
 "
                 }
@@ -200,8 +200,8 @@ Content {
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
 	Wir werden eine sehr einfache App erstellen, damit der Benutzer neue Flüssigkeit schöpfen kann.
-	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 10 Liter THX.
-	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 1 Liter THX schöpfen.
+	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 10 ml LMC.
+	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 1 ml LMC schöpfen.
 	Jeder Benutzer kann bis zu 10 andere Benutzer hinzufügen (andernfalls würde es zu einem Schneeballsystem werden, was unfair ist).
 	weil derjenige an der Spitze am meisten verdient)
 &lt;/p&gt;
@@ -209,10 +209,10 @@ Content {
 &lt;p&gt;
 	Wenn wir 1.000.000 Benutzer erreichen oder wenn wir genug Leute finden, die die Entwicklungskosten über Crowdfunding finanzieren, 
 	werden wir eine Dankbarkeitsfunktion in der App entwickeln.
-	Jeder Benutzer kann sich dann dafür bedanken, indem er THX von einer App zur anderen überträgt.
+	Jeder Benutzer kann sich dann dafür bedanken, indem er LMC von einer App zur anderen überträgt.
 	So kann der Benutzer die erstellte Flüssigkeit an eine andere Person weitergeben.
-	Die Marke 1.000.000 wird einige Entwickler motivieren, mitzumachen, weil sie sehen, dass die Leute THX akzeptieren
-	und das motiviert die Entwickler und sie werden für THX statt für Geld mitmachen.
+	Die Marke 1.000.000 wird einige Entwickler motivieren, mitzumachen, weil sie sehen, dass die Leute LMC akzeptieren
+	und das motiviert die Entwickler und sie werden für LMC statt für Geld mitmachen.
 &lt;/p&gt;
 
 &lt;h4&gt;Phase III&lt;/h4&gt;
@@ -226,7 +226,7 @@ Content {
 &lt;/p&gt;
 &lt;h4&gt;Phase V&lt;/h4&gt;
 &lt;p&gt;
-	Nach Erreichen der Menge von 10.000.000 Benutzern wird die Erzeugung von THX auf 10 Liter pro Tag reduziert.
+	Nach Erreichen der Menge von 10.000.000 Benutzern wird die Erzeugung von LMC auf 10 Liter pro Tag reduziert.
 	Damit erhalten alle Benutzer den gleichen Betrag pro Tag.
 	An diesem Punkt werden wir die Verbindung zum Server trennen und die Plattform wird vollständig dezentral ausgeführt.
 &lt;/p&gt;
@@ -247,7 +247,7 @@ Content {
                 Text {
                     text: "&lt;!-- CALLOUT --&gt;
 &lt;div class=&quot;bs-callout text-center styleBackground&quot;&gt;
-	&lt;h3&gt;Willst Du die &lt;strong&gt;APP&lt;/strong&gt; für Android haben and anfangen Flüsigkeit zu schöpfen?&lt;a href=&quot;https://github.com/CrowdWare/Shift/releases/download/v1.1.0/shift-1.1.0-signed.apk&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD&lt;/a&gt;&lt;/h3&gt;
+	&lt;h3&gt;Willst Du die &lt;strong&gt;APP&lt;/strong&gt; für Android haben and anfangen Flüsigkeit (LMC) zu schöpfen?&lt;a href=&quot;https://github.com/CrowdWare/Shift/releases/download/v1.1.0/shift-1.1.0-signed.apk&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
 &lt;!-- /CALLOUT --&gt;"
                     adminlabel: "callout"
@@ -273,10 +273,10 @@ Content {
 	Mit dieser Aktion stoppten sie den freien Energiefluss. Also haben sie eine Blockade geschaffen, 
 	um viel Geld für sich zu behalten. Alle anderen Menschen waren ausgetrocknet und mussten leiden.&lt;/br&gt;&lt;/br&gt;
 
-	Mit THX werden alle Menschen gleich sein. Zunächst sollten wir jede Stunde über Dankbarkeit nachdenken. 
+	Mit LMC werden alle Menschen gleich sein. Zunächst sollten wir jede Stunde über Dankbarkeit nachdenken. 
 	Wenn wir also eine Stunde lang etwas für jemand anderen tun, kann jemand Dankbarkeit zeigen und 60 Liter 
-	THX geben. Also ein Liter pro Minute.&lt;/br&gt;
-	Ein Softwareentwickler in Norwegen erhält also stündlich 60 Liter THX, ebenso ein Friseur in Indien.&lt;/br&gt;
+	LMC geben. Also ein Liter pro Minute.&lt;/br&gt;
+	Ein Softwareentwickler in Norwegen erhält also stündlich 60 Liter LMC, ebenso ein Friseur in Indien.&lt;/br&gt;
 	Einfach nur fair.
 &lt;/p&gt;
 &lt;h3&gt; Inflation / Deflation &lt;/h3&gt;
@@ -287,16 +287,16 @@ Content {
 &lt;/p&gt;
 &lt;h3&gt;Sicherheit / Integrität&lt;/h3&gt;
 &lt;p&gt;
-	Die lokale Datenbank wurde mit einem 1024 Bits Schlüssel verschlüsselt. 
+	Die lokale Datenbank wurde verschlüsselt. 
 	Dies macht es für jemanden unmöglich, Daten in der lokalen Datenbank zu ändern. 
 	Was natürlich auch für die Balance gilt.
-	Wenn wir THX zwischen zwei Mobiltelefonen übertragen, werden auch die Daten mit diesem 1024 Bits Schlüssel 
-	verschlüsselt. Diese Transer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
+	Wenn wir LMC zwischen zwei Mobiltelefonen übertragen, werden auch die Daten 
+	verschlüsselt. Diese Transfer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
 
-	Wenn Sie THX auf eine gefälschte mobile App übertragen, spielt es keine Rolle. 
+	Wenn Sie LMC auf eine gefälschte mobile App übertragen, spielt es keine Rolle. 
 	Der Typ mit der gefälschten mobilen App wird Ihnen nicht mitteilen, dass die Übertragung abgebrochen wurde.&lt;/br&gt;&lt;/br&gt;
 
-	Wenn jemand THX auf Ihr Konto übertragen möchte, akzeptiert Ihre App diese Übertragung aufgrund falsch entschlüsselter Daten nicht.
+	Wenn jemand LMC auf Ihr Konto übertragen möchte, akzeptiert Ihre App diese Übertragung aufgrund falsch entschlüsselter Daten nicht.
 &lt;/p&gt;
 
 &lt;h3&gt;FAQ&lt;/h3&gt;
@@ -312,8 +312,8 @@ Content {
 	&lt;li&gt;
 		Wann gehen Sie in Phase II? &lt;/br&gt;
 		Wir werden in die Phase II gehen, nachdem wir 1.000.000 Menschen mit der App erreicht haben. 
-		Dann wird es eine kritische Masse an Menschen geben, die THX als Energieaustausch akzeptieren. 
-		Dann finden wir auch Entwickler, die wir mit THX auszahlen können.
+		Dann wird es eine kritische Masse an Menschen geben, die LMC als Energieaustausch akzeptieren. 
+		Dann finden wir auch Entwickler, die wir mit LMC auszahlen können.
 		Eine andere Möglichkeit wird sein, dass wir Sponsoren finden, um die Entwicklungskosten zu finanzieren.
 	&lt;/li&gt;
 &lt;/ul&gt;"
