@@ -133,7 +133,7 @@ Content {
 &lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
 We are going to create an app which the users can use to create new liquid on a daily base.
-We gave the name LMC to this new virtual liquid.
+We gave the name LMC (&lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins)to this new virtual liquid.
 LMC is based on the phrase thank you and represents the gratitude.
 &lt;/p&gt;
 "
