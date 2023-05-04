@@ -45,21 +45,24 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="16dp"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="0dp"
             android:text="@string/latest_bookings"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ListView
-            android:id="@+id/recyclerView"
+            android:id="@+id/transactions"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_margin="16dp"
+            android:layout_weight="1">
 
 
-           ></ListView>
+        </ListView>
 
         <Button
             android:id="@+id/button"
