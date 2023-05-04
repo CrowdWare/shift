@@ -7,6 +7,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_about">About</string>
 
+    <string name="start_scooping">START SCOOPING</string>
+    <string name="latest_bookings">Latest Bookings</string>
+
     <string name="menu_home">SHIFT</string>
     <string name="menu_mates">Mates</string>
     <string name="menu_slideshow">Slideshow</string>
