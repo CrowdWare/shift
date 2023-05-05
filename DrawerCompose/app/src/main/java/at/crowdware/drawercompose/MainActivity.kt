@@ -32,6 +32,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -63,20 +64,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
-
+    val selectedItem = remember { mutableStateOf("Home") }
     NavHost(navController = navController, startDestination = "Home") {
         composable("Home") {
-            ModalNavigationDrawer(navController){ MainPage()}
+            ModalNavigationDrawer(navController, selectedItem){ MainPage()}
         }
         composable("Mate list") {
-            ModalNavigationDrawer(navController){ MateList()}
+            ModalNavigationDrawer(navController, selectedItem){ MateList()}
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalNavigationDrawer(navController: NavController, content: @Composable() () -> Unit) {
+fun ModalNavigationDrawer(navController: NavController, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -91,7 +92,7 @@ fun ModalNavigationDrawer(navController: NavController, content: @Composable() (
 
             ModalNavigationDrawer(
                 drawerState = drawerState,
-                drawerContent = { DrawerSheet(drawerState, navController) },
+                drawerContent = { DrawerSheet(drawerState, navController, selectedItem) },
                 content = {
                     Column() {
                         CenterAlignedTopAppBar(

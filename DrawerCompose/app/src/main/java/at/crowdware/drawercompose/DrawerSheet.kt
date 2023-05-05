@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,11 +38,11 @@ data class MenuItem(val icon: ImageVector, val text: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerSheet(drawerState: DrawerState, navController: NavController){
+fun DrawerSheet(drawerState: DrawerState, navController: NavController, selectedItem: MutableState<String>){
     val items = listOf(
         MenuItem(Icons.Default.Home, "Home"),
         MenuItem(Icons.Default.Face, "Mate list"))
-    val selectedItem = remember { mutableStateOf(items[0]) }
+    //val selectedItem = remember { mutableStateOf("Home") }
     val scope = rememberCoroutineScope()
     ModalDrawerSheet(modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.8).dp)) {
         Spacer(Modifier.height(12.dp))
@@ -49,10 +50,10 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController){
             NavigationDrawerItem(
                 icon = { Icon(item.icon, contentDescription = item.text) },
                 label = { Text(item.text) },
-                selected = item == selectedItem.value,
+                selected = item.text == selectedItem.value,
                 onClick = {
                     scope.launch { drawerState.close() }
-                    selectedItem.value = item
+                    selectedItem.value = item.text
                     navController.navigate(item.text)
                 },
                 modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
@@ -66,9 +67,10 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController){
 @Composable
 fun DrawerPreview() {
     val navController = rememberNavController()
+    val selectedItem = remember { mutableStateOf("Mate list") }
     DrawerComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), navController)
+            DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), navController, selectedItem)
         }
     }
 }
