@@ -24,7 +24,7 @@ There will also be a micro blogging engine, so that you are able to share things
 We are not going to copy Whats App, Telegram or Facebook, because these apps where made with capitalism in mind (to earn a bunch of money), but we will implement similar functionality. Lets think about Facebook without advertising, censorship and collecting data of the users. 
 
 ## FOUR
-There will be the possibility to implement plugins, so that we all are able to create new content for a new **time shift**.  
+There will be the possibility to implement plugins (Android Dynamic Feature), so that we all are able to create new content for a new **time shift**.  
 
 ## FIVE 
 After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 10 ml a day, so that all users are getting an equal amount per day without the amount of LMC for advertising. 

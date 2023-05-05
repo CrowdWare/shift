@@ -1,3 +1,3 @@
 # Vision
 
-see ../readme.md
+see [http://shift.crowdware.at/](http://shift.crowdware.at/)
