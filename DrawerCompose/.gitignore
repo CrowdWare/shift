@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/release/app-release.apk
+/my-release-key.keystore
+/app/release/output-metadata.json
