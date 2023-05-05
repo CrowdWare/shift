@@ -28,26 +28,34 @@ class Database {
 
         fun saveAccount(context: Context, account: Account) {
             val file = getDbFile(context)
+            try {
+                // Create a key for the encryption
+                val key = SecretKeySpec(keyPhrase.toByteArray(), "AES")
 
-            // Create a key for the encryption
-            val key = SecretKeySpec(keyPhrase.toByteArray(), "AES")
+                // Serialize the person object to a byte array
+                val baos = ByteArrayOutputStream()
+                ObjectOutputStream(baos).use { it.writeObject(account) }
+                val serializedData = baos.toByteArray()
 
-            // Serialize the person object to a byte array
-            val baos = ByteArrayOutputStream()
-            ObjectOutputStream(baos).use { it.writeObject(account) }
-            val serializedData = baos.toByteArray()
+                // Encrypt the serialized data
+                val cipher = Cipher.getInstance("AES")
+                cipher.init(Cipher.ENCRYPT_MODE, key)
+                val encryptedData = cipher.doFinal(serializedData)
 
-            // Encrypt the serialized data
-            val cipher = Cipher.getInstance("AES")
-            cipher.init(Cipher.ENCRYPT_MODE, key)
-            val encryptedData = cipher.doFinal(serializedData)
-
-            // Write the encrypted data to a file
-            file.writeBytes(encryptedData)
+                // Write the encrypted data to a file
+                file.writeBytes(encryptedData)
+            }
+            catch(e: java.lang.Exception)
+            {
+                if(file.exists())
+                    file.delete()
+            }
         }
 
         fun readAccount(context: Context): Account? {
             val file = getDbFile(context)
+            if(!file.exists())
+                return null
             try {
                 var account: Account
                 // Read the encrypted data from the file
