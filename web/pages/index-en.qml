@@ -198,8 +198,8 @@ LMC is based on the phrase thank you and represents the gratitude.
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
 	We are going to create a very simple app just to enable the user to scoop new liquid. 
-	The users are creating like 10 liters of LMC every day they start the process in the app.
-	The users can also refer other users and can earn 1 liter of LMC for every referred user per day. 
+	The users are creating like 1.000 ml of LMC every day. They start the process in the app.
+	The users can also refer other users and can earn 150 ml of LMC for every referred user per day. 
 	Every user can add up to 10 other users (otherwise it would become a snowball system, which is unfair, 
 	because the one on te top will earn the most)
 &lt;/p&gt;
@@ -223,7 +223,7 @@ LMC is based on the phrase thank you and represents the gratitude.
 &lt;/p&gt;
 &lt;h4&gt;Phase V&lt;/h4&gt;
 &lt;p&gt;
-	After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 10 liters a day, 
+	After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 1 liters a day, 
 	so that all users are getting an equal amount per day. 
 	At that point we will cut the connection to the server and the platform will running totally decentral.
 &lt;/p&gt;

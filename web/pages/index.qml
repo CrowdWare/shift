@@ -200,10 +200,9 @@ Content {
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
 	Wir werden eine sehr einfache App erstellen, damit der Benutzer neue Flüssigkeit schöpfen kann.
-	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 10 ml LMC.
-	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 1 ml LMC schöpfen.
-	Jeder Benutzer kann bis zu 10 andere Benutzer hinzufügen (andernfalls würde es zu einem Schneeballsystem werden, was unfair ist).
-	weil derjenige an der Spitze am meisten verdient)
+	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 1.000 ml LMC.
+	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 150 ml LMC schöpfen.
+	Jeder Benutzer kann bis zu 10 andere Benutzer hinzufügen.
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;
 &lt;p&gt;
@@ -226,7 +225,7 @@ Content {
 &lt;/p&gt;
 &lt;h4&gt;Phase V&lt;/h4&gt;
 &lt;p&gt;
-	Nach Erreichen der Menge von 10.000.000 Benutzern wird die Erzeugung von LMC auf 10 Liter pro Tag reduziert.
+	Nach Erreichen der Menge von 10.000.000 Benutzern wird die Erzeugung von LMC auf 1 Liter pro Tag reduziert.
 	Damit erhalten alle Benutzer den gleichen Betrag pro Tag.
 	An diesem Punkt werden wir die Verbindung zum Server trennen und die Plattform wird vollständig dezentral ausgeführt.
 &lt;/p&gt;
