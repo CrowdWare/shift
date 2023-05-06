@@ -72,7 +72,6 @@ class JoinActivity : ComponentActivity() {
 fun JoinForm() {
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
-    var email by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val languages  = listOf("Deutsch", "English", "Español", "Français", "Português")
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
@@ -104,11 +103,7 @@ fun JoinForm() {
                     onValueChange = { name = it },
                     label = { Text("Name or Nickname") }
                 )
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text("Leave your email for infos") }
-                )
+
                 OutlinedTextField(
                     value = friend,
                     onValueChange = { friend = it },
@@ -118,7 +113,7 @@ fun JoinForm() {
                 DropDownListbox(label="Language",stateHolder = stateHolderLanguage)
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { join(name, friend, email) },
+                    onClick = { join(name, friend, stateHolderCountry.value, stateHolderLanguage.value) },
                 ) {
                     Text("JOIN THE SHIFT")
                 }
@@ -127,8 +122,8 @@ fun JoinForm() {
     }
 }
 
-fun join(name:String, friend: String, email: String){
-    println("Create account ($name, $friend, $email)")
+fun join(name:String, friend: String, country: String, language: String){
+    println("Create account ($name, $friend, $country, $language)")
 }
 
 @Preview(showSystemUi = true)
