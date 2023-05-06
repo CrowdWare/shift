@@ -1,4 +1,4 @@
-package at.crowdware.drawercompose
+package at.crowdware.drawercompose.ui.widgets
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Size
+import at.crowdware.drawercompose.R
 
 class DropDownListboxStateHolder(list: List<String>) {
     var enabled by mutableStateOf(false)
