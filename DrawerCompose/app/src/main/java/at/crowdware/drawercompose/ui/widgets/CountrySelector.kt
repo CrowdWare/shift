@@ -1,15 +1,14 @@
 package at.crowdware.drawercompose.ui.widgets
 
 import android.content.Context
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,22 +16,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import at.crowdware.drawercompose.R
 import com.google.gson.GsonBuilder
-
+import kotlin.math.min
 fun readCountryData(context: Context): List<String> {
     val gson = GsonBuilder().create()
     val json = context.resources.openRawResource(R.raw.countries).bufferedReader().use { it.readText() }
@@ -66,30 +61,38 @@ fun DropDownListbox(label: String, stateHolder: DropDownListboxStateHolder) {
             )
             val width = with(LocalDensity.current) { stateHolder.size.width.toDp() }
             val height = with(LocalDensity.current) { stateHolder.size.height.toDp() }
+            val maxHeight = LocalConfiguration.current.screenHeightDp.dp * 0.6f
+            val itemHeight = 48.dp
+            val contentHeight = stateHolder.items.size * itemHeight.value
+            val boxHeight = min(contentHeight, maxHeight.value).dp
             DropdownMenu(
                 expanded = stateHolder.enabled,
                 onDismissRequest = { stateHolder.onEnabled(false) },
-                modifier = Modifier.width(width)//width(with(LocalDensity.current) { stateHolder.size.width.toDp() })
             ) {
-                stateHolder.items.forEachIndexed { index, s ->
-                    DropdownMenuItem(
-                        text = { Text(s) },
-                        onClick = {
-                            stateHolder.onSelectedIndex(index)
-                            stateHolder.onEnabled(false)
+                Box(modifier = Modifier.size(width = width, boxHeight)) {
+                    LazyColumn {
+                        items(stateHolder.items.size) { index ->
+                            DropdownMenuItem(
+                                text = { Text(stateHolder.items[index]) },
+                                onClick = {
+                                    stateHolder.onSelectedIndex(index)
+                                    stateHolder.onEnabled(false) }
+                            )
                         }
-                    )
+                    }
                 }
             }
             Box(
-                Modifier.width(width).height(height-8.dp).offset(y=8.dp)
+                Modifier
+                    .width(width)
+                    .height(height/*-8.dp*/)/*.offset(y=8.dp)*/
+                    .padding(top = 8.dp)
                     .clickable(onClick = { stateHolder.onEnabled(true) })//.alpha(0f)
             ) {
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

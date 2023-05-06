@@ -19,9 +19,6 @@ class DropDownListboxStateHolder(list: List<String>) {
         }else{
             R.drawable.baseline_arrow_drop_down_24
         }
-    //val items = (1..5).map{
-    //    "Option $it"
-    //}
     val items = list
     fun onEnabled(newValue:Boolean){
         enabled= newValue
