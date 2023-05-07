@@ -15,6 +15,7 @@ class Backend {
     companion object {
         private const val serviceUrl = "http://128.140.48.116:8080/"
         private const val key = "1234567890" // TODO...RAUS DAMIT
+        private var account = Account()
 
         fun createAccount(
             context: Context,
@@ -32,7 +33,7 @@ class Backend {
                 return
             }
             else if(ruuid.isEmpty()) {
-                onJoinFailed("Please enter your friend's id who invites you.")
+                onJoinFailed("Please enter the invitation code.")
                 return
             }
             else if(country.isEmpty()){
@@ -44,7 +45,7 @@ class Backend {
                 return
             }
 
-            val account = Account(name, uuid, ruuid, country, language)
+            account = Account(name, uuid, ruuid, country, language)
             val client = AsyncHttpClient()
             val url = serviceUrl + "register"
             val jsonParams = JSONObject()
@@ -80,6 +81,12 @@ class Backend {
                     println(responseString)
                 }
             })
+        }
+
+        fun setAccount(acc: Account){account = acc }
+        fun getAccount(): Account {return account}
+        fun startScooping() {
+            TODO("Not yet implemented")
         }
     }
 }

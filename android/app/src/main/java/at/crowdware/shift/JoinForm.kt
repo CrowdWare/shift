@@ -84,7 +84,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
         OutlinedTextField(
             value = friend,
             onValueChange = { friend = it },
-            label = { Text("Refer-Id from inviter") }
+            label = { Text("Invitation code") }
         )
         DropDownListbox(label = "Select your country", stateHolder = stateHolderCountry)
         DropDownListbox(label = "Select preferred language", stateHolder = stateHolderLanguage)

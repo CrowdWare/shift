@@ -1,5 +1,6 @@
 package at.crowdware.shift
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
@@ -35,14 +37,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.compose.rememberNavController
+import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import java.text.NumberFormat
 import java.util.Locale
 
+//rTNV7cTZ8kWU6JwUohKGIA==
 @Composable
 fun MainPage() {
     val balance by remember { mutableStateOf(17768) }
     var displayMilliliter by remember { mutableStateOf(false) }
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, "SHIFT is a new app to create worldwide universal basic income. Get your first coins now, by following this link http://shift.crowdware.at Download the app, start it and use this id\n" + Backend.getAccount().uuid + " as invitation code.")
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +97,7 @@ fun MainPage() {
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = { Backend.startScooping() }, modifier = Modifier.fillMaxWidth()) {
             Text("Start Scooping", style = TextStyle(fontSize = 20.sp))
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -124,7 +135,7 @@ fun MainPage() {
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { context.startActivity(shareIntent) }, modifier = Modifier.fillMaxWidth()) {
             Text("Invite Friends", style = TextStyle(fontSize = 20.sp))
         }
     }

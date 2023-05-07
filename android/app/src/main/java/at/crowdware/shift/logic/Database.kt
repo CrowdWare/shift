@@ -4,6 +4,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import android.content.Context
 import android.os.Environment
+import androidx.activity.compose.BackHandler
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
@@ -69,6 +70,7 @@ class Database {
                 ObjectInputStream(ByteArrayInputStream(decryptedData)).use {
                     account = it.readObject() as Account
                 }
+                Backend.setAccount(account)
                 return account
             }
             catch (e: Exception) {
