@@ -1,4 +1,4 @@
-package at.crowdware.drawercompose.ui.widgets
+package at.crowdware.shift.ui.widgets
 
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import at.crowdware.drawercompose.R
+import at.crowdware.shift.R
 import com.google.gson.GsonBuilder
 import kotlin.math.min
 fun readCountryData(context: Context): List<String> {

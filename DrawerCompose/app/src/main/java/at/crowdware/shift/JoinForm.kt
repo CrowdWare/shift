@@ -1,14 +1,9 @@
-package at.crowdware.drawercompose
+package at.crowdware.shift
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,34 +22,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import at.crowdware.drawercompose.ui.theme.DrawerComposeTheme
+import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import androidx.compose.material.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import at.crowdware.drawercompose.ui.widgets.DropDownListbox
-import at.crowdware.drawercompose.ui.widgets.readCountryData
-import at.crowdware.drawercompose.ui.widgets.rememberDropDownListboxStateHolder
+import at.crowdware.shift.ui.widgets.DropDownListbox
+import at.crowdware.shift.ui.widgets.readCountryData
+import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
+import at.crowdware.shift.logic.Backend
 
-class JoinActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            JoinForm()
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JoinForm() {
+fun JoinForm(joinSuccessful: MutableState<Boolean>) {
+    var errorMessage by remember { mutableStateOf("") }
+    var context = LocalContext.current.applicationContext
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val languages  = listOf("Deutsch", "English", "Español", "Français", "Português")
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
     val stateHolderLanguage = rememberDropDownListboxStateHolder(languages)
+
+    val onJoinFailed: (String?) -> Unit = { message ->
+        if(message != null)
+            errorMessage = message
+    }
+
+    val onJoinSucceed: ()-> Unit = {
+        joinSuccessful.value = true
+    }
 
     DrawerComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -93,9 +94,11 @@ fun JoinForm() {
                 )
                 DropDownListbox(label="Country",stateHolder = stateHolderCountry)
                 DropDownListbox(label = "Language", stateHolder = stateHolderLanguage)
-                Spacer(modifier = Modifier.height(16.dp))
+                //Spacer(modifier = Modifier.height(16.dp))
+                Text(text=errorMessage, color = Color.Red)
                 Button(
-                    onClick = { join(name, friend, stateHolderCountry.value, stateHolderLanguage.value)
+                    onClick = { Backend.createAccount( context ,name, friend,
+                        stateHolderCountry.value, stateHolderLanguage.value, onJoinSucceed, onJoinFailed)
                     },
                 ) {
                     Text("JOIN THE SHIFT")
@@ -105,14 +108,11 @@ fun JoinForm() {
     }
 }
 
-fun join(name:String, friend: String, country: String, language: String){
-    println("Create account ($name, $friend, $country, $language)")
-}
-
 @Preview(showSystemUi = true)
 @Composable
 fun JoinFormPreview()
 {
-    JoinForm()
+    val joinSuccessful = remember { mutableStateOf(false) }
+    JoinForm(joinSuccessful)
 }
 

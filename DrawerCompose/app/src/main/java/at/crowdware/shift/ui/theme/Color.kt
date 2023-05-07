@@ -1,4 +1,4 @@
-package at.crowdware.drawercompose.ui.theme
+package at.crowdware.shift.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

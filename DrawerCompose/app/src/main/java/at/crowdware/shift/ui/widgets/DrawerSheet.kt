@@ -1,4 +1,4 @@
-package at.crowdware.drawercompose.ui.widgets
+package at.crowdware.shift.ui.widgets
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import at.crowdware.drawercompose.ui.theme.DrawerComposeTheme
+import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import kotlinx.coroutines.launch
 
 data class MenuItem(val icon: ImageVector, val text: String)

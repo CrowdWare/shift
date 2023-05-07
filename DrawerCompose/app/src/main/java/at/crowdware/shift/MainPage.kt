@@ -1,4 +1,4 @@
-package at.crowdware.drawercompose
+package at.crowdware.shift
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

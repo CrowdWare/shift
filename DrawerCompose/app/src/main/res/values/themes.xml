@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.DrawerCompose" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.Shift" parent="android:Theme.Material.Light.NoActionBar">
     <item name="android:statusBarColor">@color/splash_background</item>
     </style>
-    <style name="SplashScreenTheme" parent="Theme.DrawerCompose">
+    <style name="SplashScreenTheme" parent="Theme.Shift">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 </resources>

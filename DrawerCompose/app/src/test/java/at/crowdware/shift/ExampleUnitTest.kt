@@ -1,4 +1,4 @@
-package at.crowdware.drawercompose
+package at.crowdware.shift
 
 import org.junit.Test
 

@@ -54,8 +54,9 @@ class Database {
 
         fun readAccount(context: Context): Account? {
             val file = getDbFile(context)
-            if(!file.exists())
+            if(!file.exists()) {
                 return null
+            }
             try {
                 var account: Account
                 // Read the encrypted data from the file

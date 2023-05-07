@@ -1,4 +1,5 @@
 package at.crowdware.shift.logic
+
 import android.content.Context
 import android.util.Base64
 import com.loopj.android.http.AsyncHttpClient
@@ -15,22 +16,39 @@ class Backend {
         private const val serviceUrl = "http://128.140.48.116:8080/"
         private const val key = "1234567890" // TODO...RAUS DAMIT
 
-        fun createAccount(context: Context, name: String, ruuid: String, country: String, language: String) {
+        fun createAccount(
+            context: Context,
+            name: String,
+            ruuid: String,
+            country: String,
+            language: String,
+            onJoinSucceed: () -> Unit,
+            onJoinFailed: (String?) -> Unit
+        ) {
             val uuidBytes = UUID.randomUUID().toString().toByteArray()
             val uuid = Base64.encodeToString(uuidBytes, Base64.DEFAULT)
-            val ru: String
-            if (ruuid == "me")
-                ru = uuid
-            else
-                ru = ruuid
-            val account = Account(name, uuid, ru, country, language)
-            registerAccount(context, account)
-        }
+            if(name.isEmpty()) {
+                onJoinFailed("Please enter your name!")
+                return
+            }
+            else if(ruuid.isEmpty()) {
+                onJoinFailed("Please enter your friend's id who invites you.")
+                return
+            }
+            else if(country.isEmpty()){
+                onJoinFailed("Please select your country.")
+                return
+            }
+            else if(language.isEmpty()){
+                onJoinFailed("Please select a language.")
+                return
+            }
 
-        private fun registerAccount(context: Context, account: Account) {
+            val account = Account(name, uuid, ruuid, country, language)
             val client = AsyncHttpClient()
             val url = serviceUrl + "register"
             val jsonParams = JSONObject()
+
             jsonParams.put("key", key)
             jsonParams.put("name", account.name)
             jsonParams.put("uuid", account.uuid)
@@ -39,6 +57,8 @@ class Backend {
             jsonParams.put("language", account.language)
             jsonParams.put("test","false")
 
+            //rTNV7cTZ8kWU6JwUohKGIA==
+
             val headers = arrayOf(
                 BasicHeader("User-Agent", "Shift 1.0")
             )
@@ -46,12 +66,20 @@ class Backend {
 
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
-                    Database.saveAccount(context, account)
-                    //context.Joined()
+                    val jsonResponse = JSONObject(responseString)
+                    val isError = jsonResponse.getBoolean("isError")
+                    val message = jsonResponse.getString("message")
+                     if(isError)
+                        onJoinFailed(message)
+                    else {
+                        Database.saveAccount(context, account)
+                        onJoinSucceed()
+                    }
                 }
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
-                    //context.JoinFailed(responseString)
+                    onJoinFailed("There was a network error, try again later.")
+                    println(responseString)
                 }
             })
         }

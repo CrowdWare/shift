@@ -12,9 +12,9 @@
         android:label="SHIFT"
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DrawerCompose"
+        android:theme="@style/Theme.Shift"
         tools:targetApi="31" >
-        <activity android:name=".SplashActivity"
+        <activity android:name=".MainActivity"
             android:exported="true"
             android:label="SHIFT"
             android:theme="@style/SplashScreenTheme">
@@ -23,8 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".JoinActivity"/>
     </application>
 
 </manifest>

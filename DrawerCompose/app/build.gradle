@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'at.crowdware.drawercompose'
+    namespace 'at.crowdware.shift'
     compileSdk 33
 
     defaultConfig {
-        applicationId "at.crowdware.drawercompose"
+        applicationId "at.crowdware.shift"
         minSdk 28
         targetSdk 33
         versionCode 1
