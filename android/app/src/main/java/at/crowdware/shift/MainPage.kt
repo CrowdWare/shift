@@ -1,6 +1,7 @@
 package at.crowdware.shift
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +42,7 @@ import java.util.Locale
 @Composable
 fun MainPage() {
     val balance by remember { mutableStateOf(17768) }
+    var displayMilliliter by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,6 +53,7 @@ fun MainPage() {
             Modifier
                 .fillMaxWidth()
                 .height(140.dp)
+                .clickable(onClick = {displayMilliliter = !displayMilliliter})
         ) {
             Box(
                 modifier = Modifier
@@ -61,14 +65,20 @@ fun MainPage() {
                     style = TextStyle(fontSize = 18.sp),
                     modifier = Modifier.align(Alignment.TopStart)
                 )
-                    AutoSizeText(
+                    AutoSizeText(if(displayMilliliter){
                         NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
                             maximumFractionDigits = 3
-                        }.format(balance / 1000.0),
+                        }.format(balance)
+                    }else{
+                        NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
+                            maximumFractionDigits = 0
+                        }.format(balance / 1000.0)
+                         }
+                        ,
                         style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
                     )
                 Text(
-                    text = "LMC (ml)",
+                    text = if(displayMilliliter){"LMC (ml)"}else{"LMC (liter)"},
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.BottomEnd)
@@ -102,7 +112,8 @@ fun MainPage() {
                     Text("Liquid scooped", style = TextStyle(fontSize = 18.sp))
                     Box(
                         modifier = Modifier
-                            .fillMaxSize().padding(4.dp)
+                            .fillMaxSize()
+                            .padding(4.dp)
                     ) {
                         Text(
                             "10 l", style = TextStyle(fontSize = 18.sp),
