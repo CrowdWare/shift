@@ -2,14 +2,12 @@ package at.crowdware.shift
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -22,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import androidx.compose.material.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -47,7 +44,6 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
     val languages = listOf("Deutsch", "English", "Español", "Français", "Português")
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
     val stateHolderLanguage = rememberDropDownListboxStateHolder(languages)
-
     val onJoinFailed: (String?) -> Unit = { message ->
         if (message != null)
             errorMessage = message
@@ -82,16 +78,16 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Name or Nickname") }
+            label = { Text("Name or nickname") },
         )
 
         OutlinedTextField(
             value = friend,
             onValueChange = { friend = it },
-            label = { Text("ReferId  from a friend") }
+            label = { Text("Refer-Id from inviter") }
         )
-        DropDownListbox(label = "Country", stateHolder = stateHolderCountry)
-        DropDownListbox(label = "Language", stateHolder = stateHolderLanguage)
+        DropDownListbox(label = "Select your country", stateHolder = stateHolderCountry)
+        DropDownListbox(label = "Select preferred language", stateHolder = stateHolderLanguage)
         Text(text = errorMessage, color = Color.Red)
         Button(
             onClick = {

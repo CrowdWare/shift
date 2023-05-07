@@ -33,12 +33,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.compose.rememberNavController
+import at.crowdware.shift.ui.widgets.AutoSizeText
 import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
 fun MainPage() {
-    val balance by remember { mutableStateOf(13768) }
+    val balance by remember { mutableStateOf(73768) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,24 +61,14 @@ fun MainPage() {
                     style = TextStyle(fontSize = 18.sp),
                     modifier = Modifier.align(Alignment.TopStart)
                 )
-                Row(modifier = Modifier.align(Alignment.Center)) {
-                    Text(
+                    AutoSizeText(
                         NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
                             maximumFractionDigits = 3
-                        }.format(balance / 1000.0), fontWeight = FontWeight.Bold,
-                        style = TextStyle(fontSize = 70.sp),
-                        modifier = Modifier.align(Alignment.Bottom)
+                        }.format(balance / 1000.0),
+                        style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
                     )
-                    Text(
-                        "ml", fontWeight = FontWeight.Bold,
-                        style = TextStyle(fontSize = 18.sp),
-                        modifier = Modifier
-                            .align(Alignment.Bottom)
-                            .padding(start = 4.dp)
-                    )
-                }
                 Text(
-                    text = "LMC",
+                    text = "LMC (ml)",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.BottomEnd)

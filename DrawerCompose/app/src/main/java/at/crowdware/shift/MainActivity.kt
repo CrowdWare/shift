@@ -36,5 +36,5 @@ class MainActivity : ComponentActivity() {
 
 fun hasJoined(applicationContext: Context): Boolean
 {
-    return Database.readAccount(applicationContext) != null
+   return Database.readAccount(applicationContext) != null
 }
