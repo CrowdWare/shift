@@ -57,8 +57,6 @@ class Backend {
             jsonParams.put("language", account.language)
             jsonParams.put("test","false")
 
-            //rTNV7cTZ8kWU6JwUohKGIA==
-
             val headers = arrayOf(
                 BasicHeader("User-Agent", "Shift 1.0")
             )
