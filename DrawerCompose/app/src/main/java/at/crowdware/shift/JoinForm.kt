@@ -44,66 +44,64 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
-    val languages  = listOf("Deutsch", "English", "Español", "Français", "Português")
+    val languages = listOf("Deutsch", "English", "Español", "Français", "Português")
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
     val stateHolderLanguage = rememberDropDownListboxStateHolder(languages)
 
     val onJoinFailed: (String?) -> Unit = { message ->
-        if(message != null)
+        if (message != null)
             errorMessage = message
     }
 
-    val onJoinSucceed: ()-> Unit = {
+    val onJoinSucceed: () -> Unit = {
         joinSuccessful.value = true
     }
 
-    DrawerComposeTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 
-            Column(
-                modifier = Modifier.fillMaxWidth(0.8f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+    Column(
+        modifier = Modifier.fillMaxWidth(0.8f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
 
-                CenterAlignedTopAppBar(
-                    title = { Text("JOIN SHIFT") },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                        actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                )
-                Row(Modifier.weight(1f)) {
-                    Image(
-                        painter = painterResource(id = R.drawable.icon_400x400),
-                        contentDescription = stringResource(id = R.string.icon),
-                        modifier = Modifier.fillMaxHeight(),
-                    )
-                }
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Name or Nickname") }
-                )
+        CenterAlignedTopAppBar(
+            title = { Text("JOIN SHIFT") },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        )
+        Row(Modifier.weight(1f)) {
+            Image(
+                painter = painterResource(id = R.drawable.icon_400x400),
+                contentDescription = stringResource(id = R.string.icon),
+                modifier = Modifier.fillMaxHeight(),
+            )
+        }
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Name or Nickname") }
+        )
 
-                OutlinedTextField(
-                    value = friend,
-                    onValueChange = { friend = it },
-                    label = { Text("ReferId  from a friend") }
+        OutlinedTextField(
+            value = friend,
+            onValueChange = { friend = it },
+            label = { Text("ReferId  from a friend") }
+        )
+        DropDownListbox(label = "Country", stateHolder = stateHolderCountry)
+        DropDownListbox(label = "Language", stateHolder = stateHolderLanguage)
+        Text(text = errorMessage, color = Color.Red)
+        Button(
+            onClick = {
+                Backend.createAccount(
+                    context, name, friend,
+                    stateHolderCountry.value, stateHolderLanguage.value, onJoinSucceed, onJoinFailed
                 )
-                DropDownListbox(label="Country",stateHolder = stateHolderCountry)
-                DropDownListbox(label = "Language", stateHolder = stateHolderLanguage)
-                //Spacer(modifier = Modifier.height(16.dp))
-                Text(text=errorMessage, color = Color.Red)
-                Button(
-                    onClick = { Backend.createAccount( context ,name, friend,
-                        stateHolderCountry.value, stateHolderLanguage.value, onJoinSucceed, onJoinFailed)
-                    },
-                ) {
-                    Text("JOIN THE SHIFT")
-                }
-            }
+            },
+        ) {
+            Text("JOIN THE SHIFT")
         }
     }
 }
