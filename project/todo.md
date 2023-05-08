@@ -8,8 +8,8 @@
 + Start scooping webcall
 - Introduction on app startapp to animate people to join (something with a liquid)
 + Fontsize of balance should be autosize, one should toggle the display between liter and ml
-- Embed some Esperanto
-- Localize app
++ Embed some Esperanto
++ Localize app
 - Color for drawer select background should be blueish
 - Display welcome message for news (crowdfunding, new version, new features)
 - For benefits only count mates that were scooping the last 24h ?
