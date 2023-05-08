@@ -20,7 +20,6 @@ class Backend {
         private const val key = "1234567890" // TODO...RAUS DAMIT
         private var account = Account()
 
-
         fun getFriendlist(
             context: Context,
             onFriendlistSucceed: (List<Friend>) -> Unit,
@@ -87,7 +86,9 @@ class Backend {
                     if(isError)
                         onScoopingFailed(message)
                     else {
+                        val mates = jsonResponse.getInt("mates")
                         account.scooping = (System.currentTimeMillis() / 1000).toULong()
+                        account.matescount = mates.toUInt()
                         Database.saveAccount(context)
                         onScoopingSucceed()
                     }
@@ -128,7 +129,7 @@ class Backend {
                 return
             }
 
-            account = Account(name, uuid, ruuid, country, language)
+            account = Account(name.trim(), uuid.trim(), ruuid.trim(), country, language)
             account.transactions.add(Transaction(amount=1000u, from="App", description = "Initial liquid", date = LocalDateTime.now()))
 
             val client = AsyncHttpClient()
@@ -136,9 +137,9 @@ class Backend {
             val jsonParams = JSONObject()
 
             jsonParams.put("key", key)
-            jsonParams.put("name", account.name.trim())
-            jsonParams.put("uuid", account.uuid.trim())
-            jsonParams.put("ruuid", account.ruuid.trim())
+            jsonParams.put("name", account.name)
+            jsonParams.put("uuid", account.uuid)
+            jsonParams.put("ruuid", account.ruuid)
             jsonParams.put("country", account.country)
             jsonParams.put("language", account.language)
             jsonParams.put("test","false")
@@ -168,13 +169,9 @@ class Backend {
             })
         }
 
-        fun setAccount(acc: Account){account = acc }
-        fun getAccount(): Account {return account}
-
         fun getBalance(context: Context): ULong{
             var hours = 0.0f
             val time = (System.currentTimeMillis() / 1000).toULong()
-            val mates = 0 // TODO should come from mates list
             var balance: ULong = 0u
             for(t in account.transactions)
                 balance += t.amount
@@ -184,8 +181,8 @@ class Backend {
                 hours = (seconds.toFloat() / 60.0f / 60.0f)
                 if(hours > 20.0) {  //scooping stops after 20 hours
                     hours = 0f
-                    val grow: Int = 10000 + mates * 1500
-                    balance += grow.toULong() // 10 + 1.5 (per mate) LMC per day added
+                    val grow: UInt = 10000u + account.matescount * 1500u
+                    balance += grow // 10 + 1.5 (per mate) LMC per day added
                     if (account.transactions.size > 29)
                     {
                         // combine the last two bookings
@@ -198,16 +195,16 @@ class Backend {
                     account.transactions.add(0, Transaction(grow.toULong(),"App", LocalDateTime.now(),"Liquid scooped"))
                     account.scooping = 0u
                     Database.saveAccount(context)
-                    //emit scoopingChanged();
-                    //emit balanceChanged();
                 }
             }
             // TODO use all levels of mates
-            return balance + (hours * 500).toULong() + (hours * mates * 75).toULong()
+            return balance + (hours * 500).toULong() + (hours * account.matescount.toInt() * 75).toULong()
         }
 
         fun IsRunningOnEmulator(): Boolean{
             return Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") || Build.MODEL.contains("Android SDK built for x86")
         }
+        fun setAccount(acc: Account){account = acc }
+        fun getAccount(): Account {return account}
     }
 }
