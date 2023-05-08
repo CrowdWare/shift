@@ -123,7 +123,7 @@ def scooping():
     first_date = datetime(1970, 1, 1)
     time_since = datetime.now() - first_date
     seconds = int(time_since.total_seconds())
-
+    count = 0
     if test != "true":
         conn = None
         try:
@@ -132,6 +132,13 @@ def scooping():
             query = 'UPDATE account SET scooping = ' + str(seconds) + ' WHERE uuid = "' + uuid + '"'
             curs.execute(query)
             conn.commit()
+
+            curs = conn.cursor(dictionary=True)
+            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid = "' + uuid + '"'
+            curs.execute(query)
+            row = curs.fetchone()
+            count = row['count']
+
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:
@@ -140,7 +147,8 @@ def scooping():
 
     return jsonify(isError = False,
                    message = "Success",
-                   statusCode = 200)
+                   statusCode = 200, 
+                   mates = count)
 
 @app.route('/matelist', methods=['POST'])
 def friendlist():

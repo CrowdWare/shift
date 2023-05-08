@@ -3,7 +3,7 @@
 # App
 + Invite friends
 + Read and display last x transactions
-- Page to display mates
++ Page to display mates
 + Scooping algorythm (minted balance)
 + Start scooping webcall
 - Introduction on app startapp to animate people to join (something with a liquid)
