@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import at.crowdware.shift.logic.Database
+import at.crowdware.shift.logic.LocaleManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    //checkPermissions()
+                    LocaleManager.init(applicationContext)
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
                     if (hasJoined.value)
                         NavigationView()
@@ -43,33 +45,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleManager.wrapContext(newBase!!))
+    }
 }
 
 fun hasJoined(applicationContext: Context): Boolean
 {
    return Database.readAccount(applicationContext) != null
 }
-
-/*
-@Composable
-fun checkPermissions(): Boolean {
-
-    var permissionGranted by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-    val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-
-    DisposableEffect(Unit) {
-        val permissionStatus = ContextCompat.checkSelfPermission(context, permission)
-        permissionGranted = permissionStatus == PackageManager.PERMISSION_GRANTED
-        if (!permissionGranted) {
-            ActivityCompat.requestPermissions(
-                (context as Activity),
-                arrayOf(permission),
-                1
-            )
-        }
-        onDispose { }
-    }
-    return permissionGranted
-}
-*/

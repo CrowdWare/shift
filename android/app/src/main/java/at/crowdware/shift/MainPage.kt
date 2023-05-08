@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,9 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.widgets.AutoSizeText
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -49,7 +48,7 @@ fun MainPage() {
         action = Intent.ACTION_SEND
         putExtra(
             Intent.EXTRA_TEXT,
-            "SHIFT is a new app to create worldwide universal basic income. Get your first coins now, by following this link http://shift.crowdware.at Download the app, start it and use this id\n" + Backend.getAccount().uuid + " as invitation code."
+            stringResource(id = R.string.invite_message, stringResource(id = R.string.website_url), Backend.getAccount().uuid)
         )
         type = "text/plain"
     }
@@ -91,7 +90,7 @@ fun MainPage() {
                     .padding(4.dp), contentAlignment = Alignment.Center
             ) {
                 Text(
-                    "Balance", fontWeight = FontWeight.Bold,
+                    stringResource(R.string.balance), fontWeight = FontWeight.Bold,
                     style = TextStyle(fontSize = 18.sp),
                     modifier = Modifier.align(Alignment.TopStart)
                 )
@@ -128,11 +127,17 @@ fun MainPage() {
             modifier = Modifier.fillMaxWidth(),
             enabled = !isScooping
         ) {
-            Text(if(isScooping){"Scooping started"}else{"Start Scooping"}, style = TextStyle(fontSize = 20.sp))
+            Text(
+                if (isScooping) {
+                    stringResource(R.string.button_scooping_started)
+                } else {
+                    stringResource(R.string.button_start_scooping)
+                }, style = TextStyle(fontSize = 20.sp)
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Bookings", fontWeight = FontWeight.Bold,
+            stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 18.sp),
             modifier = Modifier.align(Alignment.Start)
         )
@@ -175,7 +180,7 @@ fun MainPage() {
             onClick = { context.startActivity(shareIntent) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Invite Friends", style = TextStyle(fontSize = 20.sp))
+            Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
         }
     }
 }

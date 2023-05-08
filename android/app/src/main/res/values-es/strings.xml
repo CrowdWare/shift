@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icon">Icono de Shift</string>
+    <string name="website_url">http://shift.crowdware.at</string>
+    <string name="invite_message">"SHIFT es una nueva aplicación para Android, entre otras cosas, para crear un ingreso básico universal en todo el mundo. Obtén tus primeras monedas ahora siguiendo este enlace: %s, descarga la aplicación, iníciala y usa este ID %s como código de invitación."</string>
+    <string name="button_scooping_started">Recogiendo...</string>
+    <string name="button_start_scooping">Comenzar a recoger</string>
+    <string name="button_invite_friends">Invitar amigos</string>
+    <string name="balance">Saldo</string>
+    <string name="language_english">Inglés</string>
+    <string name="language_german">Alemán</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Francés</string>
+    <string name="language_portugues">Portugués</string>
+    <string name="language_esperanto">Esperanto</string>
+    <string name="join_shift">UNIRSE A SHIFT</string>
+    <string name="name_or_nickname">Nombre o apodo</string>
+    <string name="invitation_code">Código de invitación</string>
+    <string name="select_your_country">Selecciona tu país</string>
+    <string name="select_preferred_language">Selecciona el idioma preferido</string>
+    <string name="button_join_the_shift">UNIRSE A SHIFT</string>
+    <string name="bookings">Reservas</string>
+    <string name="friendlist">Lista de amigos</string>
+    <string name="navigation_home">Inicio</string>
+    <string name="navigation_friendlist">Lista de amigos</string>
+    <string name="navigation_about">Acerca de</string>
+    <string name="about_shift">Acerca de SHIFT</string>
+    <string name="about_dialog_text">"SHIFT NOS CONECTA A TODOS\nSHIFT será descentralizado y, por lo tanto, no funcionará en un solo servidor.\nTu cuenta SHIFT es anónima, solo tus amigos reales saben quién está detrás de tu cuenta.\nNo se necesita registro.\nSin servidor, también significa sin censura y sin anuncios.\nSHIFT también crea un ingreso básico universal y se puede usar para mostrar gratitud a otros miembros."</string>
+</resources>

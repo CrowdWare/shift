@@ -1,0 +1,28 @@
+<resources>
+    <string name="icon">Shift-Icon</string>
+    <string name="website_url">http://shift.crowdware.at</string>
+    <string name="invite_message">"SHIFT ist eine neue App für Android unter anderem zur Schaffung eines weltweiten Grundeinkommens. Hol dir jetzt deine ersten Coins, indem du diesem Link folgst: %s, die App herunterlädst, startest und diese ID %s als Einladungscode verwendendest."</string>
+    <string name="button_scooping_started">Schöpfen gestartet</string>
+    <string name="button_start_scooping">Schöpfen starten</string>
+    <string name="button_invite_friends">Freunde einladen</string>
+    <string name="balance">Kontostand</string>
+    <string name="language_english">Englisch</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_spanish">Spanisch</string>
+    <string name="language_french">Französisch</string>
+    <string name="language_portugues">Portugiesisch</string>
+    <string name="language_esperanto">Esperanto</string>
+    <string name="join_shift">SHIFT BEITRETEN</string>
+    <string name="name_or_nickname">Name oder Spitzname</string>
+    <string name="invitation_code">Einladungscode</string>
+    <string name="select_your_country">Wähle dein Land</string>
+    <string name="select_preferred_language">Bevorzugte Sprache auswählen</string>
+    <string name="button_join_the_shift">SHIFT BEITRETEN</string>
+    <string name="bookings">Buchungen</string>
+    <string name="friendlist">Freundesliste</string>
+    <string name="navigation_home">Startseite</string>
+    <string name="navigation_friendlist">Freundesliste</string>
+    <string name="navigation_about">Über uns</string>
+    <string name="about_shift">Über SHIFT</string>
+    <string name="about_dialog_text">"SHIFT VERBINDET UNS ALLE\nSHIFT wird dezentralisiert sein und deshalb nicht auf einem einzigen Server laufen.\nDein SHIFT-Konto ist anonym, nur deine echten Freunde wissen, wer hinter deinem Konto steckt.\nKeine Registrierung erforderlich.\nKein Server bedeutet auch keine Zensur und keine Werbung.\nSHIFT schafft auch ein universelles Grundeinkommen und kann genutzt werden, um anderen Mitgliedern Dankbarkeit zu zeigen."</string>
+</resources>

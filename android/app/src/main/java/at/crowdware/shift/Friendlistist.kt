@@ -1,5 +1,6 @@
 package at.crowdware.shift
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Friend
+import at.crowdware.shift.logic.LocaleManager
+import at.crowdware.shift.ui.widgets.DropDownListbox
+import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -48,6 +53,7 @@ fun Friendlist() {
     val onFriendlistSucceed: (List<Friend>) -> Unit = { dataList ->
         friendListState.value = dataList
     }
+
     LaunchedEffect(Unit) {
         Backend.getFriendlist(context, onFriendlistSucceed, onFriendlistFailed)
     }
@@ -59,7 +65,7 @@ fun Friendlist() {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Friendlist", fontWeight = FontWeight.Bold,
+            stringResource(R.string.friendlist), fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 18.sp),
             modifier = Modifier.align(Alignment.Start)
         )
@@ -74,8 +80,8 @@ fun Friendlist() {
                 FriendListItem(friend = friendListState.value[index])
             }
         }
+        Text(errorMessage, color = Color.Red)
     }
-    Text(errorMessage, color = Color.Red)
 }
 
 @Composable

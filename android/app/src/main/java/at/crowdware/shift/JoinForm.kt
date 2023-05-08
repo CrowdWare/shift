@@ -1,5 +1,6 @@
 package at.crowdware.shift
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,10 +28,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat.recreate
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.logic.LocaleManager
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,9 +44,27 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
-    val languages = listOf("Deutsch", "English", "Español", "Français", "Português")
+    val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
+    val currentActivity = LocalContext.current as? Activity
+    val languages = listOf(
+        stringResource(R.string.language_english),
+        stringResource(R.string.language_german),
+        stringResource(R.string.language_spanish),
+        stringResource(R.string.language_french),
+        stringResource(R.string.language_portugues),
+        stringResource(R.string.language_esperanto)
+    )
+    var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
+    val onSelectedIndexChanged: (Int) -> Unit = { index ->
+        selectedLanguageCode = language_codes[index]
+        println("Language changed to ${selectedLanguageCode}")
+        LocaleManager.setLocale(context, selectedLanguageCode)
+        currentActivity?.recreate()
+    }
+
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages)
+    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, onSelectedIndexChanged)
+
     val onJoinFailed: (String?) -> Unit = { message ->
         if (message != null)
             errorMessage = message
@@ -54,13 +75,14 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
     }
 
 
+
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         CenterAlignedTopAppBar(
-            title = { Text("JOIN SHIFT") },
+            title = { Text(stringResource(R.string.join_shift)) },
             colors = TopAppBarDefaults.smallTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -78,16 +100,20 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Name or nickname") },
+            label = { Text(stringResource(R.string.name_or_nickname)) },
         )
 
         OutlinedTextField(
             value = friend,
             onValueChange = { friend = it },
-            label = { Text("Invitation code") }
+            label = { Text(stringResource(R.string.invitation_code)) }
         )
-        DropDownListbox(label = "Select your country", stateHolder = stateHolderCountry)
-        DropDownListbox(label = "Select preferred language", stateHolder = stateHolderLanguage)
+        DropDownListbox(
+            label = stringResource(R.string.select_your_country),
+            stateHolder = stateHolderCountry)
+        DropDownListbox(
+            label = stringResource(R.string.select_preferred_language),
+            stateHolder = stateHolderLanguage)
         Text(text = errorMessage, color = Color.Red)
         Button(
             onClick = {
@@ -97,7 +123,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
                 )
             },
         ) {
-            Text("JOIN THE SHIFT")
+            Text(stringResource(R.string.button_join_the_shift))
         }
     }
 }

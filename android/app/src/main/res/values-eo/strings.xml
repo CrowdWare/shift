@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icon">Shift-Ikono</string>
+    <string name="website_url">http://shift.crowdware.at</string>
+    <string name="invite_message">"SHIFT estas nova aplikado por Android por krei tutmondan bazon por baznivelo. Nun akiru viajn unuajn monerojn, sekvante tiun ĉi ligilon %s, elŝutu la aplikaĵon, komencu ĝin kaj uzas tiun ĉi ID-on %s kiel invitleton."</string>
+    <string name="button_scooping_started">Ŝarĝado startis</string>
+    <string name="button_start_scooping">Startigi ŝarĝadon</string>
+    <string name="button_invite_friends">Inviti amikojn</string>
+    <string name="balance">Saldo</string>
+    <string name="language_english">Angla</string>
+    <string name="language_german">Germana</string>
+    <string name="language_spanish">Hispana</string>
+    <string name="language_french">Franca</string>
+    <string name="language_portugues">Portugala</string>
+    <string name="language_esperanto">Esperanto</string>
+    <string name="join_shift">ALIGIĜI AL SHIFT</string>
+    <string name="name_or_nickname">Nomo aŭ sopranomo</string>
+    <string name="invitation_code">Invitokodo</string>
+    <string name="select_your_country">Elektu vian landon</string>
+    <string name="select_preferred_language">Elektu preferatan lingvon</string>
+    <string name="button_join_the_shift">ALIGU VIN AL SHIFT</string>
+    <string name="bookings">Rezervoj</string>
+    <string name="friendlist">Amiklisto</string>
+    <string name="navigation_home">Ĉefpaĝo</string>
+    <string name="navigation_friendlist">Amikolisto</string>
+    <string name="navigation_about">Pri ni</string>
+    <string name="about_shift">Pri SHIFT</string>
+    <string name="about_dialog_text">"SHIFT UNUIGAS NIN ĈIUN\nSHIFT estos sencentra kaj tial ne funkcios sur unu servilo.\nVia SHIFT-konto estas sennoma, nur viaj veraj amikoj scias, kiu estas post via konto.\nNeniu registrado estas bezonata.\nNeniu servilo signifas, ke ne ekzistas cenzuro kaj reklamoj.\nSHIFT ankaŭ kreas universalan bazan enspezon kaj povas esti uzata por esprimi dankemon al aliaj membroj."</string>
+</resources>

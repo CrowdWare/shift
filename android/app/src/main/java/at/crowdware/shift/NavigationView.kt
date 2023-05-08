@@ -21,6 +21,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,12 +33,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
-    val selectedItem = remember { mutableStateOf("Home") }
-    NavHost(navController = navController, startDestination = "Home") {
-        composable("Home") {
+    val selectedItem = remember { mutableStateOf("home") }
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
             ModalNavigationDrawer(navController, selectedItem){ MainPage()}
         }
-        composable("Friendlist") {
+        composable("friendlist") {
             ModalNavigationDrawer(navController, selectedItem){ Friendlist()}
         }
     }
@@ -78,7 +79,7 @@ fun ModalNavigationDrawer(navController: NavController, selectedItem: MutableSta
                         IconButton(onClick = { openDialog.value = true }) {
                             Icon(
                                 Icons.Filled.MoreVert,
-                                contentDescription = "About"
+                                contentDescription = stringResource(R.string.navigation_about)
                             )
                         }
                     }
@@ -94,17 +95,10 @@ fun About(openDialog: Boolean, onDismiss: () -> Unit) {
     if (openDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(text = "About SHIFT") },
+            title = { Text(text = stringResource(R.string.about_shift)) },
             text = {
                 Text(
-                    """
-                        SHIFT CONNECTS US ALL
-                        SHIFT will be decentral and will therefore not run on a single server.
-                        Your SHIFT account is anonymous, only your real friends know who is behind your account.
-                        No registration needed.
-                        No server means, also no censorship and no ads.
-                        SHIFT also creates a universal basic income and can be used to show gratitude to other members.
-                        """.trimIndent()
+                    stringResource(R.string.about_dialog_text)
                 )
             },
             confirmButton = { TextButton(onClick = onDismiss ) { Text("OK") } },

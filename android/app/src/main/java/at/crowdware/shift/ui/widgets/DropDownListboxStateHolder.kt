@@ -8,11 +8,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Size
 import at.crowdware.shift.R
 
-class DropDownListboxStateHolder(list: List<String>) {
+class DropDownListboxStateHolder(list: List<String>, _onSelectedIndexChanged: ((Int) -> Unit)? = null) {
     var enabled by mutableStateOf(false)
     var value by mutableStateOf("")
     var selectedIndex by mutableStateOf(-1)
     var size by mutableStateOf(Size.Zero)
+    val onSelectedIndexChanged = _onSelectedIndexChanged
     val icon:Int
         @Composable get() = if (enabled){
             R.drawable.baseline_arrow_drop_up_24
@@ -26,6 +27,7 @@ class DropDownListboxStateHolder(list: List<String>) {
     fun onSelectedIndex(newValue: Int){
         selectedIndex=newValue
         value = items[selectedIndex]
+        onSelectedIndexChanged?.invoke(newValue)
     }
     fun onSize(newValue: Size){
         size= newValue
@@ -33,6 +35,6 @@ class DropDownListboxStateHolder(list: List<String>) {
 }
 
 @Composable
-fun rememberDropDownListboxStateHolder(items: List<String>) = remember {
-    DropDownListboxStateHolder(items)
+fun rememberDropDownListboxStateHolder(items: List<String>, onSelectedIndexChanged: ((Int) -> Unit)? = null) = remember {
+    DropDownListboxStateHolder(items, onSelectedIndexChanged)
 }
