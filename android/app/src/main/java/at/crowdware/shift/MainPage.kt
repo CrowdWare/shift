@@ -67,8 +67,9 @@ fun MainPage() {
 
     LaunchedEffect(true) {
         while (true) {
-            balance = Backend.getBalance(context)
             isScooping = Backend.getAccount().scooping > 0u
+            if(isScooping)
+                balance = Backend.getBalance(context)
             delay(1000L)
         }
     }
