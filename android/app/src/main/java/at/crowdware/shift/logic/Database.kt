@@ -16,26 +16,17 @@ class Database {
         private const val keyPhrase = "1234567812345678" // TODO...RAUS DAMIT
         private const val db_name = "shift.db"
 
-        fun getDbFile(context: Context): File
-        {
-            var file: File
-
-            file = File(context.applicationContext.filesDir, db_name)
-            if (!file.exists())
-                if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED)
-                    file = File(context.getExternalFilesDir(null), db_name)
-            return file
-        }
-
-        fun saveAccount(context: Context, account: Account) {
-            val file = getDbFile(context)
+        fun saveAccount(context: Context) {
+            val file = File(context.applicationContext.filesDir, db_name)
             try {
                 // Create a key for the encryption
                 val key = SecretKeySpec(keyPhrase.toByteArray(), "AES")
 
                 // Serialize the person object to a byte array
                 val baos = ByteArrayOutputStream()
-                ObjectOutputStream(baos).use { it.writeObject(account) }
+                ObjectOutputStream(baos).use {
+                    it.writeObject(Backend.getAccount())
+                }
                 val serializedData = baos.toByteArray()
 
                 // Encrypt the serialized data
@@ -54,14 +45,14 @@ class Database {
         }
 
         fun readAccount(context: Context): Account? {
-            val file = getDbFile(context)
+            val file = File(context.applicationContext.filesDir, db_name)
             if(!file.exists()) {
                 return null
             }
             try {
                 var account: Account
-                // Read the encrypted data from the file
 
+                // Read the encrypted data from the file
                 val encryptedDataFromFile = file.readBytes()
                 val key = SecretKeySpec(keyPhrase.toByteArray(), "AES")
                 val cipher = Cipher.getInstance("AES")
@@ -74,15 +65,9 @@ class Database {
                 return account
             }
             catch (e: Exception) {
+                println("An error occurred reading the database: " + e.message)
                 return null
             }
-        }
-
-        fun readTransactions(context: Context): MutableList<Transaction> {
-            var list: MutableList<Transaction> = mutableListOf()
-
-
-            return list
         }
     }
 }

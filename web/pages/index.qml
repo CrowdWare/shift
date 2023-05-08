@@ -200,8 +200,8 @@ Content {
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
 	Wir werden eine sehr einfache App erstellen, damit der Benutzer neue Flüssigkeit schöpfen kann.
-	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 1.000 ml LMC.
-	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 150 ml LMC schöpfen.
+	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 10.000 ml (10l) LMC.
+	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 1.500 ml (1.5l) LMC schöpfen.
 	Jeder Benutzer kann bis zu 10 andere Benutzer hinzufügen.
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;

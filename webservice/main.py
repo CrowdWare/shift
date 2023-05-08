@@ -65,7 +65,7 @@ def message():
     if test == "true":
         message = "Message from server"
     else:
-        message = '<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="https://crowdware.github.io/Shift/">crowdware.github.io/Shift/</a> for news.</html>'
+        message = '<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://shift.crowdware.at/">shift.crowdware.at/</a> for news.</html>'
     
     return jsonify(isError=False,
                    message="Success",
@@ -158,18 +158,18 @@ def friendlist():
     if test == "true":
         not_scooping = int((datetime.now() - timedelta(seconds=72001) - datetime(1970, 1, 1)).total_seconds())
         scooping = int((datetime.now() - timedelta(seconds=71999) - datetime(1970, 1, 1)).total_seconds())
-        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'scooping' : isScooping(0)})
-        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'scooping' : isScooping(not_scooping)})
-        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'scooping' : isScooping(scooping)})
+        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'country' : 'England', 'scooping' : isScooping(0)})
+        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'country' : 'Germany' ,'scooping' : isScooping(not_scooping)})
+        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'country' : 'Brasil' , 'scooping' : isScooping(scooping)})
     else:
         conn = None
         try:
             conn = dbConnect()
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT uuid, name, scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
+            query = 'SELECT uuid, name, country, scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
             curs.execute(query)
             for row in curs:
-                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'scooping' : isScooping(row['scooping'])})
+                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'country' : row['country'], 'scooping' : isScooping(row['scooping'])})
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:

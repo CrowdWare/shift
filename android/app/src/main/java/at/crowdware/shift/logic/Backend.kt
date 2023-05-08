@@ -1,6 +1,7 @@
 package at.crowdware.shift.logic
 
 import android.content.Context
+import android.os.Build
 import android.util.Base64
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
@@ -8,14 +9,96 @@ import cz.msebera.android.httpclient.Header
 import cz.msebera.android.httpclient.entity.ByteArrayEntity
 import cz.msebera.android.httpclient.message.BasicHeader
 import org.json.JSONObject
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 
 class Backend {
     companion object {
-        private const val serviceUrl = "http://128.140.48.116:8080/"
+        private const val serviceUrl = "http://shift.crowdware.at:8080/"
         private const val key = "1234567890" // TODO...RAUS DAMIT
         private var account = Account()
+
+
+        fun getFriendlist(
+            context: Context,
+            onFriendlistSucceed: (List<Friend>) -> Unit,
+            onFriendlistFailed: (String?) -> Unit){
+            val client = AsyncHttpClient()
+            val url = serviceUrl + "matelist"
+            val jsonParams = JSONObject()
+            jsonParams.put("key", key)
+            jsonParams.put("uuid", account.uuid.trim())
+            jsonParams.put("test", "false")
+
+            val headers = arrayOf(
+                BasicHeader("User-Agent", "Shift 1.0")
+            )
+            val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
+            client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
+                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
+                    println(responseString)
+                    val jsonResponse = JSONObject(responseString)
+                    val isError = jsonResponse.getBoolean("isError")
+                    val message = jsonResponse.getString("message")
+                    if(isError)
+                        onFriendlistFailed(message)
+                    else {
+                        val data = jsonResponse.getJSONArray("data")
+                        val dataList = mutableListOf<Friend>()
+                        for (i in 0 until data.length()) {
+                            val dataObj = data.getJSONObject(i)
+                            dataList.add(Friend(dataObj.getString("name"),
+                                dataObj.getBoolean("scooping"),
+                                dataObj.getString("uuid"),
+                                dataObj.getString("country")))
+                        }
+                        onFriendlistSucceed(dataList)
+                    }
+                }
+
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
+                    onFriendlistFailed("There was a network error, try again later.")
+                    println(responseString)
+                }
+            })
+        }
+        fun setScooping(
+            context: Context,
+            onScoopingSucceed: () -> Unit,
+            onScoopingFailed: (String?) -> Unit) {
+            val client = AsyncHttpClient()
+            val url = serviceUrl + "setscooping"
+            val jsonParams = JSONObject()
+            jsonParams.put("key", key)
+            jsonParams.put("uuid", account.uuid)
+            jsonParams.put("test", "false")
+
+            val headers = arrayOf(
+                BasicHeader("User-Agent", "Shift 1.0")
+            )
+            val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
+            client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
+                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
+                    val jsonResponse = JSONObject(responseString)
+                    val isError = jsonResponse.getBoolean("isError")
+                    val message = jsonResponse.getString("message")
+                    if(isError)
+                        onScoopingFailed(message)
+                    else {
+                        account.scooping = (System.currentTimeMillis() / 1000).toULong()
+                        Database.saveAccount(context)
+                        onScoopingSucceed()
+                    }
+                }
+
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
+                    onScoopingFailed("There was a network error, try again later.")
+                    println(responseString)
+                }
+            })
+        }
 
         fun createAccount(
             context: Context,
@@ -46,14 +129,16 @@ class Backend {
             }
 
             account = Account(name, uuid, ruuid, country, language)
+            account.transactions.add(Transaction(amount=1000u, from="App", description = "Initial liquid", date = LocalDateTime.now()))
+
             val client = AsyncHttpClient()
             val url = serviceUrl + "register"
             val jsonParams = JSONObject()
 
             jsonParams.put("key", key)
-            jsonParams.put("name", account.name)
-            jsonParams.put("uuid", account.uuid)
-            jsonParams.put("ruuid", account.ruuid)
+            jsonParams.put("name", account.name.trim())
+            jsonParams.put("uuid", account.uuid.trim())
+            jsonParams.put("ruuid", account.ruuid.trim())
             jsonParams.put("country", account.country)
             jsonParams.put("language", account.language)
             jsonParams.put("test","false")
@@ -71,7 +156,7 @@ class Backend {
                      if(isError)
                         onJoinFailed(message)
                     else {
-                        Database.saveAccount(context, account)
+                        Database.saveAccount(context)
                         onJoinSucceed()
                     }
                 }
@@ -85,8 +170,44 @@ class Backend {
 
         fun setAccount(acc: Account){account = acc }
         fun getAccount(): Account {return account}
-        fun startScooping() {
-            TODO("Not yet implemented")
+
+        fun getBalance(context: Context): ULong{
+            var hours = 0.0f
+            val time = (System.currentTimeMillis() / 1000).toULong()
+            val mates = 0 // TODO should come from mates list
+            var balance: ULong = 0u
+            for(t in account.transactions)
+                balance += t.amount
+
+            if(account.scooping > 0u){
+                val seconds: ULong = time - account.scooping
+                hours = (seconds.toFloat() / 60.0f / 60.0f)
+                if(hours > 20.0) {  //scooping stops after 20 hours
+                    hours = 0f
+                    val grow: Int = 10000 + mates * 1500
+                    balance += grow.toULong() // 10 + 1.5 (per mate) LMC per day added
+                    if (account.transactions.size > 29)
+                    {
+                        // combine the last two bookings
+                        val last = account.transactions[account.transactions.size - 1]
+                        var prev = account.transactions[account.transactions.size - 2]
+                        prev.amount = prev.amount + last.amount
+                        prev.description = "Subtotal"
+                        account.transactions.remove(account.transactions.last())
+                    }
+                    account.transactions.add(0, Transaction(grow.toULong(),"App", LocalDateTime.now(),"Liquid scooped"))
+                    account.scooping = 0u
+                    Database.saveAccount(context)
+                    //emit scoopingChanged();
+                    //emit balanceChanged();
+                }
+            }
+            // TODO use all levels of mates
+            return balance + (hours * 500).toULong() + (hours * mates * 75).toULong()
+        }
+
+        fun IsRunningOnEmulator(): Boolean{
+            return Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") || Build.MODEL.contains("Android SDK built for x86")
         }
     }
 }

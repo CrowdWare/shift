@@ -15,19 +15,19 @@ LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude a
 # RELEASE PHASES
 ## ONE
 We are going to create a very simple app just to enable the user to scoop new liquid.  
-You as the users can create about, lets say 1.000 ml of LMC every day. You can start the process in the app just cklicking a button.  
-You can also invite your friend to join and if they do join you can earn 150 ml of LMC for every referred user per day.   
+You as the users can create about, lets say 10.000 ml (10l) of LMC every day. You can start the process in the app just cklicking a button.  
+You can also invite your friend to join and if they do join you can earn 1.500 ml of LMC for every referred user per day.   
 Every user can add up to 10 other friends.
-If the referred users also refer other friends then you will earn additionally 30 ml LMC for each refered user.  
-This will also happen if these user refer others and you will earn additionally 6 ml LMC for each refered user.  
+If the referred users also refer other friends then you will earn additionally 300 ml LMC for each refered user.  
+This will also happen if these user refer others and you will earn additionally 60 ml LMC for each refered user.  
 You can make the math.  
-1 Level - 1.000 ml for you  
-2 Level - 1.500 ml (10 x 150 ml) for your friends  
-3 Level - 3.000 ml (100 x 30 ml) for the refered friends  
-4 Level - 6.000 ml (1000 x 6 ml) for the  
+1 Level - 10.000 ml for you  
+2 Level - 15.000 ml (10 x 1500 ml) for your friends  
+3 Level - 30.000 ml (100 x 300 ml) for the refered friends  
+4 Level - 60.000 ml (1000 x 60 ml) for the  
 ------------------------
-Up to    11.500 ml each day
-Up to   345.000 ml (115 ml x 30) a month
+Up to    115.000 ml each day
+Up to  3.450.000 ml (115 l x 30) a month (so you can pay up to 57 hours of work)
 
 ## TWO
 When we reach, lets say, 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. Every user will then be able to show gratitude giving LMC from one app to the other. So the user is able to give the liquid which has been scooped to someone else. We call this **LMP Liquid Micro Payments**.  

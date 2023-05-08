@@ -41,8 +41,8 @@ data class MenuItem(val icon: ImageVector, val text: String)
 fun DrawerSheet(drawerState: DrawerState, navController: NavController, selectedItem: MutableState<String>){
     val items = listOf(
         MenuItem(Icons.Default.Home, "Home"),
-        MenuItem(Icons.Default.Face, "Mate list"))
-    //val selectedItem = remember { mutableStateOf("Home") }
+        MenuItem(Icons.Default.Face, "Friendlist"))
+
     val scope = rememberCoroutineScope()
     ModalDrawerSheet(modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.8).dp)) {
         Spacer(Modifier.height(12.dp))

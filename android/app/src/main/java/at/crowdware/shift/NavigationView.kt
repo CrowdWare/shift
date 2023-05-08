@@ -37,8 +37,8 @@ fun NavigationView() {
         composable("Home") {
             ModalNavigationDrawer(navController, selectedItem){ MainPage()}
         }
-        composable("Mate list") {
-            ModalNavigationDrawer(navController, selectedItem){ MateList()}
+        composable("Friendlist") {
+            ModalNavigationDrawer(navController, selectedItem){ Friendlist()}
         }
     }
 }
