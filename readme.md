@@ -13,7 +13,7 @@ We gave the name **LMC** to this new virtual liquid.
 LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude and liquidity.  
 
 # RELEASE PHASES
-## ONE
+## ONE 
 We are going to create a very simple app just to enable the user to scoop new liquid.  
 You as the users can create about, lets say 10.000 ml (10l) of LMC every day. You can start the process in the app just cklicking a button.  
 You can also invite your friend to join and if they do join you can earn 1.500 ml of LMC for every referred user per day.   
@@ -71,8 +71,3 @@ When we are transfering LMC between two mobile phones, also the data will be enc
 If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The guy with the faked mobile app will not tell you that the transfer has been aborted, because otherwise you will find out that cheating is around.
 
 If someone wants to transfer LMC to your account, then your app will not accept this transfer due to incorrect decrypted data.
-
-
-# Design Preview
-
-[Experience the design preview](https://xd.adobe.com/view/108626b6-ec96-459f-8325-dcf45ba4bfa4-45d5/)
