@@ -1,1 +1,1 @@
-sudo cp -r docs/* /var/www/html/
+cp -r docs/* /var/www/html/
