@@ -181,7 +181,7 @@ LMC is based on the phrase thank you and represents the gratitude.
                 span: 4
 
                 Image {
-                    src: "preview.png"
+                    src: "preview-en.jpg"
                     animation: "slideInLeft"
                     animation_type: "Sliding Entrances"
                 }

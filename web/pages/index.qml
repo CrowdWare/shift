@@ -183,7 +183,7 @@ Content {
                 span: 4
 
                 Image {
-                    src: "preview.png"
+                    src: "preview-de.jpg"
                     animation: "slideInLeft"
                     animation_type: "Sliding Entrances"
                 }
