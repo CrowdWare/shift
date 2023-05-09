@@ -15,6 +15,7 @@
 + The icon should be larger on the splash screen, maybe we show something with a water drop or other liquids
 + Drawer shall look smarter with logo and the name of the user, (C) CrowdWare
 + after scooping finished reload bookings
+- Push notifications
 
 # Web
 - Introduction to animate people to join (video)
