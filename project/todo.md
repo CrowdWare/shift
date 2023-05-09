@@ -18,11 +18,11 @@
 
 # Web
 - Introduction to animate people to join (video)
-- New screen print of the app
++ New screen print of the app
 - Translate to Esperanto
 
 # Webservice
-- Make it possible to have multiple level of referers
++ Make it possible to have multiple level of referers
 
 # Project
 - Involve stakeholder to get active
