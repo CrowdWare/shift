@@ -5,12 +5,11 @@ import android.content.res.Configuration
 import java.util.*
 
 object LocaleManager {
-    private const val LANGUAGE_PREF = "language_pref"
     private var currentLocale: Locale? = null
     private var language: String? = ""
 
     fun setLocale(context: Context, language: String): Context {
-        persistLanguagePreference(context, language)
+        PersistanceManager.setLanguageCode(context, language)
         return updateResources(context, language)
     }
 
@@ -18,17 +17,11 @@ object LocaleManager {
 
     fun init(context: Context){
         if (currentLocale == null) {
-            val preferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            language = preferences.getString(LANGUAGE_PREF, "")
+            language = PersistanceManager.getLanguage(context)
             if(!language.isNullOrEmpty()) {
                 currentLocale = Locale(language!!)
             }
         }
-    }
-
-    private fun persistLanguagePreference(context: Context, language: String) {
-        val preferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        preferences.edit().putString(LANGUAGE_PREF, language).apply()
     }
 
     fun updateResources(context: Context, language: String): Context {
@@ -49,9 +42,12 @@ object LocaleManager {
     fun wrapContext(context: Context): Context {
         if (currentLocale == null)
             init(context)
-        Locale.setDefault(currentLocale)
-        val newConfig = Configuration()
-        newConfig.setLocale(currentLocale)
-        return context.createConfigurationContext(newConfig)
+        if(currentLocale != null) {
+            Locale.setDefault(currentLocale)
+            val newConfig = Configuration()
+            newConfig.setLocale(currentLocale)
+            return context.createConfigurationContext(newConfig)
+        }
+        return context
     }
 }

@@ -1,6 +1,7 @@
 package at.crowdware.shift
 
 import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,15 +35,18 @@ import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.LocaleManager
+import at.crowdware.shift.logic.PersistanceManager
 
-
+data class JoinData(val name: String, val friend: String, val country: Int, val language: Int)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JoinForm(joinSuccessful: MutableState<Boolean>) {
-    var errorMessage by remember { mutableStateOf("") }
     var context = LocalContext.current.applicationContext
-    var name by rememberSaveable { mutableStateOf("") }
-    var friend by rememberSaveable { mutableStateOf("") }
+    val joinData = PersistanceManager.readJoinData(context)
+    println("country ${joinData.country}, lang ${joinData.language}")
+    var errorMessage by remember { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf(joinData.name) }
+    var friend by rememberSaveable { mutableStateOf(joinData.friend) }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
     val currentActivity = LocalContext.current as? Activity
@@ -55,15 +59,14 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
         stringResource(R.string.language_esperanto)
     )
     var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
+    val stateHolderCountry = rememberDropDownListboxStateHolder(countries, joinData.country)
     val onSelectedIndexChanged: (Int) -> Unit = { index ->
+        PersistanceManager.saveJoinData(context, name, friend, stateHolderCountry.selectedIndex, index)
         selectedLanguageCode = language_codes[index]
-        println("Language changed to ${selectedLanguageCode}")
         LocaleManager.setLocale(context, selectedLanguageCode)
         currentActivity?.recreate()
     }
-
-    val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, onSelectedIndexChanged)
+    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, joinData.language, onSelectedIndexChanged)
 
     val onJoinFailed: (String?) -> Unit = { message ->
         if (message != null)
@@ -73,8 +76,6 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
     val onJoinSucceed: () -> Unit = {
         joinSuccessful.value = true
     }
-
-
 
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
@@ -127,6 +128,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
         }
     }
 }
+
 
 @Preview(showSystemUi = true)
 @Composable

@@ -39,8 +39,8 @@ data class Country(val Name: String, val Code: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropDownListbox(label: String, stateHolder: DropDownListboxStateHolder) {
-    Column {
+fun DropDownListbox(label: String, stateHolder: DropDownListboxStateHolder, modifier: Modifier = Modifier) {
+    Column (modifier = modifier) {
         Box() {
             OutlinedTextField(
                 value = stateHolder.value,

@@ -71,7 +71,7 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
         LocaleManager.setLocale(context, selectedLanguageCode)
         currentActivity?.recreate()
     }
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, onSelectedIndexChanged)
+    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, onSelectedIndexChanged = onSelectedIndexChanged)
     //endregion
 
     ModalDrawerSheet(modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.8).dp)) {
@@ -91,7 +91,8 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
         }
         DropDownListbox(
             label = stringResource(R.string.select_preferred_language),
-            stateHolder = stateHolderLanguage)
+            stateHolder = stateHolderLanguage,
+            modifier = Modifier.padding(16.dp))
     }
 }
 

@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
+import at.crowdware.shift.logic.PersistanceManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

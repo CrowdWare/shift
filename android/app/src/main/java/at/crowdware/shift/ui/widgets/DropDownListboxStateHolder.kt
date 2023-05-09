@@ -8,10 +8,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Size
 import at.crowdware.shift.R
 
-class DropDownListboxStateHolder(list: List<String>, _onSelectedIndexChanged: ((Int) -> Unit)? = null) {
+class DropDownListboxStateHolder(list: List<String>, index: Int, _onSelectedIndexChanged: ((Int) -> Unit)? = null) {
     var enabled by mutableStateOf(false)
-    var value by mutableStateOf("")
-    var selectedIndex by mutableStateOf(-1)
+    var value by mutableStateOf(list[index])
+    var selectedIndex by mutableStateOf(index)
     var size by mutableStateOf(Size.Zero)
     val onSelectedIndexChanged = _onSelectedIndexChanged
     val icon:Int
@@ -35,6 +35,6 @@ class DropDownListboxStateHolder(list: List<String>, _onSelectedIndexChanged: ((
 }
 
 @Composable
-fun rememberDropDownListboxStateHolder(items: List<String>, onSelectedIndexChanged: ((Int) -> Unit)? = null) = remember {
-    DropDownListboxStateHolder(items, onSelectedIndexChanged)
+fun rememberDropDownListboxStateHolder(items: List<String>, index: Int = -1, onSelectedIndexChanged: ((Int) -> Unit)? = null) = remember {
+    DropDownListboxStateHolder(items, index, onSelectedIndexChanged)
 }
