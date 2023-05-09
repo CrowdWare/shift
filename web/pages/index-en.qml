@@ -125,18 +125,16 @@ Content {
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-	The idea behind shift is the possibily to create a universal basic income with a new virtual liquid made by men. The possibilities to have an own liquid to use as energy exchange, makes it easy for us all to share things, give services and to express our gratitude.
-	We will never be forced to pay taxes on it, because it&#x27;s not money at all.
-	It&#x27;s just a virtual liquid.
+	The idea behind the shift is to create a universal basic income with a new virtual liquid that is scooped by people. 
+	The possibility to use our own liquid as a means of energy exchange makes it easy for all of us to share things, 
+	provide services, and express our gratitude. We will never be forced to pay taxes on it, 
+	because it is not money at all. It is just a virtual liquid!
 &lt;/p&gt;
-
 &lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-We are going to create an app which the users can use to create new liquid on a daily base.
-We gave the name LMC (&lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins)to this new virtual liquid.
-LMC is based on the phrase thank you and represents the gratitude.
-&lt;/p&gt;
-"
+	We have created an app with which you can daily scoop new fluid. 
+	We gave this new virtual fluid the name LMC. LMC stands for &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;b&gt;oins (liquid micro coins).
+&lt;/p&gt;"
                 }
             }
         }
@@ -197,11 +195,12 @@ LMC is based on the phrase thank you and represents the gratitude.
 &lt;/p&gt;
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
-	We are going to create a very simple app just to enable the user to scoop new liquid. 
-	The users are creating like 10.000 ml (10l) of LMC every day. They start the process in the app.
-	The users can also refer other users and can earn 1.500 ml (1.5l) of LMC for every referred user per day. 
-	Every user can add up to 10 other users (otherwise it would become a snowball system, which is unfair, 
-	because the one on te top will earn the most)
+	We have created a very simple app that allows you to scoop new fluid.
+	With the app, you scoop 10,000 ml (10 l) of LMC every day you start the process in the app.
+	You can also invite other people and scoop 1,500 ml (1.5l) of LMC per recommended user per day.
+	If they also invite their friends, you earn an additional 300 ml of LMC per day and invitation.
+	And if their friends also join, you get an extra 60 ml for each of these friends.
+	This is our way of spreading a good idea quickly.
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;
 &lt;p&gt;

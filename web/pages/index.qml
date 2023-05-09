@@ -125,20 +125,19 @@ Content {
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
 	Die Idee hinter dem Wandel ist die Möglichkeit, mit einer neuen virtuellen Flüssigkeit, 
-	die von Menschen hergestellt wird, ein universelles Grundeinkommen zu schaffen. 
+	die von Menschen geschöpft wird, ein universelles Grundeinkommen zu schaffen. 
 	Die Möglichkeit, eine eigene Flüssigkeit als Energieaustausch zu nutzen, macht es uns allen leicht, 
 	Dinge zu teilen, Dienstleistungen zu erbringen und unseren Dank auszudrücken.
 	Wir werden niemals gezwungen sein, Steuern darauf zu zahlen, weil es überhaupt kein Geld ist.
-	Es ist nur eine virtuelle Flüssigkeit.
+	Es ist nur eine virtuelle Flüssigkeit!
 &lt;/p&gt;
 
 &lt;h3&gt;Ziel&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-	Wir werden eine App erstellen, mit der die Benutzer täglich neue Flüssigkeiten schöpfen können.
+	Wir haben eine App erstellt, mit der du täglich neue Flüssigkeit schöpfen kannst.
 	Wir haben dieser neuen virtuellen Flüssigkeit den Namen LMC gegeben.
 	LMC ist die Abkürzung für &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;b&gt;oins (flüssige mikro Münzen).
-&lt;/p&gt;
-"
+&lt;/p&gt;"
                 }
             }
         }
@@ -195,14 +194,16 @@ Content {
                 Text {
                     text: "&lt;h3&gt;First App for Android&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-	Die erste App für Android ist fast fertig und wird in Kürze veröffentlicht.
+	Die erste App für Android ist fertig und wird in Kürze veröffentlicht.
 &lt;/p&gt;
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
-	Wir werden eine sehr einfache App erstellen, damit der Benutzer neue Flüssigkeit schöpfen kann.
-	Die Benutzer erstellen jeden Tag, an dem sie den Prozess in der App starten, etwa 10.000 ml (10l) LMC.
-	Die Benutzer können auch andere Benutzer empfehlen und für jeden empfohlenen Benutzer pro Tag 1.500 ml (1.5l) LMC schöpfen.
-	Jeder Benutzer kann bis zu 10 andere Benutzer hinzufügen.
+	Wir haben eine sehr einfache App erstellt, mit der du neue Flüssigkeit schöpfen kannst.
+	Mit der App schöpfst du jeden Tag, an dem du den Prozess in der App startest, 10.000 ml (10 l) LMC.
+	Du kannst auch andere Leute einladen und für jeden empfohlenen Benutzer pro Tag 1.500 ml (1.5l) LMC schöpfen.
+	Sollte dieser dann auch seine Freunde einladen, verdienst du daran pro Tag und Einladung 300 ml LMC dazu.  
+	Und wenn deren Freunde auch mitmachen, dann bekommst du für jeden diese Freunde nochmal 60 ml dazu.  
+	Das ist unser Weg, eine gute Idee schnell zu verbreiten.
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;
 &lt;p&gt;
@@ -217,11 +218,11 @@ Content {
 &lt;h4&gt;Phase III&lt;/h4&gt;
 &lt;p&gt;
 	Es wird eventuell eine Chat-Funktion geben.
-	Es wird eventuell auch eine Mikro-Blogging-Engine geben, mit der Sie Dinge und Dienste anbieten können.
+	Es wird eventuell auch eine Mikro-Blogging-Engine geben, mit der du Dinge und Dienste anbieten kannst.
 &lt;/p&gt;
 &lt;h4&gt;Phase IV&lt;/h4&gt;
 &lt;p&gt;
-	Es wird die höchstwahrscheinlich eine Möglichkeit geben, Plugins zu implementieren, damit wir alle neue Inhalte für eine neue Zeit im Wandel erstellen können.
+	Es wird höchstwahrscheinlich auch eine Möglichkeit geben, Plugins zu implementieren, damit wir alle neue Inhalte für eine neue Zeit im Wandel erstellen können.
 &lt;/p&gt;
 &lt;h4&gt;Phase V&lt;/h4&gt;
 &lt;p&gt;
