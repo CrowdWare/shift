@@ -25,4 +25,6 @@
     <string name="navigation_about">Über uns</string>
     <string name="about_shift">Über SHIFT</string>
     <string name="about_dialog_text">"SHIFT VERBINDET UNS ALLE\nSHIFT wird dezentralisiert sein und deshalb nicht auf einem einzigen Server laufen.\nDein SHIFT-Konto ist anonym, nur deine echten Freunde wissen, wer hinter deinem Konto steckt.\nKeine Registrierung erforderlich.\nKein Server bedeutet auch keine Zensur und keine Werbung.\nSHIFT schafft auch ein universelles Grundeinkommen und kann genutzt werden, um anderen Mitgliedern Dankbarkeit zu zeigen."</string>
+    <string name="is_scooping">ist am Schöpfen</string>
+    <string name="friends_invited">" Freunde eingeladen"</string>
 </resources>

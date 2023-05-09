@@ -4,5 +4,6 @@ data class Friend(
     val name: String,
     val scooping: Boolean,
     val uuid: String,
-    val country: String
+    val country: String,
+    val friends_count: Int
 )

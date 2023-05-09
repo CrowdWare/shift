@@ -26,4 +26,6 @@
     <string name="navigation_about">Pri ni</string>
     <string name="about_shift">Pri SHIFT</string>
     <string name="about_dialog_text">"SHIFT UNUIGAS NIN ĈIUN\nSHIFT estos sencentra kaj tial ne funkcios sur unu servilo.\nVia SHIFT-konto estas sennoma, nur viaj veraj amikoj scias, kiu estas post via konto.\nNeniu registrado estas bezonata.\nNeniu servilo signifas, ke ne ekzistas cenzuro kaj reklamoj.\nSHIFT ankaŭ kreas universalan bazan enspezon kaj povas esti uzata por esprimi dankemon al aliaj membroj."</string>
+    <string name="is_scooping">kovras</string>
+    <string name="friends_invited"> invitis amikojn</string>
 </resources>

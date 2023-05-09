@@ -51,7 +51,8 @@ class Backend {
                             dataList.add(Friend(dataObj.getString("name"),
                                 dataObj.getBoolean("scooping"),
                                 dataObj.getString("uuid"),
-                                dataObj.getString("country")))
+                                dataObj.getString("country"),
+                                dataObj.getInt("friends_count")))
                         }
                         onFriendlistSucceed(dataList)
                     }

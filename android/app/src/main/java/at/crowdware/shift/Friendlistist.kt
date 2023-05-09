@@ -103,8 +103,10 @@ fun FriendListItem(friend: Friend) {
             ) {
                 Text(text = friend.name, fontWeight = FontWeight.Bold)
                 Text(text = friend.country)
+                Text(friend.friends_count.toString() + stringResource(R.string.friends_invited))
             }
             if (friend.scooping) {
+                Text(stringResource(R.string.is_scooping), modifier = Modifier.padding(16.dp))
                 Checkbox(
                     checked = true,
                     onCheckedChange = null,
@@ -117,7 +119,7 @@ fun FriendListItem(friend: Friend) {
 @Preview(showBackground = true)
 @Composable
 fun FriendlistItemPreview() {
-    FriendListItem(friend = Friend(name="Hans Meiser", true, "788323754", "Brasil"))
+    FriendListItem(friend = Friend(name="Hans Meiser", true, "788323754", "Brasil", 5))
 }
 
 
