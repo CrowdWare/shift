@@ -14,7 +14,7 @@
 - For benefits only count mates that were scooping the last 24h ?
 + The icon should be larger on the splash screen, maybe we show something with a water drop or other liquids
 + Drawer shall look smarter with logo and the name of the user, (C) CrowdWare
-- after scooping finished reload bookings
++ after scooping finished reload bookings
 
 # Web
 - Introduction to animate people to join (video)

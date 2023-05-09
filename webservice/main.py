@@ -123,7 +123,9 @@ def scooping():
     first_date = datetime(1970, 1, 1)
     time_since = datetime.now() - first_date
     seconds = int(time_since.total_seconds())
-    count = 0
+    level_1 = 0
+    level_2 = 0
+    level_3 = 0
     if test != "true":
         conn = None
         try:
@@ -137,7 +139,19 @@ def scooping():
             query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid = "' + uuid + '"'
             curs.execute(query)
             row = curs.fetchone()
-            count = row['count']
+            level_1 = row['count']
+
+            curs = conn.cursor(dictionary=True)
+            query = 'SELECT COUNT(*) INTO count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '")'
+            curs.execute(query)
+            row = curs.fetchone()
+            level_2 = row['count']
+
+            curs = conn.cursor(dictionary=True)
+            query = 'SELECT COUNT(*) INTO count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '"))'
+            curs.execute(query)
+            row = curs.fetchone()
+            level_3 = row['count']
 
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
@@ -148,7 +162,9 @@ def scooping():
     return jsonify(isError = False,
                    message = "Success",
                    statusCode = 200, 
-                   mates = count)
+                   count_1 = level_1,
+                   count_2 = level_2,
+                   count_3 = level_3)
 
 @app.route('/matelist', methods=['POST'])
 def friendlist():
@@ -172,6 +188,9 @@ def friendlist():
     else:
         conn = None
         try:
+
+            ## SELECT uuid,(SELECT COUNT(*) FROM account WHERE ruuid = a.uuid) AS total_count  FROM account as a WHERE ruuid = "NTcwODczMWMtNGUwNS00YzAwLWIwOTYtYWY0MzI5ZDEzM2Vh" group by a.uuid
+
             conn = dbConnect()
             curs = conn.cursor(dictionary=True)
             query = 'SELECT uuid, name, country, scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
