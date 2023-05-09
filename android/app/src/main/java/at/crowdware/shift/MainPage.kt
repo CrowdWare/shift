@@ -52,6 +52,7 @@ fun MainPage() {
         )
         type = "text/plain"
     }
+    var transactionCount by remember { mutableStateOf(Backend.getAccount().transactions.size) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
     var balance by remember { mutableStateOf(Backend.getBalance(context)) }
@@ -69,6 +70,8 @@ fun MainPage() {
             isScooping = Backend.getAccount().scooping > 0u
             if(isScooping)
                 balance = Backend.getBalance(context)
+            else
+                transactionCount = Backend.getAccount().transactions.size
             delay(1000L)
         }
     }
@@ -148,7 +151,7 @@ fun MainPage() {
                 .fillMaxWidth()
                 .background(Color.LightGray.copy(alpha = 0.3f))
         ) {
-            items(Backend.getAccount().transactions.size) { index ->
+            items(transactionCount) { index ->
                 val transaction = Backend.getAccount().transactions[index]
                 val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
                 Row {
