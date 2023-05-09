@@ -193,10 +193,10 @@ def friendlist():
 
             conn = dbConnect()
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT uuid, name, country, scooping FROM account WHERE ruuid = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY name, scooping'
+            query = 'SELECT uuid, name, country, scooping, (SELECT COUNT(*) FROM account WHERE ruuid = a.uuid) AS friends_count FROM account a WHERE ruuid  = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY friends_count desc, scooping desc'
             curs.execute(query)
             for row in curs:
-                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'country' : row['country'], 'scooping' : isScooping(row['scooping'])})
+                accounts.append({'uuid' : row['uuid'], 'name' : row['name'], 'country' : row['country'], 'scooping' : isScooping(row['scooping']), 'friends_count' : row['friends_count']})
         except IntegrityError as error:
             return jsonify(isError=True, message=error.msg, statusCode=200)
         finally:
