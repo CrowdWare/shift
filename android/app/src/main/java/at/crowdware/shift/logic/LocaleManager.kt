@@ -31,8 +31,7 @@ object LocaleManager {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
-        val resources = context.resources
-        val configuration = context.resources.configuration //Configuration(resources.configuration)
+        val configuration = context.resources.configuration
         configuration.setLocale(locale)
         val contextWithUpdatedLocale = context.createConfigurationContext(configuration)
 
@@ -44,7 +43,7 @@ object LocaleManager {
         if (currentLocale == null)
             init(context)
         if(currentLocale != null) {
-            Locale.setDefault(currentLocale)
+            Locale.setDefault(currentLocale!!)
             val newConfig = Configuration()
             newConfig.setLocale(currentLocale)
             return context.createConfigurationContext(newConfig)

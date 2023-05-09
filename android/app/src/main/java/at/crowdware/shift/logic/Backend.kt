@@ -38,7 +38,7 @@ class Backend {
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
                     println(responseString)
-                    val jsonResponse = JSONObject(responseString)
+                    val jsonResponse = JSONObject(responseString!!)
                     val isError = jsonResponse.getBoolean("isError")
                     val message = jsonResponse.getString("message")
                     if(isError)
@@ -80,16 +80,22 @@ class Backend {
             val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
-                    val jsonResponse = JSONObject(responseString)
+                    val jsonResponse = JSONObject(responseString!!)
                     val isError = jsonResponse.getBoolean("isError")
                     val message = jsonResponse.getString("message")
                     if(isError)
                         onScoopingFailed(message)
                     else {
-                        val mates = jsonResponse.getInt("mates")
+                        val count_1 = jsonResponse.getInt("count_1")
+                        val count_2 = jsonResponse.getInt("count_2")
+                        val count_3 = jsonResponse.getInt("count_3")
                         account.scooping = (System.currentTimeMillis() / 1000).toULong()
-                        account.matescount = mates.toUInt()
+                        account.level_1_count = count_1.toUInt()
+                        account.level_2_count = count_2.toUInt()
+                        account.level_3_count = count_3.toUInt()
                         Database.saveAccount(context)
+
+                        println("level 1: ${account.level_1_count}, 2 ${account.level_2_count}, 3 ${account.level_3_count}")
                         onScoopingSucceed()
                     }
                 }
@@ -151,7 +157,7 @@ class Backend {
 
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
-                    val jsonResponse = JSONObject(responseString)
+                    val jsonResponse = JSONObject(responseString!!)
                     val isError = jsonResponse.getBoolean("isError")
                     val message = jsonResponse.getString("message")
                      if(isError)
@@ -181,7 +187,7 @@ class Backend {
                 hours = (seconds.toFloat() / 60.0f / 60.0f)
                 if(hours > 20.0) {  //scooping stops after 20 hours
                     hours = 0f
-                    val grow: UInt = 10000u + account.matescount * 1500u
+                    val grow: UInt = 10000u + account.level_1_count * 1500u + account.level_2_count * 300u + account.level_3_count * 60u
                     balance += grow // 10 + 1.5 (per mate) LMC per day added
                     if (account.transactions.size > 29)
                     {
@@ -197,8 +203,10 @@ class Backend {
                     Database.saveAccount(context)
                 }
             }
-            // TODO use all levels of mates
-            return balance + (hours * 500).toULong() + (hours * account.matescount.toInt() * 75).toULong()
+            return balance + (hours * 500).toULong() +                          // 500 * 20 = 10000
+                    (hours * account.level_1_count.toInt() * 75).toULong() +    //  75 * 20 = 1500
+                    (hours * account.level_2_count.toInt() * 15).toULong() +    //  15 * 20 = 300
+                    (hours * account.level_3_count.toInt() * 3).toULong()       //   3 * 20 = 60
         }
 
         fun IsRunningOnEmulator(): Boolean{

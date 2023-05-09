@@ -75,8 +75,8 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
     val index = language_codes.indexOf(lang)
     var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
     val currentActivity = LocalContext.current as? Activity
-    val onSelectedIndexChanged: (Int) -> Unit = { index ->
-        selectedLanguageCode = language_codes[index]
+    val onSelectedIndexChanged: (Int) -> Unit = { idx ->
+        selectedLanguageCode = language_codes[idx]
         LocaleManager.setLocale(context, selectedLanguageCode)
         currentActivity?.recreate()
     }

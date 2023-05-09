@@ -142,13 +142,13 @@ def scooping():
             level_1 = row['count']
 
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT COUNT(*) INTO count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '")'
+            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '")'
             curs.execute(query)
             row = curs.fetchone()
             level_2 = row['count']
 
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT COUNT(*) INTO count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '"))'
+            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '"))'
             curs.execute(query)
             row = curs.fetchone()
             level_3 = row['count']
