@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <color android:color="@color/splash_background"/>
+        <color android:color="@color/white"/>
     </item>
 
-    <item android:drawable="@drawable/icon"
-        android:width="120dp"
-        android:height="120dp"
+    <item android:drawable="@drawable/icon_400x400"
+        android:width="240dp"
+        android:height="240dp"
         android:gravity="center" />
 
 </layer-list>

@@ -10,7 +10,7 @@ import at.crowdware.shift.R
 
 class DropDownListboxStateHolder(list: List<String>, index: Int, _onSelectedIndexChanged: ((Int) -> Unit)? = null) {
     var enabled by mutableStateOf(false)
-    var value by mutableStateOf(list[index])
+    var value by mutableStateOf(list[if(index < 0){0}else{index}])
     var selectedIndex by mutableStateOf(index)
     var size by mutableStateOf(Size.Zero)
     val onSelectedIndexChanged = _onSelectedIndexChanged
@@ -35,6 +35,6 @@ class DropDownListboxStateHolder(list: List<String>, index: Int, _onSelectedInde
 }
 
 @Composable
-fun rememberDropDownListboxStateHolder(items: List<String>, index: Int = -1, onSelectedIndexChanged: ((Int) -> Unit)? = null) = remember {
+fun rememberDropDownListboxStateHolder(items: List<String>, index: Int = 0, onSelectedIndexChanged: ((Int) -> Unit)? = null) = remember {
     DropDownListboxStateHolder(items, index, onSelectedIndexChanged)
 }

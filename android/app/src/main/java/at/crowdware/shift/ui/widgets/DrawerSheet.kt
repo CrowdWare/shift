@@ -1,8 +1,14 @@
 package at.crowdware.shift.ui.widgets
 
 import android.app.Activity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -28,9 +34,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,18 +71,34 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
         stringResource(R.string.language_portugues),
         stringResource(R.string.language_esperanto)
     )
+    val lang = LocaleManager.getLanguage()
+    val index = language_codes.indexOf(lang)
     var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
     val currentActivity = LocalContext.current as? Activity
     val onSelectedIndexChanged: (Int) -> Unit = { index ->
         selectedLanguageCode = language_codes[index]
-        println("Language changed to ${selectedLanguageCode}")
         LocaleManager.setLocale(context, selectedLanguageCode)
         currentActivity?.recreate()
     }
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, onSelectedIndexChanged = onSelectedIndexChanged)
+    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
     //endregion
 
     ModalDrawerSheet(modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.8).dp)) {
+        Box(modifier = Modifier
+            .background(MaterialTheme.colorScheme.primary)
+            .fillMaxWidth()
+            .height(200.dp)){
+            Column(modifier = Modifier.padding(8.dp)) {
+                Image(
+                    painter = painterResource(id = R.drawable.icon_400x400),
+                    contentDescription = stringResource(id = R.string.icon),
+                    modifier = Modifier.weight(1f),
+                )
+                Text("© 2023 CrowdWare", color=MaterialTheme.colorScheme.onPrimary)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("http://shift.crowdware.at", color=MaterialTheme.colorScheme.onPrimary)
+            }
+        }
         Spacer(Modifier.height(12.dp))
         items.forEach { item ->
             NavigationDrawerItem(

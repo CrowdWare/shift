@@ -9,6 +9,7 @@ object LocaleManager {
     private var language: String? = ""
 
     fun setLocale(context: Context, language: String): Context {
+        this.language = language
         PersistanceManager.setLanguageCode(context, language)
         return updateResources(context, language)
     }
