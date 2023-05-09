@@ -62,6 +62,7 @@ fun MainPage() {
             errorMessage = message
     }
     val onScoopingSucceed: () -> Unit = {
+        errorMessage = ""
         isScooping = true
     }
 

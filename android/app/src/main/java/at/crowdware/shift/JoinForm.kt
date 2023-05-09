@@ -74,6 +74,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
     }
 
     val onJoinSucceed: () -> Unit = {
+        errorMessage = ""
         joinSuccessful.value = true
     }
 
