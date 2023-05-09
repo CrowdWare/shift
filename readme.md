@@ -30,7 +30,8 @@ Lets assume that you invite 10 friends and each of your friends also invite 10 f
 |3|30 l|(100 x 300 ml) for each of the refered friends|
 |4|60 l|(1000 x 60 ml) for each of the refered friends friend|
 
-That would be 115 l each day. So will be able to pay people for their works for 115 minutes a day.
+That would be 115 l each day. So will be able to pay people for their works for 115 minutes a day.  
+All have to do is to spread the word about SHIFT and make it popular.
 
 ## TWO
 When we reach, lets say, 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. Every user will then be able to show gratitude giving LMC from one app to the other. So the user is able to give the liquid which has been scooped to someone else. We call this **LMP Liquid Micro Payments**.  
@@ -64,8 +65,8 @@ With LMC all human beings will be equal. First of all we should think about grat
 So a softwaredeveloper in Norway will get 60 ml of LMC every hour and so does a hairdresser in India.  
 Just fair ins'nt it.  
 
-# Hiring Developer, Tester, Promoter, Designer
-If you are a developer, tester, promoter, designer and want to be part of the team and you are willing to accept LMC let me know.  
+# Hiring Developer, Tester, Promoter, Designer and Influencer
+If you are a developer, tester, promoter, designer and influencer and want to be part of the team and you are willing to accept LMC let me know.  
 You will earn 60 l LMC per hour.  
 - We are using Kotlin and Compose for the app. 
 - Python and Flask for the WebService.
