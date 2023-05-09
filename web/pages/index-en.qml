@@ -133,7 +133,7 @@ Content {
 &lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
 	We have created an app with which you can daily scoop new fluid. 
-	We gave this new virtual fluid the name LMC. LMC stands for &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;b&gt;oins (liquid micro coins).
+	We gave this new virtual fluid the name LMC. LMC stands for &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins (liquid micro coins).
 &lt;/p&gt;"
                 }
             }

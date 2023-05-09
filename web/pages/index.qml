@@ -136,7 +136,7 @@ Content {
 &lt;p class=&quot;lead&quot;&gt;
 	Wir haben eine App erstellt, mit der du täglich neue Flüssigkeit schöpfen kannst.
 	Wir haben dieser neuen virtuellen Flüssigkeit den Namen LMC gegeben.
-	LMC ist die Abkürzung für &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;b&gt;oins (flüssige mikro Münzen).
+	LMC ist die Abkürzung für &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;b/&gt;oins (flüssige mikro Münzen).
 &lt;/p&gt;"
                 }
             }
