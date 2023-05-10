@@ -56,11 +56,11 @@ def getScoopTimeHoursAgo(hoursAgo=24):
     seconds -= hoursAgo * 60 * 60
     return seconds
 
-def decryptData(content):
-    ciphertext = base64.b64decode(content)
-    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_CBC, b'0123456789abcdef')
-    plaintext = cipher.decrypt(ciphertext)
-    return json.loads(plaintext.decode('utf-8'))
+def decryptString(cipherText: str) -> str:
+    cipherText = base64.b64decode(cipherText)
+    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), "AES/CBC/PKCS5Padding", b'0123456789abcdef')
+    plainText = cipher.decrypt(cipherText)
+    return plainText.decode('utf-8')
 
 
 app = Flask(__name__)
@@ -71,8 +71,8 @@ def hello_world():
 
 @app.route('/message', methods=['POST'])
 def message():
-    content = decryptData(request.json)
-    key = content['key']
+    content = request.json
+    key = decryptString(content['key'])
     name = content['name']
     test = content["test"] # used only for unit testing
 
@@ -91,8 +91,8 @@ def message():
 
 @app.route('/register', methods=['POST'])
 def register():
-    content = decryptData(request.json)
-    key = content['key']
+    content = request.json
+    key = decryptString(content['key'])
     name = content['name']
     uuid = content['uuid']
     ruuid = content['ruuid']
@@ -129,8 +129,8 @@ def register():
 
 @app.route('/setscooping', methods=['POST'])
 def scooping():
-    content = decryptData(request.json)
-    key = content['key']
+    content = request.json
+    key = decryptString(content['key'])
     uuid = content['uuid']
     test = content["test"] # used only for unit testing
 
@@ -187,8 +187,8 @@ def scooping():
 
 @app.route('/matelist', methods=['POST'])
 def friendlist():
-    content = decryptData(request.json)
-    key = content['key']
+    content = request.json
+    key = decryptString(content['key'])
     uuid = content['uuid']
     test = content["test"] # used only for unit testing
 
