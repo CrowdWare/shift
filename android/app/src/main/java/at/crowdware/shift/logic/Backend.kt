@@ -12,14 +12,15 @@ import org.json.JSONObject
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 
 class Backend {
     companion object {
         private const val serviceUrl = "http://shift.crowdware.at:5000/"
-        private const val api_key = "1234567890"            // TODO...RAUS DAMIT
-        private const val secretKey = "1234567890123456"    // TODO...RAUS DAMIT
+        private const val api_key = "1234567890123456"     // must be 16 bytes long // TODO...RAUS DAMIT
+        private const val secretKey = "1234567890123456"   // must be 16 bytes long // TODO...RAUS DAMIT
         private var account = Account()
         private const val algorithm = "AES/CBC/PKCS5Padding"
 
@@ -27,8 +28,14 @@ class Backend {
         fun encryptString(plainText: String): String {
             val cipher = Cipher.getInstance(algorithm)
             val keySpec = SecretKeySpec(secretKey.toByteArray(), "AES")
-            cipher.init(Cipher.ENCRYPT_MODE, keySpec)
-            val cipherText = cipher.doFinal(plainText.toByteArray(Charsets.UTF_8))
+            val ivSpec = IvParameterSpec(byteArrayOf(
+                0x01, 0x23, 0x45, 0x67,
+                0x89.toByte(), 0xAB.toByte(), 0xCD.toByte(), 0xEF.toByte(),
+                0xFE.toByte(), 0xDC.toByte(), 0xBA.toByte(), 0x98.toByte(),
+                0x76, 0x54, 0x32, 0x10
+            ))
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec)
+            val cipherText = cipher.doFinal(plainText.toByteArray(Charsets.ISO_8859_1))
             return Base64.encodeToString(cipherText, Base64.DEFAULT)
         }
 

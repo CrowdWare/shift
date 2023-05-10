@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream
 
 class Database {
     companion object {
-        private const val keyPhrase = "1234567812345678"    // TODO...RAUS DAMIT
+        private const val keyPhrase = "1234567812345678"  // must be 16 bytes long   // TODO...RAUS DAMIT
         private const val db_name = "shift.db"
 
         fun saveAccount(context: Context) {

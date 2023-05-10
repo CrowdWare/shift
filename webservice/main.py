@@ -29,7 +29,7 @@ from shift_keys import SHIFT_DATABASE
 from shift_keys import SHIFT_SECRET_KEY
 from mysql.connector import connect
 from mysql.connector.errors import IntegrityError
-from Crypto.Cipher import AES
+        from Crypto.Cipher import AES
 import base64
 import json
 
@@ -58,9 +58,10 @@ def getScoopTimeHoursAgo(hoursAgo=24):
 
 def decryptString(cipherText: str) -> str:
     cipherText = base64.b64decode(cipherText)
-    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), "AES/CBC/PKCS5Padding", b'0123456789abcdef')
+    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_CBC, bytearray(b'\x01\x23\x45\x67\x89\xab\xcd\xef\xfe\xdc\xba\x98\x76\x54\x32\x10'))
     plainText = cipher.decrypt(cipherText)
-    return plainText.decode('utf-8')
+    return plainText.decode('latin-1')[:16]
+
 
 
 app = Flask(__name__)
