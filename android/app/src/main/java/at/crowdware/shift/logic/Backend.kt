@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec
 
 class Backend {
     companion object {
-        private const val serviceUrl = "http://shift.crowdware.at:5000/"
+        private const val serviceUrl = "http://shift.crowdware.at:8080/"
         private const val api_key = "1234567890123456"     // must be 16 bytes long // TODO...RAUS DAMIT
         private const val secretKey = "1234567890123456"   // must be 16 bytes long // TODO...RAUS DAMIT
         private var account = Account()
