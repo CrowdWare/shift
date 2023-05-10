@@ -19,7 +19,7 @@ class Backend {
     companion object {
         private const val serviceUrl = "http://shift.crowdware.at:8080/"
         private const val api_key = "1234567890"            // TODO...RAUS DAMIT
-        private const val secretKey = "my_secret_key"       // TODO...RAUS DAMIT
+        private const val secretKey = "1234567890123456"       // TODO...RAUS DAMIT
         private var account = Account()
         private const val algorithm = "AES/CBC/PKCS5Padding"
 
