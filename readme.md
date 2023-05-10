@@ -10,10 +10,10 @@ Also nobody can stop it, because it will run decentral.
 # GOAL
 We are going to create a very simple app which the users can use to create new liquid on a daily base.   
 We gave the name **LMC** to this new virtual liquid.  
-LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude and liquidity.  
+LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude and liquidity.
 
 # RELEASE PHASES
-## ONE 
+## ONE
 We are going to create a very simple app just to enable the user to scoop new liquid.  
 You as the users can create about, lets say 10.000 ml (10l) of LMC every day. You can start the process in the app just cklicking a button.  
 You can also invite your friend to join and if they do join you can earn 1.500 ml of LMC for every referred user per day.   
@@ -21,13 +21,18 @@ Every user can add up to 10 other friends.
 If the referred users also refer other friends then you will earn additionally 300 ml LMC for each refered user.  
 This will also happen if these user refer others and you will earn additionally 60 ml LMC for each refered user.  
 You can make the math.  
-1 Level - 10.000 ml for you  
-2 Level - 15.000 ml (10 x 1500 ml) for your friends  
-3 Level - 30.000 ml (100 x 300 ml) for the refered friends  
-4 Level - 60.000 ml (1000 x 60 ml) for the  
-------------------------
-Up to    115.000 ml each day
-Up to  3.450.000 ml (115 l x 30) a month (so you can pay up to 57 hours of work)
+Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on and all of them started scooping not longer than 24 hours ago.  
+To make it clear. You only get benefits for inviting friends if they are actually scooping liquid.
+
+| Level | Liter | Description |
+|-|-|-|
+|1|10 l|for you|  
+|2|15 l|(10 x 1500 ml) for each friend |
+|3|30 l|(100 x 300 ml) for each of the refered friends|
+|4|60 l|(1000 x 60 ml) for each of the refered friends friend|
+
+That would be 115 l each day. So will be able to pay people for their works for 115 minutes a day.  
+All have to do is to spread the word about SHIFT and make it popular.
 
 ## TWO
 When we reach, lets say, 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. Every user will then be able to show gratitude giving LMC from one app to the other. So the user is able to give the liquid which has been scooped to someone else. We call this **LMP Liquid Micro Payments**.  
@@ -60,6 +65,13 @@ In fact we don't wanne use money anymore, because in the old system as we knew i
 With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 ml (milli-liters) of LMC. So one ml per minute.  
 So a softwaredeveloper in Norway will get 60 ml of LMC every hour and so does a hairdresser in India.  
 Just fair ins'nt it.  
+
+# Hiring Developer, Tester, Promoter, Designer and Influencer
+If you are a developer, tester, promoter, designer and influencer and want to be part of the team and you are willing to accept LMC let me know.  
+You will earn 60 l LMC per hour.  
+- We are using Kotlin and Compose for the app. 
+- Python and Flask for the WebService.
+- Knowledge in DHT and P2P would be a plus.
 
 # Inflation / Deflation
 So that we will not flood the planet, the liquid will vaporate every day a small percentage until it's gone fully after 7 years. So it will be created, used and destroy in a full circle.
