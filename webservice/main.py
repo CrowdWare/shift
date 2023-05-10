@@ -57,8 +57,7 @@ def getScoopTimeHoursAgo(hoursAgo=24):
     return seconds
 
 def decryptData(content):
-    encoded_data = content['data']
-    ciphertext = base64.b64decode(encoded_data)
+    ciphertext = base64.b64decode(content)
     cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_CBC, b'0123456789abcdef')
     plaintext = cipher.decrypt(ciphertext)
     return json.loads(plaintext.decode('utf-8'))
