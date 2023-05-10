@@ -21,7 +21,8 @@ Every user can add up to 10 other friends.
 If the referred users also refer other friends then you will earn additionally 300 ml LMC for each refered user.  
 This will also happen if these user refer others and you will earn additionally 60 ml LMC for each refered user.  
 You can make the math.  
-Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on.
+Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on and all of them started scooping not longer than 24 hours ago.  
+To make it clear. You only get benefits for inviting friends if they are actually scooping liquid.
 
 | Level | Liter | Description |
 |-|-|-|
