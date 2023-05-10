@@ -226,3 +226,6 @@ def friendlist():
     return jsonify(isError=False,
                    message="Success",
                    statusCode=200, data=accounts)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

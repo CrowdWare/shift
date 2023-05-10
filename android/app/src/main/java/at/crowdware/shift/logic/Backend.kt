@@ -33,7 +33,7 @@ class Backend {
             val encodedData = Base64.encodeToString(ciphertext, Base64.DEFAULT)
             return ByteArrayEntity(encodedData.toByteArray(Charsets.UTF_8))
         }
-        
+
         fun setAccount(acc: Account){account = acc }
 
         fun getAccount(): Account {return account}
