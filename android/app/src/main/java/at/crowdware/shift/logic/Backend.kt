@@ -9,16 +9,34 @@ import cz.msebera.android.httpclient.Header
 import cz.msebera.android.httpclient.entity.ByteArrayEntity
 import cz.msebera.android.httpclient.message.BasicHeader
 import org.json.JSONObject
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 
 class Backend {
     companion object {
         private const val serviceUrl = "http://shift.crowdware.at:8080/"
-        private const val key = "1234567890" // TODO...RAUS DAMIT
+        private const val api_key = "1234567890"            // TODO...RAUS DAMIT
+        private const val secretKey = "my_secret_key"       // TODO...RAUS DAMIT
         private var account = Account()
+        private const val algorithm = "AES/CBC/PKCS5Padding"
+
+
+        private fun encryptData(jsonParams: JSONObject): ByteArrayEntity{
+            val cipher = Cipher.getInstance(algorithm)
+            val keySpec = SecretKeySpec(secretKey.toByteArray(), "AES")
+            val plaintext = jsonParams.toString().toByteArray(Charsets.UTF_8)
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec)
+            val ciphertext = cipher.doFinal(plaintext)
+            val encodedData = Base64.encodeToString(ciphertext, Base64.DEFAULT)
+            return ByteArrayEntity(encodedData.toByteArray(Charsets.UTF_8))
+        }
+        
+        fun setAccount(acc: Account){account = acc }
+
+        fun getAccount(): Account {return account}
 
         fun getFriendlist(
             context: Context,
@@ -27,14 +45,16 @@ class Backend {
             val client = AsyncHttpClient()
             val url = serviceUrl + "matelist"
             val jsonParams = JSONObject()
-            jsonParams.put("key", key)
+            jsonParams.put("key", api_key)
             jsonParams.put("uuid", account.uuid.trim())
             jsonParams.put("test", "false")
 
             val headers = arrayOf(
                 BasicHeader("User-Agent", "Shift 1.0")
             )
-            val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
+
+            val entity = encryptData(jsonParams)
+
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
                     println(responseString)
@@ -71,14 +91,14 @@ class Backend {
             val client = AsyncHttpClient()
             val url = serviceUrl + "setscooping"
             val jsonParams = JSONObject()
-            jsonParams.put("key", key)
+            jsonParams.put("key", api_key)
             jsonParams.put("uuid", account.uuid)
             jsonParams.put("test", "false")
 
             val headers = arrayOf(
                 BasicHeader("User-Agent", "Shift 1.0")
             )
-            val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
+            val entity = encryptData(jsonParams)
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
                     val jsonResponse = JSONObject(responseString!!)
@@ -143,7 +163,7 @@ class Backend {
             val url = serviceUrl + "register"
             val jsonParams = JSONObject()
 
-            jsonParams.put("key", key)
+            jsonParams.put("key", api_key)
             jsonParams.put("name", account.name)
             jsonParams.put("uuid", account.uuid)
             jsonParams.put("ruuid", account.ruuid)
@@ -154,7 +174,7 @@ class Backend {
             val headers = arrayOf(
                 BasicHeader("User-Agent", "Shift 1.0")
             )
-            val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
+            val entity = encryptData(jsonParams)
 
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
@@ -209,11 +229,5 @@ class Backend {
                     (hours * account.level_2_count.toInt() * 15).toULong() +    //  15 * 20 = 300
                     (hours * account.level_3_count.toInt() * 3).toULong()       //   3 * 20 = 60
         }
-
-        fun IsRunningOnEmulator(): Boolean{
-            return Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") || Build.MODEL.contains("Android SDK built for x86")
-        }
-        fun setAccount(acc: Account){account = acc }
-        fun getAccount(): Account {return account}
     }
 }

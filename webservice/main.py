@@ -24,11 +24,14 @@ from flask import request
 from flask import jsonify
 from shift_keys import SHIFT_API_KEY
 from shift_keys import SHIFT_DB_PWD
-from shift_keys import SHIFT_DB_HOST
 from shift_keys import SHIFT_DB_USER
 from shift_keys import SHIFT_DATABASE
+from shift_keys import SHIFT_SECRET_KEY
 from mysql.connector import connect
 from mysql.connector.errors import IntegrityError
+from Crypto.Cipher import AES
+import base64
+import json
 
 
 def dbConnect():
@@ -53,6 +56,13 @@ def getScoopTimeHoursAgo(hoursAgo=24):
     seconds -= hoursAgo * 60 * 60
     return seconds
 
+def decryptData(content):
+    encoded_data = content['data']
+    ciphertext = base64.b64decode(encoded_data)
+    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_CBC, b'0123456789abcdef')
+    plaintext = cipher.decrypt(ciphertext)
+    return json.loads(plaintext.decode('utf-8'))
+
 
 app = Flask(__name__)
 
@@ -62,7 +72,7 @@ def hello_world():
 
 @app.route('/message', methods=['POST'])
 def message():
-    content = request.json
+    content = decryptData(request.json)
     key = content['key']
     name = content['name']
     test = content["test"] # used only for unit testing
@@ -82,7 +92,7 @@ def message():
 
 @app.route('/register', methods=['POST'])
 def register():
-    content = request.json
+    content = decryptData(request.json)
     key = content['key']
     name = content['name']
     uuid = content['uuid']
@@ -120,7 +130,7 @@ def register():
 
 @app.route('/setscooping', methods=['POST'])
 def scooping():
-    content = request.json
+    content = decryptData(request.json)
     key = content['key']
     uuid = content['uuid']
     test = content["test"] # used only for unit testing
@@ -178,7 +188,7 @@ def scooping():
 
 @app.route('/matelist', methods=['POST'])
 def friendlist():
-    content = request.json
+    content = decryptData(request.json)
     key = content['key']
     uuid = content['uuid']
     test = content["test"] # used only for unit testing

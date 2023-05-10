@@ -15,8 +15,9 @@
 + The icon should be larger on the splash screen, maybe we show something with a water drop or other liquids
 + Drawer shall look smarter with logo and the name of the user, (C) CrowdWare
 + after scooping finished reload bookings
-- Push notifications
+- Push notifications (establish a service with a P2P network) then we can broadcast messages
 - Warning that user will loose account uninstalling the app.
+- Secure socket layer to encrypt data or packet encryption 
 
 # Web
 - Introduction to animate people to join (video)
