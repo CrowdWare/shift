@@ -46,6 +46,14 @@ def isScooping(scoop):
         return False
     return True
 
+def getScoopTimeHoursAgo(hoursAgo=24):
+    first_date = datetime(1970, 1, 1)
+    time_since = datetime.now() - first_date
+    seconds = int(time_since.total_seconds())
+    seconds -= hoursAgo * 60 * 60
+    return seconds
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -128,6 +136,8 @@ def scooping():
     level_3 = 0
     if test != "true":
         conn = None
+        scoopTime24HoursAgo = getScoopTimeHoursAgo()
+
         try:
             conn = dbConnect()
             curs = conn.cursor()
@@ -136,19 +146,19 @@ def scooping():
             conn.commit()
 
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid = "' + uuid + '"'
+            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid = "' + uuid + '" AND scooping > ' + str(scoopTime24HoursAgo)
             curs.execute(query)
             row = curs.fetchone()
             level_1 = row['count']
 
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '")'
+            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '") AND scooping > ' + str(scoopTime24HoursAgo)
             curs.execute(query)
             row = curs.fetchone()
             level_2 = row['count']
 
             curs = conn.cursor(dictionary=True)
-            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '"))'
+            query = 'SELECT COUNT(*) AS count FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid IN (SELECT uuid FROM account WHERE ruuid = "' + uuid + '")) AND scooping >' + str(scoopTime24HoursAgo)
             curs.execute(query)
             row = curs.fetchone()
             level_3 = row['count']

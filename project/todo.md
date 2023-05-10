@@ -9,13 +9,14 @@
 + Fontsize of balance should be autosize, one should toggle the display between liter and ml
 + Embed some Esperanto
 + Localize app
-- Color for drawer select background should be blueish
+- Color for drawer select background should be blueish, general theme check
 - Display welcome message for news (crowdfunding, new version, new features)
-- For benefits only count mates that were scooping the last 24h ?
+- For benefits only count mates that were scooping the last 24h
 + The icon should be larger on the splash screen, maybe we show something with a water drop or other liquids
 + Drawer shall look smarter with logo and the name of the user, (C) CrowdWare
 + after scooping finished reload bookings
 - Push notifications
+- Warning that user will loose account uninstalling the app.
 
 # Web
 - Introduction to animate people to join (video)
@@ -27,3 +28,6 @@
 
 # Project
 - Involve stakeholder to get active
+
+# Desktop App
+- A desktop app can be used to transfer liquid from mobile to desktop to be able to save the data.
