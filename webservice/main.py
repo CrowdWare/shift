@@ -197,7 +197,7 @@ def scooping():
 @app.route('/matelist', methods=['POST'])
 def friendlist():
     content = request.json
-    key = decryptString(content['key'])
+    key = decryptStringGCM(content['key'])
     uuid = content['uuid']
     test = content["test"] # used only for unit testing
 
