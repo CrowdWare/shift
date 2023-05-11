@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,9 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.logic.Transaction
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -52,7 +55,7 @@ fun MainPage() {
         )
         type = "text/plain"
     }
-    var transactionCount by remember { mutableStateOf(Backend.getAccount().transactions.size) }
+    val transactions = remember { mutableStateListOf(*Backend.getAccount().transactions.toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
     var balance by remember { mutableStateOf(Backend.getBalance(context)) }
@@ -71,8 +74,6 @@ fun MainPage() {
             isScooping = Backend.getAccount().scooping > 0u
             if(isScooping)
                 balance = Backend.getBalance(context)
-            else
-                transactionCount = Backend.getAccount().transactions.size
             delay(1000L)
         }
     }
@@ -152,8 +153,8 @@ fun MainPage() {
                 .fillMaxWidth()
                 .background(Color.LightGray.copy(alpha = 0.3f))
         ) {
-            items(transactionCount) { index ->
-                val transaction = Backend.getAccount().transactions[index]
+            items(transactions.size) { index ->
+                val transaction = transactions[index]
                 val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
                 Row {
                     Column {

@@ -42,10 +42,14 @@ I am thinking of a P2P solution, where users can chat with each other (we need t
 
 # P2P
 - https://github.com/JoshuaKissoon/Kademlia
-- https://github.com/ep2p/kademlia-api
+- https://github.com/bmuller/kademlia
 - https://github.com/jmdns/jmdns
+- https://github.com/Tribler/trustchain-superapp
+- https://github.com/Tribler/kotlin-ipv8
+- https://github.com/Tribler/py-ipv8
 
 ## Kademlia
+pip install kademlia
 At least one server hosts a list of more servers. The other servers connect to that server and register themselves to fill this list.
 All mobile clients can connect to that server to get a list of other servers. After they have got that list they can next time choose one of the other servers and hopefully there is always a server online.
 A server can be hostet on a desktop or in the cloud. Such a hub cost like 6,- a month.
