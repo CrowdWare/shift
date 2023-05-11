@@ -32,7 +32,10 @@ from mysql.connector.errors import IntegrityError
 from Crypto.Cipher import AES
 import base64
 import json
+import binascii
 
+
+## pip install pycryptodome
 
 def dbConnect():
     db = connect(unix_socket="/var/run/mysqld/mysqld.sock",
@@ -56,13 +59,18 @@ def getScoopTimeHoursAgo(hoursAgo=24):
     seconds -= hoursAgo * 60 * 60
     return seconds
 
-def decryptString(cipherText: str) -> str:
+""" def decryptString(cipherText: str) -> str:
     cipherText = base64.b64decode(cipherText)
     cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_CBC, bytearray(b'\x01\x23\x45\x67\x89\xab\xcd\xef\xfe\xdc\xba\x98\x76\x54\x32\x10'))
     plainText = cipher.decrypt(cipherText)
-    return plainText.decode('latin-1')[:16]
+    return plainText.decode('latin-1')[:16] """
 
-
+def decryptStringGCM(cipherText: str) -> str:
+    data = binascii.unhexlify(cipherText)
+    iv, tag = data[:12], data[-16:]
+    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_GCM, iv)
+    plaintext = cipher.decrypt_and_verify(data[12:-16], tag)
+    return plaintext.decode("utf-8")
 
 app = Flask(__name__)
 
@@ -73,7 +81,7 @@ def hello_world():
 @app.route('/message', methods=['POST'])
 def message():
     content = request.json
-    key = decryptString(content['key'])
+    key = decryptStringGCM(content['key'])
     name = content['name']
     test = content["test"] # used only for unit testing
 
@@ -93,7 +101,7 @@ def message():
 @app.route('/register', methods=['POST'])
 def register():
     content = request.json
-    key = decryptString(content['key'])
+    key = decryptStringGCM(content['key'])
     name = content['name']
     uuid = content['uuid']
     ruuid = content['ruuid']
@@ -131,7 +139,7 @@ def register():
 @app.route('/setscooping', methods=['POST'])
 def scooping():
     content = request.json
-    key = decryptString(content['key'])
+    key = decryptStringGCM(content['key'])
     uuid = content['uuid']
     test = content["test"] # used only for unit testing
 
