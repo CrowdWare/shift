@@ -1,7 +1,6 @@
 package at.crowdware.shift.logic
 
 import android.content.Context
-import android.os.Build
 import android.util.Base64
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
@@ -24,21 +23,25 @@ class Backend {
         private var account = Account()
         private const val algorithm = "AES/CBC/PKCS5Padding"
 
+        fun ByteArray.toHex() : String{
+            val result = StringBuffer()
 
-        fun encryptString(plainText: String): String {
-            val cipher = Cipher.getInstance(algorithm)
-            val keySpec = SecretKeySpec(secretKey.toByteArray(), "AES")
-            val ivSpec = IvParameterSpec(byteArrayOf(
-                0x01, 0x23, 0x45, 0x67,
-                0x89.toByte(), 0xAB.toByte(), 0xCD.toByte(), 0xEF.toByte(),
-                0xFE.toByte(), 0xDC.toByte(), 0xBA.toByte(), 0x98.toByte(),
-                0x76, 0x54, 0x32, 0x10
-            ))
-            cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec)
-            val cipherText = cipher.doFinal(plainText.toByteArray(Charsets.ISO_8859_1))
-            return Base64.encodeToString(cipherText, Base64.DEFAULT)
+            forEach {
+                val st = String.format("%02x", it)
+                result.append(st)
+            }
+
+            return result.toString()
         }
 
+        fun encryptStringGCM(value: String): String {
+            val keySpec = SecretKeySpec(secretKey.toByteArray(Charsets.UTF_8), "AES")
+            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec)
+            val result = cipher.doFinal(value.toByteArray(Charsets.UTF_8))
+            val iv = cipher.iv.copyOf()
+            return iv.plus(result).toHex()
+        }
         fun setAccount(acc: Account){account = acc }
 
         fun getAccount(): Account {return account}
@@ -50,7 +53,7 @@ class Backend {
             val client = AsyncHttpClient()
             val url = serviceUrl + "matelist"
             val jsonParams = JSONObject()
-            jsonParams.put("key", encryptString(api_key))
+            jsonParams.put("key", encryptStringGCM(api_key))
             jsonParams.put("uuid", account.uuid.trim())
             jsonParams.put("test", "false")
 
@@ -96,7 +99,7 @@ class Backend {
             val client = AsyncHttpClient()
             val url = serviceUrl + "setscooping"
             val jsonParams = JSONObject()
-            jsonParams.put("key", encryptString(api_key))
+            jsonParams.put("key", encryptStringGCM(api_key))
             jsonParams.put("uuid", account.uuid)
             jsonParams.put("test", "false")
 
@@ -168,7 +171,7 @@ class Backend {
             val url = serviceUrl + "register"
             val jsonParams = JSONObject()
 
-            jsonParams.put("key", encryptString(api_key))
+            jsonParams.put("key", encryptStringGCM(api_key))
             jsonParams.put("name", account.name)
             jsonParams.put("uuid", account.uuid)
             jsonParams.put("ruuid", account.ruuid)
