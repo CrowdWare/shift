@@ -155,6 +155,7 @@ public class KadServer
         {
             throw new IllegalStateException("Kad Server is not running.");
         }
+        System.out.println("ConnectReceiver.reply " + to + "," + msg );
         sendMessage(to, msg, comm);
     }
 
