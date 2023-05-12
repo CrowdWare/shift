@@ -155,7 +155,7 @@ public class KadServer
         {
             throw new IllegalStateException("Kad Server is not running.");
         }
-        System.out.println("ConnectReceiver.reply " + to + "," + msg );
+
         sendMessage(to, msg, comm);
     }
 
@@ -183,6 +183,7 @@ public class KadServer
             /* Everything is good, now create the packet and send it */
             DatagramPacket pkt = new DatagramPacket(data, 0, data.length);
             pkt.setSocketAddress(to.getSocketAddress());
+            System.out.println("ConnectReceiver.sendMessage " +to.getSocketAddress() + "," + msg );
             socket.send(pkt);
 
             /* Lets inform the statistician that we've sent some data */
