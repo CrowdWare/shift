@@ -38,6 +38,7 @@ public class NodeLookupReceiver implements Receiver
     @Override
     public void receive(Message incoming, int comm) throws IOException
     {
+        System.out.println("NodeLookupReceiver.receive");
         NodeLookupMessage msg = (NodeLookupMessage) incoming;
 
         Node origin = msg.getOrigin();

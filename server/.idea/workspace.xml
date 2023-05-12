@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="083658ac-0b78-43c7-bf4a-5235c4d1641d" name="Changes" comment="upd">
       <change beforePath="$PROJECT_DIR$/../kademlia/libs/kademlia.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/libs/kademlia.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KadServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KadServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/ConnectReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/ConnectReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/ContentLookupReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/ContentLookupReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/NodeLookupReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/NodeLookupReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/SimpleReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/message/SimpleReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/operation/ConnectOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/operation/ConnectOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/operation/ContentLookupOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/operation/ContentLookupOperation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -240,6 +240,7 @@ public class ContentLookupOperation implements Operation, Receiver
     @Override
     public synchronized void receive(Message incoming, int comm) throws IOException, RoutingException
     {
+        System.out.println("ContentLookupOperation.receive");
         if (this.isContentFound)
         {
             return;

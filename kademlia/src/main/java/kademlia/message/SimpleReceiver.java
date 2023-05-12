@@ -14,7 +14,7 @@ public class SimpleReceiver implements Receiver
     @Override
     public void receive(Message incoming, int conversationId)
     {
-        //System.out.println("Received message: " + incoming);
+        System.out.println("SimpleReceiver.receive: " + incoming);
     }
 
     @Override

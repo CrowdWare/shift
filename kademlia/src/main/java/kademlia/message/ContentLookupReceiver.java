@@ -33,6 +33,7 @@ public class ContentLookupReceiver implements Receiver
     @Override
     public void receive(Message incoming, int comm) throws IOException
     {
+        System.out.println("ContentLookupReceiver.receive");
         ContentLookupMessage msg = (ContentLookupMessage) incoming;
         this.localNode.getRoutingTable().insert(msg.getOrigin());
 

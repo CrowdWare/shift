@@ -103,6 +103,7 @@ public class ConnectOperation implements Operation, Receiver
     @Override
     public synchronized void receive(Message incoming, int comm)
     {
+        System.out.println("ConnectOperation.receive");
         /* The incoming message will be an acknowledgement message */
         AcknowledgeMessage msg = (AcknowledgeMessage) incoming;
 
