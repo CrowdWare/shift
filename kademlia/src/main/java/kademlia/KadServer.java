@@ -194,6 +194,7 @@ public class KadServer
      */
     private void listen()
     {
+        System.out.println("Listen");
         try
         {
             while (isRunning)
@@ -203,8 +204,9 @@ public class KadServer
                     /* Wait for a packet */
                     byte[] buffer = new byte[DATAGRAM_BUFFER_SIZE];
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                    System.out.println("about to receive");
                     socket.receive(packet);
-
+                    System.out.println("received a packet");
                     /* Lets inform the statistician that we've received some data */
                     this.statistician.receivedData(packet.getLength());
 
