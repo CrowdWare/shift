@@ -1,8 +1,5 @@
-import com.google.gson.Gson
 import kademlia.JKademliaNode
-import kademlia.dht.GetParameter
 import kademlia.node.KademliaId
-import kademlia.simulations.DHTContentImpl
 import kademlia.KeyValueContent
 fun main(args: Array<String>) {
     println("Server")

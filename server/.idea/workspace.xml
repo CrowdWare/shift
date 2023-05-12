@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="083658ac-0b78-43c7-bf4a-5235c4d1641d" name="Changes" comment="" />
+    <list default="true" id="083658ac-0b78-43c7-bf4a-5235c4d1641d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../kademlia/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/libs/kademlia.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/libs/kademlia.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KeyValueContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KeyValueContent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/kotlin/Main.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

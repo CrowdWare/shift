@@ -1,9 +1,11 @@
 package kademlia
 
+import java.nio.charset.StandardCharsets
 import com.google.gson.Gson
 import kademlia.dht.KadContent
 import kademlia.node.KademliaId
 import kademlia.simulations.DHTContentImpl
+
 
 class KeyValueContent(_key: String, _value: String, _owner: String): KadContent {
     @Transient
@@ -52,6 +54,7 @@ class KeyValueContent(_key: String, _value: String, _owner: String): KadContent 
     override fun toSerializedForm(): ByteArray {
         val gson = Gson()
         return gson.toJson(this).toByteArray()
+
     }
 
     override fun fromSerializedForm(p: ByteArray?): KadContent {
