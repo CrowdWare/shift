@@ -22,7 +22,7 @@ import java.net.InetAddress
 @Composable
 @Preview
 fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
+    var text by remember { mutableStateOf("Hello, World!") }x
 
     try {
         val client = JKademliaNode("client", KademliaId(), 12057)

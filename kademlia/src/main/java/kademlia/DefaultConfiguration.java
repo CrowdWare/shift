@@ -19,7 +19,7 @@ public class DefaultConfiguration implements KadConfiguration
     private final static int STALE = 1;
     private final static String LOCAL_FOLDER = "kademlia";
     
-    private final static boolean IS_TESTING = true;
+    private final static boolean IS_TESTING = false;
 
     /**
      * Default constructor to support Gson Serialization
