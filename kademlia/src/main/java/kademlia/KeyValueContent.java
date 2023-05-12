@@ -7,7 +7,8 @@ import kademlia.simulations.DHTContentImpl;
 
 import java.io.Serializable;
 
-public class KeyValueContent implements KadContent, Serializable {
+public class KeyValueContent implements KadContent, Serializable
+{
     private static final long serialVersionUID = 1L;
     private final String TYPE = "KeyValueContentImpl";
     private long updateTs = 0L;
@@ -16,7 +17,8 @@ public class KeyValueContent implements KadContent, Serializable {
     private KademliaId key;
     private String data = "";
 
-    public KeyValueContent(String _key, String _value, String _owner) {
+    public KeyValueContent(String _key, String _value, String _owner)
+    {
         createTs = System.currentTimeMillis() / 1000L;
         key = new KademliaId(_key);
         ownerId = _owner;
