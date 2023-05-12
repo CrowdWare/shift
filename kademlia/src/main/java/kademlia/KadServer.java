@@ -243,6 +243,7 @@ public class KadServer
                         Receiver receiver;
                         if (this.receivers.containsKey(comm))
                         {
+                            System.out.println("got a receiver");
                             /* If there is a reciever in the receivers to handle this */
                             synchronized (this)
                             {
@@ -256,6 +257,7 @@ public class KadServer
                         }
                         else
                         {
+                            System.out.println("create receiver");
                             /* There is currently no receivers, try to get one */
                             receiver = messageFactory.createReceiver(messCode, this);
                         }
@@ -263,6 +265,7 @@ public class KadServer
                         /* Invoke the receiver */
                         if (receiver != null)
                         {
+                            System.out.println("invoke receiver");
                             receiver.receive(msg, comm);
                         }
                     }
