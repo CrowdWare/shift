@@ -27,8 +27,8 @@ fun App() {
     try {
         val client = JKademliaNode("client", KademliaId(), 12057)
         val id = KademliaId()
-        val ip = InetAddress.getLocalHost()// getByName("127.0.0.1")
-        val server = Node(id, ip, 12049)
+        val ip = InetAddress.getByName("128.140.48.116")
+        val server = Node(id, ip, 5000)
         client.bootstrap(server)
 
         val searchKey = KademliaId("12345678901234567890".toByteArray())
