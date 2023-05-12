@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="083658ac-0b78-43c7-bf4a-5235c4d1641d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../kademlia/libs/kademlia.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/libs/kademlia.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KeyValueContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KeyValueContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KeyValueContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kademlia/src/main/java/kademlia/KeyValueContent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
