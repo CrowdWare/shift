@@ -14,7 +14,6 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-
 class Backend {
     companion object {
         private const val serviceUrl = "http://shift.crowdware.at:8080/"

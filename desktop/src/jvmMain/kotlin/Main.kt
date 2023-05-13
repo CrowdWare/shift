@@ -25,7 +25,7 @@ fun App() {
     var text by remember { mutableStateOf("Hello, World!") }
 
     try {
-        val client = JKademliaNode("client", KademliaId(), 12057)
+        val client = JKademliaNode("client", KademliaId(), 4300)
         val id = KademliaId()
         val ip = InetAddress.getByName("128.140.48.116")
         val server = Node(id, ip, 5000)
