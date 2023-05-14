@@ -139,6 +139,8 @@ dependencies {
     implementation 'no.nordicsemi.android:ble:2.2.0-alpha06'
     implementation 'no.nordicsemi.android.support.v18:scanner:1.4.2'
 
+    implementation 'com.google.accompanist:accompanist-permissions:0.23.1'
+
     implementation files('../../kotlin-ipv8/ipv8-android/build/outputs/aar/ipv8-android-debug.aar')
     implementation files('../../kotlin-ipv8/ipv8/build/libs/ipv8.jar')
     //implementation fileTree(dir: 'libs', include: ['*.jar'])

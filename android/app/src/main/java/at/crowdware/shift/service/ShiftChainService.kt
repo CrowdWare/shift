@@ -18,7 +18,7 @@ class ShiftChainService : IPv8Service() {
             .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_CONNECTION)
-            .setContentTitle("Shift")
+            .setContentTitle("Shift-Service")
             .setContentText("Running")
             .setSmallIcon(R.drawable.ic_insert_link_black_24dp)
             .setContentIntent(pendingIntent)

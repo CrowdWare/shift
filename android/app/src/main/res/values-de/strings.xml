@@ -27,4 +27,6 @@
     <string name="about_dialog_text">"SHIFT VERBINDET UNS ALLE\nSHIFT wird dezentralisiert sein und deshalb nicht auf einem einzigen Server laufen.\nDein SHIFT-Konto ist anonym, nur deine echten Freunde wissen, wer hinter deinem Konto steckt.\nKeine Registrierung erforderlich.\nKein Server bedeutet auch keine Zensur und keine Werbung.\nSHIFT schafft auch ein universelles Grundeinkommen und kann genutzt werden, um anderen Mitgliedern Dankbarkeit zu zeigen."</string>
     <string name="is_scooping">ist am Schöpfen</string>
     <string name="friends_invited">" Freunde eingeladen"</string>
+    <string name="bluetooth_rational">Aktivieren Sie die Bluetooth-Verbindung für sichere und sofortige Liquiditätsübertragungen!</string>
+    <string name="bluetooth_disabled">Bluetooth ist deaktiviert. Wenn du es dir anders überlegst, kannst du Bluetooth in den Geräteeinstellungen aktivieren.</string>
 </resources>

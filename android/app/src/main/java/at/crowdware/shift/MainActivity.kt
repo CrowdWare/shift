@@ -13,11 +13,10 @@ import androidx.compose.ui.Modifier
 import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
-
-import nl.tudelft.ipv8.*
+import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
+import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,6 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    defaultCryptoProvider = AndroidCryptoProvider
                     LocaleManager.init(applicationContext)
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
                     if (hasJoined.value)
@@ -41,9 +41,10 @@ class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleManager.wrapContext(newBase!!))
     }
+
+    fun hasJoined(applicationContext: Context): Boolean
+    {
+        return Database.readAccount(applicationContext) != null
+    }
 }
 
-fun hasJoined(applicationContext: Context): Boolean
-{
-   return Database.readAccount(applicationContext) != null
-}

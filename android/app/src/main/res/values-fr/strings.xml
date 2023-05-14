@@ -28,4 +28,7 @@
     <string name="about_dialog_text">"SHIFT NOUS RELIE TOUS\nSHIFT sera décentralisé et ne fonctionnera donc pas sur un seul serveur.\nVotre compte SHIFT est anonyme, seuls vos vrais amis savent qui se cache derrière votre compte.\nPas d'inscription requise.\nPas de serveur signifie également pas de censure ni de publicités.\nSHIFT crée également un revenu de base universel et peut être utilisé pour témoigner de la gratitude envers les autres membres."</string>
     <string name="is_scooping">est en train de collecter</string>
     <string name="friends_invited"> amis invités</string>
+    <string name="bluetooth_rational">Activez la connexion Bluetooth pour des transactions liquides sécurisées et instantanées !</string>
+    <string name="bluetooth_disabled">Le Bluetooth est désactivé. Si vous changez d\'avis, vous pouvez activer le Bluetooth dans les paramètres de l\'appareil.</string>
+
 </resources>

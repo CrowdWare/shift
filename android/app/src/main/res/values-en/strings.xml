@@ -28,4 +28,6 @@
     <string name="about_dialog_text">"SHIFT CONNECTS US ALL\nSHIFT will be decentralized and will therefore not run on a single server.\nYour SHIFT account is anonymous, only your real friends know who is behind your account.\nNo registration needed.\nNo server means, also no censorship and no ads.\nSHIFT also creates a universal basic income and can be used to show gratitude to other members."</string>
     <string name="is_scooping">is scooping</string>
     <string name="friends_invited">" friends invited"</string>
+    <string name="bluetooth_rational">Enable Bluetooth Connection for Secure and Instant Liquid Transactions!</string>
+    <string name="bluetooth_disabled">Bluetooth is disabled. If you change your mind, you can enable Bluetooth in the device settings.</string>
 </resources>

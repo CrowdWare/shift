@@ -1,12 +1,15 @@
-package at.crowdware.shift
+package at.crowdware.shift.logic
 
 import android.app.Application
 import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.os.Build
-import androidx.preference.PreferenceManager
 import android.util.Log
 import androidx.core.content.getSystemService
+import androidx.preference.PreferenceManager
+import at.crowdware.shift.ShiftCommunity
 import at.crowdware.shift.service.ShiftChainService
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import nl.tudelft.ipv8.IPv8Configuration
 import nl.tudelft.ipv8.Overlay
 import nl.tudelft.ipv8.OverlayConfiguration
@@ -24,7 +27,6 @@ import nl.tudelft.ipv8.attestation.trustchain.store.TrustChainStore
 import nl.tudelft.ipv8.attestation.trustchain.validation.TransactionValidator
 import nl.tudelft.ipv8.attestation.trustchain.validation.ValidationResult
 import nl.tudelft.ipv8.keyvault.PrivateKey
-import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
 import nl.tudelft.ipv8.peerdiscovery.DiscoveryCommunity
 import nl.tudelft.ipv8.peerdiscovery.strategy.PeriodicSimilarity
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomChurn
@@ -32,39 +34,38 @@ import nl.tudelft.ipv8.peerdiscovery.strategy.RandomWalk
 import nl.tudelft.ipv8.sqldelight.Database
 import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import org.apache.commons.net.tftp.TFTP
 
-class ShiftApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
 
-        defaultCryptoProvider = AndroidCryptoProvider
+object Network {
+    private const val PREF_PRIVATE_KEY = "private_key"
+    private const val BLOCK_TYPE = "demo_block"
+    private var isStarted = false
 
-        initIPv8()
-    }
-
-    private fun initIPv8() {
+    fun initIPv8(application: Application) {
         val config = IPv8Configuration(overlays = listOf(
-            createDiscoveryCommunity(),
-            createTrustChainCommunity(),
+            createDiscoveryCommunity(application),
+            createTrustChainCommunity(application),
             createDemoCommunity()
         ), walkerInterval = 5.0)
 
-        IPv8Android.Factory(this)
+        IPv8Android.Factory(application)
             .setConfiguration(config)
-            .setPrivateKey(getPrivateKey())
+            .setPrivateKey(getPrivateKey(application))
             .setServiceClass(ShiftChainService::class.java)
             .init()
 
         initTrustChain()
+        isStarted = true
     }
+
+    fun isStarted(): Boolean {return isStarted }
 
     private fun initTrustChain() {
         val ipv8 = IPv8Android.getInstance()
         val trustchain = ipv8.getOverlay<TrustChainCommunity>()!!
 
-        trustchain.registerTransactionValidator(BLOCK_TYPE, object : TransactionValidator {
+        trustchain.registerTransactionValidator(BLOCK_TYPE, object :
+            TransactionValidator {
             override fun validate(
                 block: TrustChainBlock,
                 database: TrustChainStore
@@ -90,13 +91,13 @@ class ShiftApplication : Application() {
         })
     }
 
-    private fun createDiscoveryCommunity(): OverlayConfiguration<DiscoveryCommunity> {
+    private fun createDiscoveryCommunity(application: Application): OverlayConfiguration<DiscoveryCommunity> {
         val randomWalk = RandomWalk.Factory()
         val randomChurn = RandomChurn.Factory()
         val periodicSimilarity = PeriodicSimilarity.Factory()
 
-        val nsd = NetworkServiceDiscovery.Factory(getSystemService()!!)
-        val bluetoothManager = getSystemService<BluetoothManager>()
+        val nsd = NetworkServiceDiscovery.Factory(application.getSystemService()!!)
+        val bluetoothManager = application.getSystemService<BluetoothManager>()
             ?: throw IllegalStateException("BluetoothManager not available")
         val strategies = mutableListOf(
             randomWalk, randomChurn, periodicSimilarity, nsd
@@ -112,9 +113,9 @@ class ShiftApplication : Application() {
         )
     }
 
-    private fun createTrustChainCommunity(): OverlayConfiguration<TrustChainCommunity> {
+    private fun createTrustChainCommunity(application: Application): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
-        val driver = AndroidSqliteDriver(Database.Schema, this, "trustchain.db")
+        val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
         val store = TrustChainSQLiteStore(Database(driver))
         val randomWalk = RandomWalk.Factory()
         return OverlayConfiguration(
@@ -131,9 +132,9 @@ class ShiftApplication : Application() {
         )
     }
 
-    private fun getPrivateKey(): PrivateKey {
+    private fun getPrivateKey(context: Context): PrivateKey {
         // Load a key from the shared preferences
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val privateKey = prefs.getString(PREF_PRIVATE_KEY, null)
         return if (privateKey == null) {
             // Generate a new key on the first launch
@@ -145,10 +146,5 @@ class ShiftApplication : Application() {
         } else {
             AndroidCryptoProvider.keyFromPrivateBin(privateKey.hexToBytes())
         }
-    }
-
-    companion object {
-        private const val PREF_PRIVATE_KEY = "private_key"
-        private const val BLOCK_TYPE = "demo_block"
     }
 }

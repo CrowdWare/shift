@@ -28,4 +28,6 @@
     <string name="about_dialog_text">"SHIFT UNUIGAS NIN ĈIUN\nSHIFT estos sencentra kaj tial ne funkcios sur unu servilo.\nVia SHIFT-konto estas sennoma, nur viaj veraj amikoj scias, kiu estas post via konto.\nNeniu registrado estas bezonata.\nNeniu servilo signifas, ke ne ekzistas cenzuro kaj reklamoj.\nSHIFT ankaŭ kreas universalan bazan enspezon kaj povas esti uzata por esprimi dankemon al aliaj membroj."</string>
     <string name="is_scooping">kovras</string>
     <string name="friends_invited"> invitis amikojn</string>
+    <string name="bluetooth_rational">Habilitigu Bluetooth-ligilon por sekuraj kaj tuŝrapide fluktuantaj transakcioj!</string>
+    <string name="bluetooth_disabled">La Bluetooth-klavilo estas malŝaltita. Se vi ŝanĝas opinion, vi povas aktivigi Bluetooth-on en la agordoj de la aparato.</string>
 </resources>
