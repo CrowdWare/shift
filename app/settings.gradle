@@ -1,2 +1,0 @@
-include ':ipv8', ':ipv8-android', ':shift'
-rootProject.name = 'IPv8'
