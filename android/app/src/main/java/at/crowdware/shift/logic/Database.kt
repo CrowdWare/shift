@@ -22,8 +22,10 @@ import java.io.File
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import android.content.Context
+import android.os.Build
 import android.os.Environment
 import androidx.activity.compose.BackHandler
+import at.crowdware.shift.BuildConfig
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
@@ -32,7 +34,7 @@ import java.io.ObjectOutputStream
 
 class Database {
     companion object {
-        private const val keyPhrase = "1234567812345678"  // must be 16 bytes long   // TODO...RAUS DAMIT
+        private const val keyPhrase = BuildConfig.KEYPHRASE
         private const val db_name = "shift.db"
 
         fun saveAccount(context: Context) {

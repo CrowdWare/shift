@@ -1,6 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "";
+    }
+}
+
 android {
     namespace 'at.crowdware.shift'
     compileSdk 33
@@ -11,8 +22,14 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "API_KEY", getProps("api_key")
+        buildConfigField "String", "SECRET_KEY", getProps("secret_key")
+        buildConfigField "String", "WEB_SERVICE_URL", getProps("web_service_url")
+        buildConfigField "String", "ALGORYTHM", getProps("algorythm")
+        buildConfigField "String", "KEYPHRASE", getProps("key_phrase")
+        buildConfigField "String", "SHIFT_COMMUNITY_ID", getProps("shift_community_id")
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
         vectorDrawables {
             useSupportLibrary true
         }

@@ -29,6 +29,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import at.crowdware.shift.BuildConfig
 import at.crowdware.shift.R
 import nl.tudelft.ipv8.IPv4Address
 import nl.tudelft.ipv8.Community
@@ -76,9 +77,9 @@ fun sendNotification(context: Context, title: String, message: String, url: Stri
             notify(NOTIFICATION_ID, builder.build())
     }
 }
-class BroadcastMessage(val message: String, val url: String = "") : Serializable {
+class BroadcastMessage(val title: String, val message: String, val url: String = "") : Serializable {
     override fun serialize(): ByteArray {
-        val serializedData = "$message|$url" // Combine message and url with a delimiter
+        val serializedData = "$title|$message|$url"
         return serializedData.toByteArray(Charsets.UTF_8)
     }
 
@@ -86,16 +87,17 @@ class BroadcastMessage(val message: String, val url: String = "") : Serializable
         override fun deserialize(buffer: ByteArray, offset: Int): Pair<BroadcastMessage, Int> {
             val serializedData = String(buffer, offset, buffer.size - offset, Charsets.UTF_8)
             val parts = serializedData.split("|")
-            val message = parts.getOrNull(0) ?: ""
-            val url = parts.getOrNull(1) ?: ""
-            val broadcastMessage = BroadcastMessage(message, url)
+            val title = parts.getOrNull(0) ?: ""
+            val message = parts.getOrNull(1) ?: ""
+            val url = parts.getOrNull(2) ?: ""
+            val broadcastMessage = BroadcastMessage(title, message, url)
             return Pair(broadcastMessage, buffer.size)
         }
     }
 }
 
 class ShiftCommunity : Community() {
-    override val serviceId = "62824bd445a546ba803e7de9a8bb42d8cd92009c"
+    override val serviceId = BuildConfig.SHIFT_COMMUNITY_ID
     private val MESSAGE_ID = 1
     var context: Context? = null
 
@@ -108,14 +110,12 @@ class ShiftCommunity : Community() {
 
     private fun onMessage(packet: Packet) {
         val (peer, payload) = packet.getAuthPayload(BroadcastMessage.Deserializer)
-        Log.d("ShiftCommunity", peer.mid + ": " + payload.message)
-
-        sendNotification(context!!, "Message", payload.message, payload.url)
+        sendNotification(context!!, payload.title, payload.message, payload.url)
     }
 
     fun broadcastGreeting() {
         for (peer in getPeers()) {
-            val packet = serializePacket(MESSAGE_ID, BroadcastMessage("Hello, have a look at our website for news.", "http://shift.crowdware.at"))
+            val packet = serializePacket(MESSAGE_ID, BroadcastMessage("Title","Hello, have a look at our website for news.", "http://shift.crowdware.at"))
             send(peer.address, packet)
         }
     }

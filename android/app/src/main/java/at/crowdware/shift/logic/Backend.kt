@@ -22,6 +22,7 @@ package at.crowdware.shift.logic
 import android.content.Context
 import android.util.Base64
 import android.util.Log
+import at.crowdware.shift.BuildConfig
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -36,12 +37,12 @@ import javax.crypto.spec.SecretKeySpec
 
 class Backend {
     companion object {
-        private const val serviceUrl = "http://shift.crowdware.at:8080/"
-        private const val api_key = "1234567890123456"     // must be 16 bytes long // TODO...RAUS DAMIT
-        private const val secretKey = "1234567890123456"   // must be 16 bytes long // TODO...RAUS DAMIT
-        private var account = Account()
-        private const val algorithm = "AES/CBC/PKCS5Padding"
+        private const val serviceUrl = BuildConfig.WEB_SERVICE_URL
+        private val api_key = BuildConfig.API_KEY
+        private val secretKey = BuildConfig.SECRET_KEY
+        private const val algorithm = BuildConfig.ALGORYTHM
 
+        private var account = Account()
         fun ByteArray.toHex() : String{
             val result = StringBuffer()
 
