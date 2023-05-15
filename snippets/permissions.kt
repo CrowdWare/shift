@@ -1,22 +1,8 @@
-/****************************************************************************
- * Copyright (C) 2023 CrowdWare
- *
- * This file is part of SHIFT.
- *
- *  SHIFT is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  SHIFT is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
- *
- ****************************************************************************/
+MainPage with permission request fro BLUETOOTH.
+Maybe we need that later for payments via blootooth.
+
+
+
 package at.crowdware.shift
 
 import android.Manifest
@@ -75,26 +61,45 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.reflect.KFunction1
 
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun BluetoothPermission(
+    multiplePermissionsState: MultiplePermissionsState,
+    context: Context,
+    onScoopingSucceed: () -> Unit,
+    onScoopingFailed: (String?) -> Unit
+) {
+    PermissionsRequired(
+        multiplePermissionsState =  multiplePermissionsState,
+        permissionsNotGrantedContent = {  },
+        permissionsNotAvailableContent = { }
+    ) {
+        Backend.setScooping(context, onScoopingSucceed, onScoopingFailed)
+    }
+}
+
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainPage() {
+    val permissionState = rememberMultiplePermissionsState(
+        listOf<String>(
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_ADVERTISE,
+            Manifest.permission.BLUETOOTH_SCAN
+        )
+    )
     var displayMilliliter by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf("") }
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(
             Intent.EXTRA_TEXT,
-            stringResource(
-                id = R.string.invite_message,
-                stringResource(id = R.string.website_url),
-                Backend.getAccount().uuid
-            )
+            stringResource(id = R.string.invite_message, stringResource(id = R.string.website_url), Backend.getAccount().uuid)
         )
         type = "text/plain"
     }
-    val transactions =
-        remember { mutableStateListOf(*Backend.getAccount().transactions.toTypedArray()) }
+    val transactions = remember { mutableStateListOf(*Backend.getAccount().transactions.toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
     var balance by remember { mutableStateOf(Backend.getBalance(context)) }
@@ -107,11 +112,14 @@ fun MainPage() {
         errorMessage = ""
         isScooping = true
     }
+    if (permissionState.allPermissionsGranted && !Network.isStarted()) {
+        Network.initIPv8(context.applicationContext as Application)
+    }
 
     LaunchedEffect(true) {
         while (true) {
             isScooping = Backend.getAccount().scooping > 0u
-            if (isScooping)
+            if(isScooping)
                 balance = Backend.getBalance(context)
             delay(1000L)
         }
@@ -163,20 +171,61 @@ fun MainPage() {
             }
         }
         Text(errorMessage, color = Color.Red)
-        Button(
-            onClick = { Backend.setScooping(context, onScoopingSucceed, onScoopingFailed) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isScooping
-        ) {
-            Text(
-                if (isScooping) {
-                    stringResource(R.string.button_scooping_started)
-                } else {
-                    stringResource(R.string.button_start_scooping)
-                }, style = TextStyle(fontSize = 20.sp)
+        val shouldShowBluetoothOff = (permissionState.permissionRequested && !permissionState.shouldShowRationale && !permissionState.allPermissionsGranted)
+        if(permissionState.allPermissionsGranted) {
+            Button(
+                onClick = { Backend.setScooping(context, onScoopingSucceed, onScoopingFailed) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isScooping
+            ) {
+                Text(
+                    if (isScooping) {
+                        stringResource(R.string.button_scooping_started)
+                    } else {
+                        stringResource(R.string.button_start_scooping)
+                    }, style = TextStyle(fontSize = 20.sp)
+                )
+            }
+        } else if (shouldShowBluetoothOff) {
+            Button(
+                onClick = {
+                    val packageName = context.packageName
+                    val settingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    settingsIntent.data = Uri.fromParts("package", packageName, null)
+                    context.startActivity(settingsIntent)
+                          },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    stringResource(R.string.bluetooth_disabled),
+                    style = TextStyle(fontSize = 15.sp)
+                )
+            }
+        } else {
+            BluetoothPermission(
+                multiplePermissionsState = permissionState,
+                context,
+                onScoopingSucceed,
+                onScoopingFailed
             )
+            Button(
+                onClick = { permissionState.launchMultiplePermissionRequest() },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isScooping && !shouldShowBluetoothOff
+            ) {
+                Text(
+                    if (isScooping) {
+                        stringResource(R.string.button_scooping_started)
+                    } else {
+                        if (permissionState.shouldShowRationale) {
+                            stringResource(R.string.bluetooth_rational)
+                        } else {
+                            stringResource(R.string.button_start_scooping)
+                        }
+                    }, style = TextStyle(fontSize = 20.sp)
+                )
+            }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
@@ -222,10 +271,7 @@ fun MainPage() {
             onClick = { context.startActivity(shareIntent) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                stringResource(R.string.button_invite_friends),
-                style = TextStyle(fontSize = 20.sp)
-            )
+            Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
         }
     }
 }

@@ -62,9 +62,9 @@ object Network {
 
     fun initIPv8(application: Application) {
         val config = IPv8Configuration(overlays = listOf(
-            createDiscoveryCommunity(application),
+            //createDiscoveryCommunity(application),
             createTrustChainCommunity(application),
-            createDemoCommunity()
+            createShiftCommunity()
         ), walkerInterval = 5.0)
 
         IPv8Android.Factory(application)
@@ -110,6 +110,7 @@ object Network {
         })
     }
 
+    /*
     private fun createDiscoveryCommunity(application: Application): OverlayConfiguration<DiscoveryCommunity> {
         val randomWalk = RandomWalk.Factory()
         val randomChurn = RandomChurn.Factory()
@@ -131,7 +132,7 @@ object Network {
             strategies
         )
     }
-
+*/
     private fun createTrustChainCommunity(application: Application): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
         val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
@@ -143,7 +144,7 @@ object Network {
         )
     }
 
-    private fun createDemoCommunity(): OverlayConfiguration<ShiftCommunity> {
+    private fun createShiftCommunity(): OverlayConfiguration<ShiftCommunity> {
         val randomWalk = RandomWalk.Factory()
         return OverlayConfiguration(
             Overlay.Factory(ShiftCommunity::class.java),

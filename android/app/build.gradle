@@ -42,7 +42,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '11'
-        allWarningsAsErrors = true
+        allWarningsAsErrors = false
     }
     buildFeatures {
         compose true

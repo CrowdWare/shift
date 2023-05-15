@@ -141,8 +141,6 @@ class Backend {
                         account.level_2_count = count_2.toUInt()
                         account.level_3_count = count_3.toUInt()
                         Database.saveAccount(context)
-
-                        println("level 1: ${account.level_1_count}, 2 ${account.level_2_count}, 3 ${account.level_3_count}")
                         onScoopingSucceed()
                     }
                 }

@@ -19,6 +19,7 @@
  ****************************************************************************/
 package at.crowdware.shift
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -32,6 +33,7 @@ import androidx.compose.ui.Modifier
 import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
+import at.crowdware.shift.logic.Network
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
 
@@ -47,6 +49,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     defaultCryptoProvider = AndroidCryptoProvider
                     LocaleManager.init(applicationContext)
+                    Network.initIPv8(applicationContext as Application)
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
                     if (hasJoined.value)
                         NavigationView()

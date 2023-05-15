@@ -109,8 +109,8 @@ object IPv8Android {
                 connectivityManager
             )
 
-            val bluetoothManager = application.getSystemService<BluetoothManager>()
-                ?: throw IllegalStateException("BluetoothManager not found")
+            //val bluetoothManager = application.getSystemService<BluetoothManager>()
+            //    ?: throw IllegalStateException("BluetoothManager not found")
 
             val myPeer = Peer(
                 privateKey,
@@ -121,18 +121,17 @@ object IPv8Android {
 
             val network = Network()
 
-            val gattServer = GattServerManager(application, myPeer)
-            val bleAdvertiser = IPv8BluetoothLeAdvertiser(bluetoothManager)
-            val bleScanner = IPv8BluetoothLeScanner(bluetoothManager, network)
-            val bluetoothEndpoint = if (
-                bluetoothManager.adapter != null && Build.VERSION.SDK_INT >= 24
-            ) BluetoothLeEndpoint(
-                application, bluetoothManager, gattServer, bleAdvertiser, bleScanner, network, myPeer
-            ) else null
+            //val gattServer = GattServerManager(application, myPeer)
+            //val bleAdvertiser = IPv8BluetoothLeAdvertiser(bluetoothManager)
+            //val bleScanner = IPv8BluetoothLeScanner(bluetoothManager, network)
+            //val bluetoothEndpoint = if (
+            //    bluetoothManager.adapter != null && Build.VERSION.SDK_INT >= 24
+            //) BluetoothLeEndpoint(
+            //    application, bluetoothManager, gattServer, bleAdvertiser, bleScanner, network, myPeer
+            //) else null
 
             val endpointAggregator = EndpointAggregator(
-                udpEndpoint,
-                bluetoothEndpoint
+                udpEndpoint, null//bluetoothEndpoint
             )
 
             return IPv8(endpointAggregator, configuration, myPeer, network)
