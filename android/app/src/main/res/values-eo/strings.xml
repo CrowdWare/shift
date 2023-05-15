@@ -31,4 +31,5 @@
     <string name="bluetooth_rational">Habilitigu Bluetooth-ligilon por sekuraj kaj tuŝrapide fluktuantaj transakcioj!</string>
     <string name="bluetooth_disabled">La Bluetooth-klavilo estas malŝaltita. Se vi ŝanĝas opinion, vi povas aktivigi Bluetooth-on en la agordoj de la aparato.</string>
     <string name="invite_advertise">Se vi invitas aliajn homojn aliĝi al Shift, vi povas akiri pli da LMC por tago kaj invito. Tio funkcias en tri niveloj. Ni faras tion por rapide disvastigi la aplikaĵon kaj gajni akcepton. Kiu scias, eble vi povos poste eĉ pagi per la aplikaĵo en la supermerkato, ĉar tiu ebleco generas pli da enspezo en la supermerkato.</string>
+    <string name="service_description">Memoru, ke la Shift-reto estas senservila kaj pro tio tiu servo konektas uzantojn kaj prilaboras mesaĝojn en la fono.</string>
 </resources>

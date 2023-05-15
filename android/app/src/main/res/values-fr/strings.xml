@@ -31,4 +31,5 @@
     <string name="bluetooth_rational">Activez la connexion Bluetooth pour des transactions liquides sécurisées et instantanées !</string>
     <string name="bluetooth_disabled">Le Bluetooth est désactivé. Si vous changez d\'avis, vous pouvez activer le Bluetooth dans les paramètres de l\'appareil.</string>
     <string name="invite_advertise">Si vous invitez d\'autres personnes à rejoindre Shift, vous pouvez obtenir des LMC supplémentaires par jour et par invitation. Cela fonctionne sur trois niveaux. Nous faisons cela pour favoriser la diffusion rapide de l\'application et gagner en acceptation. Qui sait, à l\'avenir, vous pourrez peut-être même payer vos achats avec l\'application au supermarché, car cette fonctionnalité génère davantage de chiffre d\'affaires en magasin.</string>
+    <string name="service_description">Gardez à l\'esprit que le réseau Shift est sans serveur, donc ce service connecte les utilisateurs et traite les messages en arrière-plan.</string>
 </resources>

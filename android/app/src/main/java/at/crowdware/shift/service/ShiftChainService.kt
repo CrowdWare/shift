@@ -20,11 +20,13 @@
 package at.crowdware.shift.service
 
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.LocaleManager
 import nl.tudelft.ipv8.android.service.IPv8Service
 
 
@@ -33,13 +35,24 @@ class ShiftChainService : IPv8Service() {
         val trustChainExplorerIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = TaskStackBuilder.create(this)
             .addNextIntentWithParentStack(trustChainExplorerIntent)
-            //.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
             .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_CONNECTION)
             .setContentTitle("Shift-Service")
-            .setContentText("Running")
             .setSmallIcon(R.drawable.ic_insert_link_black_24dp)
             .setContentIntent(pendingIntent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(getString(R.string.service_description)))
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val language = intent?.getStringExtra("language")
+        if (!language.isNullOrEmpty()) {
+            LocaleManager.setLocale(applicationContext, language)
+        }
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleManager.wrapContext(newBase!!))
     }
 }

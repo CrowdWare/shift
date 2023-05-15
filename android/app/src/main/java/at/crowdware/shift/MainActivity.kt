@@ -21,6 +21,7 @@ package at.crowdware.shift
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,7 @@ import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.Network
+import at.crowdware.shift.service.ShiftChainService
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
 
@@ -49,6 +51,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     defaultCryptoProvider = AndroidCryptoProvider
                     LocaleManager.init(applicationContext)
+
+                    val serviceIntent = Intent(this, ShiftChainService::class.java)
+                    serviceIntent.putExtra("language", LocaleManager.getLanguage())
+                    startService(serviceIntent)
+
                     Network.initIPv8(applicationContext as Application)
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
                     if (hasJoined.value)
