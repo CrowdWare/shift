@@ -29,4 +29,5 @@
     <string name="friends_invited">" Freunde eingeladen"</string>
     <string name="bluetooth_rational">Aktivieren Sie die Bluetooth-Verbindung für sichere und sofortige Liquiditätsübertragungen!</string>
     <string name="bluetooth_disabled">Bluetooth ist deaktiviert. Wenn du es dir anders überlegst, kannst du Bluetooth in den Geräteeinstellungen aktivieren.</string>
+    <string name="invite_advertise">Wenn du andere Menschen zu Shift einlädst, dann kannst Du pro Tag und Einladung zusätzlich etwas LMC schöpfen. Das Ganze geht über drei Ebenen. Wir machen das, damit sich die App schnell verbreitet und an Akzeptanz gewinnt. Wer weiß, später kannst Du eventuell mit der App im Supermarkt bezahlen, denn diese Möglichkeit sorgt im Supermarkt für mehr Umsatz.</string>
 </resources>

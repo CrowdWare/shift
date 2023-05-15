@@ -30,7 +30,7 @@ import nl.tudelft.ipv8.messaging.payload.PuncturePayload
 import java.util.*
 
 class ShiftCommunity : Community() {
-    override val serviceId = "02319685c1912a141279f8248fc8db5899c5df5a"
+    override val serviceId = "62824bd445a546ba803e7de9a8bb42d8cd92009c"
 
     val discoveredAddressesContacted: MutableMap<IPv4Address, Date> = mutableMapOf()
     val lastTrackerResponses = mutableMapOf<IPv4Address, Date>()

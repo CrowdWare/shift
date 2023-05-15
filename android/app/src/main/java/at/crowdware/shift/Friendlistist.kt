@@ -20,6 +20,7 @@
 package at.crowdware.shift
 
 import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Checkbox
@@ -65,6 +67,15 @@ fun Friendlist() {
     val context = LocalContext.current
     val friendListState = remember { mutableStateOf(emptyList<Friend>()) }
     var errorMessage by remember { mutableStateOf("") }
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(
+            Intent.EXTRA_TEXT,
+            stringResource(id = R.string.invite_message, stringResource(id = R.string.website_url), Backend.getAccount().uuid)
+        )
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
     val onFriendlistFailed: (String?) -> Unit = { message ->
         if (message != null)
             errorMessage = message
@@ -89,17 +100,27 @@ fun Friendlist() {
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(4.dp))
-
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) {
-            items(friendListState.value.size) { index ->
-                FriendListItem(friend = friendListState.value[index])
+        if(friendListState.value.size > 0) {
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            ) {
+                items(friendListState.value.size) { index ->
+                    FriendListItem(friend = friendListState.value[index])
+                }
             }
+            Text(errorMessage, color = Color.Red)
+        } else {
+            Text(stringResource(R.string.invite_advertise))
         }
-        Text(errorMessage, color = Color.Red)
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { context.startActivity(shareIntent) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
+        }
     }
 }
 

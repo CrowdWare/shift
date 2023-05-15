@@ -75,20 +75,17 @@ import kotlin.reflect.KFunction1
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun BluetoothPermission(
-    permissionState: PermissionState,
-    isScooping: KFunction1<Boolean, Unit>,
+    multiplePermissionsState: MultiplePermissionsState,
     context: Context,
     onScoopingSucceed: () -> Unit,
     onScoopingFailed: (String?) -> Unit
 ) {
-    PermissionRequired(
-        permissionState =  permissionState,
-        permissionNotGrantedContent = {  },
-        permissionNotAvailableContent = { }
+    PermissionsRequired(
+        multiplePermissionsState =  multiplePermissionsState,
+        permissionsNotGrantedContent = {  },
+        permissionsNotAvailableContent = { }
     ) {
-        // TODO, das startet nun automatisch wenner permission hat
-        //Backend.setScooping(context, onScoopingSucceed, onScoopingFailed)
-        //isScooping(true)
+        Backend.setScooping(context, onScoopingSucceed, onScoopingFailed)
     }
 }
 
@@ -96,8 +93,13 @@ fun BluetoothPermission(
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainPage() {
-    val permissionState = rememberPermissionState(
-        permission = Manifest.permission.BLUETOOTH_CONNECT)
+    val permissionState = rememberMultiplePermissionsState(
+        listOf<String>(
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_ADVERTISE,
+            Manifest.permission.BLUETOOTH_SCAN
+        )
+    )
     var displayMilliliter by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf("") }
     val sendIntent: Intent = Intent().apply {
@@ -113,9 +115,6 @@ fun MainPage() {
     val context = LocalContext.current
     var balance by remember { mutableStateOf(Backend.getBalance(context)) }
     var isScooping by remember { mutableStateOf(Backend.getAccount().scooping > 0u) }
-    fun updateIsScooping(value: Boolean) {
-        isScooping = value
-    }
     val onScoopingFailed: (String?) -> Unit = { message ->
         if (message != null)
             errorMessage = message
@@ -124,7 +123,7 @@ fun MainPage() {
         errorMessage = ""
         isScooping = true
     }
-    if (permissionState.hasPermission && !Network.isStarted()) {
+    if (permissionState.allPermissionsGranted && !Network.isStarted()) {
         Network.initIPv8(context.applicationContext as Application)
     }
 
@@ -183,30 +182,53 @@ fun MainPage() {
             }
         }
         Text(errorMessage, color = Color.Red)
-        BluetoothPermission(permissionState = permissionState,
-            ::updateIsScooping,
-            context,
-            onScoopingSucceed,
-            onScoopingFailed)
-        val shouldShowBluetoothOff = (permissionState.permissionRequested && !permissionState.shouldShowRationale && !permissionState.hasPermission)
-        Button(
-            onClick = { permissionState.launchPermissionRequest() },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isScooping && !shouldShowBluetoothOff
-        ) {
-            Text(
-                if(isScooping) {
-                    stringResource(R.string.button_scooping_started)
-                } else {
-                if(shouldShowBluetoothOff) {
-                    stringResource(R.string.bluetooth_disabled)
-                } else {
-                if(permissionState.shouldShowRationale) {
-                    stringResource(R.string.bluetooth_rational)
-                } else {
-                    stringResource(R.string.button_start_scooping)
-                }}}, style = if(shouldShowBluetoothOff) { TextStyle(fontSize = 15.sp, color = Color.DarkGray) } else { TextStyle(fontSize = 20.sp) }
-            )
+
+        if(permissionState.allPermissionsGranted) {
+            Button(
+                onClick = { Backend.setScooping(context, onScoopingSucceed, onScoopingFailed) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isScooping
+            ) {
+                Text(
+                    if (isScooping) {
+                        stringResource(R.string.button_scooping_started)
+                    } else {
+                        stringResource(R.string.button_start_scooping)
+                    }, style = TextStyle(fontSize = 20.sp)
+                )
+            }
+        } else {
+            BluetoothPermission(
+                multiplePermissionsState = permissionState,
+                context,
+                onScoopingSucceed,
+                onScoopingFailed)
+            val shouldShowBluetoothOff = (permissionState.permissionRequested && !permissionState.shouldShowRationale && !permissionState.allPermissionsGranted)
+            Button(
+                onClick = { permissionState.launchMultiplePermissionRequest() },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isScooping && !shouldShowBluetoothOff
+            ) {
+                Text(
+                    if (isScooping) {
+                        stringResource(R.string.button_scooping_started)
+                    } else {
+                        if (shouldShowBluetoothOff) {
+                            stringResource(R.string.bluetooth_disabled)
+                        } else {
+                            if (permissionState.shouldShowRationale) {
+                                stringResource(R.string.bluetooth_rational)
+                            } else {
+                                stringResource(R.string.button_start_scooping)
+                            }
+                        }
+                    }, style = if (shouldShowBluetoothOff) {
+                        TextStyle(fontSize = 15.sp, color = Color.DarkGray)
+                    } else {
+                        TextStyle(fontSize = 20.sp)
+                    }
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
