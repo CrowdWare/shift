@@ -21,6 +21,7 @@ package at.crowdware.shift.logic
 
 import android.content.Context
 import android.util.Base64
+import android.util.Log
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -83,7 +84,6 @@ class Backend {
 
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseString: String?) {
-                    println(responseString)
                     val jsonResponse = JSONObject(responseString!!)
                     val isError = jsonResponse.getBoolean("isError")
                     val message = jsonResponse.getString("message")
@@ -106,7 +106,8 @@ class Backend {
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
                     onFriendlistFailed("There was a network error, try again later.")
-                    println(responseString)
+                    if(responseString != null)
+                        Log.e("Shift", responseString!!)
                 }
             })
         }
@@ -147,7 +148,8 @@ class Backend {
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
                     onScoopingFailed("There was a network error, try again later.")
-                    println(responseString)
+                    if(responseString != null)
+                        Log.e("Shift", responseString!!)
                 }
             })
         }
@@ -215,7 +217,8 @@ class Backend {
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
                     onJoinFailed("There was a network error, try again later.")
-                    println(responseString)
+                    if(responseString != null)
+                        Log.e("Shift", responseString!!)
                 }
             })
         }

@@ -20,13 +20,10 @@
 package at.crowdware.shift.logic
 
 import android.app.Application
-import android.bluetooth.BluetoothManager
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
-import at.crowdware.shift.ShiftCommunity
 import at.crowdware.shift.service.ShiftChainService
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import nl.tudelft.ipv8.IPv8Configuration
@@ -34,7 +31,6 @@ import nl.tudelft.ipv8.Overlay
 import nl.tudelft.ipv8.OverlayConfiguration
 import nl.tudelft.ipv8.android.IPv8Android
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
-import nl.tudelft.ipv8.android.messaging.bluetooth.BluetoothLeDiscovery
 import nl.tudelft.ipv8.android.peerdiscovery.NetworkServiceDiscovery
 import nl.tudelft.ipv8.attestation.trustchain.BlockListener
 import nl.tudelft.ipv8.attestation.trustchain.BlockSigner
@@ -62,7 +58,7 @@ object Network {
 
     fun initIPv8(application: Application) {
         val config = IPv8Configuration(overlays = listOf(
-            //createDiscoveryCommunity(application),
+            createDiscoveryCommunity(application),
             createTrustChainCommunity(application),
             createShiftCommunity()
         ), walkerInterval = 5.0)
@@ -110,29 +106,24 @@ object Network {
         })
     }
 
-    /*
+
     private fun createDiscoveryCommunity(application: Application): OverlayConfiguration<DiscoveryCommunity> {
         val randomWalk = RandomWalk.Factory()
         val randomChurn = RandomChurn.Factory()
         val periodicSimilarity = PeriodicSimilarity.Factory()
 
         val nsd = NetworkServiceDiscovery.Factory(application.getSystemService()!!)
-        val bluetoothManager = application.getSystemService<BluetoothManager>()
-            ?: throw IllegalStateException("BluetoothManager not available")
-        val strategies = mutableListOf(
-            randomWalk, randomChurn, periodicSimilarity, nsd
-        )
-        if (bluetoothManager.adapter != null && Build.VERSION.SDK_INT >= 24) {
-            val ble = BluetoothLeDiscovery.Factory()
-            strategies += ble
-        }
+        //val bluetoothManager = application.getSystemService<BluetoothManager>()
+        //    ?: throw IllegalStateException("BluetoothManager not available")
+        val strategies = mutableListOf(randomWalk, randomChurn, periodicSimilarity, nsd)
+        //if (bluetoothManager.adapter != null && Build.VERSION.SDK_INT >= 24) {
+        //    val ble = BluetoothLeDiscovery.Factory()
+        //    strategies += ble
+        //}
 
-        return OverlayConfiguration(
-            DiscoveryCommunity.Factory(),
-            strategies
-        )
+        return OverlayConfiguration(DiscoveryCommunity.Factory(), strategies)
     }
-*/
+
     private fun createTrustChainCommunity(application: Application): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
         val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")

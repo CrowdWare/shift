@@ -141,6 +141,7 @@ dependencies {
 
     implementation 'com.google.accompanist:accompanist-permissions:0.23.1'
 
+
     implementation files('../../ipv8/ipv8-android/build/outputs/aar/ipv8-android-debug.aar')
     implementation files('../../ipv8/ipv8/build/libs/ipv8.jar')
     //implementation fileTree(dir: 'libs', include: ['*.jar'])

@@ -39,7 +39,7 @@ class ShiftChainService : IPv8Service() {
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_CONNECTION)
             .setContentTitle("Shift-Service")
-            .setSmallIcon(R.drawable.ic_insert_link_black_24dp)
+            .setSmallIcon(R.drawable.icon)
             .setContentIntent(pendingIntent)
             .setStyle(NotificationCompat.BigTextStyle().bigText(getString(R.string.service_description)))
     }

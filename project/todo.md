@@ -10,7 +10,7 @@
 + Embed some Esperanto
 + Localize app
 - Color for drawer select background should be blueish, general theme check
-- For benefits only count mates that were scooping the last 24h
++ For benefits only count mates that were scooping the last 24h
 + The icon should be larger on the splash screen, maybe we show something with a water drop or other liquids
 + Drawer shall look smarter with logo and the name of the user, (C) CrowdWare
 + after scooping finished reload bookings
@@ -21,7 +21,7 @@
 # Web
 - Introduction to animate people to join (video)
 + New screen print of the app
-- Translate to Esperanto
+- Translate to Esperanto, French, Spanish, Portuguese
 
 # Webservice
 + Make it possible to have multiple level of referers
@@ -33,10 +33,10 @@
 - A desktop app can be used to transfer liquid from mobile to desktop to be able to save the data.
 
 
-
 # Push notification
 Instead of using Google Firebase or OneSignal, which is based on Firebase, we should implement our own push service.
 I am thinking of a P2P solution, where users can chat with each other (we need that anyways later). This way we can also broadcast messages to the users.
+We will use IPv8 for this purpose.
 
 
 
