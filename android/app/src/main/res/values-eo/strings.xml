@@ -32,4 +32,8 @@
     <string name="bluetooth_disabled">La Bluetooth-klavilo estas malŝaltita. Se vi ŝanĝas opinion, vi povas aktivigi Bluetooth-on en la agordoj de la aparato.</string>
     <string name="invite_advertise">Se vi invitas aliajn homojn aliĝi al Shift, vi povas akiri pli da LMC por tago kaj invito. Tio funkcias en tri niveloj. Ni faras tion por rapide disvastigi la aplikaĵon kaj gajni akcepton. Kiu scias, eble vi povos poste eĉ pagi per la aplikaĵo en la supermerkato, ĉar tiu ebleco generas pli da enspezo en la supermerkato.</string>
     <string name="service_description">Memoru, ke la Shift-reto estas senservila kaj pro tio tiu servo konektas uzantojn kaj prilaboras mesaĝojn en la fono.</string>
+    <string name="broadcasts_channel">Dissendoj</string>
+    <string name="open_link">Malfermi ligilon</string>
+    <string name="uninstall_warning">Dankon pro la instalo de tiu ĉi aplikaĵo.\n\nShift povas krei virtualan monon, kiun ni povas uzi por pago de servoj kaj varoj.\nBONVOLU ATENTI.\nNi laboras sen konservado de viaj datumoj sur servilo. Ĉiuj transakcioj estos konservitaj en tiu ĉi aparato. Se vi malinstalas tiun ĉi aplikaĵon, ĉiuj akumulitaj monsumoj kaj transakcioj estos forigitaj. Estas kiel vi forĵetus vian monujon plenan de mono.</string>
+    <string name="intro">Enkonduko</string>
 </resources>

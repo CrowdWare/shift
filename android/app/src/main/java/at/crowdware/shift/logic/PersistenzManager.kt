@@ -28,14 +28,35 @@ object PersistanceManager{
     private const val COUNTRY_PREF = "country_pref"
     private const val LANGUAGE_PREF = "language_pref"
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
+    private const val DELETE_WARNING_SEEN = "delete_warning_pref"
     private const val APP_PREFS = "app_prefs"
 
-    fun saveJoinData(context: Context, name: String, friend: String, country: Int, language: Int) {
+    fun hasSeenDeleteWarning(context: Context): Boolean {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        val has = preferences.getString(DELETE_WARNING_SEEN, "false")
+        return has == "true"
+    }
+
+    fun putHasSeenDeleteWarning(context: Context) {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        preferences.edit().putString(DELETE_WARNING_SEEN, "true").apply()
+    }
+
+    fun saveLanguageIndex(context: Context, language: Int) {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        preferences.edit().putInt(LANGUAGE_PREF, language).apply()
+    }
+
+    fun getLanguageIndex(context: Context): Int {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        return preferences.getInt(LANGUAGE_PREF, -1)
+    }
+
+    fun saveJoinData(context: Context, name: String, friend: String, country: Int) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putString(NAME_PREF, name).apply()
         preferences.edit().putString(FRIEND_PREF, friend).apply()
         preferences.edit().putInt(COUNTRY_PREF, country).apply()
-        preferences.edit().putInt(LANGUAGE_PREF, language).apply()
     }
 
     fun readJoinData(context: Context): JoinData {
@@ -43,8 +64,7 @@ object PersistanceManager{
         val name = preferences.getString(NAME_PREF, "")
         val friend = preferences.getString(FRIEND_PREF, "")
         val country = preferences.getInt(COUNTRY_PREF, -1)
-        val language = preferences.getInt(LANGUAGE_PREF, -1)
-        return JoinData(name!!, friend!!, country, language)
+        return JoinData(name!!, friend!!, country)
     }
 
     fun getLanguage(context: Context): String? {

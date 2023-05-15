@@ -32,4 +32,8 @@
     <string name="bluetooth_disabled">El Bluetooth está desactivado. Si cambias de opinión, puedes habilitar el Bluetooth en la configuración del dispositivo.</string>
     <string name="invite_advertise">Si invitas a otras personas a unirse a Shift, puedes obtener LMC adicionales por día e invitación. Esto se aplica en tres niveles. Lo hacemos para promover una rápida difusión de la aplicación y ganar aceptación. ¿Quién sabe? En el futuro, quizás puedas pagar en el supermercado con la aplicación, ya que esta posibilidad genera más ventas en el establecimiento.</string>
     <string name="service_description">Ten en cuenta que la red Shift es sin servidor y, por lo tanto, este servicio conecta a los usuarios y procesa mensajes en segundo plano.</string>
+    <string name="broadcasts_channel">Transmisiones</string>
+    <string name="open_link">Abrir enlace</string>
+    <string name="uninstall_warning">Gracias por instalar esta aplicación.\n\nShift puede crear una moneda virtual que podemos usar para pagar servicios y cosas.\nPOR FAVOR, TEN EN CUENTA.\nTrabajamos sin almacenar tus datos en un servidor. Todas las transacciones se guardarán en este dispositivo. Si desinstalas esta aplicación, se eliminará toda la moneda acumulada y todas las transacciones. Es como si estuvieras tirando tu billetera llena de dinero.</string>
+    <string name="intro">Introducción</string>
 </resources>

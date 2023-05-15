@@ -19,7 +19,17 @@
  ****************************************************************************/
 package at.crowdware.shift.logic
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import at.crowdware.shift.R
 import nl.tudelft.ipv8.IPv4Address
 import nl.tudelft.ipv8.Community
 import nl.tudelft.ipv8.Peer
@@ -29,19 +39,56 @@ import nl.tudelft.ipv8.messaging.Deserializable
 import nl.tudelft.ipv8.messaging.Packet
 import nl.tudelft.ipv8.messaging.Serializable
 import nl.tudelft.ipv8.messaging.payload.IntroductionResponsePayload
-import java.nio.charset.Charset
 import java.util.Date
 
+fun sendNotification(context: Context, title: String, message: String, url: String = "") {
+    val NOTIFICATION_ID = 123
+    val channelId = "your_channel_id"
 
-class BroadcastMessage(val message: String) : Serializable {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelId, context.getString(R.string.broadcasts_channel), importance)
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    val builder = NotificationCompat.Builder(context, channelId)
+        .setSmallIcon(R.drawable.icon)
+        .setContentTitle(title)
+        .setContentText(message)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setAutoCancel(true)
+
+    if(url.isNotEmpty()) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val action = NotificationCompat.Action(
+            R.drawable.icon,
+            context.getString(R.string.open_link),
+            pendingIntent
+        )
+        builder.setContentIntent(pendingIntent)
+        builder.addAction(action)
+    }
+    with(NotificationManagerCompat.from(context)) {
+            notify(NOTIFICATION_ID, builder.build())
+    }
+}
+class BroadcastMessage(val message: String, val url: String = "") : Serializable {
     override fun serialize(): ByteArray {
-        return message.toByteArray(charset = Charsets.UTF_8)
+        val serializedData = "$message|$url" // Combine message and url with a delimiter
+        return serializedData.toByteArray(Charsets.UTF_8)
     }
 
     companion object Deserializer : Deserializable<BroadcastMessage> {
         override fun deserialize(buffer: ByteArray, offset: Int): Pair<BroadcastMessage, Int> {
-            val messageString = String(buffer, offset, buffer.size - offset, Charsets.UTF_8)
-            val broadcastMessage = BroadcastMessage(messageString)
+            val serializedData = String(buffer, offset, buffer.size - offset, Charsets.UTF_8)
+            val parts = serializedData.split("|")
+            val message = parts.getOrNull(0) ?: ""
+            val url = parts.getOrNull(1) ?: ""
+            val broadcastMessage = BroadcastMessage(message, url)
             return Pair(broadcastMessage, buffer.size)
         }
     }
@@ -50,6 +97,7 @@ class BroadcastMessage(val message: String) : Serializable {
 class ShiftCommunity : Community() {
     override val serviceId = "62824bd445a546ba803e7de9a8bb42d8cd92009c"
     private val MESSAGE_ID = 1
+    var context: Context? = null
 
     val discoveredAddressesContacted: MutableMap<IPv4Address, Date> = mutableMapOf()
     val lastTrackerResponses = mutableMapOf<IPv4Address, Date>()
@@ -61,11 +109,13 @@ class ShiftCommunity : Community() {
     private fun onMessage(packet: Packet) {
         val (peer, payload) = packet.getAuthPayload(BroadcastMessage.Deserializer)
         Log.d("ShiftCommunity", peer.mid + ": " + payload.message)
+
+        sendNotification(context!!, "Message", payload.message, payload.url)
     }
 
     fun broadcastGreeting() {
         for (peer in getPeers()) {
-            val packet = serializePacket(MESSAGE_ID, BroadcastMessage("Hello!"))
+            val packet = serializePacket(MESSAGE_ID, BroadcastMessage("Hello, have a look at our website for news.", "http://shift.crowdware.at"))
             send(peer.address, packet)
         }
     }

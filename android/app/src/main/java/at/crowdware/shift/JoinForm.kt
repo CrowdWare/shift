@@ -43,11 +43,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat.recreate
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.readCountryData
@@ -56,36 +59,16 @@ import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.PersistanceManager
 
-data class JoinData(val name: String, val friend: String, val country: Int, val language: Int)
+data class JoinData(val name: String, val friend: String, val country: Int)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JoinForm(joinSuccessful: MutableState<Boolean>) {
+fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
     var context = LocalContext.current.applicationContext
-    val joinData = PersistanceManager.readJoinData(context)
-    println("country ${joinData.country}, lang ${joinData.language}")
     var errorMessage by remember { mutableStateOf("") }
-    var name by rememberSaveable { mutableStateOf(joinData.name) }
-    var friend by rememberSaveable { mutableStateOf(joinData.friend) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
-    val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
-    val currentActivity = LocalContext.current as? Activity
-    val languages = listOf(
-        stringResource(R.string.language_english),
-        stringResource(R.string.language_german),
-        stringResource(R.string.language_spanish),
-        stringResource(R.string.language_french),
-        stringResource(R.string.language_portugues),
-        stringResource(R.string.language_esperanto)
-    )
-    var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
-    val stateHolderCountry = rememberDropDownListboxStateHolder(countries, joinData.country)
-    val onSelectedIndexChanged: (Int) -> Unit = { index ->
-        PersistanceManager.saveJoinData(context, name, friend, stateHolderCountry.selectedIndex, index)
-        selectedLanguageCode = language_codes[index]
-        LocaleManager.setLocale(context, selectedLanguageCode)
-        currentActivity?.recreate()
-    }
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, joinData.language, onSelectedIndexChanged)
+    val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
 
     val onJoinFailed: (String?) -> Unit = { message ->
         if (message != null)
@@ -118,29 +101,30 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
                 modifier = Modifier.fillMaxHeight(),
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text(stringResource(R.string.name_or_nickname)) },
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = friend,
             onValueChange = { friend = it },
             label = { Text(stringResource(R.string.invitation_code)) }
         )
+        Spacer(modifier = Modifier.height(16.dp))
         DropDownListbox(
             label = stringResource(R.string.select_your_country),
             stateHolder = stateHolderCountry)
-        DropDownListbox(
-            label = stringResource(R.string.select_preferred_language),
-            stateHolder = stateHolderLanguage)
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(text = errorMessage, color = Color.Red)
         Button(
             onClick = {
                 Backend.createAccount(
                     context, name, friend,
-                    stateHolderCountry.value, stateHolderLanguage.value, onJoinSucceed, onJoinFailed
+                    stateHolderCountry.value, language, onJoinSucceed, onJoinFailed
                 )
             },
         ) {
@@ -155,6 +139,6 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>) {
 fun JoinFormPreview()
 {
     val joinSuccessful = remember { mutableStateOf(false) }
-    JoinForm(joinSuccessful)
+    JoinForm(joinSuccessful, "de")
 }
 

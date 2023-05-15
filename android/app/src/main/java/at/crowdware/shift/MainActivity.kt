@@ -35,6 +35,7 @@ import at.crowdware.shift.ui.theme.DrawerComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.Network
+import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shift.service.ShiftChainService
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
@@ -58,10 +59,14 @@ class MainActivity : ComponentActivity() {
 
                     Network.initIPv8(applicationContext as Application)
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
+                    val hasSeenDeleteWarning = remember { mutableStateOf(false) }
                     if (hasJoined.value)
                         NavigationView()
                     else
-                        JoinForm(hasJoined)
+                        if(hasSeenDeleteWarning.value || PersistanceManager.hasSeenDeleteWarning(this))
+                            JoinForm(hasJoined, LocaleManager.getLanguage())
+                        else
+                            Intro(hasSeenDeleteWarning)
                 }
             }
         }

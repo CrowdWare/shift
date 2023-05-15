@@ -54,7 +54,6 @@ import nl.tudelft.ipv8.util.toHex
 object Network {
     private const val PREF_PRIVATE_KEY = "private_key"
     private const val BLOCK_TYPE = "demo_block"
-    private var isStarted = false
 
     fun initIPv8(application: Application) {
         val config = IPv8Configuration(overlays = listOf(
@@ -70,10 +69,15 @@ object Network {
             .init()
 
         initTrustChain()
-        isStarted = true
+        initShiftCommunity(application)
     }
 
-    fun isStarted(): Boolean {return isStarted }
+    private fun initShiftCommunity(application: Application) {
+        val shift = IPv8Android.getInstance().getOverlay<ShiftCommunity>()!!
+        shift.context = application
+    }
+
+    fun isStarted(): Boolean { return IPv8Android.getInstance().isStarted() }
 
     private fun initTrustChain() {
         val ipv8 = IPv8Android.getInstance()
