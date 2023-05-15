@@ -31,7 +31,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import at.crowdware.shift.ui.theme.DrawerComposeTheme
+import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.Network
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            DrawerComposeTheme {
+            ShiftComposeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

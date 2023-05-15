@@ -235,7 +235,7 @@ class Backend {
                 hours = (seconds.toFloat() / 60.0f / 60.0f)
                 if(hours > 20.0) {  //scooping stops after 20 hours
                     hours = 0f
-                    val grow: UInt = 10000u + account.level_1_count * 1500u + account.level_2_count * 300u + account.level_3_count * 60u
+                    val grow: UInt = 10000u + kotlin.math.min(account.level_1_count, 10u) * 1500u + kotlin.math.min(account.level_2_count, 100u) * 300u + kotlin.math.min(account.level_3_count, 1000u) * 60u
                     balance += grow // 10 + 1.5 (per mate) LMC per day added
                     if (account.transactions.size > 29)
                     {
@@ -251,10 +251,10 @@ class Backend {
                     Database.saveAccount(context)
                 }
             }
-            return balance + (hours * 500).toULong() +                          // 500 * 20 = 10000
-                    (hours * account.level_1_count.toInt() * 75).toULong() +    //  75 * 20 = 1500
-                    (hours * account.level_2_count.toInt() * 15).toULong() +    //  15 * 20 = 300
-                    (hours * account.level_3_count.toInt() * 3).toULong()       //   3 * 20 = 60
+            return balance + (hours * 500).toULong() +                                                     // 500 * 20 = 10000
+                    (hours * kotlin.math.min(account.level_1_count, 10u).toInt() * 75).toULong() +      //  75 * 20 = 1500
+                    (hours * kotlin.math.min(account.level_2_count, 100u).toInt() * 15).toULong() +     //  15 * 20 = 300
+                    (hours * kotlin.math.min(account.level_3_count, 1000u).toInt() * 3).toULong()       //   3 * 20 = 60
         }
     }
 }

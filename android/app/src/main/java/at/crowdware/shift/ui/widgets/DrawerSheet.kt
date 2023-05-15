@@ -41,12 +41,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemColors
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,7 +67,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.LocaleManager
-import at.crowdware.shift.ui.theme.DrawerComposeTheme
+import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
 
 data class MenuItem(val icon: ImageVector, val text: String, val id: String)
@@ -145,7 +147,7 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
 fun DrawerPreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Mate list") }
-    DrawerComposeTheme {
+    ShiftComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), navController, selectedItem)
         }
