@@ -158,6 +158,7 @@ class Backend {
         fun createAccount(
             context: Context,
             name: String,
+            email: String,
             ruuid: String,
             country: String,
             language: String,
@@ -178,12 +179,8 @@ class Backend {
                 onJoinFailed("Please select your country.")
                 return
             }
-            else if(language.isEmpty()){
-                onJoinFailed("Please select a language.")
-                return
-            }
 
-            account = Account(name.trim(), uuid.trim(), ruuid.trim(), country, language)
+            account = Account(name.trim(), uuid.trim(), email.trim(), ruuid.trim(), country, language)
             account.transactions.add(Transaction(amount=1000u, from="App", description = "Initial liquid", date = LocalDateTime.now()))
 
             val client = AsyncHttpClient()
@@ -193,6 +190,7 @@ class Backend {
             jsonParams.put("key", encryptStringGCM(api_key))
             jsonParams.put("name", account.name)
             jsonParams.put("uuid", account.uuid)
+            jsonParams.put("email", account.email)
             jsonParams.put("ruuid", account.ruuid)
             jsonParams.put("country", account.country)
             jsonParams.put("language", account.language)

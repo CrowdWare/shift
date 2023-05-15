@@ -36,4 +36,5 @@
     <string name="open_link">Ouvrir le lien</string>
     <string name="uninstall_warning">Merci d\'avoir installé cette application.\n\nShift est capable de créer une monnaie virtuelle que nous pouvons utiliser pour payer des services et des biens.\nVEUILLEZ PRENDRE NOTE.\nNous travaillons sans stocker vos données sur un serveur. Toutes les transactions seront stockées sur cet appareil. Si vous désinstallez cette application, toute la monnaie créée et toutes les transactions seront supprimées. C\'est comme jeter votre portefeuille rempli d\'argent.</string>
     <string name="intro">Introduction</string>
+    <string name="email">Email si vous souhaitez recevoir des mises à jour</string>
 </resources>

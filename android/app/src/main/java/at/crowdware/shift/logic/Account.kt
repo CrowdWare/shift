@@ -23,6 +23,7 @@ import java.io.Serializable
 
 data class Account(val name: String = "",
                    val uuid: String = "",
+                   val email: String = "",
                    val ruuid: String = "",
                    val country: String = "",
                    val language: String = "",

@@ -66,6 +66,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
     var context = LocalContext.current.applicationContext
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
@@ -114,6 +115,12 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
             label = { Text(stringResource(R.string.invitation_code)) }
         )
         Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text(stringResource(R.string.email)) }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         DropDownListbox(
             label = stringResource(R.string.select_your_country),
             stateHolder = stateHolderCountry)
@@ -123,7 +130,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
         Button(
             onClick = {
                 Backend.createAccount(
-                    context, name, friend,
+                    context, name, email, friend,
                     stateHolderCountry.value, language, onJoinSucceed, onJoinFailed
                 )
             },

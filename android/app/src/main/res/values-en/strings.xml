@@ -36,4 +36,5 @@
     <string name="open_link">Open Link</string>
     <string name="uninstall_warning">Thank you for installing this app.\n\nShift is able to create a virtual currency which we can use to pay for services and things.\nPLEASE KEEP IN MIND.\nWe work without storing your data on a server. All transactions will be stored on this device. If you uninstall this app, all created currency and transactions will be deleted. It\'s like throwing away your wallet full of money.</string>
     <string name="intro">Intro</string>
+    <string name="email">Email if you want to be updated</string>
 </resources>

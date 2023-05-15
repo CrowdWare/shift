@@ -100,7 +100,8 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
         Button(onClick = {
             PersistanceManager.putHasSeenDeleteWarning(context)
             hasSeenDeleteWarning.value = true
-        }) {
+        },
+        enabled = selectedLanguageCode.isNotEmpty()) {
             Text(stringResource(R.string.button_join_the_shift))
         }
     }

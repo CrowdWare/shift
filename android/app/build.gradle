@@ -21,7 +21,7 @@ android {
         minSdk 28
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "2.0"
         buildConfigField "String", "API_KEY", getProps("api_key")
         buildConfigField "String", "SECRET_KEY", getProps("secret_key")
         buildConfigField "String", "WEB_SERVICE_URL", getProps("web_service_url")
@@ -29,7 +29,7 @@ android {
         buildConfigField "String", "KEYPHRASE", getProps("key_phrase")
         buildConfigField "String", "SHIFT_COMMUNITY_ID", getProps("shift_community_id")
 
-        
+
         vectorDrawables {
             useSupportLibrary true
         }

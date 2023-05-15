@@ -103,6 +103,7 @@ def register():
     content = request.json
     key = decryptStringGCM(content['key'])
     name = content['name']
+    email = content['email']
     uuid = content['uuid']
     ruuid = content['ruuid']
     country = content['country']
@@ -125,7 +126,7 @@ def register():
                 if count != 1:
                     return jsonify(isError=True, message="The referer id is not correct.", statusCode=200)
             curs = conn.cursor()
-            query = 'INSERT INTO account(name, uuid, ruuid, scooping, country, language) VALUES("' + name + '", "' + uuid + '", "' + ruuid + '", 0, "' + country + '","' + language +'")'
+            query = 'INSERT INTO account(name, email, uuid, ruuid, scooping, country, language) VALUES("' + name + '", "' + email + '", "' + uuid + '", "' + ruuid + '", 0, "' + country + '","' + language +'")'
             curs.execute(query)
             conn.commit()
         except IntegrityError as error:
@@ -216,9 +217,6 @@ def friendlist():
     else:
         conn = None
         try:
-
-            ## SELECT uuid,(SELECT COUNT(*) FROM account WHERE ruuid = a.uuid) AS total_count  FROM account as a WHERE ruuid = "NTcwODczMWMtNGUwNS00YzAwLWIwOTYtYWY0MzI5ZDEzM2Vh" group by a.uuid
-
             conn = dbConnect()
             curs = conn.cursor(dictionary=True)
             query = 'SELECT uuid, name, country, scooping, (SELECT COUNT(*) FROM account WHERE ruuid = a.uuid) AS friends_count FROM account a WHERE ruuid  = "' + uuid + '" and uuid <> "' + uuid + '" ORDER BY friends_count desc, scooping desc'
