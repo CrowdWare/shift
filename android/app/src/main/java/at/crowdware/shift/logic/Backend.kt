@@ -38,9 +38,10 @@ import javax.crypto.spec.SecretKeySpec
 class Backend {
     companion object {
         private const val serviceUrl = BuildConfig.WEB_SERVICE_URL
-        private val api_key = BuildConfig.API_KEY
-        private val secretKey = BuildConfig.SECRET_KEY
+        private const val api_key = BuildConfig.API_KEY
+        private const val secretKey = BuildConfig.SECRET_KEY
         private const val algorithm = BuildConfig.ALGORYTHM
+        private const val user_agent = "Shift 1.0"
 
         private var account = Account()
         fun ByteArray.toHex() : String{
@@ -50,13 +51,12 @@ class Backend {
                 val st = String.format("%02x", it)
                 result.append(st)
             }
-
             return result.toString()
         }
 
         fun encryptStringGCM(value: String): String {
             val keySpec = SecretKeySpec(secretKey.toByteArray(Charsets.UTF_8), "AES")
-            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+            val cipher = Cipher.getInstance(algorithm)
             cipher.init(Cipher.ENCRYPT_MODE, keySpec)
             val result = cipher.doFinal(value.toByteArray(Charsets.UTF_8))
             val iv = cipher.iv.copyOf()
@@ -78,7 +78,7 @@ class Backend {
             jsonParams.put("test", "false")
 
             val headers = arrayOf(
-                BasicHeader("User-Agent", "Shift 1.0")
+                BasicHeader("User-Agent", user_agent)
             )
 
             val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
@@ -124,7 +124,7 @@ class Backend {
             jsonParams.put("test", "false")
 
             val headers = arrayOf(
-                BasicHeader("User-Agent", "Shift 1.0")
+                BasicHeader("User-Agent", user_agent)
             )
             val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
             client.post(context, url, headers, entity, "application/json", object : TextHttpResponseHandler() {
@@ -197,7 +197,7 @@ class Backend {
             jsonParams.put("test","false")
 
             val headers = arrayOf(
-                BasicHeader("User-Agent", "Shift 1.0")
+                BasicHeader("User-Agent", user_agent)
             )
             val entity = ByteArrayEntity(jsonParams.toString().toByteArray(Charsets.UTF_8))
 
