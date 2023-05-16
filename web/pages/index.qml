@@ -42,9 +42,10 @@ Content {
 
                 Text {
                     text: "&lt;h1&gt;
-	&lt;strong&gt;Willkommen&lt;/strong&gt; bei SHIFT
+	&lt;strong&gt;Welcome&lt;/strong&gt; to SHIFT
 &lt;/h1&gt;
-&lt;p&gt;SHIFT ist ein Projekt von &lt;a href=&quot;https://www.crowdware.at&quot;&gt;CrowdWare&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;SHIFT is a project from &lt;a href=&quot;https://www.crowdware.at&quot;&gt;CrowdWare&lt;/a&gt;&lt;/p&gt;
+
 
 "
                 }
@@ -63,11 +64,11 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Grundeinkommen&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Wir stehen gerade vor schweren Zeiten. Was ist, wenn wir unser eigenes Grundeinkommen schaffen?&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Basic Income&lt;/strong&gt;&lt;/h4&gt;
+		&lt;p&gt;We are facing real hard times right now. What if we create our own basic income.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
-                    adminlabel: "Grundeinkommen"
+                    adminlabel: "Basic Income"
                 }
             }
 
@@ -78,11 +79,11 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-lightbulb-o&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Dankbarkeit&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Wir erstellen eine virtuelle Flüssigkeit namens LMC, mit der Dankbarkeit gezeigt werden kann.&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Liquid&lt;/strong&gt;&lt;/h4&gt;
+		&lt;p&gt;We are creating a virtual liquid called LMC which can be used to show gratitude.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
-                    adminlabel: "Dankbarkeit"
+                    adminlabel: "Liquid"
                 }
             }
 
@@ -93,11 +94,11 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-users&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Mikro-Blogging&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Keine Zensur. Anonym. Keine Werbung. Keine Registration. Kein Datenmissbrauch.&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Micro-Blogging&lt;/strong&gt;&lt;/h4&gt;
+		&lt;p&gt;No censorship. Anonymous. No ads. No registration. No data mis-usage.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
-                    adminlabel: "Mikro-Blogging"
+                    adminlabel: "Micro-Blogging"
                 }
             }
 
@@ -108,11 +109,11 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-flag-checkered&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Sicheres Chatten&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Sicheres Chatten ist ebenfalls verfügbar. Wir benutzen keine Server! Wir sind dezentral.&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Secure Chat&lt;/strong&gt;&lt;/h4&gt;
+		&lt;p&gt;Secure chatting will also be available. We don&#x27;t use servers! We are decentral.&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
-                    adminlabel: "Sicheres Chatten"
+                    adminlabel: "Secure Chat"
                 }
             }
         }
@@ -124,19 +125,15 @@ Content {
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-	Die Idee hinter dem Wandel ist die Möglichkeit, mit einer neuen virtuellen Flüssigkeit, 
-	die von Menschen geschöpft wird, ein universelles Grundeinkommen zu schaffen. 
-	Die Möglichkeit, eine eigene Flüssigkeit als Energieaustausch zu nutzen, macht es uns allen leicht, 
-	Dinge zu teilen, Dienstleistungen zu erbringen und unseren Dank auszudrücken.
-	Wir werden niemals gezwungen sein, Steuern darauf zu zahlen, weil es überhaupt kein Geld ist.
-	Es ist nur eine virtuelle Flüssigkeit!
+	The idea behind the shift is to create a universal basic income with a new virtual liquid that is scooped by people. 
+	The possibility to use our own liquid as a means of energy exchange makes it easy for all of us to share things, 
+	provide services, and express our gratitude. We will never be forced to pay taxes on it, 
+	because it is not money at all. It is just a virtual liquid!
 &lt;/p&gt;
-
-&lt;h3&gt;Ziel&lt;/h3&gt;
+&lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-	Wir haben eine App erstellt, mit der du täglich neue Flüssigkeit schöpfen kannst.
-	Wir haben dieser neuen virtuellen Flüssigkeit den Namen LMC gegeben.
-	LMC ist die Abkürzung für &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins (flüssige mikro Münzen).
+	We have created an app with which you can daily scoop new fluid. 
+	We gave this new virtual fluid the name LMC. LMC stands for &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins (liquid micro coins).
 &lt;/p&gt;"
                 }
             }
@@ -159,9 +156,9 @@ Content {
 		&lt;div class=&quot;col-md-6&quot;&gt;&lt;/div&gt;
 		&lt;div class=&quot;col-md-6&quot;&gt;
 			&lt;div class=&quot;white-row&quot;&gt;
-				&lt;h4&gt;&lt;strong&gt;Wir sind&lt;/strong&gt;&lt;/h4&gt;
+				&lt;h4&gt;&lt;strong&gt;We are&lt;/strong&gt;&lt;/h4&gt;
 				&lt;p class=&quot;lead&quot;&gt;
-				 	der Wandel...
+					creating the change...
 				&lt;/p&gt;
 			&lt;/div&gt;
 		&lt;/div&gt;
@@ -182,7 +179,7 @@ Content {
                 span: 4
 
                 Image {
-                    src: "preview-de.jpg"
+                    src: "preview-en.jpg"
                     animation: "slideInLeft"
                     animation_type: "Sliding Entrances"
                 }
@@ -194,41 +191,40 @@ Content {
                 Text {
                     text: "&lt;h3&gt;First App for Android&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-	Die erste App für Android ist fertig und wird in Kürze veröffentlicht.
+	The first app for Android is almost ready and will be released shortly.
 &lt;/p&gt;
 &lt;h4&gt;Phase I&lt;/h4&gt;
 &lt;p&gt;
-	Wir haben eine sehr einfache App erstellt, mit der du neue Flüssigkeit schöpfen kannst.
-	Mit der App schöpfst du jeden Tag, an dem du den Prozess in der App startest, 10.000 ml (10 l) LMC.
-	Du kannst auch andere Leute einladen und für jeden empfohlenen Benutzer pro Tag 1.500 ml (1.5l) LMC schöpfen.
-	Sollte dieser dann auch seine Freunde einladen, verdienst du daran pro Tag und Einladung 300 ml LMC dazu.  
-	Und wenn deren Freunde auch mitmachen, dann bekommst du für jeden diese Freunde nochmal 60 ml dazu.  
-	Das ist unser Weg, eine gute Idee schnell zu verbreiten.
+	We have created a very simple app that allows you to scoop new fluid.
+	With the app, you scoop 10,000 ml (10 l) of LMC every day you start the process in the app.
+	You can also invite other people and scoop 1,500 ml (1.5l) of LMC per recommended user per day.
+	If they also invite their friends, you earn an additional 300 ml of LMC per day and invitation.
+	And if their friends also join, you get an extra 60 ml for each of these friends.
+	This is our way of spreading a good idea quickly.
 &lt;/p&gt;
 &lt;h4&gt;Phase II&lt;/h4&gt;
 &lt;p&gt;
-	Wenn wir 1.000.000 Benutzer erreichen oder wenn wir genug Leute finden, die die Entwicklungskosten über Crowdfunding finanzieren, 
-	werden wir eine Dankbarkeitsfunktion in der App entwickeln.
-	Jeder Benutzer kann sich dann dafür bedanken, indem er LMC von einer App zur anderen überträgt.
-	So kann der Benutzer die erstellte Flüssigkeit an eine andere Person weitergeben.
-	Die Marke 1.000.000 wird einige Entwickler motivieren, mitzumachen, weil sie sehen, dass die Leute LMC akzeptieren
-	und das motiviert die Entwickler und sie werden für LMC statt für Geld mitmachen.
+	When we reach 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. 
+	Every user will then be able to show gratitude giving LMC from one app to the other. 
+	So the user is able to give the liquid which has been created to someone else.
+	The mark 1.000.000 will motivate some developers to join in, because they see that the people 
+	want this app and the devlopers will be kind of payed with LMC instead of money.
 &lt;/p&gt;
 
 &lt;h4&gt;Phase III&lt;/h4&gt;
 &lt;p&gt;
-	Es wird eventuell eine Chat-Funktion geben.
-	Es wird eventuell auch eine Mikro-Blogging-Engine geben, mit der du Dinge und Dienste anbieten kannst.
+	There will be a chat function.
+	There will also be a micro blogging engine, so that you are able to share things and services.
 &lt;/p&gt;
 &lt;h4&gt;Phase IV&lt;/h4&gt;
 &lt;p&gt;
-	Es wird höchstwahrscheinlich auch eine Möglichkeit geben, Plugins zu implementieren, damit wir alle neue Inhalte für eine neue Zeit im Wandel erstellen können.
+	There will be the possibility to implement plugins, so that we all are able to create new content for a new time shift.
 &lt;/p&gt;
 &lt;h4&gt;Phase V&lt;/h4&gt;
 &lt;p&gt;
-	Nach Erreichen der Menge von 10.000.000 Benutzern wird die Erzeugung von LMC auf 1 Liter pro Tag reduziert.
-	Damit erhalten alle Benutzer den gleichen Betrag pro Tag.
-	An diesem Punkt werden wir die Verbindung zum Server trennen und die Plattform wird vollständig dezentral ausgeführt.
+	After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 1 liters a day, 
+	so that all users are getting an equal amount per day. 
+	At that point we will cut the connection to the server and the platform will running totally decentral.
 &lt;/p&gt;
 
 "
@@ -247,11 +243,9 @@ Content {
                 Text {
                     text: "&lt;!-- CALLOUT --&gt;
 &lt;div class=&quot;bs-callout text-center styleBackground&quot;&gt;
-	&lt;h3&gt;Willst Du die &lt;strong&gt;APP&lt;/strong&gt; für Android haben und anfangen LMC zu schöpfen?&lt;a href=&quot;&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD - NÄCHSTE WOCHE&lt;/a&gt;&lt;/h3&gt;
+	&lt;h3&gt;Do you want to get the &lt;strong&gt;APP&lt;/strong&gt; for Android and start to scoop liquid?&lt;a href=&quot;&quot; target=&quot;_self&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;DOWNLOAD - NEXT WEEK&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
-&lt;!-- /CALLOUT --&gt;
-
-"
+&lt;!-- /CALLOUT --&gt;"
                     adminlabel: "callout"
                 }
             }
@@ -266,57 +260,50 @@ Content {
                 span: 12
 
                 Text {
-                    text: "&lt;h3&gt; Über die Flüssigkeit &lt;/h3&gt;
+                    text: "&lt;h3&gt;About the liquid&lt;/h3&gt;
 &lt;p&gt;
-	Wenn wir über Gehälter und Geld sprechen, dann sprechen wir auch über Liquidität. Wenn Sie also genug 
-	Geld haben, sind Sie liquide.&lt;/br&gt;
-	Tatsächlich wollen wir kein Geld mehr verwenden, weil in dem alten System, wie wir es vor 2020 kannten, 
-	einige Leute Geld missbraucht haben, um es zu horten.&lt;/br&gt;
-	Mit dieser Aktion stoppten sie den freien Energiefluss. Also haben sie eine Blockade geschaffen, 
-	um viel Geld für sich zu behalten. Alle anderen Menschen waren ausgetrocknet und mussten leiden.&lt;/br&gt;&lt;/br&gt;
+When we are talking about salaries and money, then we also talk about liquidity. So when you have got enough money you are liquid.&lt;/br&gt;
+In fact we don&#x27;t wanne use money anymore, because in the old system as we knew it from before 2020, some people abused money to hoard it. With this action they stopped the free flow of energy. So they created a blockade to keep much money for themselves. All other people where dryed out and had to suffer.&lt;/br&gt;&lt;/br&gt;
 
-	Mit LMC werden alle Menschen gleich sein. Zunächst sollten wir jede Stunde über Dankbarkeit nachdenken. 
-	Wenn wir also eine Stunde lang etwas für jemand anderen tun, kann jemand Dankbarkeit zeigen und 60 Liter 
-	LMC geben. Also ein Liter pro Minute.&lt;/br&gt;
-	Ein Softwareentwickler in Norwegen erhält also stündlich 60 Liter LMC, ebenso ein Friseur in Indien.&lt;/br&gt;
-	Einfach nur fair.
+With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 liters of LMC.&lt;/br&gt; So one liter per minute.
+So a softwaredeveloper in Norway will get 60 liters of LMC every hour and so does a hairdresser in India.&lt;/br&gt;
+Just fair ins&#x27;nt it.
 &lt;/p&gt;
-&lt;h3&gt; Inflation / Deflation &lt;/h3&gt;
+&lt;h3&gt;Inflation/Deflation&lt;/h3&gt;
 &lt;p&gt;
-	Damit wir den Planeten nicht überfluten, verdampft die Flüssigkeit jeden Tag einen kleinen Prozentsatz, 
-	bis sie nach 7 Jahren komplett verschwunden ist. So wird es in einem vollen Zyklus erstellt, 
-	verwendet und wieder zerstört.
+	So that we will not flood the planet, the liquid will vaporate every day a small percentage until it&#x27;s gone 
+	fully after 7 years. So it will be created, used and destroy in a full circle.
 &lt;/p&gt;
-&lt;h3&gt;Sicherheit / Integrität&lt;/h3&gt;
-&lt;p&gt;
-	Die lokale Datenbank wurde verschlüsselt. 
-	Dies macht es für jemanden unmöglich, Daten in der lokalen Datenbank zu ändern. 
-	Was natürlich auch für die Balance gilt.
-	Wenn wir LMC zwischen zwei Mobiltelefonen übertragen, werden auch die Daten 
-	verschlüsselt. Diese Transfer-Daten können also nur mit der Original-App entschlüsselt werden.&lt;/br&gt;&lt;/br&gt;
+&lt;h3&gt;Security / Integrity&lt;/h3&gt;
+&lt;p&gt;	
+	The local database has been encrypted.
+	So this makes it impossible for someone to change any data in the local database.
+	Which of course is also true for the balance.
+	When we are transfering LMC between two mobile phones, also the data will be encrypted. 
+So this tranfser data can only be decrypted with the original app.&lt;/br&gt;&lt;/br&gt;
 
-	Wenn Sie LMC auf eine gefälschte mobile App übertragen, spielt es keine Rolle. 
-	Der Typ mit der gefälschten mobilen App wird Ihnen nicht mitteilen, dass die Übertragung abgebrochen wurde.&lt;/br&gt;&lt;/br&gt;
+	If you transfer an amount of LMC to a faked mobile app, it doesn&#x27;t matter. The guy with the faked mobile 
+	app will not tell you that the transfer has been aborted.&lt;/br&gt;&lt;/br&gt;
 
-	Wenn jemand LMC auf Ihr Konto übertragen möchte, akzeptiert Ihre App diese Übertragung aufgrund falsch entschlüsselter Daten nicht.
+	If someone wants to transfer LMC to your account, then your app will not accept this transfer due 
+	to incorrect decrypted data.
 &lt;/p&gt;
 
 &lt;h3&gt;FAQ&lt;/h3&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Klingt komisch, dass Sie Flüssigkeit schöpfen?&lt;/br&gt;
-		Wir können das Wort Geld nicht benutzen. Wenn du Geld erschaffst, müsstest du Steuern zahlen ;-)
+		Sounds weird that you scoop liquid?&lt;/br&gt; 
+		We cannot call money. When you create money, then you would have to pay taxes ;-)
 	&lt;/li&gt;
 	&lt;li&gt;
-		Wird es eine Version für das iPhone geben? &lt;/br&gt;
-		Ja, wenn wir ein iPhone in die Hände bekommen, um es zu testen. (ob Sie es glauben oder nicht, wir haben ein sehr geringes Budget)
+		Will there be a version for iPhone? &lt;/br&gt;
+		Yes, when we get the hands on an iPhone to test it. (believe it or not, we are on a very low budget)
 	&lt;/li&gt;
 	&lt;li&gt;
-		Wann gehen Sie in Phase II? &lt;/br&gt;
-		Wir werden in die Phase II gehen, nachdem wir 1.000.000 Menschen mit der App erreicht haben. 
-		Dann wird es eine kritische Masse an Menschen geben, die LMC als Energieaustausch akzeptieren. 
-		Dann finden wir auch Entwickler, die wir mit LMC auszahlen können.
-		Eine andere Möglichkeit wird sein, dass wir Sponsoren finden, um die Entwicklungskosten zu finanzieren.
+		When will you go into phase II?&lt;/br&gt;
+		We will go into phase II after reaching 1.000.000 people using the app. Then there will be a critical mass
+		who will accept LMC as an energy exchange. Then we also will find developers who we can pay out with LMC.
+		Another possibilty will be that we find sponsors to finance the development costs.
 	&lt;/li&gt;
 &lt;/ul&gt;"
                     adminlabel: "FAQ"
