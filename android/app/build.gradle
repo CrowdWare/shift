@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 def getProps(String propName) {
-    def propsFile = rootProject.file('local.properties')
+    def propsFile = rootProject.file('config.properties')
     if (propsFile.exists()) {
         def props = new Properties()
         props.load(new FileInputStream(propsFile))
