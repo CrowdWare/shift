@@ -79,7 +79,7 @@ fun sendNotification(context: Context, title: String, message: String, url: Stri
 }
 class BroadcastMessage(val title: String, val message: String, val url: String = "", val access_code: String) : Serializable {
     override fun serialize(): ByteArray {
-        val serializedData = "$title|$message|$url"
+        val serializedData = "$title|$message|$url|$access_code"
         return serializedData.toByteArray(Charsets.UTF_8)
     }
 
@@ -108,6 +108,14 @@ class ShiftCommunity : Community() {
 
     init {
         messageHandlers[MESSAGE_ID_BROADCAST] = ::onBroadcastMessage
+    }
+
+    fun broadcastMessage(title: String, message: String, url:String, access_code:String ) {
+        for (peer in getPeers()) {
+            val packet = serializePacket(MESSAGE_ID_BROADCAST, BroadcastMessage(title,
+                message, url, access_code))
+            send(peer.address, packet)
+        }
     }
 
     private fun onBroadcastMessage(packet: Packet) {
