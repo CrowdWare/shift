@@ -37,7 +37,8 @@ All have to do is to spread the word about SHIFT and make it popular.
 ## TWO
 When we reach, lets say, 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. Every user will then be able to show gratitude giving LMC from one app to the other. So the user is able to give the liquid which has been scooped to someone else. We call this **LMP Liquid Micro Payments**.  
 We will use the trustchain implementation from IPv8 a university in Delft Netherlands.  
-[TrustChain: A Sybil-resistant scalable blockchain](https://www.sciencedirect.com/science/article/abs/pii/S0167739X17318988)
+[TrustChain: A Sybil-resistant scalable blockchain](https://www.sciencedirect.com/science/article/abs/pii/S0167739X17318988)  
+
 At the moment there are just a few people working on the app.  
 The mark 1.000.000 will motivate some additonal developers to join in, because they see that the people want this app and the developers will be kind of payed with LMC instead of real money.
 
