@@ -1,6 +1,6 @@
 # ToDo
 
-# App
+# App 2.0
 + Invite friends
 + Read and display last x transactions
 + Page to display mates
@@ -17,6 +17,13 @@
 + Push notifications (establish a service with a P2P network) then we can broadcast messages
 + Warning that user will loose account uninstalling the app.
 + Secure socket layer to encrypt data or packet encryption 
+
+# App 3.0
+- Pay function using IPv8 trustchain
+- Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
+- DHT is already implemented in IPv8 for Python 
+- Posts for micro blogging
+  
 
 # Web
 - Introduction to animate people to join (video)
@@ -41,15 +48,6 @@ We will use IPv8 for this purpose.
 
 
 # P2P
-- https://github.com/JoshuaKissoon/Kademlia
-- https://github.com/bmuller/kademlia
-- https://github.com/jmdns/jmdns
 - https://github.com/Tribler/trustchain-superapp
 - https://github.com/Tribler/kotlin-ipv8
 - https://github.com/Tribler/py-ipv8
-
-## Kademlia
-pip install kademlia
-At least one server hosts a list of more servers. The other servers connect to that server and register themselves to fill this list.
-All mobile clients can connect to that server to get a list of other servers. After they have got that list they can next time choose one of the other servers and hopefully there is always a server online.
-A server can be hostet on a desktop or in the cloud. Such a hub cost like 6,- a month.

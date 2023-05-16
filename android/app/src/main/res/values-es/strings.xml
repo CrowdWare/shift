@@ -37,4 +37,5 @@
     <string name="uninstall_warning">Gracias por instalar esta aplicación.\n\nShift puede crear una moneda virtual que podemos usar para pagar servicios y cosas.\nPOR FAVOR, TEN EN CUENTA.\nTrabajamos sin almacenar tus datos en un servidor. Todas las transacciones se guardarán en este dispositivo. Si desinstalas esta aplicación, se eliminará toda la moneda acumulada y todas las transacciones. Es como si estuvieras tirando tu billetera llena de dinero.</string>
     <string name="intro">Introducción</string>
     <string name="email">Correo electrónico si deseas recibir actualizaciones</string>
+    <string name="button_continue">Continuar</string>
 </resources>

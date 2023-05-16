@@ -37,4 +37,5 @@
     <string name="uninstall_warning">Dankon pro la instalo de tiu ĉi aplikaĵo.\n\nShift povas krei virtualan monon, kiun ni povas uzi por pago de servoj kaj varoj.\nBONVOLU ATENTI.\nNi laboras sen konservado de viaj datumoj sur servilo. Ĉiuj transakcioj estos konservitaj en tiu ĉi aparato. Se vi malinstalas tiun ĉi aplikaĵon, ĉiuj akumulitaj monsumoj kaj transakcioj estos forigitaj. Estas kiel vi forĵetus vian monujon plenan de mono.</string>
     <string name="intro">Enkonduko</string>
     <string name="email">Retpoŝto, se vi deziras ricevi ĝisdatigojn</string>
+    <string name="button_continue">Daŭrigi</string>
 </resources>

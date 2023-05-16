@@ -36,4 +36,5 @@
     <string name="uninstall_warning">Vielen Dank für die Installation dieser App.\n\nShift kann eine virtuelle Währung erstellen, die wir für Dienstleistungen und Dinge verwenden können.\nBITTE BEACHTE.\nWir arbeiten ohne Speicherung Deiner Daten auf einem Server. Alle Transaktionen werden auf diesem Gerät gespeichert. Wenn Du diese App deinstallierst, werden alle Guthaben und Transaktionen gelöscht. Es ist so, als wenn Du Deine Brieftasche wegwerfen würdest.</string>
     <string name="intro">Einführung</string>
     <string name="email">E-Mail, wenn du Updates erhalten möchtest</string>
+    <string name="button_continue">Weiter</string>
 </resources>

@@ -20,15 +20,18 @@
 package at.crowdware.shift.logic
 
 import android.content.Context
+import androidx.preference.PreferenceManager
 import at.crowdware.shift.JoinData
+import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
+import nl.tudelft.ipv8.keyvault.PrivateKey
+import nl.tudelft.ipv8.util.hexToBytes
+import nl.tudelft.ipv8.util.toHex
 
 object PersistanceManager{
-    private const val NAME_PREF = "name_pref"
-    private const val FRIEND_PREF = "friend_pref"
-    private const val COUNTRY_PREF = "country_pref"
-    private const val LANGUAGE_PREF = "language_pref"
+    private const val LANGUAGE_INDEX_PREF = "language_index_pref"
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
     private const val DELETE_WARNING_SEEN = "delete_warning_pref"
+    private const val PREF_PRIVATE_KEY = "private_key"
     private const val APP_PREFS = "app_prefs"
 
     fun hasSeenDeleteWarning(context: Context): Boolean {
@@ -44,27 +47,12 @@ object PersistanceManager{
 
     fun saveLanguageIndex(context: Context, language: Int) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        preferences.edit().putInt(LANGUAGE_PREF, language).apply()
+        preferences.edit().putInt(LANGUAGE_INDEX_PREF, language).apply()
     }
 
     fun getLanguageIndex(context: Context): Int {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        return preferences.getInt(LANGUAGE_PREF, -1)
-    }
-
-    fun saveJoinData(context: Context, name: String, friend: String, country: Int) {
-        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        preferences.edit().putString(NAME_PREF, name).apply()
-        preferences.edit().putString(FRIEND_PREF, friend).apply()
-        preferences.edit().putInt(COUNTRY_PREF, country).apply()
-    }
-
-    fun readJoinData(context: Context): JoinData {
-        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        val name = preferences.getString(NAME_PREF, "")
-        val friend = preferences.getString(FRIEND_PREF, "")
-        val country = preferences.getInt(COUNTRY_PREF, -1)
-        return JoinData(name!!, friend!!, country)
+        return preferences.getInt(LANGUAGE_INDEX_PREF, -1)
     }
 
     fun getLanguage(context: Context): String? {
@@ -75,5 +63,19 @@ object PersistanceManager{
     fun setLanguageCode(context: Context, language: String) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putString(LANGUAGE_CODE_PREF, language).apply()
+    }
+
+    fun getPrivateKey(context: Context): PrivateKey {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        val privateKey = preferences.getString(PREF_PRIVATE_KEY, null)
+        return if (privateKey == null) {
+            val newKey = AndroidCryptoProvider.generateKey()
+            preferences.edit()
+                .putString(PREF_PRIVATE_KEY, newKey.keyToBin().toHex())
+                .apply()
+            newKey
+        } else {
+            AndroidCryptoProvider.keyFromPrivateBin(privateKey.hexToBytes())
+        }
     }
 }

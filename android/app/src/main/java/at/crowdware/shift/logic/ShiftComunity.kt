@@ -77,7 +77,7 @@ fun sendNotification(context: Context, title: String, message: String, url: Stri
             notify(NOTIFICATION_ID, builder.build())
     }
 }
-class BroadcastMessage(val title: String, val message: String, val url: String = "") : Serializable {
+class BroadcastMessage(val title: String, val message: String, val url: String = "", val access_code: String) : Serializable {
     override fun serialize(): ByteArray {
         val serializedData = "$title|$message|$url"
         return serializedData.toByteArray(Charsets.UTF_8)
@@ -90,46 +90,36 @@ class BroadcastMessage(val title: String, val message: String, val url: String =
             val title = parts.getOrNull(0) ?: ""
             val message = parts.getOrNull(1) ?: ""
             val url = parts.getOrNull(2) ?: ""
-            val broadcastMessage = BroadcastMessage(title, message, url)
+            val access_code = parts.getOrNull(3) ?: ""
+            val broadcastMessage = BroadcastMessage(title, message, url, access_code)
             return Pair(broadcastMessage, buffer.size)
         }
     }
 }
 
 class ShiftCommunity : Community() {
+    private val access_code = BuildConfig.SHIFT_COMMUNITY_ADMIN
     override val serviceId = BuildConfig.SHIFT_COMMUNITY_ID
-    private val MESSAGE_ID = 1
+    private val MESSAGE_ID_BROADCAST = 1
     var context: Context? = null
 
     val discoveredAddressesContacted: MutableMap<IPv4Address, Date> = mutableMapOf()
     val lastTrackerResponses = mutableMapOf<IPv4Address, Date>()
 
     init {
-        messageHandlers[MESSAGE_ID] = ::onMessage
+        messageHandlers[MESSAGE_ID_BROADCAST] = ::onBroadcastMessage
     }
 
-    private fun onMessage(packet: Packet) {
+    private fun onBroadcastMessage(packet: Packet) {
         val (peer, payload) = packet.getAuthPayload(BroadcastMessage.Deserializer)
-        sendNotification(context!!, payload.title, payload.message, payload.url)
-    }
-
-    fun broadcastGreeting() {
-        for (peer in getPeers()) {
-            val packet = serializePacket(MESSAGE_ID, BroadcastMessage("Title","Hello, have a look at our website for news.", "http://shift.crowdware.at"))
-            send(peer.address, packet)
-        }
+        if(payload.access_code == access_code)
+            sendNotification(context!!, payload.title, payload.message, payload.url)
     }
 
     override fun walkTo(address: IPv4Address) {
         super.walkTo(address)
 
         discoveredAddressesContacted[address] = Date()
-    }
-
-    // Retrieve the trustchain community
-    private fun getTrustChainCommunity(): TrustChainCommunity {
-        return IPv8Android.getInstance().getOverlay()
-            ?: throw IllegalStateException("TrustChainCommunity is not configured")
     }
 
     override fun onIntroductionResponse(peer: Peer, payload: IntroductionResponsePayload) {

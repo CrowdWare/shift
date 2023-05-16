@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,6 +53,7 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
         stringResource(R.string.language_portugues),
         stringResource(R.string.language_esperanto)
     )
+    val scrollState = rememberLazyListState()
     val currentActivity = LocalContext.current as? Activity
     val langIndex = PersistanceManager.getLanguageIndex(context)
     val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
@@ -62,6 +65,7 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
         currentActivity?.recreate()
     }
     val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, langIndex, onSelectedIndexChanged)
+    val hasSeenAll = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
@@ -83,15 +87,19 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
                 modifier = Modifier.fillMaxHeight(),
             )
         }
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            item {
+        LazyColumn(modifier = Modifier.weight(1f), state = scrollState) {
+            items(2) { index ->
                 Text(
-                    stringResource(R.string.uninstall_warning),
-                    modifier = Modifier.padding(16.dp).weight(1f),
-                    style = TextStyle(fontSize = 13.sp)
+                    if (index == 0) { stringResource(R.string.uninstall_warning) } else {""},
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .weight(1f)
                 )
             }
         }
+        if( scrollState.layoutInfo.visibleItemsInfo.size < 2) {
+            Text("...", style = TextStyle(fontSize = 20.sp))
+        } else { hasSeenAll.value = true}
         Spacer(modifier = Modifier.height(16.dp))
         DropDownListbox(
             label = stringResource(R.string.select_preferred_language),
@@ -101,8 +109,8 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
             PersistanceManager.putHasSeenDeleteWarning(context)
             hasSeenDeleteWarning.value = true
         },
-        enabled = selectedLanguageCode.isNotEmpty()) {
-            Text(stringResource(R.string.button_join_the_shift))
+        enabled = selectedLanguageCode.isNotEmpty() && hasSeenAll.value) {
+            Text(stringResource(R.string.button_continue))
         }
     }
 }
