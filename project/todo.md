@@ -17,6 +17,10 @@
 + Push notifications (establish a service with a P2P network) then we can broadcast messages
 + Warning that user will loose account uninstalling the app.
 + Secure socket layer to encrypt data or packet encryption 
+- Only scoop while service is running in background (that keeps the network active)
+    scooping gives 7 ml/min + benefits for scooping friends
+    booking after a full liter is scooped (timestamp for demurage)
+    in the bookings list values are cumulated per day 
 
 # App 3.0
 - Pay function using IPv8 trustchain

@@ -22,24 +22,23 @@ import java.io.File
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import android.content.Context
-import android.os.Build
-import android.os.Environment
-import androidx.activity.compose.BackHandler
 import at.crowdware.shift.BuildConfig
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
-
+import java.util.concurrent.locks.ReentrantLock
 
 class Database {
     companion object {
         private const val keyPhrase = BuildConfig.KEYPHRASE
         private const val db_name = "shift.db"
+        private val dbLock = ReentrantLock()
 
         fun saveAccount(context: Context) {
             val file = File(context.applicationContext.filesDir, db_name)
             try {
+                dbLock.lock()
                 // Create a key for the encryption
                 val key = SecretKeySpec(keyPhrase.toByteArray(), "AES")
 
@@ -63,16 +62,20 @@ class Database {
                 if(file.exists())
                     file.delete()
             }
+            finally {
+                dbLock.unlock()
+            }
         }
 
         fun readAccount(context: Context): Account? {
+
             val file = File(context.applicationContext.filesDir, db_name)
             if(!file.exists()) {
                 return null
             }
             try {
                 var account: Account
-
+                dbLock.lock()
                 // Read the encrypted data from the file
                 val encryptedDataFromFile = file.readBytes()
                 val key = SecretKeySpec(keyPhrase.toByteArray(), "AES")
@@ -88,6 +91,9 @@ class Database {
             catch (e: Exception) {
                 println("An error occurred reading the database: " + e.message)
                 return null
+            }
+            finally {
+                dbLock.unlock()
             }
         }
     }

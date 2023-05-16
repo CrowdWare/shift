@@ -52,7 +52,6 @@ import nl.tudelft.ipv8.util.toHex
 
 
 object Network {
-
     fun initIPv8(application: Application) {
         val config = IPv8Configuration(overlays = listOf(
             createDiscoveryCommunity(application),
@@ -61,7 +60,7 @@ object Network {
 
         IPv8Android.Factory(application)
             .setConfiguration(config)
-            .setPrivateKey(PersistanceManager.getPrivateKey(application))
+            .setPrivateKey(Backend.getPrivateKey())
             .setServiceClass(ShiftChainService::class.java)
             .init()
 

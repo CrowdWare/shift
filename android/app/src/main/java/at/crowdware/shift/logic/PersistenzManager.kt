@@ -31,7 +31,6 @@ object PersistanceManager{
     private const val LANGUAGE_INDEX_PREF = "language_index_pref"
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
     private const val DELETE_WARNING_SEEN = "delete_warning_pref"
-    private const val PREF_PRIVATE_KEY = "private_key"
     private const val APP_PREFS = "app_prefs"
 
     fun hasSeenDeleteWarning(context: Context): Boolean {
@@ -63,19 +62,5 @@ object PersistanceManager{
     fun setLanguageCode(context: Context, language: String) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putString(LANGUAGE_CODE_PREF, language).apply()
-    }
-
-    fun getPrivateKey(context: Context): PrivateKey {
-        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        val privateKey = preferences.getString(PREF_PRIVATE_KEY, null)
-        return if (privateKey == null) {
-            val newKey = AndroidCryptoProvider.generateKey()
-            preferences.edit()
-                .putString(PREF_PRIVATE_KEY, newKey.keyToBin().toHex())
-                .apply()
-            newKey
-        } else {
-            AndroidCryptoProvider.keyFromPrivateBin(privateKey.hexToBytes())
-        }
     }
 }

@@ -20,7 +20,7 @@
 package at.crowdware.shift.logic
 
 import java.io.Serializable
-import java.time.LocalDateTime
+import java.time.LocalDate
 
-data class Transaction(var amount: ULong, val from: String, val date: LocalDateTime, var description: String):
+data class Transaction(var amount: ULong, var from: String, val date: LocalDate, var description: String):
     Serializable

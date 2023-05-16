@@ -19,12 +19,7 @@
  ****************************************************************************/
 package at.crowdware.shift
 
-import android.Manifest
-import android.app.Application
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -57,23 +52,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.Network
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.MultiplePermissionsState
-import com.google.accompanist.permissions.PermissionRequired
-import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.PermissionsRequired
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import kotlin.reflect.KFunction1
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -97,22 +83,14 @@ fun MainPage() {
         remember { mutableStateListOf(*Backend.getAccount().transactions.toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
-    var balance by remember { mutableStateOf(Backend.getBalance(context)) }
+    var balance by remember { mutableStateOf(Backend.getBalance()) }
     var isScooping by remember { mutableStateOf(Backend.getAccount().scooping > 0u) }
-    val onScoopingFailed: (String?) -> Unit = { message ->
-        if (message != null)
-            errorMessage = message
-    }
-    val onScoopingSucceed: () -> Unit = {
-        errorMessage = ""
-        isScooping = true
-    }
 
     LaunchedEffect(true) {
         while (true) {
             isScooping = Backend.getAccount().scooping > 0u
             if (isScooping)
-                balance = Backend.getBalance(context)
+                balance = Backend.getBalance()
             delay(1000L)
         }
     }
@@ -164,7 +142,7 @@ fun MainPage() {
         }
         Text(errorMessage, color = Color.Red)
         Button(
-            onClick = { Backend.setScooping(context, onScoopingSucceed, onScoopingFailed) },
+            onClick = { Backend.startScooping(context) },
             modifier = Modifier.fillMaxWidth(),
             enabled = !isScooping
         ) {

@@ -19,8 +19,6 @@
  ****************************************************************************/
 package at.crowdware.shift
 
-import android.app.Activity
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,19 +49,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.recreate
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.LocaleManager
-import at.crowdware.shift.logic.PersistanceManager
 
 data class JoinData(val name: String, val friend: String, val country: Int)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
     var context = LocalContext.current.applicationContext
+    var res = LocalContext.current.resources
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -131,7 +127,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
             onClick = {
                 Backend.createAccount(
                     context, name, email, friend,
-                    stateHolderCountry.value, language, onJoinSucceed, onJoinFailed
+                    stateHolderCountry.value, language, onJoinSucceed, onJoinFailed, res
                 )
             },
         ) {

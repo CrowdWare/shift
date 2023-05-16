@@ -30,6 +30,7 @@ object LocaleManager {
     fun setLocale(context: Context, language: String): Context {
         this.language = language
         PersistanceManager.setLanguageCode(context, language)
+        println("lang: $language")
         return updateResources(context, language)
     }
 
