@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.delay
@@ -64,9 +65,9 @@ import java.util.Locale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun MainPage() {
+fun ScoopPage() {
     var displayMilliliter by remember { mutableStateOf(true) }
-    var errorMessage by remember { mutableStateOf("") }
+    val errorMessage by remember { mutableStateOf("") }
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(
@@ -89,8 +90,13 @@ fun MainPage() {
     LaunchedEffect(true) {
         while (true) {
             isScooping = Backend.getAccount().scooping > 0u
-            if (isScooping)
+            if (isScooping) {
                 balance = Backend.getBalance()
+                transactions.clear()
+                for(t in Backend.getAccount().transactions) {
+                    transactions.add(t)
+                }
+            }
             delay(1000L)
         }
     }
@@ -181,7 +187,12 @@ fun MainPage() {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(transaction.description, style = TextStyle(fontSize = 18.sp))
+                    val txt = when (transaction.type) {
+                        TransactionType.SCOOPED -> stringResource(R.string.transaction_liquid_scooped)
+                        TransactionType.INITIAL_BOOKING -> stringResource(R.string.transaction_initial_liquid)
+                        TransactionType.SUBTOTAL -> stringResource(R.string.transaction_subtotal)
+                    }
+                    Text(txt, style = TextStyle(fontSize = 18.sp))
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -214,5 +225,5 @@ fun MainPage() {
 fun MainPagePreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
-    ModalNavigationDrawer(navController = navController, selectedItem){ MainPage()}
+    ModalNavigationDrawer(navController = navController, selectedItem){ ScoopPage()}
 }

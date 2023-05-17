@@ -55,7 +55,7 @@ fun NavigationView() {
     val selectedItem = remember { mutableStateOf("home") }
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            ModalNavigationDrawer(navController, selectedItem){ MainPage()}
+            ModalNavigationDrawer(navController, selectedItem){ ScoopPage()}
         }
         composable("friendlist") {
             ModalNavigationDrawer(navController, selectedItem){ Friendlist()}

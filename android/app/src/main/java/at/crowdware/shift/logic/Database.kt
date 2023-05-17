@@ -18,11 +18,13 @@
  *
  ****************************************************************************/
 package at.crowdware.shift.logic
+import android.annotation.SuppressLint
 import java.io.File
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import android.content.Context
 import at.crowdware.shift.BuildConfig
+import com.loopj.android.http.AsyncHttpClient.log
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
@@ -35,6 +37,7 @@ class Database {
         private const val db_name = "shift.db"
         private val dbLock = ReentrantLock()
 
+        @SuppressLint("GetInstance")
         fun saveAccount(context: Context) {
             val file = File(context.applicationContext.filesDir, db_name)
             try {
@@ -67,6 +70,7 @@ class Database {
             }
         }
 
+        @SuppressLint("GetInstance")
         fun readAccount(context: Context): Account? {
 
             val file = File(context.applicationContext.filesDir, db_name)
@@ -89,7 +93,7 @@ class Database {
                 return account
             }
             catch (e: Exception) {
-                println("An error occurred reading the database: " + e.message)
+                log.e("Shift", "An error occurred reading the database: " + e.message)
                 return null
             }
             finally {

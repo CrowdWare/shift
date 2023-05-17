@@ -15,24 +15,39 @@ LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude a
 # RELEASE PHASES
 ## ONE
 We are going to create a very simple app just to enable the user to scoop new liquid.  
-You as the users can create about, lets say 10.000 ml (10l) of LMC every day. You can start the process in the app just cklicking a button.  
-You can also invite your friend to join and if they do join you can earn 1.500 ml of LMC for every referred user per day.   
+You as the users can create about, lets say 11.800 ml (12l) of LMC every day. You can start the process in the app just cklicking a button.  
+You can also invite your friend to join and if they do join you can earn 1.800 ml of LMC for every referred user per day.   
 Every user can add up to 10 other friends.
-If the referred users also refer other friends then you will earn additionally 300 ml LMC for each refered user.  
-This will also happen if these user refer others and you will earn additionally 60 ml LMC for each refered user.  
+If the referred users also refer other friends then you will earn additionally 360 ml LMC for each refered user.  
+This will also happen if these user refer others and you will earn additionally 72 ml LMC for each refered user.  
 You can make the math.  
 Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on and all of them started scooping not longer than 24 hours ago.  
 To make it clear. You only get benefits for inviting friends if they are actually scooping liquid.
 
 | Level | Liter | Description |
 |-|-|-|
-|1|10 l|for you|  
-|2|15 l|(10 x 1500 ml) for each friend |
-|3|30 l|(100 x 300 ml) for each of the refered friends|
-|4|60 l|(1000 x 60 ml) for each of the refered friends friend|
+|1|12 l|for you|  
+|2|18 l|(10 x 1800 ml) for each friend (up to 10)|
+|3|36 l|(100 x 360 ml) for each of the invited users (up to 100)|
+|4|75 l|(1000 x 75 ml) for each of the invited user friends (up to 1000)|
 
-That would be 115 l each day. So will be able to pay people for their works for 115 minutes a day.  
-All have to do is to spread the word about SHIFT and make it popular.
+That would be max 141 l each day in theory if everybody of these users are actually scooping. 
+So will be able to pay people for their works for 141 minutes a day.  
+All you have to do is to spread the word about SHIFT and make it popular.
+
+But lets be realistical. You invite 3 friends, they also invite 3 people and so on.
+That would result in 12 l + 3 * 1.800 ml + 9 * 360 ml + 27 * 75 ml = 22 l  
+That's not enough to be able to live from it, but if this app is running for about 1 month this will sum up to 660 l (worth 11 hours of work), and we have got a new currency. Also you are able to give services like massage, art, trainings etc and will earn additionally LMC.
+Just imagine if we don't have to deal with these banksters and financial departments anymore!  
+- No interest rates  
+- No inflations  
+- No price changes  
+- No taxes 
+- No waste of money for military 
+- No more wars
+- No slavery
+
+In other words: **PEACE**, **FREEDOM**
 
 ## TWO
 When we reach, lets say, 1.000.000 users or when we will find enough people crowdfunding the development costs, we are going to develop a gratitude function in the app. Every user will then be able to show gratitude giving LMC from one app to the other. So the user is able to give the liquid which has been scooped to someone else. We call this **LMP Liquid Micro Payments**.  
@@ -59,7 +74,6 @@ All these feature are driven by YOU without the idea to make profit at all.
 ## FIVE 
 After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 1.000 ml a day, so that all users are getting an equal amount per day without the amount of LMC for advertising. 
 At that point we will cut the connection to the server and the platform will be running totally decentral and can not be stopped by legal forces.
-
 
 # About the liquid
 When we are talking about salaries and money, then we also talk about liquidity. So when you have got enough money you are liquid.  

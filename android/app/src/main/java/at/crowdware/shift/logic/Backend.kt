@@ -25,6 +25,7 @@ import android.util.Base64
 import android.util.Log
 import at.crowdware.shift.BuildConfig
 import at.crowdware.shift.R
+import at.crowdware.shift.service.ShiftChainService
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.SyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
@@ -39,6 +40,7 @@ import java.time.LocalDate
 import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
+import kotlin.math.min
 
 class Backend {
     companion object {
@@ -48,7 +50,6 @@ class Backend {
         private const val algorithm = BuildConfig.ALGORYTHM
         private const val user_agent = "Shift 1.0"
         private const val MAX_TRANSACTIONS = 100
-        private const val SHIFT = "shift"
         private var account = Account()
 
         fun ByteArray.toHex() : String{
@@ -198,9 +199,7 @@ class Backend {
             }
 
             account = Account(name.trim(), uuid.trim(), email.trim(), ruuid.trim(), country, language)
-            account.transactions.add(Transaction(amount=1000u, from=SHIFT, description = res.getString(
-                            R.string.transaction_initial_liquid), date = LocalDate.now()))
-            println("desc: ${account.transactions.first().description}")
+            account.transactions.add(Transaction(amount=1000u, date = LocalDate.now(), type = TransactionType.INITIAL_BOOKING))
             val client = AsyncHttpClient()
             val url = serviceUrl + "register"
             val jsonParams = JSONObject()
@@ -240,55 +239,55 @@ class Backend {
         }
 
         fun getPrivateKey(): PrivateKey {
-            if(account.privateKey.isNullOrEmpty()) {
+            if(account.privateKey.isEmpty()) {
                 account.privateKey = AndroidCryptoProvider.generateKey().keyToBin().toHex()
             }
             return AndroidCryptoProvider.keyFromPrivateBin(account.privateKey.hexToBytes())
         }
 
         fun getBalance(): ULong{
-            var hours = 0.0f
-            val time = (System.currentTimeMillis() / 1000).toULong()
+            var amountOf20Minutes = 0.0f
             var balance: ULong = 0u
             for(t in account.transactions)
                 balance += t.amount
 
             if(account.scooping > 0u){
-                val seconds: ULong = time - account.scooping
-                hours = (seconds.toFloat() / 60.0f / 60.0f)
+                val minutes = ShiftChainService.minutesScooping()
+                amountOf20Minutes = minutes / 20f
             }
-            return balance + (hours * 500).toULong() +                                                     // 500 * 20 = 10000
-                    (hours * kotlin.math.min(account.level_1_count, 10u).toInt() * 75).toULong() +      //  75 * 20 = 1500
-                    (hours * kotlin.math.min(account.level_2_count, 100u).toInt() * 15).toULong() +     //  15 * 20 = 300
-                    (hours * kotlin.math.min(account.level_3_count, 1000u).toInt() * 3).toULong()       //   3 * 20 = 60
+            return balance + (calcGrowPer20Minutes().toFloat() * amountOf20Minutes).toULong()
         }
 
-        fun addLiquid(context: Context, hoursScooped: Float) {
-            val growPerHour = 500UL +
-                    kotlin.math.min(account.level_1_count, 10u) * 75u +
-                    kotlin.math.min(account.level_2_count, 100u) * 15u +
-                    kotlin.math.min(account.level_3_count, 1000u) * 3u
+        fun addLiquid(context: Context, minutes: UInt) {
+            val growPer20Minutes = calcGrowPer20Minutes()
+            val amountOf20Minutes = (minutes / 20u)
             // if we scooped on the same day, we just add to the amount
-            if (account.transactions.first().date == LocalDate.now() && account.transactions.first().from == SHIFT) {
-                account.transactions.first().amount += growPerHour * hoursScooped.toULong()
+            if (account.transactions.first().date == LocalDate.now() && account.transactions.first().type == TransactionType.SCOOPED) {
+                account.transactions.first().amount += growPer20Minutes * amountOf20Minutes
             } else {    // we create a new transaction
                 if (account.transactions.size > MAX_TRANSACTIONS) {
                     // combine the last two bookings
                     val last = account.transactions[account.transactions.size - 1]
-                    var prev = account.transactions[account.transactions.size - 2]
+                    val prev = account.transactions[account.transactions.size - 2]
                     prev.amount = prev.amount + last.amount
-                    prev.description = context.getString(R.string.transaction_subtotal)
-                    prev.from = SHIFT
+                    prev.type = TransactionType.SUBTOTAL
                     account.transactions.remove(account.transactions.last())
                 }
-                account.transactions.add(0, Transaction(growPerHour * hoursScooped.toULong(),
-                    SHIFT, LocalDate.now(), context.getString(R.string.transaction_liquid_scooped)))
+                account.transactions.add(0, Transaction(growPer20Minutes * amountOf20Minutes,
+                    date = LocalDate.now(), type = TransactionType.SCOOPED))
             }
-            println("Liquid scooped: ${growPerHour * hoursScooped.toULong()}")
 
             account.scooping = 0u
             Database.saveAccount(context)
             setScooping(context, null, null)
+        }
+
+        private fun calcGrowPer20Minutes(): ULong {
+            val growPer20Minutes = 165UL +
+                    min(account.level_1_count, 10u) * 25u +
+                    min(account.level_2_count, 100u) * 5u +
+                    min(account.level_3_count, 1000u) * 1u
+            return growPer20Minutes
         }
     }
 }

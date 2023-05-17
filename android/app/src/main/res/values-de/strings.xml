@@ -38,8 +38,8 @@
     <string name="email">E-Mail, wenn du Updates erhalten möchtest</string>
     <string name="button_continue">Weiter</string>
     <string name="transaction_subtotal">Zwischensumme</string>
-    <string name="transaction_liquid_scooped">Geschöpfte Mittel</string>
-    <string name="transaction_initial_liquid">Startguthaben</string>
+    <string name="transaction_liquid_scooped">Liquid geschöpft</string>
+    <string name="transaction_initial_liquid">Liquid initial</string>
     <string name="please_select_your_country">Bitte wählen Sie Ihr Land aus.</string>
     <string name="please_enter_the_invitation_code">Bitte geben Sie den Einladungscode ein.</string>
     <string name="please_enter_your_name">Bitte geben Sie Ihren Namen ein!</string>

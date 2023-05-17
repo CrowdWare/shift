@@ -22,5 +22,16 @@ package at.crowdware.shift.logic
 import java.io.Serializable
 import java.time.LocalDate
 
-data class Transaction(var amount: ULong, var from: String, val date: LocalDate, var description: String):
+enum class TransactionType(val value: UInt) {
+    INITIAL_BOOKING(1u),
+    SCOOPED(2u),
+    SUBTOTAL(3u),
+}
+
+data class Transaction(
+    var amount: ULong,
+    var from: String = "",
+    val date: LocalDate,
+    var description: String = "",
+    var type: TransactionType):
     Serializable

@@ -27,26 +27,38 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.Account
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.LocaleManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import nl.tudelft.ipv8.android.service.IPv8Service
-
+import kotlin.math.min
 
 class ShiftChainService : IPv8Service() {
-    private val INTERVAL: Long = 1000 * 60 // 1 minute
+    private val INTERVAL: Long = 1000 * 60 // 1 minute pause
     private var isServiceStarted = false
     private var wakeLock: PowerManager.WakeLock? = null
-    private var startTime: ULong = 0UL
-    private val SHIFT = "shift"
     private val serviceScope = CoroutineScope(Dispatchers.Main)
 
+
+    companion object {
+        private var startTime: ULong = 0UL
+
+        fun minutesScooping(): Float {
+            val time = (System.currentTimeMillis() / 1000).toULong()
+            val account = Backend.getAccount()
+            val scoopingSeconds = time - account.scooping
+            val serviceSeconds = time - startTime
+            return  min(
+                scoopingSeconds.toFloat() / 60,
+                serviceSeconds.toFloat() / 60
+            )
+        }
+    }
     override fun createNotification(): NotificationCompat.Builder {
         val trustChainExplorerIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = TaskStackBuilder.create(this)
@@ -77,7 +89,7 @@ class ShiftChainService : IPv8Service() {
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShiftChainService::lock").apply {
-                    acquire()
+                    acquire(10*60*1000L /*10 minutes*/)
                 }
             }
 
@@ -103,19 +115,22 @@ class ShiftChainService : IPv8Service() {
     }
 
     private fun scoopLiquid() {
-        val context = this;
-        val time = (System.currentTimeMillis() / 1000).toULong()
         val account = Backend.getAccount()
         if (account.scooping > 0UL) {
-            val scoopingSeconds = time - account.scooping
-            val serviceSeconds = time - startTime
-            val hoursScooped = kotlin.math.min(
-                scoopingSeconds.toFloat() / 3600,
-                serviceSeconds.toFloat() / 3600
-            )
-            if (hoursScooped >= 1f) {
-                Backend.addLiquid(context, hoursScooped)
+            // we book 3 times an hour
+            val minutes = minutesScooping()
+            if (minutes >= 20f) {
+                Backend.addLiquid(this, minutes.toUInt())
             }
+            debugOutput(account, minutes)
+        }
+    }
+
+    fun debugOutput(account: Account, minutes: Float) {
+
+        println("scooping since $minutes minutes")
+        for(trans in account.transactions) {
+            println("Transaction ${trans.date} ${trans.amount} ${trans.description}")
         }
     }
 
