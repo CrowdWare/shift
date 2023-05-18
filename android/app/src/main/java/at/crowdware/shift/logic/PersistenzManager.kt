@@ -20,12 +20,6 @@
 package at.crowdware.shift.logic
 
 import android.content.Context
-import androidx.preference.PreferenceManager
-import at.crowdware.shift.JoinData
-import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
-import nl.tudelft.ipv8.keyvault.PrivateKey
-import nl.tudelft.ipv8.util.hexToBytes
-import nl.tudelft.ipv8.util.toHex
 
 object PersistanceManager{
     private const val LANGUAGE_INDEX_PREF = "language_index_pref"

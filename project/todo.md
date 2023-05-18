@@ -17,10 +17,14 @@
 + Push notifications (establish a service with a P2P network) then we can broadcast messages
 + Warning that user will loose account uninstalling the app.
 + Secure socket layer to encrypt data or packet encryption 
-- Only scoop while service is running in background (that keeps the network active)
++ Only scoop while service is running in background (that keeps the network active)
     scooping gives 7 ml/min + benefits for scooping friends
     booking after a full liter is scooped (timestamp for demurage)
     in the bookings list values are cumulated per day 
+- Book all transactions via trustchain, before releasing (no need to drop db, when adding payments)
+- Problem if user is offline and cannot let sign blocks (maybe scoop the whole day, and create a block once a day when online)
+- Start service when push start scooping
+- Give warning when scooping that service is running and wallet will be dropped after uninstall
 
 # App 3.0
 - Pay function using IPv8 trustchain
@@ -32,22 +36,19 @@
 # Web
 - Introduction to animate people to join (video)
 + New screen print of the app
-- Translate to Esperanto, French, Spanish, Portuguese
++ Translate to Esperanto, French, Spanish, Portuguese
 
 # Webservice
 + Make it possible to have multiple level of referers
 
 # Project
-- Involve stakeholder to get active
++ Involve stakeholder to get active
 
 # Desktop App
 - A desktop app can be used to transfer liquid from mobile to desktop to be able to save the data.
+- It could also be used as DHT node to store posts and messages for chat and blogging
 
 
-# Push notification
-Instead of using Google Firebase or OneSignal, which is based on Firebase, we should implement our own push service.
-I am thinking of a P2P solution, where users can chat with each other (we need that anyways later). This way we can also broadcast messages to the users.
-We will use IPv8 for this purpose.
 
 
 
@@ -55,3 +56,18 @@ We will use IPv8 for this purpose.
 - https://github.com/Tribler/trustchain-superapp
 - https://github.com/Tribler/kotlin-ipv8
 - https://github.com/Tribler/py-ipv8
+
+
+
+# Problem to solve
+Minting coins could be saved in the trustchain. To keep the database small scooping blocks should only be stored once a day.
+These blocks should be signed by another peer before spending. So we need our own TrustChain community. The other tc communities cannot sign our transactions. Signing blocks needs to check the API key to ensure that blocks are valid.
+The problem here is...the app cannot let blocks be signed when app is offline.
+So we need to have to broadcast signing requests, when back online.
+
+Service is running...service creates transactions every 20 minutes while the service is online.
+Temporary scoop data is saved in shift.db (unsigned).
+When back online these transaction (older than today) will be broadcasted to be signed and stored in the trustchain ledger.
+Only signed blocks can be spent.
+The signing process should read the last X blocks to ensure that there are no other blocks for scooping for that day.
+I think that can be issued with a crawl method.

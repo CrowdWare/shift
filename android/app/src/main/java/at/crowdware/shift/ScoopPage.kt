@@ -19,6 +19,7 @@
  ****************************************************************************/
 package at.crowdware.shift
 
+import android.app.Application
 import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,9 +33,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,6 +61,7 @@ import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.delay
+import org.w3c.dom.Text
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -68,6 +72,7 @@ import java.util.Locale
 fun ScoopPage() {
     var displayMilliliter by remember { mutableStateOf(true) }
     val errorMessage by remember { mutableStateOf("") }
+    val openDialog = remember { mutableStateOf(false) }
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(
@@ -80,10 +85,10 @@ fun ScoopPage() {
         )
         type = "text/plain"
     }
-    val transactions =
-        remember { mutableStateListOf(*Backend.getAccount().transactions.toTypedArray()) }
+    val transactions = remember { mutableStateListOf(*Backend.getTransactions().toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
+    val application: Application = LocalContext.current.applicationContext as Application
     var balance by remember { mutableStateOf(Backend.getBalance()) }
     var isScooping by remember { mutableStateOf(Backend.getAccount().scooping > 0u) }
 
@@ -93,13 +98,22 @@ fun ScoopPage() {
             if (isScooping) {
                 balance = Backend.getBalance()
                 transactions.clear()
-                for(t in Backend.getAccount().transactions) {
+                for(t in Backend.getTransactions()) {
                     transactions.add(t)
                 }
             }
             delay(1000L)
         }
     }
+    ServiceStartRequest(
+        openDialog = openDialog.value,
+        onDismiss = { openDialog.value = false },
+        onConfirm = {
+            openDialog.value = false
+            Backend.startScooping(application)
+        }
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -147,20 +161,21 @@ fun ScoopPage() {
             }
         }
         Text(errorMessage, color = Color.Red)
-        Button(
-            onClick = { Backend.startScooping(context) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isScooping
-        ) {
-            Text(
-                if (isScooping) {
-                    stringResource(R.string.button_scooping_started)
-                } else {
-                    stringResource(R.string.button_start_scooping)
-                }, style = TextStyle(fontSize = 20.sp)
-            )
+        if(Backend.getAccount().scooping == 0UL) {
+            Button(
+                onClick = { openDialog.value = true },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isScooping
+            ) {
+                Text(
+                    if (isScooping) {
+                        stringResource(R.string.button_scooping_started)
+                    } else {
+                        stringResource(R.string.button_start_scooping)
+                    }, style = TextStyle(fontSize = 20.sp)
+                )
+            }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
@@ -190,7 +205,6 @@ fun ScoopPage() {
                     val txt = when (transaction.type) {
                         TransactionType.SCOOPED -> stringResource(R.string.transaction_liquid_scooped)
                         TransactionType.INITIAL_BOOKING -> stringResource(R.string.transaction_initial_liquid)
-                        TransactionType.SUBTOTAL -> stringResource(R.string.transaction_subtotal)
                     }
                     Text(txt, style = TextStyle(fontSize = 18.sp))
                     Box(
@@ -226,4 +240,31 @@ fun MainPagePreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
     ModalNavigationDrawer(navController = navController, selectedItem){ ScoopPage()}
+}
+
+
+@Composable
+fun ServiceStartRequest(openDialog: Boolean, onDismiss: () -> Unit, onConfirm: () -> Unit) {
+    if (openDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = stringResource(id = R.string.button_start_scooping)) },
+            text = {
+                Text(
+                    stringResource(R.string.servive_start_request_message)
+                )
+            },
+            confirmButton = { TextButton(onClick = onConfirm ) { Text("OK") } },
+            dismissButton = { TextButton(onClick = onDismiss ) { Text("Dismiss") } }
+        )
+    }
+}
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewDialog() {
+    val openDialog = remember { mutableStateOf(false) }
+    ServiceStartRequest(
+        openDialog = openDialog.value,
+        onDismiss = { openDialog.value = false },
+        onConfirm = { openDialog.value = false })
 }

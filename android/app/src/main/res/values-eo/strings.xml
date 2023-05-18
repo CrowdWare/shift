@@ -38,10 +38,10 @@
     <string name="intro">Enkonduko</string>
     <string name="email">Retpoŝto, se vi deziras ricevi ĝisdatigojn</string>
     <string name="button_continue">Daŭrigi</string>
-    <string name="transaction_subtotal">Subtotalo</string>
     <string name="transaction_liquid_scooped">Likiton prenitaj</string>
     <string name="transaction_initial_liquid">Enirlikido</string>
     <string name="please_select_your_country">Bonvolu elekti vian landon.</string>
     <string name="please_enter_the_invitation_code">Bonvolu entajpi la invitan kodon.</string>
     <string name="please_enter_your_name">Bonvolu entajpi vian nomon!</string>
+    <string name="servive_start_request_message">Vi estas proksima komenci servo, kiu helpos forviŝi likvon en la fono, eĉ kiam vi fermas tiun ĉi aplikaĵon. Bonvolu konscii, ke se vi ĉesigos tiun servon, la viŝprocezo estos paŭzita ĝis vi rekomencos la aplikaĵon.</string>
 </resources>

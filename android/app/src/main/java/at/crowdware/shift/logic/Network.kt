@@ -20,17 +20,15 @@
 package at.crowdware.shift.logic
 
 import android.app.Application
-import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.core.content.getSystemService
-import androidx.preference.PreferenceManager
 import at.crowdware.shift.service.ShiftChainService
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import nl.tudelft.ipv8.IPv8Configuration
 import nl.tudelft.ipv8.Overlay
 import nl.tudelft.ipv8.OverlayConfiguration
 import nl.tudelft.ipv8.android.IPv8Android
-import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.android.peerdiscovery.NetworkServiceDiscovery
 import nl.tudelft.ipv8.attestation.trustchain.BlockListener
 import nl.tudelft.ipv8.attestation.trustchain.BlockSigner
@@ -41,20 +39,32 @@ import nl.tudelft.ipv8.attestation.trustchain.store.TrustChainSQLiteStore
 import nl.tudelft.ipv8.attestation.trustchain.store.TrustChainStore
 import nl.tudelft.ipv8.attestation.trustchain.validation.TransactionValidator
 import nl.tudelft.ipv8.attestation.trustchain.validation.ValidationResult
-import nl.tudelft.ipv8.keyvault.PrivateKey
 import nl.tudelft.ipv8.peerdiscovery.DiscoveryCommunity
 import nl.tudelft.ipv8.peerdiscovery.strategy.PeriodicSimilarity
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomChurn
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomWalk
 import nl.tudelft.ipv8.sqldelight.Database
-import nl.tudelft.ipv8.util.hexToBytes
-import nl.tudelft.ipv8.util.toHex
+import java.lang.Math.abs
+import java.math.BigInteger
 
 
 object Network {
+    private const val BLOCK_TYPE = "LMC"
+    var isStarted = false
+        private set
+
+    fun startServive(application: Application) {
+        initIPv8(application)
+
+        val serviceIntent = Intent(application, ShiftChainService::class.java)
+        serviceIntent.putExtra("language", LocaleManager.getLanguage())
+        application.startService(serviceIntent)
+    }
+
     fun initIPv8(application: Application) {
         val config = IPv8Configuration(overlays = listOf(
             createDiscoveryCommunity(application),
+            createTrustChainCommunity(application),
             createShiftCommunity()
         ), walkerInterval = 5.0)
 
@@ -65,6 +75,8 @@ object Network {
             .init()
 
         initShiftCommunity(application)
+        initTrustChain()
+        isStarted = true
     }
 
     private fun initShiftCommunity(application: Application) {
@@ -87,5 +99,58 @@ object Network {
             Overlay.Factory(ShiftCommunity::class.java),
             listOf(randomWalk)
         )
+    }
+
+    private fun createTrustChainCommunity(application: Application): OverlayConfiguration<TrustChainCommunity> {
+        val settings = TrustChainSettings()
+        val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
+        val store = TrustChainSQLiteStore(Database(driver))
+        val randomWalk = RandomWalk.Factory()
+        return OverlayConfiguration(
+            TrustChainCommunity.Factory(settings, store),
+            listOf(randomWalk)
+        )
+    }
+
+    private fun initTrustChain() {
+        val ipv8 = IPv8Android.getInstance()
+        val trustchain = ipv8.getOverlay<TrustChainCommunity>()!!
+
+        trustchain.registerTransactionValidator(BLOCK_TYPE, object : TransactionValidator {
+            override fun validate(
+                block: TrustChainBlock,
+                database: TrustChainStore
+            ): ValidationResult {
+                if (block.isAgreement)
+                    return ValidationResult.Valid
+
+                val amount: Long = block.transaction["amount"] as? Long ?: 0L
+                val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
+                val date: Long = block.transaction["date"] as? Long ?: 0L
+                println("validate: $amount $type $date | ${Backend.getMaxGrow()} ${kotlin.math.abs((System.currentTimeMillis() / 1_000) - date)}")
+                return if (amount <= Backend.getMaxGrow()
+                    && (type == TransactionType.SCOOPED.value.toInt() || type == TransactionType.INITIAL_BOOKING.value.toInt())
+                    && kotlin.math.abs((System.currentTimeMillis() / 1_000) - date) < 60 * 60 * 24 ) {
+                    Log.d("TrustChainDemo", "Validating block true")
+                    ValidationResult.Valid
+                } else {
+                    Log.d("TrustChainDemo", "Validating block false")
+                    ValidationResult.Invalid(listOf(""))
+                }
+            }
+        })
+
+        trustchain.registerBlockSigner(BLOCK_TYPE, object : BlockSigner {
+            override fun onSignatureRequest(block: TrustChainBlock) {
+                Log.d("TrustChainDemo", "creating agreement")
+                trustchain.createAgreementBlock(block, mapOf<Any?, Any?>())
+            }
+        })
+
+        trustchain.addListener(BLOCK_TYPE, object : BlockListener {
+            override fun onBlockReceived(block: TrustChainBlock) {
+                Log.d("TrustChainDemo", "onBlockReceived ${block.transaction}")
+            }
+        })
     }
 }

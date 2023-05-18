@@ -54,7 +54,6 @@ import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.logic.Backend
 
-data class JoinData(val name: String, val friend: String, val country: Int)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
@@ -62,7 +61,6 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
     var res = LocalContext.current.resources
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
-    var email by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
@@ -111,12 +109,6 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
             label = { Text(stringResource(R.string.invitation_code)) }
         )
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(stringResource(R.string.email)) }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
         DropDownListbox(
             label = stringResource(R.string.select_your_country),
             stateHolder = stateHolderCountry)
@@ -126,7 +118,7 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
         Button(
             onClick = {
                 Backend.createAccount(
-                    context, name, email, friend,
+                    context, name, friend,
                     stateHolderCountry.value, language, onJoinSucceed, onJoinFailed, res
                 )
             },

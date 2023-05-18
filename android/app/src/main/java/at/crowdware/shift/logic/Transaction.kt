@@ -24,8 +24,7 @@ import java.time.LocalDate
 
 enum class TransactionType(val value: UInt) {
     INITIAL_BOOKING(1u),
-    SCOOPED(2u),
-    SUBTOTAL(3u),
+    SCOOPED(2u)
 }
 
 data class Transaction(

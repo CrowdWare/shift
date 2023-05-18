@@ -38,10 +38,10 @@
     <string name="intro">Introduction</string>
     <string name="email">Email si vous souhaitez recevoir des mises à jour</string>
     <string name="button_continue">Continuer</string>
-    <string name="transaction_subtotal">Sous-total</string>
     <string name="transaction_liquid_scooped">Liquide prélevé</string>
     <string name="transaction_initial_liquid">Liquide initial</string>
     <string name="please_select_your_country">Veuillez sélectionner votre pays.</string>
     <string name="please_enter_the_invitation_code">Veuillez entrer le code d\'invitation.</string>
     <string name="please_enter_your_name">Veuillez entrer votre nom !</string>
+    <string name="servive_start_request_message">Vous êtes sur le point de démarrer un service qui va aspirer du liquide en arrière-plan, même lorsque vous fermez cette application. Veuillez noter que lorsque vous arrêterez ce service, le processus d\'aspiration sera mis en pause jusqu\'à ce que vous relanciez l\'application.</string>
 </resources>

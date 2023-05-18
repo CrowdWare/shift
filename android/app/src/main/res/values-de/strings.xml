@@ -37,10 +37,10 @@
     <string name="intro">Einführung</string>
     <string name="email">E-Mail, wenn du Updates erhalten möchtest</string>
     <string name="button_continue">Weiter</string>
-    <string name="transaction_subtotal">Zwischensumme</string>
     <string name="transaction_liquid_scooped">Liquid geschöpft</string>
     <string name="transaction_initial_liquid">Liquid initial</string>
     <string name="please_select_your_country">Bitte wählen Sie Ihr Land aus.</string>
     <string name="please_enter_the_invitation_code">Bitte geben Sie den Einladungscode ein.</string>
     <string name="please_enter_your_name">Bitte geben Sie Ihren Namen ein!</string>
+    <string name="servive_start_request_message">Du bist dabei, einen Dienst zu starten, der im Hintergrund Liquid schöpfen wird, auch wenn Du diese App schließen solltest. Bitte beachte, dass der Schöpfprozess angehalten wird, wenn Du diesen Dienst stoppen solltest, bis Du die App erneut startetest.</string>
 </resources>

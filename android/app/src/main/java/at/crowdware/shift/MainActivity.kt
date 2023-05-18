@@ -31,6 +31,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
@@ -53,13 +54,17 @@ class MainActivity : ComponentActivity() {
                     defaultCryptoProvider = AndroidCryptoProvider
                     LocaleManager.init(applicationContext)
 
-                    val serviceIntent = Intent(this, ShiftChainService::class.java)
-                    serviceIntent.putExtra("language", LocaleManager.getLanguage())
-                    startService(serviceIntent)
-
-                    Network.initIPv8(applicationContext as Application)
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
                     val hasSeenDeleteWarning = remember { mutableStateOf(false) }
+
+                    // first the account has to be created and user should have to trigger "Start Scooping" before starting the service
+                    if(Backend.getAccount().scooping > 0u) {
+                        Network.initIPv8(applicationContext as Application)
+
+                        val serviceIntent = Intent(this, ShiftChainService::class.java)
+                        serviceIntent.putExtra("language", LocaleManager.getLanguage())
+                        startService(serviceIntent)
+                    }
                     if (hasJoined.value)
                         NavigationView()
                     else

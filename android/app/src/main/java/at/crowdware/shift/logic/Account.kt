@@ -25,7 +25,6 @@ import nl.tudelft.ipv8.keyvault.PrivateKey
 data class Account(
     val name: String = "",
     val uuid: String = "",
-    val email: String = "",
     val ruuid: String = "",
     val country: String = "",
     val language: String = "",
@@ -34,5 +33,5 @@ data class Account(
     var level_2_count: UInt = 0u,
     var level_3_count: UInt = 0u,
     var privateKey: String = "",
-    var transactions: MutableList<Transaction> = mutableListOf<Transaction>()
+    //var transactions: MutableList<Transaction> = mutableListOf<Transaction>()
 ) : Serializable

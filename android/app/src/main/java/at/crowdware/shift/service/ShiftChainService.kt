@@ -122,15 +122,6 @@ class ShiftChainService : IPv8Service() {
             if (minutes >= 20f) {
                 Backend.addLiquid(this, minutes.toUInt())
             }
-            debugOutput(account, minutes)
-        }
-    }
-
-    fun debugOutput(account: Account, minutes: Float) {
-
-        println("scooping since $minutes minutes")
-        for(trans in account.transactions) {
-            println("Transaction ${trans.date} ${trans.amount} ${trans.description}")
         }
     }
 
