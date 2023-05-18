@@ -49,9 +49,6 @@
 - It could also be used as DHT node to store posts and messages for chat and blogging
 
 
-
-
-
 # P2P
 - https://github.com/Tribler/trustchain-superapp
 - https://github.com/Tribler/kotlin-ipv8
@@ -60,14 +57,9 @@
 
 
 # Problem to solve
-Minting coins could be saved in the trustchain. To keep the database small scooping blocks should only be stored once a day.
-These blocks should be signed by another peer before spending. So we need our own TrustChain community. The other tc communities cannot sign our transactions. Signing blocks needs to check the API key to ensure that blocks are valid.
-The problem here is...the app cannot let blocks be signed when app is offline.
-So we need to have to broadcast signing requests, when back online.
+To keep the database small scooping blocks should only be stored once a day and chached in the account file
 
-Service is running...service creates transactions every 20 minutes while the service is online.
-Temporary scoop data is saved in shift.db (unsigned).
-When back online these transaction (older than today) will be broadcasted to be signed and stored in the trustchain ledger.
-Only signed blocks can be spent.
-The signing process should read the last X blocks to ensure that there are no other blocks for scooping for that day.
-I think that can be issued with a crawl method.
+
+# Data usage
+Proposal: 300 B * 24h * 3 = 21.6 KB / Day * 365 days = 7.8 MB (better to book once a day)
+Aggreement: 260 B

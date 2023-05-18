@@ -267,8 +267,8 @@ class Backend {
                 val instant = Instant.ofEpochSecond(date)
                 val d = instant.atZone(ZoneOffset.UTC).toLocalDate()
                 val transactionType = enumValues<TransactionType>().getOrNull(type)
-                if(block.isProposal && (type == TransactionType.INITIAL_BOOKING.value.toInt()
-                            || type == TransactionType.SCOOPED.value.toInt())) {
+                if(block.isProposal && (transactionType == TransactionType.INITIAL_BOOKING
+                            || transactionType == TransactionType.SCOOPED)) {
                     list.add(0, Transaction(amount = amount.toULong(), date = d, type = transactionType!!))
                 }
             }
@@ -283,6 +283,7 @@ class Backend {
                 return 0u
 
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
+            // collect amounts from blockchain
             for(block in trustchain.database.getAllBlocks()) {
                 val amount: Long = block.transaction["amount"] as? Long ?: 0L
                 val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
@@ -291,7 +292,10 @@ class Backend {
                     balance += amount.toULong()
                 }
             }
-
+            // and also from daily transactions
+            for(t in account.transactions) {
+                balance += t.amount
+            }
             val minutes = ShiftChainService.minutesScooping()
             amountOf20Minutes = minutes / 20f
 
@@ -301,6 +305,17 @@ class Backend {
         fun addLiquid(context: Context, minutes: UInt) {
             val growPer20Minutes = calcGrowPer20Minutes()
             val amountOf20Minutes = (minutes / 20u)
+            // if there is an old transaction we accumulate them and put them in the blockchain
+            if (account.transactions.last().date != LocalDate.now()) {
+                var balance = 0UL
+                for(t in account.transactions) {
+                    balance += t.amount
+                }
+                addTransactionToTrustChain(balance.toLong(), TransactionType.SCOOPED)
+                account.transactions.clear()
+            }
+            account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))
+            Database.saveAccount(context)
             setScooping(context, null, null)
         }
         fun getMaxGrow(): Long {
@@ -317,7 +332,7 @@ class Backend {
 
         fun dumpBlocks() {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
-            var balance = 0L
+            var balance = 0UL
             for(block in trustchain.database.getAllBlocks()) {
                 val type = when{
                     block.isProposal ->  "proposal "
@@ -325,8 +340,12 @@ class Backend {
                     else ->              "unknown  "
                 }
                 val amount: Long = block.transaction["amount"] as? Long ?: 0L
-                balance += amount
+                balance += amount.toULong()
                 println("Block: ${block.sequenceNumber} ${block.publicKey.toHex()}, $type, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+            }
+            for(t in account.transactions) {
+                balance += t.amount
+                println("Trans: ${t.amount} ${t.date}")
             }
             println("Balance: $balance")
         }

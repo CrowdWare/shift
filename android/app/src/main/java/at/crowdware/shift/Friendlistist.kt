@@ -115,26 +115,16 @@ fun Friendlist() {
         } else {
             Text(stringResource(R.string.invite_advertise))
         }
-        /*
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { context.startActivity(shareIntent) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
-        }*/
-        Button(onClick = {
-            Backend.addTransactionToTrustChain(13000L, TransactionType.INITIAL_BOOKING)
-            }) {
-            Text("Scoop")
-        }
-        Button(onClick = {
-            Backend.dumpBlocks()
-        }) {
-            Text("Dump")
         }
     }
 }
+
 
 @Composable
 fun FriendListItem(friend: Friend) {
