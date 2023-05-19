@@ -24,8 +24,10 @@
 + Book all transactions via trustchain, before releasing (no need to drop db, when adding payments)
 + Start service when push start scooping
 + Give warning when scooping that service is running and wallet will be dropped after uninstall
-- Plugin sample (make sure that a plugin cannot spy on keys etc, create an easy to use API for payments)
+- Plugin sample
+- create an easy to use API for payments
 - Payment functionionallity
+- Plugin download from bittorrent
 
 # App 3.0
 - Pay function using IPv8 trustchain

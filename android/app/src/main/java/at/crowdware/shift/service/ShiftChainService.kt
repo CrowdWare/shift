@@ -123,6 +123,7 @@ class ShiftChainService : IPv8Service() {
                 Backend.addLiquid(this, minutes.toUInt())
             }
         }
+        Backend.dumpBlocks()
     }
 
     override fun attachBaseContext(newBase: Context?) {

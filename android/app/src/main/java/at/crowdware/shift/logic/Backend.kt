@@ -333,6 +333,7 @@ class Backend {
         fun dumpBlocks() {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             var balance = 0UL
+            println("Scooping for ${ShiftChainService.minutesScooping()} minutes")
             for(block in trustchain.database.getAllBlocks()) {
                 val type = when{
                     block.isProposal ->  "proposal "
@@ -341,11 +342,13 @@ class Backend {
                 }
                 val amount: Long = block.transaction["amount"] as? Long ?: 0L
                 balance += amount.toULong()
-                println("Block: ${block.sequenceNumber} ${block.publicKey.toHex()}, $type, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                println("Block: $amount ${block.sequenceNumber} ${block.publicKey.toHex()}, $type, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
             }
+            var i: Int = 0
             for(t in account.transactions) {
                 balance += t.amount
-                println("Trans: ${t.amount} ${t.date}")
+                i++
+                println("Trans: ${t.amount} ${t.date} $i")
             }
             println("Balance: $balance")
         }
