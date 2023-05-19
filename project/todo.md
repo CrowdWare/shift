@@ -21,10 +21,11 @@
     scooping gives 7 ml/min + benefits for scooping friends
     booking after a full liter is scooped (timestamp for demurage)
     in the bookings list values are cumulated per day 
-- Book all transactions via trustchain, before releasing (no need to drop db, when adding payments)
-- Problem if user is offline and cannot let sign blocks (maybe scoop the whole day, and create a block once a day when online)
-- Start service when push start scooping
-- Give warning when scooping that service is running and wallet will be dropped after uninstall
++ Book all transactions via trustchain, before releasing (no need to drop db, when adding payments)
++ Start service when push start scooping
++ Give warning when scooping that service is running and wallet will be dropped after uninstall
+- Plugin sample (make sure that a plugin cannot spy on keys etc, create an easy to use API for payments)
+- Payment functionionallity
 
 # App 3.0
 - Pay function using IPv8 trustchain
@@ -57,7 +58,7 @@
 
 
 # Problem to solve
-To keep the database small scooping blocks should only be stored once a day and chached in the account file
+To keep the database small scooping blocks should only be stored once a day and chached in the account file in between.
 
 
 # Data usage

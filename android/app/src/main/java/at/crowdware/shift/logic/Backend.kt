@@ -306,7 +306,7 @@ class Backend {
             val growPer20Minutes = calcGrowPer20Minutes()
             val amountOf20Minutes = (minutes / 20u)
             // if there is an old transaction we accumulate them and put them in the blockchain
-            if (account.transactions.last().date != LocalDate.now()) {
+            if (account.transactions.size > 0 && account.transactions.last().date != LocalDate.now()) {
                 var balance = 0UL
                 for(t in account.transactions) {
                     balance += t.amount
