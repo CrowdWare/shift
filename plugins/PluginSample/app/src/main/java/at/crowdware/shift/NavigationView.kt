@@ -45,11 +45,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun NavigationView(
-    items: List<NavigationItem>,
-    plugin: ShiftPlugin?,
-    internalPages: Int
-) {
+fun NavigationView(items: List<NavigationItem>) {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("home") }
     NavHost(navController = navController, startDestination = "home") {
@@ -60,7 +56,8 @@ fun NavigationView(
                         "home" -> Greeting(name = "Home")
                         "second" -> Greeting(name = "Second")
                         else -> {
-                            plugin!!.pages()[index - internalPages].invoke()
+                            val plugin = items[index].plugin
+                            plugin!!.pages()[items[index].index].invoke()
                         }
                     }
                 }

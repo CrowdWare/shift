@@ -131,6 +131,7 @@ class Backend {
 
         fun startScooping(application: Application) {
             Network.startServive(application)
+            account.isScooping = true
             account.scooping = (System.currentTimeMillis() / 1000).toULong()
             Database.saveAccount(application.applicationContext)
             setScooping(application, null, null)
@@ -266,7 +267,7 @@ class Backend {
                 val date: Long = block.transaction["date"] as? Long ?: 0L
                 val instant = Instant.ofEpochSecond(date)
                 val d = instant.atZone(ZoneOffset.UTC).toLocalDate()
-                val transactionType = enumValues<TransactionType>().getOrNull(type)
+                val transactionType = TransactionType.fromInt(type)
                 if(block.isProposal && (transactionType == TransactionType.INITIAL_BOOKING
                             || transactionType == TransactionType.SCOOPED)) {
                     list.add(0, Transaction(amount = amount.toULong(), date = d, type = transactionType!!))
@@ -287,8 +288,9 @@ class Backend {
             for(block in trustchain.database.getAllBlocks()) {
                 val amount: Long = block.transaction["amount"] as? Long ?: 0L
                 val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
-                if(block.isProposal && (type == TransactionType.INITIAL_BOOKING.value.toInt()
-                            || type == TransactionType.SCOOPED.value.toInt())) {
+                val transactionType = TransactionType.fromInt(type)
+                if(block.isProposal && (transactionType == TransactionType.INITIAL_BOOKING
+                            || transactionType == TransactionType.SCOOPED)) {
                     balance += amount.toULong()
                 }
             }
@@ -315,6 +317,7 @@ class Backend {
                 account.transactions.clear()
             }
             account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))
+            account.scooping = 0u
             Database.saveAccount(context)
             setScooping(context, null, null)
         }
@@ -335,14 +338,16 @@ class Backend {
             var balance = 0UL
             println("Scooping for ${ShiftChainService.minutesScooping()} minutes")
             for(block in trustchain.database.getAllBlocks()) {
-                val type = when{
+                val blocktype = when{
                     block.isProposal ->  "proposal "
                     block.isAgreement -> "agreement"
                     else ->              "unknown  "
                 }
                 val amount: Long = block.transaction["amount"] as? Long ?: 0L
+                val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
+                val transactionType = TransactionType.fromInt(type)
                 balance += amount.toULong()
-                println("Block: $amount ${block.sequenceNumber} ${block.publicKey.toHex()}, $type, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                println("Block: $transactionType ${block.transaction} ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
             }
             var i: Int = 0
             for(t in account.transactions) {
@@ -360,6 +365,8 @@ class Backend {
                 "date" to (System.currentTimeMillis() / 1000),
                 "type" to type.value.toInt())
             val publicKey = IPv8Android.getInstance().myPeer.publicKey.keyToBin()
+
+            // self signed so send to your own public key
             trustchain.createProposalBlock("LMC", transaction, publicKey)
         }
     }

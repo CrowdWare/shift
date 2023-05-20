@@ -44,4 +44,5 @@
     <string name="please_enter_the_invitation_code">Please enter the invitation code.</string>
     <string name="please_enter_your_name">Please enter your name!</string>
     <string name="servive_start_request_message">You are about to start a service which will scoop liquid in the background, even when you close this app. Please be aware, that when you stop this service the scooping process will be paused until you start the app again.</string>
+    <string name="button_read_all">Please read all</string>
 </resources>

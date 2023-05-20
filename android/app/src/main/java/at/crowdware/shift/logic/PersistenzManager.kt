@@ -22,7 +22,6 @@ package at.crowdware.shift.logic
 import android.content.Context
 
 object PersistanceManager{
-    private const val LANGUAGE_INDEX_PREF = "language_index_pref"
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
     private const val DELETE_WARNING_SEEN = "delete_warning_pref"
     private const val APP_PREFS = "app_prefs"
@@ -36,16 +35,6 @@ object PersistanceManager{
     fun putHasSeenDeleteWarning(context: Context) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putString(DELETE_WARNING_SEEN, "true").apply()
-    }
-
-    fun saveLanguageIndex(context: Context, language: Int) {
-        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        preferences.edit().putInt(LANGUAGE_INDEX_PREF, language).apply()
-    }
-
-    fun getLanguageIndex(context: Context): Int {
-        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        return preferences.getInt(LANGUAGE_INDEX_PREF, -1)
     }
 
     fun getLanguage(context: Context): String? {

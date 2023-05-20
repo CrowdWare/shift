@@ -22,6 +22,7 @@ package at.crowdware.shift
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +32,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import at.crowdware.shift.logic.Database
@@ -42,6 +44,7 @@ import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,13 +55,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     defaultCryptoProvider = AndroidCryptoProvider
-                    LocaleManager.init(applicationContext)
+                    LocaleManager.init(applicationContext, resources)
 
                     val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
                     val hasSeenDeleteWarning = remember { mutableStateOf(false) }
 
                     // first the account has to be created and user should have to trigger "Start Scooping" before starting the service
-                    if(Backend.getAccount().scooping > 0u) {
+                    // that means the user should have agreed to start the service
+                    if(Backend.getAccount().isScooping) {
                         Network.initIPv8(applicationContext as Application)
 
                         val serviceIntent = Intent(this, ShiftChainService::class.java)

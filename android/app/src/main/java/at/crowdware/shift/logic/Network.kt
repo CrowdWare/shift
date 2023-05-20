@@ -127,9 +127,9 @@ object Network {
                 val amount: Long = block.transaction["amount"] as? Long ?: 0L
                 val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
                 val date: Long = block.transaction["date"] as? Long ?: 0L
-                println("validate: $amount $type $date | ${Backend.getMaxGrow()} ${kotlin.math.abs((System.currentTimeMillis() / 1_000) - date)}")
+                val transactionType = TransactionType.fromInt(type)
                 return if (amount <= Backend.getMaxGrow()
-                    && (type == TransactionType.SCOOPED.value.toInt() || type == TransactionType.INITIAL_BOOKING.value.toInt())
+                    && (transactionType == TransactionType.SCOOPED || transactionType == TransactionType.INITIAL_BOOKING)
                     && kotlin.math.abs((System.currentTimeMillis() / 1_000) - date) < 60 * 60 * 24 ) {
                     Log.d("TrustChainDemo", "Validating block true")
                     ValidationResult.Valid

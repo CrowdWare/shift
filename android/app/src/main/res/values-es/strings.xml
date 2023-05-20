@@ -44,4 +44,7 @@
     <string name="please_enter_the_invitation_code">Por favor, ingrese el código de invitación.</string>
     <string name="please_enter_your_name">Por favor, ingrese su nombre.</string>
     <string name="servive_start_request_message">Estás a punto de iniciar un servicio que va a recolectar líquido en segundo plano, incluso cuando cierres esta aplicación. Por favor, ten en cuenta que cuando detengas este servicio, el proceso de recolección se pausará hasta que vuelvas a iniciar la aplicación.</string>
+    <string name="button_read_all">Por favor, lee todo</string>
+
+
 </resources>

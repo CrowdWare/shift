@@ -23,11 +23,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
-import at.crowdware.shift.logic.Account
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.LocaleManager
 import kotlinx.coroutines.CoroutineScope
@@ -116,7 +116,7 @@ class ShiftChainService : IPv8Service() {
 
     private fun scoopLiquid() {
         val account = Backend.getAccount()
-        if (account.scooping > 0UL) {
+        if (account.isScooping) {
             // we book 3 times an hour
             val minutes = minutesScooping()
             if (minutes >= 20f) {

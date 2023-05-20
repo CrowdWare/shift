@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,26 +46,19 @@ import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 @Composable
 fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
     var context = LocalContext.current.applicationContext
-    val languages = listOf(
-        stringResource(R.string.language_english),
-        stringResource(R.string.language_german),
-        stringResource(R.string.language_spanish),
-        stringResource(R.string.language_french),
-        stringResource(R.string.language_portugues),
-        stringResource(R.string.language_esperanto)
-    )
     val scrollState = rememberLazyListState()
     val currentActivity = LocalContext.current as? Activity
-    val langIndex = PersistanceManager.getLanguageIndex(context)
-    val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
-    var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
+    val languages = LocaleManager.getLanguages()
+    val lang = LocaleManager.getLanguage()
+    val index = LocaleManager.getLanguageIndex()
+    var selectedLanguageCode by remember { mutableStateOf(lang) }
     val onSelectedIndexChanged: (Int) -> Unit = { index ->
-        PersistanceManager.saveLanguageIndex(context, index)
-        selectedLanguageCode = language_codes[index]
-        LocaleManager.setLocale(context, selectedLanguageCode)
+        LocaleManager.setLocale(context,index)
+        selectedLanguageCode = LocaleManager.getLanguage()
         currentActivity?.recreate()
     }
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, langIndex, onSelectedIndexChanged)
+
+    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
     val hasSeenAll = remember { mutableStateOf(false) }
 
     Column(
@@ -110,7 +104,8 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
             hasSeenDeleteWarning.value = true
         },
         enabled = selectedLanguageCode.isNotEmpty() && hasSeenAll.value) {
-            Text(stringResource(R.string.button_continue))
+            Text(if (hasSeenAll.value) { stringResource( R.string.button_continue )} else { stringResource(
+                            R.string.button_read_all) })
         }
     }
 }

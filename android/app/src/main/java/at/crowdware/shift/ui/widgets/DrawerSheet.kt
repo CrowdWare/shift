@@ -83,22 +83,13 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
 
     //region vars for the DropDownlistbox
     val context = LocalContext.current
-    val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
-    val languages = listOf(
-        stringResource(R.string.language_english),
-        stringResource(R.string.language_german),
-        stringResource(R.string.language_spanish),
-        stringResource(R.string.language_french),
-        stringResource(R.string.language_portugues),
-        stringResource(R.string.language_esperanto)
-    )
-    val lang = LocaleManager.getLanguage()
-    val index = language_codes.indexOf(lang)
+    val languages = LocaleManager.getLanguages()
+    val index = LocaleManager.getLanguageIndex()
     var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
     val currentActivity = LocalContext.current as? Activity
     val onSelectedIndexChanged: (Int) -> Unit = { idx ->
-        selectedLanguageCode = language_codes[idx]
-        LocaleManager.setLocale(context, selectedLanguageCode)
+        LocaleManager.setLocale(context, idx)
+        selectedLanguageCode = LocaleManager.getLanguage()
         currentActivity?.recreate()
     }
     val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)

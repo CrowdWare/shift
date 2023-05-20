@@ -21,23 +21,53 @@ package at.crowdware.shift.logic
 
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
+import androidx.compose.ui.platform.LocalContext
+import at.crowdware.shift.R
 import java.util.*
 
 object LocaleManager {
     private var currentLocale: Locale? = null
     private var language: String? = ""
+    private var index: Int = -1
+    private val language_codes = listOf("en", "de", "es", "fr", "pt", "eo")
+    private val languages: MutableList<String> = mutableListOf()
 
-    fun setLocale(context: Context, language: String): Context {
-        this.language = language
-        PersistanceManager.setLanguageCode(context, language)
-        return updateResources(context, language)
+    fun setLocale(context: Context, lang: String): Context {
+        language = lang
+        index = language_codes.indexOf(language)
+        PersistanceManager.setLanguageCode(context, lang)
+        return updateResources(context, lang)
+    }
+
+    fun setLocale(context: Context, index: Int): Context {
+        if(index < 0 || index > 5) return context
+        language = language_codes[index]
+        PersistanceManager.setLanguageCode(context, language!!)
+        return updateResources(context, language!!)
     }
 
     fun getLanguage(): String { return language!! }
 
-    fun init(context: Context){
+    fun getLanguageIndex(): Int { return index }
+
+    fun getLanguages(): List<String> {
+        return languages.toList()
+    }
+
+    fun init(context: Context, resources: Resources){
+        languages.add(resources.getString(R.string.language_english))
+        languages.add(resources.getString(R.string.language_german))
+        languages.add(resources.getString(R.string.language_spanish))
+        languages.add(resources.getString(R.string.language_french))
+        languages.add(resources.getString(R.string.language_portugues))
+        languages.add(resources.getString(R.string.language_esperanto))
+
         if (currentLocale == null) {
             language = PersistanceManager.getLanguage(context)
+            if(language.isNullOrEmpty())
+                language = Resources.getSystem().configuration.locales[0].language
+            index = language_codes.indexOf(language)
             if(!language.isNullOrEmpty()) {
                 currentLocale = Locale(language!!)
             }
@@ -60,7 +90,7 @@ object LocaleManager {
 
     fun wrapContext(context: Context): Context {
         if (currentLocale == null)
-            init(context)
+            init(context, context.resources)
         if(currentLocale != null) {
             Locale.setDefault(currentLocale!!)
             val newConfig = Configuration()

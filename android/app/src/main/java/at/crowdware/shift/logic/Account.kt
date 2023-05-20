@@ -29,6 +29,7 @@ data class Account(
     val country: String = "",
     val language: String = "",
     var scooping: ULong = 0u,
+    var isScooping: Boolean = false,
     var level_1_count: UInt = 0u,
     var level_2_count: UInt = 0u,
     var level_3_count: UInt = 0u,

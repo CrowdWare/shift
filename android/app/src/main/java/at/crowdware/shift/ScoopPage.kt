@@ -90,11 +90,11 @@ fun ScoopPage() {
     val context = LocalContext.current
     val application: Application = LocalContext.current.applicationContext as Application
     var balance by remember { mutableStateOf(Backend.getBalance()) }
-    var isScooping by remember { mutableStateOf(Backend.getAccount().scooping > 0u) }
+    var isScooping by remember { mutableStateOf(Backend.getAccount().isScooping) }
 
     LaunchedEffect(true) {
         while (true) {
-            isScooping = Backend.getAccount().scooping > 0u
+            isScooping = Backend.getAccount().isScooping
             if (isScooping) {
                 balance = Backend.getBalance()
                 transactions.clear()
@@ -161,7 +161,7 @@ fun ScoopPage() {
             }
         }
         Text(errorMessage, color = Color.Red)
-        if(Backend.getAccount().scooping == 0UL) {
+        if(!Backend.getAccount().isScooping) {
             Button(
                 onClick = { openDialog.value = true },
                 modifier = Modifier.fillMaxWidth(),
