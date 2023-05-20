@@ -53,8 +53,6 @@ import androidx.navigation.NavController
 
 import kotlinx.coroutines.launch
 
-data class MenuItem(val icon: ImageVector, val text: String, val id: String)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrawerSheet(

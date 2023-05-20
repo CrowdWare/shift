@@ -22,26 +22,33 @@ package at.crowdware.shift
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.logic.ClassLoaderUtils
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.Network
 import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shift.service.ShiftChainService
+import at.crowdware.shift.ui.widgets.NavigationItem
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
+import java.io.File
+import java.io.FileNotFoundException
 
 class MainActivity : ComponentActivity() {
 
@@ -69,8 +76,14 @@ class MainActivity : ComponentActivity() {
                         serviceIntent.putExtra("language", LocaleManager.getLanguage())
                         startService(serviceIntent)
                     }
-                    if (hasJoined.value)
-                        NavigationView()
+                    if (hasJoined.value) {
+                        val list = mutableListOf(
+                            NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
+                            NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+                        )
+                        loadPlugins(LocalContext.current, list)
+                        NavigationView(list)
+                    }
                     else
                         if(hasSeenDeleteWarning.value || PersistanceManager.hasSeenDeleteWarning(this))
                             JoinForm(hasJoined, LocaleManager.getLanguage())
@@ -89,5 +102,40 @@ class MainActivity : ComponentActivity() {
     {
         return Database.readAccount(applicationContext) != null
     }
+
+    fun loadPlugins(
+        context: Context,
+        list: MutableList<NavigationItem>
+    ) {
+        val dir = File("${context.filesDir}/plugins/")
+        if(dir.exists() && dir.isDirectory) {
+            for(file in dir.listFiles()) {
+                if(file.isFile && file.extension == "apk") {
+                    loadPlugin(context, file.name, list)
+                }
+            }
+        }
+    }
+
+    fun loadPlugin(
+        context: Context,
+        filename: String,
+        list: MutableList<NavigationItem>
+    ){
+        try {
+            val file = "${context.filesDir}/plugins/$filename"
+            val clu = ClassLoaderUtils()
+            val pluginClass = clu.loadClass(file, context)
+            val plugin = pluginClass!!.newInstance() as ShiftPlugin
+            if (plugin is ShiftPlugin) {
+                for(index in plugin.menuTexts().indices)
+                    list.add(NavigationItem(plugin.icons()[index], plugin.menuTexts()[index], filename + plugin.menuTexts()[index].lowercase(), plugin, index))
+            }
+        } catch(e: FileNotFoundException) {
+            println("class not found ${e.message.toString()}")
+            e.printStackTrace()
+        }
+    }
+
 }
 

@@ -33,6 +33,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -59,6 +62,7 @@ import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.widgets.AutoSizeText
+import at.crowdware.shift.ui.widgets.NavigationItem
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.delay
 import org.w3c.dom.Text
@@ -239,7 +243,11 @@ fun ScoopPage() {
 fun MainPagePreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
-    ModalNavigationDrawer(navController = navController, selectedItem){ ScoopPage()}
+    val list = mutableListOf(
+        NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
+        NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+    )
+    ModalNavigationDrawer(navController = navController, list, selectedItem){ ScoopPage()}
 }
 
 

@@ -29,6 +29,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -55,6 +58,7 @@ import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Friend
 import at.crowdware.shift.logic.ShiftCommunity
 import at.crowdware.shift.logic.TransactionType
+import at.crowdware.shift.ui.widgets.NavigationItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -173,5 +177,9 @@ fun FriendlistItemPreview() {
 fun FriendlistPreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
-    ModalNavigationDrawer(navController = navController, selectedItem){ Friendlist() }
+    val list = mutableListOf(
+        NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
+        NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+    )
+    ModalNavigationDrawer(navController = navController, list, selectedItem){ Friendlist() }
 }

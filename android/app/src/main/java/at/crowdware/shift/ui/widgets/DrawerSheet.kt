@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
@@ -66,18 +67,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.R
+import at.crowdware.shift.ShiftPlugin
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
 
 data class MenuItem(val icon: ImageVector, val text: String, val id: String)
+data class NavigationItem(val icon: ImageVector, val text: String, val id: String, val plugin: ShiftPlugin?, val index: Int)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerSheet(drawerState: DrawerState, navController: NavController, selectedItem: MutableState<String>){
-    val items = listOf(
-        MenuItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home"),
-        MenuItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist"))
+fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: List<NavigationItem>, selectedItem: MutableState<String>){
+    //val items = listOf(
+    //    MenuItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home"),
+    //    MenuItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist"))
 
     val scope = rememberCoroutineScope()
 
@@ -112,18 +115,20 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
             }
         }
         Spacer(Modifier.height(12.dp))
-        items.forEach { item ->
-            NavigationDrawerItem(
-                icon = { Icon(item.icon, contentDescription = item.text) },
-                label = { Text(item.text) },
-                selected = item.text == selectedItem.value,
-                onClick = {
-                    scope.launch { drawerState.close() }
-                    selectedItem.value = item.text
-                    navController.navigate(item.id)
-                },
-                modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-            )
+        LazyColumn() {
+            items(items.size) { index ->
+                NavigationDrawerItem(
+                    icon = { Icon(items[index].icon, contentDescription = items[index].text) },
+                    label = { Text(items[index].text) },
+                    selected = items[index].text == selectedItem.value,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        selectedItem.value = items[index].text
+                        navController.navigate(items[index].id)
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+            }
         }
         DropDownListbox(
             label = stringResource(R.string.select_preferred_language),
@@ -138,9 +143,13 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, selected
 fun DrawerPreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Mate list") }
+    val list = mutableListOf(
+        NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
+        NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+    )
     ShiftComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), navController, selectedItem)
+            DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), navController, list, selectedItem)
         }
     }
 }

@@ -46,26 +46,35 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.ui.widgets.DrawerSheet
+import at.crowdware.shift.ui.widgets.NavigationItem
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun NavigationView() {
+fun NavigationView(items: MutableList<NavigationItem>) {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("home") }
     NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            ModalNavigationDrawer(navController, selectedItem){ ScoopPage()}
-        }
-        composable("friendlist") {
-            ModalNavigationDrawer(navController, selectedItem){ Friendlist()}
+        for(index in items.indices) {
+            composable(items[index].id) {
+                ModalNavigationDrawer(navController, items, selectedItem) {
+                    when(items[index].id) {
+                        "home" -> ScoopPage()
+                        "friendlist" -> Friendlist()
+                        else -> {
+                            val plugin = items[index].plugin
+                            plugin!!.pages()[items[index].index].invoke()
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalNavigationDrawer(navController: NavController, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
+fun ModalNavigationDrawer(navController: NavController, items: List<NavigationItem>, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -78,7 +87,7 @@ fun ModalNavigationDrawer(navController: NavController, selectedItem: MutableSta
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = { DrawerSheet(drawerState, navController, selectedItem) },
+        drawerContent = { DrawerSheet(drawerState, navController, items, selectedItem) },
         content = {
             Column() {
                 CenterAlignedTopAppBar(
