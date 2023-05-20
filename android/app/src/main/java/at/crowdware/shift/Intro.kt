@@ -52,8 +52,8 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
     val lang = LocaleManager.getLanguage()
     val index = LocaleManager.getLanguageIndex()
     var selectedLanguageCode by remember { mutableStateOf(lang) }
-    val onSelectedIndexChanged: (Int) -> Unit = { index ->
-        LocaleManager.setLocale(context,index)
+    val onSelectedIndexChanged: (Int) -> Unit = { idx ->
+        LocaleManager.setLocale(context,idx)
         selectedLanguageCode = LocaleManager.getLanguage()
         currentActivity?.recreate()
     }

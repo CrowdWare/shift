@@ -27,8 +27,9 @@
 + Plugin sample
 - create an easy to use API for payments
 - Payment functionionality
-- Plugin download from bittorrent
+- Plugin download from bittorrent and install
 - Key exchange via text or QR-code
+- settings, language survives recreate
 
 # App 3.0
 - Pay function using IPv8 trustchain
@@ -67,3 +68,4 @@ To keep the database small scooping blocks should only be stored once a day and 
 # Data usage
 Proposal: 300 B * 24h * 3 = 21.6 KB / Day * 365 days = 7.8 MB (better to book once a day)
 Aggreement: 260 B
+

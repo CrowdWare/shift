@@ -244,8 +244,8 @@ fun MainPagePreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
     val list = mutableListOf(
-        NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
-        NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+        NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
+        NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     ModalNavigationDrawer(navController = navController, list, selectedItem){ ScoopPage()}
 }

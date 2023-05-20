@@ -45,6 +45,6 @@
     <string name="please_enter_your_name">Veuillez entrer votre nom !</string>
     <string name="servive_start_request_message">Vous êtes sur le point de démarrer un service qui va aspirer du liquide en arrière-plan, même lorsque vous fermez cette application. Veuillez noter que lorsque vous arrêterez ce service, le processus d\'aspiration sera mis en pause jusqu\'à ce que vous relanciez l\'application.</string>
     <string name="button_read_all">Veuillez tout lire</string>
-
+    <string name="settings">Paramètres</string>
 
 </resources>

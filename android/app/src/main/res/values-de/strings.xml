@@ -44,4 +44,5 @@
     <string name="please_enter_your_name">Bitte geben Sie Ihren Namen ein!</string>
     <string name="servive_start_request_message">Du bist dabei, einen Dienst zu starten, der im Hintergrund Liquid schöpfen wird, auch wenn Du diese App schließen solltest. Bitte beachte, dass der Schöpfprozess angehalten wird, wenn Du diesen Dienst stoppen solltest, bis Du die App erneut startetest.</string>
     <string name="button_read_all">Bitte alles lesen</string>
+    <string name="settings">Einstellungen</string>
 </resources>

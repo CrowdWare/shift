@@ -45,5 +45,6 @@
     <string name="please_enter_your_name">Por favor, insira seu nome!</string>
     <string name="servive_start_request_message">Você está prestes a iniciar um serviço que irá coletar líquido em segundo plano, mesmo quando você fechar este aplicativo. Por favor, esteja ciente de que quando você parar este serviço, o processo de coleta será pausado até que você inicie o aplicativo novamente.</string>
     <string name="button_read_all">Por favor, leia tudo</string>
+    <string name="settings">Configurações</string>
 
 </resources>

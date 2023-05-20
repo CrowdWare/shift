@@ -104,9 +104,9 @@ fun DropDownListbox(label: String, stateHolder: DropDownListboxStateHolder, modi
             Box(
                 Modifier
                     .width(width)
-                    .height(height/*-8.dp*/)/*.offset(y=8.dp)*/
+                    .height(height)
                     .padding(top = 8.dp)
-                    .clickable(onClick = { stateHolder.onEnabled(true) })//.alpha(0f)
+                    .clickable(onClick = { stateHolder.onEnabled(true) })
             ) {
             }
         }

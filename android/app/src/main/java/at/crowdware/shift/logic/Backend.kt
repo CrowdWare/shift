@@ -270,14 +270,13 @@ class Backend {
                 val transactionType = TransactionType.fromInt(type)
                 if(block.isProposal && (transactionType == TransactionType.INITIAL_BOOKING
                             || transactionType == TransactionType.SCOOPED)) {
-                    list.add(0, Transaction(amount = amount.toULong(), date = d, type = transactionType!!))
+                    list.add(0, Transaction(amount = amount.toULong(), date = d, type = transactionType))
                 }
             }
             return list
         }
 
         fun getBalance(): ULong {
-            var amountOf20Minutes = 0.0f
             var balance: ULong = 0u
 
             if(!Network.isStarted)
@@ -299,7 +298,7 @@ class Backend {
                 balance += t.amount
             }
             val minutes = ShiftChainService.minutesScooping()
-            amountOf20Minutes = minutes / 20f
+            val amountOf20Minutes = minutes / 20f
 
             return balance + (calcGrowPer20Minutes().toFloat() * amountOf20Minutes).toULong()
         }

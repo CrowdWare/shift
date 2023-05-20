@@ -56,6 +56,7 @@ object LocaleManager {
     }
 
     fun init(context: Context, resources: Resources){
+        languages.clear()
         languages.add(resources.getString(R.string.language_english))
         languages.add(resources.getString(R.string.language_german))
         languages.add(resources.getString(R.string.language_spanish))

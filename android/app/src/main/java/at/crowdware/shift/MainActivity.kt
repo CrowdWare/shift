@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
@@ -78,8 +79,10 @@ class MainActivity : ComponentActivity() {
                     }
                     if (hasJoined.value) {
                         val list = mutableListOf(
-                            NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
-                            NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+                            NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
+                            NavigationItem("friendlist",Icons.Default.Face, stringResource(R.string.navigation_friendlist)),
+                            NavigationItem("settings", Icons.Default.Settings, stringResource(R.string.settings)),
+                            NavigationItem("divider")
                         )
                         loadPlugins(LocalContext.current, list)
                         NavigationView(list)
@@ -109,7 +112,7 @@ class MainActivity : ComponentActivity() {
     ) {
         val dir = File("${context.filesDir}/plugins/")
         if(dir.exists() && dir.isDirectory) {
-            for(file in dir.listFiles()) {
+            for(file in dir.listFiles()!!) {
                 if(file.isFile && file.extension == "apk") {
                     loadPlugin(context, file.name, list)
                 }
@@ -127,15 +130,12 @@ class MainActivity : ComponentActivity() {
             val clu = ClassLoaderUtils()
             val pluginClass = clu.loadClass(file, context)
             val plugin = pluginClass!!.newInstance() as ShiftPlugin
-            if (plugin is ShiftPlugin) {
-                for(index in plugin.menuTexts().indices)
-                    list.add(NavigationItem(plugin.icons()[index], plugin.menuTexts()[index], filename + plugin.menuTexts()[index].lowercase(), plugin, index))
-            }
+            for(index in plugin.menuTexts().indices)
+                list.add(NavigationItem(filename + plugin.menuTexts()[index].lowercase(), plugin.icons()[index], plugin.menuTexts()[index], plugin, index))
         } catch(e: FileNotFoundException) {
             println("class not found ${e.message.toString()}")
             e.printStackTrace()
         }
     }
-
 }
 

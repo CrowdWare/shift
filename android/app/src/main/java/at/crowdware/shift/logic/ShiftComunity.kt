@@ -119,7 +119,7 @@ class ShiftCommunity : Community() {
     }
 
     private fun onBroadcastMessage(packet: Packet) {
-        val (peer, payload) = packet.getAuthPayload(BroadcastMessage.Deserializer)
+        val (_, payload) = packet.getAuthPayload(BroadcastMessage.Deserializer)
         if(payload.access_code == access_code)
             sendNotification(context!!, payload.title, payload.message, payload.url)
     }

@@ -42,6 +42,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Divider
 import androidx.compose.material3.NavigationDrawerItemColors
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Surface
@@ -72,31 +73,12 @@ import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
 
-data class MenuItem(val icon: ImageVector, val text: String, val id: String)
-data class NavigationItem(val icon: ImageVector, val text: String, val id: String, val plugin: ShiftPlugin?, val index: Int)
+data class NavigationItem( val id: String, val icon: ImageVector? = null, val text: String = "", val plugin: ShiftPlugin? = null, val index: Int = 0)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: List<NavigationItem>, selectedItem: MutableState<String>){
-    //val items = listOf(
-    //    MenuItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home"),
-    //    MenuItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist"))
-
     val scope = rememberCoroutineScope()
-
-    //region vars for the DropDownlistbox
-    val context = LocalContext.current
-    val languages = LocaleManager.getLanguages()
-    val index = LocaleManager.getLanguageIndex()
-    var selectedLanguageCode by remember { mutableStateOf(LocaleManager.getLanguage()) }
-    val currentActivity = LocalContext.current as? Activity
-    val onSelectedIndexChanged: (Int) -> Unit = { idx ->
-        LocaleManager.setLocale(context, idx)
-        selectedLanguageCode = LocaleManager.getLanguage()
-        currentActivity?.recreate()
-    }
-    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
-    //endregion
 
     ModalDrawerSheet(modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.8).dp)) {
         Box(modifier = Modifier
@@ -117,23 +99,29 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: L
         Spacer(Modifier.height(12.dp))
         LazyColumn() {
             items(items.size) { index ->
-                NavigationDrawerItem(
-                    icon = { Icon(items[index].icon, contentDescription = items[index].text) },
-                    label = { Text(items[index].text) },
-                    selected = items[index].text == selectedItem.value,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        selectedItem.value = items[index].text
-                        navController.navigate(items[index].id)
-                    },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                )
+                if(items[index].id == "divider") {
+                    Divider()
+                }
+                else {
+                    NavigationDrawerItem(
+                        icon = {
+                            Icon(
+                                items[index].icon!!,
+                                contentDescription = items[index].text
+                            )
+                        },
+                        label = { Text(items[index].text) },
+                        selected = items[index].text == selectedItem.value,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            selectedItem.value = items[index].text
+                            navController.navigate(items[index].id)
+                        },
+                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                    )
+                }
             }
         }
-        DropDownListbox(
-            label = stringResource(R.string.select_preferred_language),
-            stateHolder = stateHolderLanguage,
-            modifier = Modifier.padding(16.dp))
     }
 }
 
@@ -144,8 +132,8 @@ fun DrawerPreview() {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Mate list") }
     val list = mutableListOf(
-        NavigationItem(Icons.Default.Home, stringResource(R.string.navigation_home), "home", null, 0),
-        NavigationItem(Icons.Default.Face, stringResource(R.string.navigation_friendlist), "friendlist", null, 0)
+        NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
+        NavigationItem("", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     ShiftComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {

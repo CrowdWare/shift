@@ -61,6 +61,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
                     when(items[index].id) {
                         "home" -> ScoopPage()
                         "friendlist" -> Friendlist()
+                        "settings" -> Settings()
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()

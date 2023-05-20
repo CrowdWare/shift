@@ -45,5 +45,6 @@
     <string name="please_enter_your_name">Bonvolu entajpi vian nomon!</string>
     <string name="servive_start_request_message">Vi estas proksima komenci servo, kiu helpos forviŝi likvon en la fono, eĉ kiam vi fermas tiun ĉi aplikaĵon. Bonvolu konscii, ke se vi ĉesigos tiun servon, la viŝprocezo estos paŭzita ĝis vi rekomencos la aplikaĵon.</string>
     <string name="button_read_all">Bonvolu legi ĉion</string>
+    <string name="settings">Agordoj</string>
 
 </resources>
