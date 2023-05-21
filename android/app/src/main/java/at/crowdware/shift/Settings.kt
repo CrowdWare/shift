@@ -53,13 +53,58 @@ import at.crowdware.shift.logic.Plugin
 import at.crowdware.shift.logic.PluginManager
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
+import com.darkrockstudios.libraries.mpfilepicker.AndroidFile
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
+import com.darkrockstudios.libraries.mpfilepicker.MPFile
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+
+
+import android.content.ContentResolver
+import android.net.Uri
+import android.provider.OpenableColumns
+import android.database.Cursor
+import android.widget.Toast
+
+fun getFileNameFromUri(contentResolver: ContentResolver, uri: Uri): String? {
+    var fileName: String? = null
+    val cursor = contentResolver.query(uri, null, null, null, null)
+    cursor?.use {
+        if (it.moveToFirst()) {
+            val displayNameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (displayNameIndex != -1) {
+                fileName = it.getString(displayNameIndex)
+            }
+        }
+    }
+    return fileName
+}
+
+fun copyFileFromUri(contentResolver: ContentResolver, uri: Uri, destinationDirectory: File): Boolean {
+    val inputStream = contentResolver.openInputStream(uri)
+    inputStream?.use { input ->
+        val fileName = getFileNameFromUri(contentResolver, uri)
+        if (fileName != null) {
+            val destinationPath = Paths.get(destinationDirectory.absolutePath, fileName)
+            Files.copy(input, destinationPath, StandardCopyOption.REPLACE_EXISTING)
+            return true
+        } else {
+          return false
+        }
+    }
+    return false
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings() {
     val items = PluginManager.getPluginList()
+    val pluginPath = LocalContext.current.filesDir.path + "/plugins/"
+    val applicationContext = LocalContext.current.applicationContext
 
     //region vars for the DropDownlistbox
     val context = LocalContext.current
@@ -75,14 +120,36 @@ fun Settings() {
     //endregion
 
     fun onDelete(item: Plugin) {
-        // uninstall APK
+        val file = File(pluginPath + item.filename)
+        println("to delete: ${file.path}")
+        file.delete()
+        Toast.makeText(context, "The plugin has been removed. You should restart your app now.", Toast.LENGTH_LONG).show()
     }
 
     var showFilePicker by remember { mutableStateOf(false) }
 
     FilePicker(showFilePicker, fileExtensions = listOf("apk") ) {
         if(it != null) {
-            println("file: ${it!!.path}")
+            val uri = Uri.parse(it.path)
+            val contentResolver: ContentResolver = applicationContext.contentResolver
+            val pp = File(pluginPath)
+            if(!pp.exists()) {
+                pp.mkdir()
+            }
+            try {
+                if(copyFileFromUri(contentResolver, uri, pp)) {
+                    Toast.makeText(
+                        context,
+                        "The plugin has been installed. You should restart your app now.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else
+                    Toast.makeText(context, "There was an error copying the plugin.", Toast.LENGTH_LONG).show()
+            }
+            catch (e: Exception) {
+                Toast.makeText(context, "There was an error installing the plugin.", Toast.LENGTH_LONG).show()
+            }
+
         }
         showFilePicker = false
     }
