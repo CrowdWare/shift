@@ -144,5 +144,7 @@ dependencies {
 
     implementation files('../../ipv8/ipv8-android/build/outputs/aar/ipv8-android-debug.aar')
     implementation files('../../ipv8/ipv8/build/libs/ipv8.jar')
+
+    implementation("com.darkrockstudios:mpfilepicker:1.1.0")
 }
 

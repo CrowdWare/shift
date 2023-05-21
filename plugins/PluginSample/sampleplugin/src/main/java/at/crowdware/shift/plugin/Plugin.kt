@@ -13,6 +13,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import at.crowdware.shift.ShiftPlugin
 
 class Plugin : ShiftPlugin {
+    override fun getName(): String {
+        return "Sample Plugin"
+    }
+
+    override fun getVersion(): String {
+        return "1.0.0"
+    }
+
     override fun menuTexts(): List<String> {
         return listOf("Sample Plugin 1", "Sample Plugin 2", "Sample Plugin 3", "Sample Plugin 4")
     }

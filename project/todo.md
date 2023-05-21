@@ -62,10 +62,15 @@
 
 
 # Problem to solve
-To keep the database small scooping blocks should only be stored once a day and chached in the account file in between.
++ To keep the database small scooping blocks should only be stored once a day and chached in the account file in between.
 
 
 # Data usage
-Proposal: 300 B * 24h * 3 = 21.6 KB / Day * 365 days = 7.8 MB (better to book once a day)
+Scooping:   300 B * 365 days = 109.5 KB / year
+Proposal:   300 B
 Aggreement: 260 B
 
+# Promotion
+- https://www.producthunt.com/
+- https://www.reddit.com/
+- https://news.ycombinator.com/

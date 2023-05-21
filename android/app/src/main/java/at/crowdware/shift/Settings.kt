@@ -1,32 +1,25 @@
 package at.crowdware.shift
 
 import android.app.Activity
-import android.app.LauncherActivity
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -56,16 +49,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.logic.LocaleManager
+import at.crowdware.shift.logic.Plugin
+import at.crowdware.shift.logic.PluginManager
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.darkrockstudios.libraries.mpfilepicker.FilePicker
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings() {
-    val items = listOf("Item 1", "Item 2", "Item 3", "Item 4")
-    val scope = rememberCoroutineScope()
+    val items = PluginManager.getPluginList()
+
     //region vars for the DropDownlistbox
     val context = LocalContext.current
     val languages = LocaleManager.getLanguages()
@@ -78,6 +73,19 @@ fun Settings() {
     val stateHolderLanguage =
         rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
     //endregion
+
+    fun onDelete(item: Plugin) {
+        // uninstall APK
+    }
+
+    var showFilePicker by remember { mutableStateOf(false) }
+
+    FilePicker(showFilePicker, fileExtensions = listOf("apk") ) {
+        if(it != null) {
+            println("file: ${it!!.path}")
+        }
+        showFilePicker = false
+    }
 
     Column(
         modifier = Modifier
@@ -108,36 +116,27 @@ fun Settings() {
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                //.background(Color.LightGray.copy(alpha = 0.3f))
         ) {
             items(items) { item ->
                 var deleted by remember { mutableStateOf(false) }
-                var unread by remember { mutableStateOf(true) }
-                /*val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it == DismissValue.DismissedToEnd) unread = !unread
 
-                        if (it == DismissValue.DismissedToStart) {
-                            deleted = true
-                            return@rememberDismissState true
-                        }
-                        return@rememberDismissState false
-                    }
-                )*/
-                /*
-                if (deleted) {
-                    scope.launch {
-                        delay(500)
-
-                        //onDelete(item)
-                    }
-                }*/
                 AnimatedVisibility(
                     visible = !deleted,
                     enter = expandVertically(),
                     exit = shrinkVertically()
                 ) {
-                    val dismissState = rememberDismissState()
+                    var unread by remember { mutableStateOf(false) }
+                    val dismissState = rememberDismissState(
+                        confirmValueChange = { dismissValue ->
+                            if(dismissValue == DismissValue.DismissedToStart) {
+                                deleted = true
+                                onDelete(item)
+                                true
+                            } else {
+                                false
+                            }
+                        }
+                    )
                     SwipeToDismiss(
                         state = dismissState,
                         background = {
@@ -145,19 +144,15 @@ fun Settings() {
                                 dismissState.dismissDirection ?: return@SwipeToDismiss
                             val color by animateColorAsState(
                                 when (dismissState.targetValue) {
-                                    DismissValue.Default -> Color.LightGray
-                                    DismissValue.DismissedToEnd -> Color.Green
                                     DismissValue.DismissedToStart -> Color.Red
+                                    else -> Color.LightGray
                                 }
                             )
                             val alignment = when (direction) {
-                                DismissDirection.StartToEnd -> Alignment.CenterStart
                                 DismissDirection.EndToStart -> Alignment.CenterEnd
+                                else -> Alignment.CenterStart
                             }
-                            val icon = when (direction) {
-                                DismissDirection.StartToEnd -> Icons.Default.Done
-                                DismissDirection.EndToStart -> Icons.Default.Delete
-                            }
+                            val icon = Icons.Default.Delete
                             val scale by animateFloatAsState(
                                 if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
                             )
@@ -176,25 +171,24 @@ fun Settings() {
                             }
                         },
                         dismissContent = {
-                            Card (
-                                /*elevation = animateDpAsState(if (dismissState.dismissDirection != null) {4.dp} else {0.dp}).value*/
-                            ) {
+                            Card () {
                                 ListItem(
                                     headlineContent = {
-                                        Text(item, fontWeight = if (unread) FontWeight.Bold else null,
-                                            textDecoration = if (unread) TextDecoration.None else TextDecoration.LineThrough,)
+                                        Text(item.displayName, fontWeight = FontWeight.Bold)
                                     },
-                                    supportingContent = { Text("Swipe me left or right!") }
+                                    supportingContent = { Text("Swipe left to uninstall.") },
+                                    trailingContent = {Text(item.version)}
                                 )
                                 Divider()
                             }
-                        }
+                        },
+                        directions = setOf(DismissDirection.EndToStart)
                     )
                 }
             }
         }
         Spacer(modifier = Modifier.height(4.dp))
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { showFilePicker = true }) {
             Text("Install plugin")
         }
     }

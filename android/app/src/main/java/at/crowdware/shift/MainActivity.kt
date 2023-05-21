@@ -44,6 +44,7 @@ import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.Network
 import at.crowdware.shift.logic.PersistanceManager
+import at.crowdware.shift.logic.PluginManager
 import at.crowdware.shift.service.ShiftChainService
 import at.crowdware.shift.ui.widgets.NavigationItem
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
@@ -84,7 +85,7 @@ class MainActivity : ComponentActivity() {
                             NavigationItem("settings", Icons.Default.Settings, stringResource(R.string.settings)),
                             NavigationItem("divider")
                         )
-                        loadPlugins(LocalContext.current, list)
+                        PluginManager.loadPlugins(LocalContext.current, list)
                         NavigationView(list)
                     }
                     else
@@ -104,38 +105,6 @@ class MainActivity : ComponentActivity() {
     fun hasJoined(applicationContext: Context): Boolean
     {
         return Database.readAccount(applicationContext) != null
-    }
-
-    fun loadPlugins(
-        context: Context,
-        list: MutableList<NavigationItem>
-    ) {
-        val dir = File("${context.filesDir}/plugins/")
-        if(dir.exists() && dir.isDirectory) {
-            for(file in dir.listFiles()!!) {
-                if(file.isFile && file.extension == "apk") {
-                    loadPlugin(context, file.name, list)
-                }
-            }
-        }
-    }
-
-    fun loadPlugin(
-        context: Context,
-        filename: String,
-        list: MutableList<NavigationItem>
-    ){
-        try {
-            val file = "${context.filesDir}/plugins/$filename"
-            val clu = ClassLoaderUtils()
-            val pluginClass = clu.loadClass(file, context)
-            val plugin = pluginClass!!.newInstance() as ShiftPlugin
-            for(index in plugin.menuTexts().indices)
-                list.add(NavigationItem(filename + plugin.menuTexts()[index].lowercase(), plugin.icons()[index], plugin.menuTexts()[index], plugin, index))
-        } catch(e: FileNotFoundException) {
-            println("class not found ${e.message.toString()}")
-            e.printStackTrace()
-        }
     }
 }
 
