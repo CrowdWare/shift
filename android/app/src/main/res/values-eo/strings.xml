@@ -2,7 +2,7 @@
 <resources>
     <string name="icon">Shift-Ikono</string>
     <string name="website_url">http://shift.crowdware.at</string>
-    <string name="invite_message">"SHIFT estas nova aplikado por Android por krei tutmondan bazon por baznivelo. Nun akiru viajn unuajn monerojn, sekvante tiun ĉi ligilon %s, elŝutu la aplikaĵon, komencu ĝin kaj uzas tiun ĉi ID-on %s kiel invitleton."</string>
+    <string name="invite_message" formatted="false">"SHIFT estas nova aplikado por Android por krei tutmondan bazon por baznivelo. Nun akiru viajn unuajn monerojn, sekvante tiun ĉi ligilon %s, elŝutu la aplikaĵon, komencu ĝin kaj uzas tiun ĉi ID-on %s kiel invitleton."</string>
     <string name="button_start_scooping">Startigi ŝarĝadon</string>
     <string name="button_invite_friends">Inviti amikojn</string>
     <string name="balance">Saldo</string>

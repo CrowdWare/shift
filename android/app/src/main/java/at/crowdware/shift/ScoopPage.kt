@@ -65,7 +65,6 @@ import at.crowdware.shift.ui.widgets.AutoSizeText
 import at.crowdware.shift.ui.widgets.NavigationItem
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.delay
-import org.w3c.dom.Text
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -165,18 +164,12 @@ fun ScoopPage() {
             }
         }
         Text(errorMessage, color = Color.Red)
-        if(!Backend.getAccount().isScooping) {
+        if(!isScooping) {
             Button(
                 onClick = { openDialog.value = true },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = !isScooping
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    if (isScooping) {
-                        stringResource(R.string.button_scooping_started)
-                    } else {
-                        stringResource(R.string.button_start_scooping)
-                    }, style = TextStyle(fontSize = 20.sp)
+                Text(stringResource(R.string.button_start_scooping), style = TextStyle(fontSize = 20.sp)
                 )
             }
         }

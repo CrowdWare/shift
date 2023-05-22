@@ -1,7 +1,7 @@
 <resources>
     <string name="icon">Shift-Icon</string>
     <string name="website_url">http://shift.crowdware.at</string>
-    <string name="invite_message">"SHIFT ist eine neue App für Android unter anderem zur Schaffung eines weltweiten Grundeinkommens. Hol dir jetzt deine ersten Coins, indem du diesem Link folgst: %s, die App herunterlädst, startest und diese ID %s als Einladungscode verwendendest."</string>
+    <string name="invite_message" formatted="false">"SHIFT ist eine neue App für Android unter anderem zur Schaffung eines weltweiten Grundeinkommens. Hol dir jetzt deine ersten Coins, indem du diesem Link folgst: %s, die App herunterlädst, startest und diese ID %s als Einladungscode verwendendest."</string>
     <string name="button_start_scooping">Schöpfen starten</string>
     <string name="button_invite_friends">Freunde einladen</string>
     <string name="balance">Kontostand</string>
