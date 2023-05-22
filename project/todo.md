@@ -27,8 +27,9 @@
 + Plugin sample
 - create an easy to use API for payments
 - Payment functionionality
-- Key exchange via text or QR-code
+- Key exchange via text or QR-code or TOFU
 - settings, language survives recreate
+
 
 # App 3.0
 - Pay function using IPv8 trustchain
@@ -48,8 +49,9 @@
 - Tutorial to install the app via APK download
 - Tutorial to install a plugin 
 
-# Webservice
-+ Make it possible to have multiple level of referers
+# Security
+Maybe also use trust on first use (TOFU) for messaging and sign the contact as TOFU_CONTACT.
+
 
 # Desktop App
 - A desktop app can be used to transfer liquid from mobile to desktop to be able to save the data.
@@ -59,6 +61,17 @@
 - https://github.com/Tribler/trustchain-superapp
 - https://github.com/Tribler/kotlin-ipv8
 - https://github.com/Tribler/py-ipv8
+
+# Contact Matt Skala or so else from BlockchainLab
+info@tudelft.nl 
+https://www.blockchain-lab.org
+
+Questions: 
+- Do we really need the DiscoveryCommunity, because it throws exceptions? (Maybe DOS attacks)
+- How to really make payments with proposal and agreement. 
+- Why broadcast the pair?
+- Why crawl the trustchain? Maybe check the integrity of the chain? Check the amount of scooped liquid? 
+- How to create our own TrustChainCommunity/DiscoveryCommunity?
 
 
 # Additional use cases for the app
