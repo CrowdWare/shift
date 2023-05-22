@@ -27,7 +27,6 @@
 + Plugin sample
 - create an easy to use API for payments
 - Payment functionionality
-- Plugin download from bittorrent and install
 - Key exchange via text or QR-code
 - settings, language survives recreate
 
@@ -36,34 +35,30 @@
 - Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
 - DHT is already implemented in IPv8 for Python 
 - Posts for micro blogging
-  
+
+# Project
+- Find someone who starts the app and continues the development
+- Or, start the app alone and be sure that the main app can stay unmodified (errorless)
 
 # Web
 - Introduction to animate people to join (video)
 + New screen print of the app
 + Translate to Esperanto, French, Spanish, Portuguese
+- Tutorial to create plugins
+- Tutorial to install the app via APK download
+- Tutorial to install a plugin 
 
 # Webservice
 + Make it possible to have multiple level of referers
-
-# Project
-+ Involve stakeholder to get active
 
 # Desktop App
 - A desktop app can be used to transfer liquid from mobile to desktop to be able to save the data.
 - It could also be used as DHT node to store posts and messages for chat and blogging
 
-
 # P2P
 - https://github.com/Tribler/trustchain-superapp
 - https://github.com/Tribler/kotlin-ipv8
 - https://github.com/Tribler/py-ipv8
-
-
-
-# Problem to solve
-+ To keep the database small scooping blocks should only be stored once a day and chached in the account file in between.
-
 
 # Data usage
 Scooping:   300 B * 365 days = 109.5 KB / year
@@ -74,3 +69,4 @@ Aggreement: 260 B
 - https://www.producthunt.com/
 - https://www.reddit.com/
 - https://news.ycombinator.com/
+- https://www.willmcgugan.com/blog/tech/post/promoting-your-open-source-project-or-how-to-get-your-first-1k-github-stars/
