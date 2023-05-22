@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shift
+package at.crowdware.shift.ui.pages
 
 import android.app.Application
 import android.content.Intent
@@ -59,6 +59,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.widgets.AutoSizeText
@@ -240,7 +242,7 @@ fun MainPagePreview() {
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
-    ModalNavigationDrawer(navController = navController, list, selectedItem){ ScoopPage()}
+    ModalNavigationDrawer(navController = navController, list, selectedItem){ ScoopPage() }
 }
 
 

@@ -38,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.ClassLoaderUtils
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
@@ -46,11 +45,12 @@ import at.crowdware.shift.logic.Network
 import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shift.logic.PluginManager
 import at.crowdware.shift.service.ShiftChainService
+import at.crowdware.shift.ui.pages.Intro
+import at.crowdware.shift.ui.pages.JoinForm
 import at.crowdware.shift.ui.widgets.NavigationItem
+import at.crowdware.shift.ui.widgets.NavigationView
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
-import java.io.File
-import java.io.FileNotFoundException
 
 class MainActivity : ComponentActivity() {
 

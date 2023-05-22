@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shift
+package at.crowdware.shift.ui.pages
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -49,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import at.crowdware.shift.R
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
@@ -57,8 +58,8 @@ import at.crowdware.shift.logic.Backend
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
-    var context = LocalContext.current.applicationContext
-    var res = LocalContext.current.resources
+    val context = LocalContext.current.applicationContext
+    val res = LocalContext.current.resources
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }

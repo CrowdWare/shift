@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shift
+package at.crowdware.shift.ui.pages
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
@@ -53,6 +53,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Friend
 import at.crowdware.shift.ui.widgets.NavigationItem

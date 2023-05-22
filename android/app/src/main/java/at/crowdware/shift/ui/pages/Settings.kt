@@ -1,4 +1,4 @@
-package at.crowdware.shift
+package at.crowdware.shift.ui.pages
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
@@ -59,6 +59,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.widget.Toast
+import at.crowdware.shift.R
 
 fun getFileNameFromUri(contentResolver: ContentResolver, uri: Uri): String? {
     var fileName: String? = null

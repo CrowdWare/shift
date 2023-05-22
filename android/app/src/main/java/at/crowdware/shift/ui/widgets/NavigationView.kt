@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shift
+package at.crowdware.shift.ui.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -45,8 +45,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import at.crowdware.shift.ui.widgets.DrawerSheet
-import at.crowdware.shift.ui.widgets.NavigationItem
+import at.crowdware.shift.R
+import at.crowdware.shift.ui.pages.Friendlist
+import at.crowdware.shift.ui.pages.ScoopPage
+import at.crowdware.shift.ui.pages.Settings
 import kotlinx.coroutines.launch
 
 
