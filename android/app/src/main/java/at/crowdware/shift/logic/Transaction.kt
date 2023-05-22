@@ -26,9 +26,14 @@ enum class TransactionType(val value: UInt) {
     INITIAL_BOOKING(1u),
     SCOOPED(2u);
 
+    override fun toString(): String {
+        return value.toString()
+    }
+
     companion object {
-        fun fromInt(value: Int): TransactionType? {
-            return values().find { it.value.toInt() == value }
+        fun fromString(valueString: String): TransactionType {
+            return values().find { it.value.toString() == valueString }
+                ?: throw IllegalArgumentException("Invalid TransactionType value: $valueString")
         }
     }
 }

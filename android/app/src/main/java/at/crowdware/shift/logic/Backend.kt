@@ -28,23 +28,19 @@ import at.crowdware.shift.BuildConfig
 import at.crowdware.shift.R
 import at.crowdware.shift.service.ShiftChainService
 import com.loopj.android.http.AsyncHttpClient
-import com.loopj.android.http.SyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import cz.msebera.android.httpclient.entity.ByteArrayEntity
 import cz.msebera.android.httpclient.message.BasicHeader
 import nl.tudelft.ipv8.android.IPv8Android
 import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
-import nl.tudelft.ipv8.attestation.trustchain.EMPTY_PK
+import nl.tudelft.ipv8.attestation.trustchain.TrustChainBlock
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.keyvault.PrivateKey
 import nl.tudelft.ipv8.util.hexToBytes
 import org.json.JSONObject
-import java.math.BigInteger
-import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
@@ -57,7 +53,6 @@ class Backend {
         private const val secretKey = BuildConfig.SECRET_KEY
         private const val algorithm = BuildConfig.ALGORYTHM
         private const val user_agent = "Shift 1.0"
-        private const val MAX_TRANSACTIONS = 100
         private var account = Account()
 
         fun ByteArray.toHex() : String{
@@ -134,16 +129,14 @@ class Backend {
             account.isScooping = true
             account.scooping = (System.currentTimeMillis() / 1000).toULong()
             Database.saveAccount(application.applicationContext)
-            setScooping(application, null, null)
+            setScooping(application)
             addTransactionToTrustChain(1000, TransactionType.INITIAL_BOOKING)
         }
 
         fun setScooping(
-            context: Context,
-            onScoopingSucceed: (() -> Unit)?,
-            onScoopingFailed: ((String?) -> Unit)?
+            context: Context
         ) {
-            val client = SyncHttpClient()
+            val client = AsyncHttpClient()
             val url = serviceUrl + "setscooping"
             val jsonParams = JSONObject()
             jsonParams.put("key", encryptStringGCM(api_key))
@@ -159,8 +152,8 @@ class Backend {
                     val jsonResponse = JSONObject(responseString!!)
                     val isError = jsonResponse.getBoolean("isError")
                     val message = jsonResponse.getString("message")
-                    if(isError && onScoopingFailed != null)
-                        onScoopingFailed(message)
+                    if(isError)
+                        Log.e("setScooping", message)
                     else {
                         val count_1 = jsonResponse.getInt("count_1")
                         val count_2 = jsonResponse.getInt("count_2")
@@ -170,16 +163,12 @@ class Backend {
                         account.level_2_count = count_2.toUInt()
                         account.level_3_count = count_3.toUInt()
                         Database.saveAccount(context)
-                        if(onScoopingSucceed != null)
-                            onScoopingSucceed()
                     }
                 }
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
-                    if (onScoopingFailed != null)
-                        onScoopingFailed("There was a network error, try again later.")
                     if(responseString != null)
-                        Log.e("Shift", responseString)
+                        Log.e("setScooping", responseString)
                 }
             })
         }
@@ -235,7 +224,6 @@ class Backend {
                         onJoinFailed(message)
                     else {
                         Database.saveAccount(context)
-                        //addTransactionToTrustChain(1000L, TransactionType.INITIAL_BOOKING)
                         onJoinSucceed()
                     }
                 }
@@ -262,15 +250,11 @@ class Backend {
 
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             for(block in trustchain.database.getAllBlocks()) {
-                val amount: Long = block.transaction["amount"] as? Long ?: 0L
-                val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
-                val date: Long = block.transaction["date"] as? Long ?: 0L
-                val instant = Instant.ofEpochSecond(date)
-                val d = instant.atZone(ZoneOffset.UTC).toLocalDate()
-                val transactionType = TransactionType.fromInt(type)
-                if(block.isProposal && (transactionType == TransactionType.INITIAL_BOOKING
-                            || transactionType == TransactionType.SCOOPED)) {
-                    list.add(0, Transaction(amount = amount.toULong(), date = d, type = transactionType))
+                val (amount, type, date) = parseTransaction(block)
+
+                if(block.isProposal && (type == TransactionType.INITIAL_BOOKING
+                            || type == TransactionType.SCOOPED)) {
+                    list.add(0, Transaction(amount = amount, date = date, type = type))
                 }
             }
             return list
@@ -285,12 +269,10 @@ class Backend {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             // collect amounts from blockchain
             for(block in trustchain.database.getAllBlocks()) {
-                val amount: Long = block.transaction["amount"] as? Long ?: 0L
-                val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
-                val transactionType = TransactionType.fromInt(type)
-                if(block.isProposal && (transactionType == TransactionType.INITIAL_BOOKING
-                            || transactionType == TransactionType.SCOOPED)) {
-                    balance += amount.toULong()
+                val (amount, type, _) = parseTransaction(block)
+                if(block.isProposal && (type == TransactionType.INITIAL_BOOKING
+                            || type == TransactionType.SCOOPED)) {
+                    balance += amount
                 }
             }
             // and also from daily transactions
@@ -318,7 +300,7 @@ class Backend {
             account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))
             account.scooping = 0u
             Database.saveAccount(context)
-            setScooping(context, null, null)
+            setScooping(context)
         }
         fun getMaxGrow(): Long {
             return 165L + 10 * 25 + 100 * 5 + 1000 * 1 * 24
@@ -342,13 +324,11 @@ class Backend {
                     block.isAgreement -> "agreement"
                     else ->              "unknown  "
                 }
-                val amount: Long = block.transaction["amount"] as? Long ?: 0L
-                val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
-                val transactionType = TransactionType.fromInt(type)
-                balance += amount.toULong()
-                println("Block: $transactionType ${block.transaction} ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                val (amount, _, _) = parseTransaction(block)
+                balance += amount
+                println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
             }
-            var i: Int = 0
+            var i = 0
             for(t in account.transactions) {
                 balance += t.amount
                 i++
@@ -357,12 +337,21 @@ class Backend {
             println("Balance: $balance")
         }
 
+        fun parseTransaction(block: TrustChainBlock): Triple<ULong, TransactionType, LocalDate> {
+            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
+            val amount = (block.transaction["amount"] as String).toULong()
+            val type = TransactionType.fromString(block.transaction["type"] as String)
+            val date = LocalDate.parse(block.transaction["date"] as String, formatter)
+            return Triple(amount, type, date)
+        }
+
         fun addTransactionToTrustChain(amount: Long, type: TransactionType) {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
+            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
             val transaction = mapOf(
-                "amount" to amount,
-                "date" to (System.currentTimeMillis() / 1000),
-                "type" to type.value.toInt())
+                "amount" to amount.toString(),
+                "date" to LocalDate.now().format(formatter),
+                "type" to type.toString())
             val publicKey = IPv8Android.getInstance().myPeer.publicKey.keyToBin()
 
             // self signed so send to your own public key

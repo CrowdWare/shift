@@ -44,8 +44,7 @@ import nl.tudelft.ipv8.peerdiscovery.strategy.PeriodicSimilarity
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomChurn
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomWalk
 import nl.tudelft.ipv8.sqldelight.Database
-import java.lang.Math.abs
-import java.math.BigInteger
+import java.time.LocalDate
 
 
 object Network {
@@ -123,14 +122,11 @@ object Network {
             ): ValidationResult {
                 if (block.isAgreement)
                     return ValidationResult.Valid
+                val (amount, type, date) = Backend.parseTransaction(block)
 
-                val amount: Long = block.transaction["amount"] as? Long ?: 0L
-                val type: Int = (block.transaction["type"] as? BigInteger)?.toInt() ?: 0
-                val date: Long = block.transaction["date"] as? Long ?: 0L
-                val transactionType = TransactionType.fromInt(type)
-                return if (amount <= Backend.getMaxGrow()
-                    && (transactionType == TransactionType.SCOOPED || transactionType == TransactionType.INITIAL_BOOKING)
-                    && kotlin.math.abs((System.currentTimeMillis() / 1_000) - date) < 60 * 60 * 24 ) {
+                return if (amount <= Backend.getMaxGrow().toULong()
+                    && (type == TransactionType.SCOOPED || type == TransactionType.INITIAL_BOOKING)
+                    && date > LocalDate.now().minusDays(1) && date < LocalDate.now().plusDays(1)) {
                     Log.d("TrustChainDemo", "Validating block true")
                     ValidationResult.Valid
                 } else {
