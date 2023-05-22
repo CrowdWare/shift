@@ -28,6 +28,7 @@ import at.crowdware.shift.BuildConfig
 import at.crowdware.shift.R
 import at.crowdware.shift.service.ShiftChainService
 import com.loopj.android.http.AsyncHttpClient
+import com.loopj.android.http.SyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import cz.msebera.android.httpclient.entity.ByteArrayEntity
@@ -129,14 +130,18 @@ class Backend {
             account.isScooping = true
             account.scooping = (System.currentTimeMillis() / 1000).toULong()
             Database.saveAccount(application.applicationContext)
-            setScooping(application)
+            setScooping(application, true)
             addTransactionToTrustChain(1000, TransactionType.INITIAL_BOOKING)
         }
 
         fun setScooping(
-            context: Context
+            context: Context,
+            async: Boolean = false
         ) {
-            val client = AsyncHttpClient()
+            val client = if(async)
+                AsyncHttpClient()
+            else
+                SyncHttpClient()
             val url = serviceUrl + "setscooping"
             val jsonParams = JSONObject()
             jsonParams.put("key", encryptStringGCM(api_key))
