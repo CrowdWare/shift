@@ -23,6 +23,7 @@ import android.app.Application
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.getSystemService
+import at.crowdware.shift.communities.ShiftCommunity
 import at.crowdware.shift.service.ShiftChainService
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import nl.tudelft.ipv8.IPv8Configuration

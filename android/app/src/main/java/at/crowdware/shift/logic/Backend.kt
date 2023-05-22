@@ -281,8 +281,8 @@ class Backend {
             }
             val minutes = ShiftChainService.minutesScooping()
             val amountOf20Minutes = minutes / 20f
-
-            return balance + (calcGrowPer20Minutes().toFloat() * amountOf20Minutes).toULong()
+            balance += (calcGrowPer20Minutes().toFloat() * amountOf20Minutes).toULong()
+            return balance
         }
 
         fun addLiquid(context: Context, minutes: UInt) {

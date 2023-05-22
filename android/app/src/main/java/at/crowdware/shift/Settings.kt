@@ -23,7 +23,6 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.DismissValue
@@ -34,7 +33,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +42,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,20 +50,14 @@ import at.crowdware.shift.logic.Plugin
 import at.crowdware.shift.logic.PluginManager
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
-import com.darkrockstudios.libraries.mpfilepicker.AndroidFile
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
-import com.darkrockstudios.libraries.mpfilepicker.MPFile
 import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
-
-
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.database.Cursor
 import android.widget.Toast
 
 fun getFileNameFromUri(contentResolver: ContentResolver, uri: Uri): String? {
@@ -123,10 +114,13 @@ fun Settings() {
         val file = File(pluginPath + item.filename)
         println("to delete: ${file.path}")
         file.delete()
-        Toast.makeText(context, "The plugin has been removed. You should restart your app now.", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.the_plugin_has_been_removed_you_should_restart_your_app_now), Toast.LENGTH_LONG).show()
     }
 
     var showFilePicker by remember { mutableStateOf(false) }
+    val t1 = stringResource(R.string.the_plugin_has_been_installed_you_should_restart_your_app_now)
+    val t2 = stringResource(R.string.there_was_an_error_copying_the_plugin)
+    val t3 = stringResource(R.string.there_was_an_error_installing_the_plugin)
 
     FilePicker(showFilePicker, fileExtensions = listOf("apk") ) {
         if(it != null) {
@@ -140,14 +134,14 @@ fun Settings() {
                 if(copyFileFromUri(contentResolver, uri, pp)) {
                     Toast.makeText(
                         context,
-                        "The plugin has been installed. You should restart your app now.",
+                        t1,
                         Toast.LENGTH_LONG
                     ).show()
                 } else
-                    Toast.makeText(context, "There was an error copying the plugin.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, t2, Toast.LENGTH_LONG).show()
             }
             catch (e: Exception) {
-                Toast.makeText(context, "There was an error installing the plugin.", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, t3, Toast.LENGTH_LONG).show()
             }
 
         }
@@ -192,7 +186,6 @@ fun Settings() {
                     enter = expandVertically(),
                     exit = shrinkVertically()
                 ) {
-                    var unread by remember { mutableStateOf(false) }
                     val dismissState = rememberDismissState(
                         confirmValueChange = { dismissValue ->
                             if(dismissValue == DismissValue.DismissedToStart) {

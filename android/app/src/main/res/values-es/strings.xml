@@ -3,7 +3,6 @@
     <string name="icon">Icono de Shift</string>
     <string name="website_url">http://shift.crowdware.at</string>
     <string name="invite_message">"SHIFT es una nueva aplicación para Android, entre otras cosas, para crear un ingreso básico universal en todo el mundo. Obtén tus primeras monedas ahora siguiendo este enlace: %s, descarga la aplicación, iníciala y usa este ID %s como código de invitación."</string>
-    <string name="button_scooping_started">Recogiendo...</string>
     <string name="button_start_scooping">Comenzar a recoger</string>
     <string name="button_invite_friends">Invitar amigos</string>
     <string name="balance">Saldo</string>
@@ -46,5 +45,9 @@
     <string name="servive_start_request_message">Estás a punto de iniciar un servicio que va a recolectar líquido en segundo plano, incluso cuando cierres esta aplicación. Por favor, ten en cuenta que cuando detengas este servicio, el proceso de recolección se pausará hasta que vuelvas a iniciar la aplicación.</string>
     <string name="button_read_all">Por favor, lee todo</string>
     <string name="settings">Configuración</string>
+    <string name="the_plugin_has_been_removed_you_should_restart_your_app_now">El complemento ha sido eliminado. Debes reiniciar tu aplicación ahora.</string>
+    <string name="the_plugin_has_been_installed_you_should_restart_your_app_now">El complemento ha sido instalado. Debes reiniciar tu aplicación ahora.</string>
+    <string name="there_was_an_error_copying_the_plugin">Hubo un error al copiar el complemento.</string>
+    <string name="there_was_an_error_installing_the_plugin">Hubo un error al instalar el complemento.</string>
 
 </resources>

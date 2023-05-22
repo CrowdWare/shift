@@ -2,7 +2,6 @@
     <string name="icon">Shift-Icon</string>
     <string name="website_url">http://shift.crowdware.at</string>
     <string name="invite_message">"SHIFT ist eine neue App für Android unter anderem zur Schaffung eines weltweiten Grundeinkommens. Hol dir jetzt deine ersten Coins, indem du diesem Link folgst: %s, die App herunterlädst, startest und diese ID %s als Einladungscode verwendendest."</string>
-    <string name="button_scooping_started">Schöpfen gestartet</string>
     <string name="button_start_scooping">Schöpfen starten</string>
     <string name="button_invite_friends">Freunde einladen</string>
     <string name="balance">Kontostand</string>
@@ -45,4 +44,9 @@
     <string name="servive_start_request_message">Du bist dabei, einen Dienst zu starten, der im Hintergrund Liquid schöpfen wird, auch wenn Du diese App schließen solltest. Bitte beachte, dass der Schöpfprozess angehalten wird, wenn Du diesen Dienst stoppen solltest, bis Du die App erneut startetest.</string>
     <string name="button_read_all">Bitte alles lesen</string>
     <string name="settings">Einstellungen</string>
+    <string name="the_plugin_has_been_removed_you_should_restart_your_app_now">Das Plugin wurde entfernt. Du solltest jetzt deine App neu starten.</string>
+    <string name="the_plugin_has_been_installed_you_should_restart_your_app_now">Das Plugin wurde installiert. Du solltest jetzt deine App neu starten.</string>
+    <string name="there_was_an_error_copying_the_plugin">Beim Kopieren des Plugins ist ein Fehler aufgetreten.</string>
+    <string name="there_was_an_error_installing_the_plugin">Bei der Installation des Plugins ist ein Fehler aufgetreten.</string>
+
 </resources>

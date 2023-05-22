@@ -3,7 +3,6 @@
     <string name="icon">Shift Icon</string>
     <string name="website_url">http://shift.crowdware.at</string>
     <string name="invite_message">"SHIFT is a new app for Android, among other things, to create a worldwide basic income. Get your first coins now by following this link: %s, downloading the app, starting it, and using this ID %s as an invitation code."</string>
-    <string name="button_scooping_started">Scooping started</string>
     <string name="button_start_scooping">Start Scooping</string>
     <string name="button_invite_friends">Invite friends</string>
     <string name="balance">Balance</string>
@@ -46,5 +45,8 @@
     <string name="servive_start_request_message">You are about to start a service which will scoop liquid in the background, even when you close this app. Please be aware, that when you stop this service the scooping process will be paused until you start the app again.</string>
     <string name="button_read_all">Please read all</string>
     <string name="settings">Settings</string>
-
+    <string name="the_plugin_has_been_removed_you_should_restart_your_app_now">The plugin has been removed. You should restart your app now.</string>
+    <string name="the_plugin_has_been_installed_you_should_restart_your_app_now">The plugin has been installed. You should restart your app now.</string>
+    <string name="there_was_an_error_copying_the_plugin">There was an error copying the plugin.</string>
+    <string name="there_was_an_error_installing_the_plugin">There was an error installing the plugin.</string>
 </resources>

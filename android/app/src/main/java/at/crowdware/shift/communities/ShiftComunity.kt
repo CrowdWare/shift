@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shift.logic
+package at.crowdware.shift.communities
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -34,8 +34,6 @@ import at.crowdware.shift.R
 import nl.tudelft.ipv8.IPv4Address
 import nl.tudelft.ipv8.Community
 import nl.tudelft.ipv8.Peer
-import nl.tudelft.ipv8.android.IPv8Android
-import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.messaging.Deserializable
 import nl.tudelft.ipv8.messaging.Packet
 import nl.tudelft.ipv8.messaging.Serializable
@@ -44,7 +42,7 @@ import java.util.Date
 
 fun sendNotification(context: Context, title: String, message: String, url: String = "") {
     val NOTIFICATION_ID = 123
-    val channelId = "your_channel_id"
+    val channelId = "broadcast_channel"
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -73,10 +71,19 @@ fun sendNotification(context: Context, title: String, message: String, url: Stri
         builder.setContentIntent(pendingIntent)
         builder.addAction(action)
     }
-    with(NotificationManagerCompat.from(context)) {
+    try {
+        with(NotificationManagerCompat.from(context)) {
             notify(NOTIFICATION_ID, builder.build())
+        }
+    }
+    catch(e:SecurityException) {
+        if (e.message != null)
+            Log.e("sendNotification", e.message!!)
+        else
+            Log.e("sendNotification", "A SecurityException occurred")
     }
 }
+
 class BroadcastMessage(val title: String, val message: String, val url: String = "", val access_code: String) : Serializable {
     override fun serialize(): ByteArray {
         val serializedData = "$title|$message|$url|$access_code"
@@ -113,13 +120,14 @@ class ShiftCommunity : Community() {
     fun broadcastMessage(title: String, message: String, url:String, access_code:String ) {
         for (peer in getPeers()) {
             val packet = serializePacket(MESSAGE_ID_BROADCAST, BroadcastMessage(title,
-                message, url, access_code))
+                message, url, access_code)
+            )
             send(peer.address, packet)
         }
     }
 
     private fun onBroadcastMessage(packet: Packet) {
-        val (_, payload) = packet.getAuthPayload(BroadcastMessage.Deserializer)
+        val (_, payload) = packet.getAuthPayload(BroadcastMessage)
         if(payload.access_code == access_code)
             sendNotification(context!!, payload.title, payload.message, payload.url)
     }

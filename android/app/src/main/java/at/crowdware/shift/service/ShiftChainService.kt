@@ -23,7 +23,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import at.crowdware.shift.MainActivity
@@ -53,6 +52,8 @@ class ShiftChainService : IPv8Service() {
             val account = Backend.getAccount()
             val scoopingSeconds = time - account.scooping
             val serviceSeconds = time - startTime
+            if(account.scooping == 0UL && startTime == 0UL )
+                return 0f
             return  min(
                 scoopingSeconds.toFloat() / 60,
                 serviceSeconds.toFloat() / 60

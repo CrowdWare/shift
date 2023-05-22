@@ -60,6 +60,12 @@
 - https://github.com/Tribler/kotlin-ipv8
 - https://github.com/Tribler/py-ipv8
 
+
+# Additional use cases for the app
+https://github.com/imartinez/privateGPT
+Lets train our model with real facts without the influence of mainstream media aka paid journalism.
+The database must be hosted on a server in this case?
+
 # Data usage
 Scooping:   300 B * 365 days = 109.5 KB / year
 Proposal:   300 B
@@ -70,3 +76,15 @@ Aggreement: 260 B
 - https://www.reddit.com/
 - https://news.ycombinator.com/
 - https://www.willmcgugan.com/blog/tech/post/promoting-your-open-source-project-or-how-to-get-your-first-1k-github-stars/
+
+# Book
+Write a book about this project, so that someone else is able to continue my work.
+Topics
+- Why do we need our own currency at all?
+- Why wouldn't we need this app at all?
+- How to build the app
+- How to bootstrap the app
+- How to build multiple circles of trust and combine them later.
+- How to install plugins
+- How to build plugins
+- How to use the payments API 

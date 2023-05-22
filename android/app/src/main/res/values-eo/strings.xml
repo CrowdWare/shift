@@ -3,7 +3,6 @@
     <string name="icon">Shift-Ikono</string>
     <string name="website_url">http://shift.crowdware.at</string>
     <string name="invite_message">"SHIFT estas nova aplikado por Android por krei tutmondan bazon por baznivelo. Nun akiru viajn unuajn monerojn, sekvante tiun ĉi ligilon %s, elŝutu la aplikaĵon, komencu ĝin kaj uzas tiun ĉi ID-on %s kiel invitleton."</string>
-    <string name="button_scooping_started">Ŝarĝado startis</string>
     <string name="button_start_scooping">Startigi ŝarĝadon</string>
     <string name="button_invite_friends">Inviti amikojn</string>
     <string name="balance">Saldo</string>
@@ -46,5 +45,9 @@
     <string name="servive_start_request_message">Vi estas proksima komenci servo, kiu helpos forviŝi likvon en la fono, eĉ kiam vi fermas tiun ĉi aplikaĵon. Bonvolu konscii, ke se vi ĉesigos tiun servon, la viŝprocezo estos paŭzita ĝis vi rekomencos la aplikaĵon.</string>
     <string name="button_read_all">Bonvolu legi ĉion</string>
     <string name="settings">Agordoj</string>
+    <string name="the_plugin_has_been_removed_you_should_restart_your_app_now">La kromprogramo estis forigita. Vi devus restarti vian aplikaĵon nun.</string>
+    <string name="the_plugin_has_been_installed_you_should_restart_your_app_now">La kromprogramo estis instaliĝita. Vi devus restarti vian aplikaĵon nun.</string>
+    <string name="there_was_an_error_copying_the_plugin">Okazis eraro dum kopio de la kromprogramo.</string>
+    <string name="there_was_an_error_installing_the_plugin">Okazis eraro dum instalo de la kromprogramo.</string>
 
 </resources>
