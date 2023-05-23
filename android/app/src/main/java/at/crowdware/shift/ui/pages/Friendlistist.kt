@@ -52,12 +52,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Friend
 import at.crowdware.shift.ui.widgets.NavigationItem
+import java.time.LocalDate
 
 @Composable
 fun Friendlist() {
@@ -118,7 +118,7 @@ fun Friendlist() {
         ) {
             Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
         }
-        Button(onClick = { Backend.dumpBlocks() }) {
+        Button(onClick = { Backend.calculateWorth(3000UL, LocalDate.now().minusDays(2554)) }) {
             Text(text = "Dump")
         }
     }
@@ -167,11 +167,11 @@ fun FriendlistItemPreview() {
     showSystemUi = true,)
 @Composable
 fun FriendlistPreview() {
-    val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
     val list = mutableListOf(
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
-    ModalNavigationDrawer(navController = navController, list, selectedItem){ Friendlist() }
+
+    ModalNavigationDrawer(list, selectedItem){ Friendlist() }
 }

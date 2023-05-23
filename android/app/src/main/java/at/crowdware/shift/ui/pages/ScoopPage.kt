@@ -21,9 +21,6 @@ package at.crowdware.shift.ui.pages
 
 import android.app.Application
 import android.content.Intent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,13 +29,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -58,24 +56,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.TransactionType
-import at.crowdware.shift.ui.widgets.AutoSizeText
+import at.crowdware.shift.ui.theme.OnSecondary
+import at.crowdware.shift.ui.theme.Secondary
 import at.crowdware.shift.ui.widgets.NavigationItem
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.delay
-import java.text.NumberFormat
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import at.crowdware.shift.ui.widgets.BalanceDisplay
+import at.crowdware.shift.ui.widgets.Bookings
+import at.crowdware.shift.ui.widgets.HourMinutesPicker
+import at.crowdware.shift.ui.widgets.TotalDisplay
 
-
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScoopPage() {
-    var displayMilliliter by remember { mutableStateOf(true) }
+fun ScoopPage(isPreview: Boolean = false) {
     val errorMessage by remember { mutableStateOf("") }
     val openDialog = remember { mutableStateOf(false) }
     val sendIntent: Intent = Intent().apply {
@@ -93,10 +88,18 @@ fun ScoopPage() {
     val transactions = remember { mutableStateListOf(*Backend.getTransactions().toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
-    val application: Application = LocalContext.current.applicationContext as Application
+    val application = LocalContext.current.applicationContext
     var balance by remember { mutableStateOf(Backend.getBalance()) }
     var isScooping by remember { mutableStateOf(Backend.getAccount().isScooping) }
+    var isReceiveMode by remember { mutableStateOf(false) }
+    var hours = remember { mutableStateOf(0) }
+    var minutes = remember { mutableStateOf(0) }
+    var total = remember { mutableStateOf(0UL) }
 
+    if(isPreview) {
+        isScooping = true
+        isReceiveMode = true
+    }
     LaunchedEffect(true) {
         while (true) {
             isScooping = Backend.getAccount().isScooping
@@ -107,15 +110,17 @@ fun ScoopPage() {
                     transactions.add(t)
                 }
             }
-            delay(1000L)
+            delay(3000L)
         }
     }
+
     ServiceStartRequest(
         openDialog = openDialog.value,
         onDismiss = { openDialog.value = false },
         onConfirm = {
             openDialog.value = false
-            Backend.startScooping(application)
+            if(application is Application)
+                Backend.startScooping(application)
         }
     )
 
@@ -125,109 +130,78 @@ fun ScoopPage() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(
-            Modifier
-                .fillMaxWidth()
-                .height(140.dp)
-                .clickable(onClick = { displayMilliliter = !displayMilliliter })
-        ) {
-            Box(
+        if(isReceiveMode) {
+            BalanceDisplay(balance, true)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("Click below to change hours and minutes",
+                modifier = Modifier.fillMaxWidth(),
+                style = TextStyle(fontSize = 18.sp))
+            Spacer(modifier = Modifier.height(8.dp))
+            HourMinutesPicker(hours, minutes, total)
+            Spacer(modifier = Modifier.height(8.dp))
+            TotalDisplay(total.value)
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(value = "",
+                onValueChange = {} ,
+                placeholder = {Text("Enter the purpose of the transaction")},
+                singleLine = false,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(4.dp), contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    stringResource(R.string.balance), fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontSize = 18.sp),
-                    modifier = Modifier.align(Alignment.TopStart)
-                )
-                AutoSizeText(
-                    if (displayMilliliter) {
-                        NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
-                            maximumFractionDigits = 3
-                        }.format(balance.toDouble())
-                    } else {
-                        NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
-                            maximumFractionDigits = 0
-                        }.format((balance.toDouble() / 1000.0f))
-                    },
-                    style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
-                )
-                Text(
-                    text = if (displayMilliliter) {
-                        "LMC (ml)"
-                    } else {
-                        "LMC (liter)"
-                    },
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.BottomEnd)
-                )
+                    .weight(1f)
+                    .fillMaxWidth())
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+                Text("Continue", style = TextStyle(fontSize = 20.sp))
             }
-        }
-        Text(errorMessage, color = Color.Red)
-        if(!isScooping) {
-            Button(
-                onClick = { openDialog.value = true },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.button_start_scooping), style = TextStyle(fontSize = 20.sp)
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
-            style = TextStyle(fontSize = 18.sp),
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(Color.LightGray.copy(alpha = 0.3f))
-        ) {
-            items(transactions.size) { index ->
-                val transaction = transactions[index]
-                val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                Row {
-                    Column {
-
-                        Text(
-                            transaction.date.format(formatter),
-                            style = TextStyle(fontSize = 18.sp)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+        } else {
+            BalanceDisplay(balance)
+            Text(errorMessage, color = Color.Red)
+            if (isScooping) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Button(onClick = {isReceiveMode = true}, modifier = Modifier.weight(1f)) {
+                        Text("Receive", style = TextStyle(fontSize = 20.sp))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    val txt = when (transaction.type) {
-                        TransactionType.SCOOPED -> stringResource(R.string.transaction_liquid_scooped)
-                        TransactionType.INITIAL_BOOKING -> stringResource(R.string.transaction_initial_liquid)
-                    }
-                    Text(txt, style = TextStyle(fontSize = 18.sp))
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(4.dp)
-                    ) {
-                        Text(
-                            "${transaction.amount / 1000u} l", style = TextStyle(fontSize = 18.sp),
-                            modifier = Modifier.align(Alignment.CenterEnd)
+                    Button(
+                        onClick = {},
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Secondary,
+                            contentColor = OnSecondary
                         )
+                    ) {
+                        Text("Give", style = TextStyle(fontSize = 20.sp))
                     }
                 }
+
+            } else {
+                Button(
+                    onClick = { openDialog.value = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        stringResource(R.string.button_start_scooping),
+                        style = TextStyle(fontSize = 20.sp)
+                    )
+                }
             }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { context.startActivity(shareIntent) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                stringResource(R.string.button_invite_friends),
-                style = TextStyle(fontSize = 20.sp)
+                stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
+                style = TextStyle(fontSize = 18.sp),
+                modifier = Modifier.align(Alignment.Start)
             )
+            Spacer(modifier = Modifier.height(4.dp))
+            Bookings(transactions, modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { context.startActivity(shareIntent) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    stringResource(R.string.button_invite_friends),
+                    style = TextStyle(fontSize = 20.sp)
+                )
+            }
         }
     }
 }
@@ -236,15 +210,13 @@ fun ScoopPage() {
     showSystemUi = true,)
 @Composable
 fun MainPagePreview() {
-    val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Home") }
     val list = mutableListOf(
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
-    ModalNavigationDrawer(navController = navController, list, selectedItem){ ScoopPage() }
+    ModalNavigationDrawer(list, selectedItem){ ScoopPage(true) }
 }
-
 
 @Composable
 fun ServiceStartRequest(openDialog: Boolean, onDismiss: () -> Unit, onConfirm: () -> Unit) {
@@ -261,13 +233,4 @@ fun ServiceStartRequest(openDialog: Boolean, onDismiss: () -> Unit, onConfirm: (
             dismissButton = { TextButton(onClick = onDismiss ) { Text("Dismiss") } }
         )
     }
-}
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewDialog() {
-    val openDialog = remember { mutableStateOf(false) }
-    ServiceStartRequest(
-        openDialog = openDialog.value,
-        onDismiss = { openDialog.value = false },
-        onConfirm = { openDialog.value = false })
 }

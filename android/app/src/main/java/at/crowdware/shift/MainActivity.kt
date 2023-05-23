@@ -86,6 +86,8 @@ class MainActivity : ComponentActivity() {
                             NavigationItem("divider")
                         )
                         PluginManager.loadPlugins(LocalContext.current, list)
+                        //list.add(NavigationItem(id="show_gratitude"))
+                        //list.add(NavigationItem(id="receive_gratitude"))
                         NavigationView(list)
                     }
                     else

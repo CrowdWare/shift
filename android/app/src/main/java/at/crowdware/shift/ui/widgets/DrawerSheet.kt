@@ -19,13 +19,11 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.widgets
 
-import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,41 +41,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Divider
-import androidx.compose.material3.NavigationDrawerItemColors
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.R
 import at.crowdware.shift.ShiftPlugin
-import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
 
 data class NavigationItem( val id: String, val icon: ImageVector? = null, val text: String = "", val plugin: ShiftPlugin? = null, val index: Int = 0)
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: List<NavigationItem>, selectedItem: MutableState<String>){
+fun DrawerSheet(drawerState: DrawerState, items: List<NavigationItem>, selectedItem: MutableState<String>){
     val scope = rememberCoroutineScope()
 
     ModalDrawerSheet(modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.8).dp)) {
@@ -102,7 +91,7 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: L
                 if(items[index].id == "divider") {
                     Divider()
                 }
-                else {
+                else if (items[index].text.isNotEmpty()) {
                     NavigationDrawerItem(
                         icon = {
                             Icon(
@@ -115,7 +104,7 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: L
                         onClick = {
                             scope.launch { drawerState.close() }
                             selectedItem.value = items[index].text
-                            navController.navigate(items[index].id)
+                            NavigationManager.navigate(items[index].id)
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
@@ -125,11 +114,9 @@ fun DrawerSheet(drawerState: DrawerState, navController: NavController, items: L
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showSystemUi = true)
 @Composable
 fun DrawerPreview() {
-    val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("Mate list") }
     val list = mutableListOf(
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
@@ -137,7 +124,7 @@ fun DrawerPreview() {
     )
     ShiftComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), navController, list, selectedItem)
+            DrawerSheet(drawerState = rememberDrawerState(DrawerValue.Closed), list, selectedItem)
         }
     }
 }

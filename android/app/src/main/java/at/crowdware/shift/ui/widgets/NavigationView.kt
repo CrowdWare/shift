@@ -41,29 +41,34 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.pages.Friendlist
+import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
+import at.crowdware.shift.ui.pages.ShowGratitude
 import kotlinx.coroutines.launch
-
 
 @Composable
 fun NavigationView(items: MutableList<NavigationItem>) {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("home") }
+
+    NavigationManager.setNavController(navController)
+
     NavHost(navController = navController, startDestination = "home") {
         for(index in items.indices) {
             composable(items[index].id) {
-                ModalNavigationDrawer(navController, items, selectedItem) {
+                ModalNavigationDrawer(items, selectedItem) {
                     when(items[index].id) {
                         "home" -> ScoopPage()
                         "friendlist" -> Friendlist()
                         "settings" -> Settings()
+                        "show_gratitude" -> ShowGratitude()
+                        "receive_gratitude" -> ReceiveGratitude()
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()
@@ -77,7 +82,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalNavigationDrawer(navController: NavController, items: List<NavigationItem>, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
+fun ModalNavigationDrawer(items: List<NavigationItem>, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -90,7 +95,7 @@ fun ModalNavigationDrawer(navController: NavController, items: List<NavigationIt
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = { DrawerSheet(drawerState, navController, items, selectedItem) },
+        drawerContent = { DrawerSheet(drawerState, items, selectedItem) },
         content = {
             Column() {
                 CenterAlignedTopAppBar(

@@ -46,6 +46,8 @@ import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import kotlin.math.min
+import java.time.temporal.ChronoUnit
+import kotlin.math.pow
 
 class Backend {
     companion object {
@@ -274,13 +276,13 @@ class Backend {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             // collect amounts from blockchain
             for(block in trustchain.database.getAllBlocks()) {
-                val (amount, type, _) = parseTransaction(block)
+                val (amount, type, date) = parseTransaction(block)
                 if(block.isProposal && (type == TransactionType.INITIAL_BOOKING
                             || type == TransactionType.SCOOPED)) {
-                    balance += amount
+                    balance += calculateWorth(amount, date)
                 }
             }
-            // and also from daily transactions
+            // and also from daily transactions, no need to calculate worth
             for(t in account.transactions) {
                 balance += t.amount
             }
@@ -361,6 +363,23 @@ class Backend {
 
             // self signed so send to your own public key
             trustchain.createProposalBlock("LMC", transaction, publicKey)
+        }
+
+        /**
+         * Calculates the worth of an amount with demurrage rate.
+         *
+         * @param amount The initial amount of coins in milli liter.
+         * @param transactionDate The date of the transaction or the date of scooping.
+         * @return The current worth of the amount in milli liter.
+         */
+        fun calculateWorth(amount: ULong, transactionDate: LocalDate): ULong {
+            val currentDate = LocalDate.now()
+            val daysPassed = ChronoUnit.DAYS.between(transactionDate, currentDate)
+            val demurrageRate = 0.27 / 100
+            val amountInLiter = amount / 1000u
+            var worth = (1000 * (1 - demurrageRate).pow(daysPassed.toInt())).toULong()
+            worth *= amountInLiter
+            return worth
         }
     }
 }

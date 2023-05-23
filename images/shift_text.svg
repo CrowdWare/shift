@@ -168,10 +168,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4806639"
-     inkscape:cx="186.06518"
+     inkscape:cx="165.804"
      inkscape:cy="256.64163"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g848"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
@@ -202,7 +202,7 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     style="opacity:1"
+     style="display:inline;opacity:1"
      transform="translate(45.840364,5.766967)">
     <g
        id="g848"
@@ -211,14 +211,14 @@
        inkscape:export-ydpi="96"
        style="filter:url(#filter6250)">
       <ellipse
-         style="fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         style="display:inline;fill:#cacaca;fill-opacity:0.682353;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          id="path1009"
          cx="110.79039"
          cy="144.95657"
          rx="155.39159"
          ry="159.31967" />
       <ellipse
-         style="fill:#ffffff;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         style="display:inline;fill:#ffffff;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          id="path992"
          cx="110.79041"
          cy="144.95659"
@@ -227,22 +227,22 @@
       <g
          id="g986"
          transform="translate(-19.276781,-5.2916671)"
-         style="fill:#28a9e0;fill-opacity:1">
+         style="display:inline;fill:#0c8ce9;fill-opacity:1">
         <path
            id="rect917"
-           style="fill:#28a9e0;fill-opacity:1;stroke-width:1.04978"
+           style="display:inline;fill:#0c8ce9;fill-opacity:1;stroke-width:1.04978"
            d="M 514.16602,132.12305 405.06836,241.2207 764.68359,600.83594 405.06836,960.44922 514.16602,1069.5449 873.7793,709.93164 982.87695,600.83398 873.7793,491.73828 Z M 330.92383,315.76953 221.82617,424.86719 399.61328,602.65234 221.82617,780.43945 330.92383,889.53711 508.71094,711.75 617.80664,602.65234 508.71094,493.55664 Z"
            transform="matrix(0.26458333,0,0,0.26458333,-25.456707,-9.2037229)" />
       </g>
     </g>
     <path
-       style="fill:#000000;stroke-width:0.264583"
+       style="display:inline;fill:#000000;stroke-width:0.264583"
        id="path915"
        d="" />
     <g
        aria-label="SHIFT"
        id="text878"
-       style="font-size:21.6486px;line-height:1.25;opacity:0.681093;fill:#c9c9c9;stroke-width:0.541212;filter:url(#filter5512)"
+       style="font-size:21.6486px;line-height:1.25;display:inline;opacity:0.681093;fill:#c9c9c9;stroke-width:0.541212;filter:url(#filter5512)"
        transform="matrix(0.58033551,0,0,0.58033551,-99.681528,60.945963)">
       <path
          d="m 115.17222,99.133156 q -4.84557,0 -8.65098,-0.837191 -3.78005,-0.837192 -6.545314,-2.080294 l 1.953444,-9.056888 h 1.06552 q 2.61305,2.384727 6.1394,3.703937 3.52635,1.293842 7.58546,1.293842 4.16059,0 6.11404,-1.116255 1.95344,-1.141625 1.95344,-3.247288 0,-0.786452 -0.3298,-1.34458 -0.30443,-0.583497 -1.21773,-1.141624 -0.9133,-0.558128 -2.51158,-1.090886 -1.5729,-0.558128 -4.08448,-1.268472 -2.76526,-0.761083 -4.97241,-1.649013 -2.18177,-0.88793 -3.7293,-2.105663 -1.54754,-1.243102 -2.35936,-2.866746 -0.78645,-1.623644 -0.78645,-3.881523 0,-5.682754 4.99778,-9.056888 5.02314,-3.399504 13.72486,-3.399504 4.18596,0 7.88989,0.684974 3.72931,0.684975 6.31699,1.851969 l -1.85197,8.701716 h -1.04014 q -1.97882,-1.826599 -5.22611,-3.044332 -3.22191,-1.243102 -7.0527,-1.243102 -3.75467,0 -5.8096,1.090885 -2.05492,1.090886 -2.05492,3.018963 0,0.88793 0.30443,1.471427 0.30443,0.583497 1.2431,1.141624 0.81182,0.507389 2.56232,1.116256 1.75049,0.583496 4.10984,1.217732 6.34236,1.699752 9.05689,3.983001 2.71453,2.283249 2.71453,6.190142 0,3.272657 -1.47143,5.758862 -1.47142,2.486204 -4.05911,4.03374 -2.71452,1.649013 -6.16477,2.410096 -3.45024,0.761083 -7.81378,0.761083 z"

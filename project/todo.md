@@ -29,6 +29,11 @@
 - Payment functionionality
 - Key exchange via text or QR-code or TOFU
 - settings, language survives recreate
+- bugfix: see crashlog
+- Firebase for push notifications and crash reports (only in the beginning, later we kick it out)
+- Writing a block after day change should use the date from the day before. 
+- The balance on the display is less than the amount in the blocks + in shift.db
+- Display value from blocks can be cached...only load daily blocks from shift.db 
 
 
 # App 3.0
@@ -101,3 +106,7 @@ Topics
 - How to install plugins
 - How to build plugins
 - How to use the payments API 
+
+
+# Demurage
+The demurage of the liquid per day is 0.27% so that an amount of 1000 ml is worth below 1.0 after 7 years (2555 days)

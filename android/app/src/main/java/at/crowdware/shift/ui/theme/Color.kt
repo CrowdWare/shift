@@ -21,10 +21,9 @@ package at.crowdware.shift.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFF46A4F0)
-val PurpleGrey80 = Color(0xFF1CB0F3)
-val Pink80 = Color(0xFF229DF0)
-
-val Purple40 = Color(0xFF28A9E0)
-val PurpleGrey40 = Color(0xFF507788)
-val Pink40 = Color(0xFF2196F3)
+val Primary = Color(0xFF0c8ce9)
+val Secondary = Color(0xFF07B256)
+val Tertiary = Color(0xFFB1CAEE)
+val OnTertiary = Color(0xFF292929)
+val OnPrimary = Color(0xFFF7F4F4)
+val OnSecondary = Color(0xFFF1EDED)
