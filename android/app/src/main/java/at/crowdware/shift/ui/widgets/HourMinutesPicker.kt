@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,43 +37,36 @@ fun HourMinutesPicker(
     minutes: MutableState<Int>,
     total: MutableState<ULong>
 ) {
-    var showTimePicker by remember { mutableStateOf(false) }
-    if (showTimePicker) {
-        TimePickerDialog(onDismissRequest = { showTimePicker = false },
-            onTimeChange = {
-                hours.value = it.hour
-                minutes.value = it.minute
-                total.value = (hours.value * 60 + minutes.value).toULong()
-                showTimePicker = false},
-            is24HourFormat = true,
-            initialTime = LocalTime.of(hours.value,minutes.value,0))
-    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp).clickable { showTimePicker = true }
+            .height(160.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(4.dp), contentAlignment = Alignment.Center
-        ) {
-            Text(
-                "Time", fontWeight = FontWeight.Bold,
-                style = TextStyle(fontSize = 18.sp),
-                modifier = Modifier.align(Alignment.TopStart)
+        Row (modifier = Modifier.fillMaxWidth()){
+            Spacer(modifier = Modifier.width(8.dp))
+            CircularValuePicker(
+                modifier = Modifier.size(250.dp).weight(0.5f),
+                initialValue = hours.value,
+                maxValue = 12,
+                unit = "h",
+                onPositionChange = { position ->
+                    hours.value = position
+                    total.value = (hours.value * 60 + minutes.value).toULong()
+                }
             )
-            Row(modifier = Modifier.align(Alignment.Center).padding(8.dp)) {
-                Text(hours.value.toString(), fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontSize = 70.sp, textAlign = TextAlign.Right), modifier = Modifier.alignByBaseline())
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("h", style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Left), modifier = Modifier.alignByBaseline())
-                Spacer(modifier = Modifier.width(32.dp))
-                Text(minutes.value.toString(), fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontSize = 70.sp, textAlign = TextAlign.Right), modifier = Modifier.alignByBaseline())
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("min", style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Left), modifier = Modifier.alignByBaseline())
-            }
+            Spacer(modifier = Modifier.width(16.dp))
+            CircularValuePicker(
+                modifier = Modifier.size(250.dp).weight(0.5f),
+                initialValue = minutes.value,
+                maxValue = 12,
+                stepSize = 5,
+                unit = "m",
+                onPositionChange = { position ->
+                    minutes.value = position * 5
+                    total.value = (hours.value * 60 + minutes.value).toULong()
+                }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
@@ -80,8 +74,8 @@ fun HourMinutesPicker(
 @Preview
 @Composable
 fun HourMinutesPickerPreview() {
-    val hours = remember { mutableStateOf(8) }
-    val minutes = remember { mutableStateOf(30) }
+    val hours = remember { mutableStateOf(3) }
+    val minutes = remember { mutableStateOf(30 / 5) }
     val total = remember { mutableStateOf(360UL) }
     HourMinutesPicker(hours, minutes, total)
 }

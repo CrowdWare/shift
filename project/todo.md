@@ -36,7 +36,10 @@
 - Display value from blocks can be cached...only load daily blocks from shift.db 
 - We have unwanted blocks in the blockchain like message=pak, we might need a different service ID to form a separate trustchain 
 - Also think of an own discovery overlay, for above reason
-
+- We need a better hour and minute picker design
+- All webservice calls errors ignored, if WebService is offline(in case someone wants to dissturb us with DOS attacks on the server) 
+- Stromverbrauchswarnung from Android, how to avoid this?
+- Multiple Themes to choose from (i personally like orange on dark background)
 
 # App 3.0
 - Pay function using IPv8 trustchain

@@ -49,7 +49,6 @@ import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
-import at.crowdware.shift.ui.pages.ShowGratitude
 import kotlinx.coroutines.launch
 
 @Composable
@@ -67,7 +66,6 @@ fun NavigationView(items: MutableList<NavigationItem>) {
                         "home" -> ScoopPage()
                         "friendlist" -> Friendlist()
                         "settings" -> Settings()
-                        "show_gratitude" -> ShowGratitude()
                         "receive_gratitude" -> ReceiveGratitude()
                         else -> {
                             val plugin = items[index].plugin

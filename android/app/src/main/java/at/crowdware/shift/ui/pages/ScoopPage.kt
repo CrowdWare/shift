@@ -66,7 +66,9 @@ import kotlinx.coroutines.delay
 import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.Bookings
 import at.crowdware.shift.ui.widgets.HourMinutesPicker
+import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,14 +93,10 @@ fun ScoopPage(isPreview: Boolean = false) {
     val application = LocalContext.current.applicationContext
     var balance by remember { mutableStateOf(Backend.getBalance()) }
     var isScooping by remember { mutableStateOf(Backend.getAccount().isScooping) }
-    var isReceiveMode by remember { mutableStateOf(false) }
-    var hours = remember { mutableStateOf(0) }
-    var minutes = remember { mutableStateOf(0) }
-    var total = remember { mutableStateOf(0UL) }
 
     if(isPreview) {
         isScooping = true
-        isReceiveMode = true
+
     }
     LaunchedEffect(true) {
         while (true) {
@@ -113,7 +111,6 @@ fun ScoopPage(isPreview: Boolean = false) {
             delay(3000L)
         }
     }
-
     ServiceStartRequest(
         openDialog = openDialog.value,
         onDismiss = { openDialog.value = false },
@@ -123,85 +120,61 @@ fun ScoopPage(isPreview: Boolean = false) {
                 Backend.startScooping(application)
         }
     )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if(isReceiveMode) {
-            BalanceDisplay(balance, true)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text("Click below to change hours and minutes",
-                modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(fontSize = 18.sp))
-            Spacer(modifier = Modifier.height(8.dp))
-            HourMinutesPicker(hours, minutes, total)
-            Spacer(modifier = Modifier.height(8.dp))
-            TotalDisplay(total.value)
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(value = "",
-                onValueChange = {} ,
-                placeholder = {Text("Enter the purpose of the transaction")},
-                singleLine = false,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth())
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                Text("Continue", style = TextStyle(fontSize = 20.sp))
-            }
-        } else {
-            BalanceDisplay(balance)
-            Text(errorMessage, color = Color.Red)
-            if (isScooping) {
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Button(onClick = {isReceiveMode = true}, modifier = Modifier.weight(1f)) {
-                        Text("Receive", style = TextStyle(fontSize = 20.sp))
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {},
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Secondary,
-                            contentColor = OnSecondary
-                        )
-                    ) {
-                        Text("Give", style = TextStyle(fontSize = 20.sp))
-                    }
+        BalanceDisplay(balance)
+        Text(errorMessage, color = Color.Red)
+        if (isScooping) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = { NavigationManager.navigate("receive_gratitude") },
+                    modifier = Modifier.weight(1f)) {
+                    Text("Receive", style = TextStyle(fontSize = 20.sp))
                 }
-
-            } else {
+                Spacer(modifier = Modifier.width(8.dp))
                 Button(
-                    onClick = { openDialog.value = true },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        stringResource(R.string.button_start_scooping),
-                        style = TextStyle(fontSize = 20.sp)
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Secondary,
+                        contentColor = OnSecondary
                     )
+                ) {
+                    Text("Give", style = TextStyle(fontSize = 20.sp))
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
-                style = TextStyle(fontSize = 18.sp),
-                modifier = Modifier.align(Alignment.Start)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Bookings(transactions, modifier = Modifier.weight(1f))
-            Spacer(modifier = Modifier.height(16.dp))
+
+        } else {
             Button(
-                onClick = { context.startActivity(shareIntent) },
+                onClick = { openDialog.value = true },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    stringResource(R.string.button_invite_friends),
+                    stringResource(R.string.button_start_scooping),
                     style = TextStyle(fontSize = 20.sp)
                 )
             }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            stringResource(R.string.bookings), fontWeight = FontWeight.Bold,
+            style = TextStyle(fontSize = 18.sp),
+            modifier = Modifier.align(Alignment.Start)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Bookings(transactions, modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { context.startActivity(shareIntent) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                stringResource(R.string.button_invite_friends),
+                style = TextStyle(fontSize = 20.sp)
+            )
         }
     }
 }
