@@ -28,7 +28,8 @@ If the referred users also refer other friends then you will earn additionally 3
 This will also happen if these user refer others and you will earn additionally 72 ml LMC for each refered user.  
 You can make the math.  
 Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on and all of them started scooping not longer than 24 hours ago.  
-To make it clear. You only get benefits for inviting friends if they are actually scooping liquid.
+To make it clear. You only get benefits for inviting friends if they are actually scooping liquid.  
+That means the shift service has to run on your mobile and on their mobile.
 
 | Level | Liter | Description |
 |-|-|-|
@@ -80,6 +81,13 @@ In fact we don't wanne use money anymore, because in the old system as we knew i
 With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 ml (milli-liters) of LMC. So one ml per minute.  
 So a softwaredeveloper in Norway will get 60 ml of LMC every hour and so does a hairdresser in India.  
 Just fair ins'nt it.  
+
+# About the Shift service
+When you start scooping in your app a service is started. A service on Android means that there is a program running even if you stop the app.  
+Unlike all the services from google which are running hidden, our service leaves a notification on your mobile where you are able to stop it.
+This service makes it possible to receive messages and forward them to the receiver. So your mobile becomes a server. You can compare it to bittorrent.
+With this technology we are free of traditional servers where all our messages can be seens by the service provider. 
+No one can stop the network, no one can censor our data, no one can pollute our network with ads.
 
 # Hiring Developer, Tester, Promoter, Designer and Influencer
 If you are a developer, tester, promoter, designer and influencer and want to be part of the team and you are willing to accept LMC let me know.  
