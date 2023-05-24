@@ -51,6 +51,7 @@ import kotlin.math.pow
 
 class Backend {
     companion object {
+        const val BLOCK_TYPE = "LMC"
         private const val serviceUrl = BuildConfig.WEB_SERVICE_URL
         private const val api_key = BuildConfig.API_KEY
         private const val secretKey = BuildConfig.SECRET_KEY
@@ -257,11 +258,14 @@ class Backend {
 
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             for(block in trustchain.database.getAllBlocks()) {
-                val (amount, type, date) = parseTransaction(block)
+                if (block.isProposal && block.type == BLOCK_TYPE) {
+                    val (amount, type, date) = parseTransaction(block)
 
-                if(block.isProposal && (type == TransactionType.INITIAL_BOOKING
-                            || type == TransactionType.SCOOPED)) {
-                    list.add(0, Transaction(amount = amount, date = date, type = type))
+                    if ((type == TransactionType.INITIAL_BOOKING
+                                || type == TransactionType.SCOOPED)
+                    ) {
+                        list.add(0, Transaction(amount = amount, date = date, type = type))
+                    }
                 }
             }
             return list
@@ -276,10 +280,13 @@ class Backend {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             // collect amounts from blockchain
             for(block in trustchain.database.getAllBlocks()) {
-                val (amount, type, date) = parseTransaction(block)
-                if(block.isProposal && (type == TransactionType.INITIAL_BOOKING
-                            || type == TransactionType.SCOOPED)) {
-                    balance += calculateWorth(amount, date)
+                if (block.type == BLOCK_TYPE && block.isProposal) {
+                    val (amount, type, date) = parseTransaction(block)
+                    if ((type == TransactionType.INITIAL_BOOKING
+                                || type == TransactionType.SCOOPED)
+                    ) {
+                        balance += calculateWorth(amount, date)
+                    }
                 }
             }
             // and also from daily transactions, no need to calculate worth
@@ -326,14 +333,16 @@ class Backend {
             var balance = 0UL
             println("Scooping for ${ShiftChainService.minutesScooping()} minutes")
             for(block in trustchain.database.getAllBlocks()) {
-                val blocktype = when{
-                    block.isProposal ->  "proposal "
-                    block.isAgreement -> "agreement"
-                    else ->              "unknown  "
+                if (block.type == BLOCK_TYPE) {
+                    val blocktype = when {
+                        block.isProposal -> "proposal "
+                        block.isAgreement -> "agreement"
+                        else -> "unknown  "
+                    }
+                    val (amount, _, _) = parseTransaction(block)
+                    balance += amount
+                    println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
-                val (amount, _, _) = parseTransaction(block)
-                balance += amount
-                println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
             }
             var i = 0
             for(t in account.transactions) {
@@ -362,7 +371,7 @@ class Backend {
             val publicKey = IPv8Android.getInstance().myPeer.publicKey.keyToBin()
 
             // self signed so send to your own public key
-            trustchain.createProposalBlock("LMC", transaction, publicKey)
+            trustchain.createProposalBlock(BLOCK_TYPE, transaction, publicKey)
         }
 
         /**

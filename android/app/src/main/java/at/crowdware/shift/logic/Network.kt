@@ -49,7 +49,7 @@ import java.time.LocalDate
 
 
 object Network {
-    private const val BLOCK_TYPE = "LMC"
+
     var isStarted = false
         private set
 
@@ -101,22 +101,38 @@ object Network {
         )
     }
 
+
     private fun createTrustChainCommunity(application: Application): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
         val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
         val store = TrustChainSQLiteStore(Database(driver))
         val randomWalk = RandomWalk.Factory()
-        return OverlayConfiguration(
+
+        val trustChainCommunity = OverlayConfiguration(
             TrustChainCommunity.Factory(settings, store),
             listOf(randomWalk)
         )
+        return trustChainCommunity
     }
+
+    /*
+    private fun createTrustChainCommunity(application: Application): OverlayConfiguration<MyTrustChainCommunity> {
+        val settings = TrustChainSettings()
+        val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
+        val store = TrustChainSQLiteStore(Database(driver))
+        val randomWalk = RandomWalk.Factory()
+        val trustChainCommunity = OverlayConfiguration(
+            MyTrustChainCommunity.Factory(settings, store),
+            listOf(randomWalk)
+        )
+        return trustChainCommunity
+    }*/
 
     private fun initTrustChain() {
         val ipv8 = IPv8Android.getInstance()
         val trustchain = ipv8.getOverlay<TrustChainCommunity>()!!
 
-        trustchain.registerTransactionValidator(BLOCK_TYPE, object : TransactionValidator {
+        trustchain.registerTransactionValidator(Backend.BLOCK_TYPE, object : TransactionValidator {
             override fun validate(
                 block: TrustChainBlock,
                 database: TrustChainStore
@@ -137,14 +153,14 @@ object Network {
             }
         })
 
-        trustchain.registerBlockSigner(BLOCK_TYPE, object : BlockSigner {
+        trustchain.registerBlockSigner(Backend.BLOCK_TYPE, object : BlockSigner {
             override fun onSignatureRequest(block: TrustChainBlock) {
                 Log.d("TrustChainDemo", "creating agreement")
                 trustchain.createAgreementBlock(block, mapOf<Any?, Any?>())
             }
         })
 
-        trustchain.addListener(BLOCK_TYPE, object : BlockListener {
+        trustchain.addListener(Backend.BLOCK_TYPE, object : BlockListener {
             override fun onBlockReceived(block: TrustChainBlock) {
                 Log.d("TrustChainDemo", "onBlockReceived ${block.transaction}")
             }

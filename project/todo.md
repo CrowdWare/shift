@@ -30,10 +30,12 @@
 - Key exchange via text or QR-code or TOFU
 - settings, language survives recreate
 - bugfix: see crashlog
-- Firebase for push notifications and crash reports (only in the beginning, later we kick it out)
+- ?Firebase for push notifications and crash reports (only in the beginning, later we kick it out)
 - Writing a block after day change should use the date from the day before. 
 - The balance on the display is less than the amount in the blocks + in shift.db
 - Display value from blocks can be cached...only load daily blocks from shift.db 
+- We have unwanted blocks in the blockchain like message=pak, we might need a different service ID to form a separate trustchain 
+- Also think of an own discovery overlay, for above reason
 
 
 # App 3.0
