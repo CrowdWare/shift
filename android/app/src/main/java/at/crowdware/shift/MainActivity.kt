@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         )
                         PluginManager.loadPlugins(LocalContext.current, list)
                         // navigation targets which are not listed in the drawer
-                        //list.add(NavigationItem(id="timepicker"))
+                        list.add(NavigationItem(id="receive_gratitude_qrcode"))
                         list.add(NavigationItem(id="receive_gratitude"))
                         NavigationView(list)
                     }

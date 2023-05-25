@@ -101,7 +101,6 @@ object Network {
         )
     }
 
-
     private fun createTrustChainCommunity(application: Application): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
         val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
@@ -114,19 +113,6 @@ object Network {
         )
         return trustChainCommunity
     }
-
-    /*
-    private fun createTrustChainCommunity(application: Application): OverlayConfiguration<MyTrustChainCommunity> {
-        val settings = TrustChainSettings()
-        val driver = AndroidSqliteDriver(Database.Schema, application, "trustchain.db")
-        val store = TrustChainSQLiteStore(Database(driver))
-        val randomWalk = RandomWalk.Factory()
-        val trustChainCommunity = OverlayConfiguration(
-            MyTrustChainCommunity.Factory(settings, store),
-            listOf(randomWalk)
-        )
-        return trustChainCommunity
-    }*/
 
     private fun initTrustChain() {
         val ipv8 = IPv8Android.getInstance()

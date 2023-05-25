@@ -1,5 +1,6 @@
 package at.crowdware.shift.ui.pages
 
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,13 +40,13 @@ import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.HourMinutesPicker
 import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
+import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 
-@OptIn(ExperimentalComposeUiApi::class)
+
 @Composable
 fun ReceiveGratitude(viewModel: ReceiveViewModel) {
     viewModel.balance.value = (Backend.getBalance() / 1000UL) * 1000UL // that should round down to full liter
-
 
     Column(
         modifier = Modifier
@@ -55,7 +56,7 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
     ) {
         BalanceDisplay(viewModel.balance.value, true)
         Spacer(modifier = Modifier.height(8.dp))
-        HourMinutesPicker(viewModel.hours, viewModel.minutes, viewModel.total, viewModel.longNumber)
+        HourMinutesPicker(viewModel.hours, viewModel.minutes, viewModel.total, viewModel.longNumber, modifier = Modifier.focusable())
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = viewModel.longNumberText.value,
@@ -90,7 +91,7 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
         TotalDisplay(viewModel.total.value)
         Spacer(modifier = Modifier.height(8.dp))
         if(viewModel.balance.value / 1000UL >= viewModel.total.value) {
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { NavigationManager.navigate("receive_gratitude_qrcode") },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = viewModel.total.value > 0UL){
                 Text("Continue", style = TextStyle(fontSize = 20.sp))

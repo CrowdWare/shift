@@ -49,6 +49,7 @@ import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.ReceiveGratitude
+import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
@@ -71,6 +72,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
                         "friendlist" -> Friendlist()
                         "settings" -> Settings()
                         "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
+                        "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()

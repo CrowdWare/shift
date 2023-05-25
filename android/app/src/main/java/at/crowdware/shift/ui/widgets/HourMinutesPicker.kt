@@ -24,9 +24,10 @@ fun HourMinutesPicker(
     minutes: MutableState<Int>,
     total: MutableState<ULong>,
     longNumber: MutableState<ULong>,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(160.dp)
     ) {

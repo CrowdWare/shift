@@ -7,6 +7,7 @@ package at.crowdware.shift.ui.widgets
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
@@ -228,7 +230,6 @@ fun CircularValuePicker(
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    val focusRequester = remember { FocusRequester() }
     CircularValuePicker(
         modifier = Modifier
             .size(250.dp)
