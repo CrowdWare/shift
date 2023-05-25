@@ -57,7 +57,7 @@ fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
                         .padding(4.dp)
                 ) {
                     Text(
-                        "${transaction.amount / 1000u} l", style = TextStyle(fontSize = 18.sp),
+                        "${transaction.amount} l", style = TextStyle(fontSize = 18.sp),
                         modifier = Modifier.align(Alignment.CenterEnd)
                     )
                 }

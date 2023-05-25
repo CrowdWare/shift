@@ -126,14 +126,14 @@ object Network {
                 if (block.isAgreement)
                     return ValidationResult.Valid
                 val (amount, type, date) = Backend.parseTransaction(block)
-
-                return if (amount <= Backend.getMaxGrow().toULong()
-                    && (type == TransactionType.SCOOPED || type == TransactionType.INITIAL_BOOKING)
-                    && date > LocalDate.now().minusDays(1) && date < LocalDate.now().plusDays(1)) {
+                println("validate: $amount, $type, $date")
+                return if ((type == TransactionType.INITIAL_BOOKING && date == LocalDate.now())
+                    || (type == TransactionType.SCOOPED && amount * 1000UL <= Backend.getMaxGrow().toULong()
+                            && date == LocalDate.now().minusDays(1))) {
                     Log.d("TrustChainDemo", "Validating block true")
                     ValidationResult.Valid
                 } else {
-                    Log.d("TrustChainDemo", "Validating block false")
+                    Log.d("TrustChainDemo", "Validating block false: $amount, $type, $date")
                     ValidationResult.Invalid(listOf(""))
                 }
             }

@@ -135,11 +135,7 @@ class Backend {
             account.scooping = (System.currentTimeMillis() / 1000).toULong()
             Database.saveAccount(application.applicationContext)
             setScooping(application, true)
-            addTransactionToTrustChain(
-                initial_amount.toLong(),
-                TransactionType.INITIAL_BOOKING,
-                LocalDate.now().minusDays(1)
-            )
+            addTransactionToTrustChain(initial_amount.toLong(), TransactionType.INITIAL_BOOKING)
         }
 
         fun setScooping(
@@ -313,7 +309,8 @@ class Backend {
                 for(t in account.transactions) {
                     balance += t.amount
                 }
-                addTransactionToTrustChain(balance.toLong(), TransactionType.SCOOPED, LocalDate.now().minusDays(1))
+                // only book full liters
+                addTransactionToTrustChain((balance / 1000UL).toLong(), TransactionType.SCOOPED, LocalDate.now().minusDays(1))
                 account.transactions.clear()
             }
             account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))
@@ -322,7 +319,7 @@ class Backend {
             setScooping(context)
         }
         fun getMaxGrow(): Long {
-            return 165L + 10 * 25 + 100 * 5 + 1000 * 1 * 24
+            return (165L + 10 * 25 + 100 * 5 + 1000 * 1) * 24 // 24 hours
         }
 
         private fun calcGrowPer20Minutes(): ULong {
@@ -344,8 +341,8 @@ class Backend {
                         block.isAgreement -> "agreement"
                         else -> "unknown  "
                     }
-                    val (amount, _, _) = parseTransaction(block)
-                    balance += amount
+                    val (amount, _, date) = parseTransaction(block)
+                    balance += calculateWorth(amount, date)
                     println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
             }
@@ -369,7 +366,7 @@ class Backend {
         /**
          * Adds transaction to the trustchain.
          *
-         * @param amount The value in milli liter
+         * @param amount The value in liter
          * @param type Transaction type like INITIAL_BOOKING, SCOOPING or LMP (liquid micro payment)
          * @param bookingDate When is the transaction created. When scooping the day before is used,
          * because the amount is cumulated on the day before.
@@ -383,6 +380,7 @@ class Backend {
                 "type" to type.toString())
             val publicKey = IPv8Android.getInstance().myPeer.publicKey.keyToBin()
 
+            println("trans: $transaction")
             // self signed so send to your own public key
             trustchain.createProposalBlock(BLOCK_TYPE, transaction, publicKey)
         }
@@ -390,7 +388,7 @@ class Backend {
         /**
          * Calculates the worth of an amount with demurrage rate.
          *
-         * @param amount The initial amount of coins in milli liter.
+         * @param amount The initial amount of coins liter.
          * @param transactionDate The date of the transaction or the date of scooping.
          * @return The current worth of the amount in milli liter.
          */
@@ -398,7 +396,7 @@ class Backend {
             val currentDate = LocalDate.now()
             val daysPassed = ChronoUnit.DAYS.between(transactionDate, currentDate)
             val demurrageRate = 0.27 / 100
-            val amountInLiter = amount / 1000u
+            val amountInLiter = amount
             var worth = (1000 * (1 - demurrageRate).pow(daysPassed.toInt())).toULong()
             worth *= amountInLiter
             return worth

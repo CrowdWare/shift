@@ -27,8 +27,12 @@
 + Plugin sample
 + We need a better hour and minute picker design
 + Writing a block after day change should use the date from the day before. 
+- Balance Display state should be saved in prefs or/and it should switch to liter when amount > X
+- Transaction should only store full liters.
+- Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
 - create an easy to use API for payments
 - Payment scan and send functionionality
+- isScooping should only be true if connected to the internet, and not in flightmode
 - Key exchange via text or QR-code or TOFU
 - bugfix: see crashlog
 - To validate a giver we have to crawl the trustchain to verify the last x blocks.
@@ -39,9 +43,7 @@
 - Stromverbrauchswarnung from Android, how to avoid this?
 - Multiple Themes to choose from (i personally like orange on dark background)
 - Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
-- Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
 - Request focus when dragging the cirlular picker
-- isScooping should only be true if connected to the internet, and not in flightmode
 - Why does service crashes also when app crashes? service should run independently
 - Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends.
 - settings, language survives recreate
@@ -60,6 +62,7 @@
 - Open houses, map of open houses to occupy
 
 # Project
+- Should the name say something like TIME instead of LIQUID?  LUNA GRATIA FLUO (LGF), LUNA GRATIA LIQUIDO (LGL)
 - Find someone who starts the app and continues the development
 - Or, start the app alone and be sure that the main app can stay unmodified (errorless)
 
