@@ -57,6 +57,7 @@ class Backend {
         private const val secretKey = BuildConfig.SECRET_KEY
         private const val algorithm = BuildConfig.ALGORYTHM
         private const val user_agent = "Shift 1.0"
+        private const val initial_amount = BuildConfig.INITIAL_AMOUNT
         private var account = Account()
 
         fun ByteArray.toHex() : String{
@@ -134,7 +135,7 @@ class Backend {
             account.scooping = (System.currentTimeMillis() / 1000).toULong()
             Database.saveAccount(application.applicationContext)
             setScooping(application, true)
-            addTransactionToTrustChain(1000, TransactionType.INITIAL_BOOKING)
+            addTransactionToTrustChain(initial_amount.toLong(), TransactionType.INITIAL_BOOKING)
         }
 
         fun setScooping(
