@@ -118,9 +118,6 @@ fun Friendlist() {
         ) {
             Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
         }
-        Button(onClick = { Backend.calculateWorth(3000UL, LocalDate.now().minusDays(2554)) }) {
-            Text(text = "Dump")
-        }
     }
 }
 

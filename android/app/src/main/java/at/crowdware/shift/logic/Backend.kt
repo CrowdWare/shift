@@ -310,7 +310,9 @@ class Backend {
                     balance += t.amount
                 }
                 // only book full liters
-                addTransactionToTrustChain((balance / 1000UL).toLong(), TransactionType.SCOOPED, LocalDate.now().minusDays(1))
+                val liter = (balance / 1000UL).toLong()
+                if(liter > 0)
+                    addTransactionToTrustChain(liter, TransactionType.SCOOPED, LocalDate.now().minusDays(1))
                 account.transactions.clear()
             }
             account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))

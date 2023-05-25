@@ -126,7 +126,6 @@ object Network {
                 if (block.isAgreement)
                     return ValidationResult.Valid
                 val (amount, type, date) = Backend.parseTransaction(block)
-                println("validate: $amount, $type, $date")
                 return if ((type == TransactionType.INITIAL_BOOKING && date == LocalDate.now())
                     || (type == TransactionType.SCOOPED && amount * 1000UL <= Backend.getMaxGrow().toULong()
                             && date == LocalDate.now().minusDays(1))) {
