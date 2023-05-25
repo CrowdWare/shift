@@ -25,19 +25,17 @@
 + Start service when push start scooping
 + Give warning when scooping that service is running and wallet will be dropped after uninstall
 + Plugin sample
++ We need a better hour and minute picker design
++ Writing a block after day change should use the date from the day before. 
 - create an easy to use API for payments
-- Payment functionionality
+- Payment scan and send functionionality
 - Key exchange via text or QR-code or TOFU
-- settings, language survives recreate
 - bugfix: see crashlog
-- ?Firebase for push notifications and crash reports (only in the beginning, later we kick it out)
-- Writing a block after day change should use the date from the day before. 
+- To validate a giver we have to crawl the trustchain to verify the last x blocks.
 - The balance on the display is less than the amount in the blocks + in shift.db
 - Display value from blocks can be cached...only load daily blocks from shift.db 
 - We have unwanted blocks in the blockchain like message=pak, we might need a different service ID to form a separate trustchain 
-- Also think of an own discovery overlay, for above reason
-- We need a better hour and minute picker design
-- All webservice calls errors ignored, if WebService is offline(in case someone wants to dissturb us with DOS attacks on the server) 
+- Also think of an own discovery overlay, for above reason (or just change the existing) 
 - Stromverbrauchswarnung from Android, how to avoid this?
 - Multiple Themes to choose from (i personally like orange on dark background)
 - Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
@@ -46,13 +44,16 @@
 - isScooping should only be true if connected to the internet, and not in flightmode
 - Why does service crashes also when app crashes? service should run independently
 - Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends.
-- Additional to hours and minutes we should be able to enter days, weeks, months. 
+- settings, language survives recreate
+- ?Firebase for push notifications and crash reports (only in the beginning, later we kick it out)
 
 # App 3.0
 - Pay function using IPv8 trustchain
 - Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
 - DHT is already implemented in IPv8 for Python 
 - Posts for micro blogging
+- Additional to hours and minutes we should be able to enter days, weeks, months. 
+- All webservice calls errors ignored, if WebService is offline(in case someone wants to dissturb us with DOS attacks on the server)
 
 # Plugin Ideas
 - 13 moons calendar (https://www.lawoftime.org/thirteenmoon/tutorial.html)
