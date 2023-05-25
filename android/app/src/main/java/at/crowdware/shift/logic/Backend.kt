@@ -135,7 +135,11 @@ class Backend {
             account.scooping = (System.currentTimeMillis() / 1000).toULong()
             Database.saveAccount(application.applicationContext)
             setScooping(application, true)
-            addTransactionToTrustChain(initial_amount.toLong(), TransactionType.INITIAL_BOOKING)
+            addTransactionToTrustChain(
+                initial_amount.toLong(),
+                TransactionType.INITIAL_BOOKING,
+                LocalDate.now().minusDays(1)
+            )
         }
 
         fun setScooping(
@@ -309,7 +313,7 @@ class Backend {
                 for(t in account.transactions) {
                     balance += t.amount
                 }
-                addTransactionToTrustChain(balance.toLong(), TransactionType.SCOOPED)
+                addTransactionToTrustChain(balance.toLong(), TransactionType.SCOOPED, LocalDate.now().minusDays(1))
                 account.transactions.clear()
             }
             account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))
@@ -362,12 +366,20 @@ class Backend {
             return Triple(amount, type, date)
         }
 
-        fun addTransactionToTrustChain(amount: Long, type: TransactionType) {
+        /**
+         * Adds transaction to the trustchain.
+         *
+         * @param amount The value in milli liter
+         * @param type Transaction type like INITIAL_BOOKING, SCOOPING or LMP (liquid micro payment)
+         * @param bookingDate When is the transaction created. When scooping the day before is used,
+         * because the amount is cumulated on the day before.
+         */
+        fun addTransactionToTrustChain(amount: Long, type: TransactionType, bookingDate:LocalDate = LocalDate.now()) {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             val formatter = DateTimeFormatter.ISO_LOCAL_DATE
             val transaction = mapOf(
                 "amount" to amount.toString(),
-                "date" to LocalDate.now().format(formatter),
+                "date" to bookingDate.format(formatter),
                 "type" to type.toString())
             val publicKey = IPv8Android.getInstance().myPeer.publicKey.keyToBin()
 
