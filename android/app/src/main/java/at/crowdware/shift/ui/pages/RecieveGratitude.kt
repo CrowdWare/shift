@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
@@ -46,23 +48,32 @@ import at.crowdware.shift.ui.widgets.TotalDisplay
 
 @Composable
 fun ReceiveGratitude(viewModel: ReceiveViewModel) {
-    viewModel.balance.value = (Backend.getBalance() / 1000UL) * 1000UL // that should round down to full liter
+    viewModel.balance.value =
+        (Backend.getBalance() / 1000UL) * 1000UL // that should round down to full liter
+    val scrollState = rememberScrollState()
 
     Column(
-        modifier = Modifier
+        modifier = Modifier.verticalScroll(scrollState)
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         BalanceDisplay(viewModel.balance.value, true)
         Spacer(modifier = Modifier.height(8.dp))
-        HourMinutesPicker(viewModel.hours, viewModel.minutes, viewModel.total, viewModel.longNumber, modifier = Modifier.focusable())
+        HourMinutesPicker(
+            viewModel.hours,
+            viewModel.minutes,
+            viewModel.total,
+            viewModel.longNumber,
+            modifier = Modifier.focusable()
+        )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = viewModel.longNumberText.value,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = TextStyle(fontSize = 20.sp, textAlign = TextAlign.End),
+            singleLine = true,
             onValueChange = { input ->
                 viewModel.longNumberText.value = input
                 // Filter the input to accept only digits
@@ -77,31 +88,28 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
                 } else {
                     viewModel.longNumber.value = 0UL
                 }
-                viewModel.total.value = (viewModel.hours.value * 60 + viewModel.minutes.value).toULong() + viewModel.longNumber.value
+                viewModel.total.value =
+                    (viewModel.hours.value * 60 + viewModel.minutes.value).toULong() + viewModel.longNumber.value
             },
-            label = { Text("Enter an amount to add to the time") }
+            label = { Text(stringResource(R.string.enter_an_amount_to_add_to_the_time)) }
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(value = viewModel.description.value,
-            onValueChange = {viewModel.description.value = it} ,
-            placeholder = {Text("Enter the purpose of the transaction")},
-            singleLine = false,
-            modifier = Modifier.weight(1f).fillMaxWidth())
+            onValueChange = { viewModel.description.value = it },
+            placeholder = { Text(stringResource(R.string.enter_the_purpose_of_the_transaction)) },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            textStyle = TextStyle(fontSize = 20.sp)
+        )
         Spacer(modifier = Modifier.height(8.dp))
         TotalDisplay(viewModel.total.value)
         Spacer(modifier = Modifier.height(8.dp))
-        if(viewModel.balance.value / 1000UL >= viewModel.total.value) {
-            Button(onClick = { NavigationManager.navigate("receive_gratitude_qrcode") },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = viewModel.total.value > 0UL){
-                Text("Continue", style = TextStyle(fontSize = 20.sp))
-            }
-        } else {
-            Button(onClick = {  },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = false){
-                Text("Balance too low", style = TextStyle(fontSize = 20.sp))
-            }
+        Button(
+            onClick = { NavigationManager.navigate("receive_gratitude_qrcode") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = viewModel.total.value > 0UL
+        ) {
+            Text(stringResource(R.string.button_continue), style = TextStyle(fontSize = 20.sp))
         }
     }
 }

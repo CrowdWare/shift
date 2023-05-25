@@ -27,6 +27,7 @@ android {
         buildConfigField "String", "WEB_SERVICE_URL", getProps("web_service_url")
         buildConfigField "String", "ALGORYTHM", getProps("algorythm")
         buildConfigField "String", "KEYPHRASE", getProps("key_phrase")
+        buildConfigField "String", "INITIAL_AMOUNT", getProps("initial_amount")
         buildConfigField "String", "SHIFT_COMMUNITY_ID", getProps("shift_community_id")
         buildConfigField "String", "SHIFT_COMMUNITY_ADMIN", getProps("shift_community_admin")
 

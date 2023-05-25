@@ -48,11 +48,10 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
         TotalDisplay(viewModel.total.value)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            "Let the giver scan the QR-Code to start the transaction.",
+            stringResource(R.string.let_the_giver_scan_the_qr_code_to_start_the_transaction),
             modifier = Modifier.fillMaxWidth(),
             style = TextStyle(fontSize = 20.sp)
         )
-        val URL = "https://github.com/simonsickle/ComposedBarcodes"
 
         val map = mutableMapOf("type" to "LMP")  // liquid micro payment
         map["pubKey"] = IPv8Android.getInstance().myPeer.publicKey.toString()
@@ -77,7 +76,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
             modifier = Modifier.fillMaxWidth(),
             enabled = viewModel.total.value > 0UL
         ) {
-            Text("Done", style = TextStyle(fontSize = 20.sp))
+            Text(stringResource(R.string.button_done), style = TextStyle(fontSize = 20.sp))
         }
     }
 }

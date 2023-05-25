@@ -45,12 +45,18 @@
 - Request focus when dragging the cirlular picker
 - isScooping should only be true if connected to the internet, and not in flightmode
 - Why does service crashes also when app crashes? service should run independently
+- Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends.
+- Additional to hours and minutes we should be able to enter days, weeks, months. 
 
 # App 3.0
 - Pay function using IPv8 trustchain
 - Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
 - DHT is already implemented in IPv8 for Python 
 - Posts for micro blogging
+
+# Plugin Ideas
+- 13 moons calendar (https://www.lawoftime.org/thirteenmoon/tutorial.html)
+- Open houses, map of open houses to occupy
 
 # Project
 - Find someone who starts the app and continues the development

@@ -49,4 +49,8 @@
     <string name="the_plugin_has_been_installed_you_should_restart_your_app_now">The plugin has been installed. You should restart your app now.</string>
     <string name="there_was_an_error_copying_the_plugin">There was an error copying the plugin.</string>
     <string name="there_was_an_error_installing_the_plugin">There was an error installing the plugin.</string>
+    <string name="enter_an_amount_to_add_to_the_time">Enter an amount to add to the time</string>
+    <string name="enter_the_purpose_of_the_transaction">Enter the purpose of the transaction</string>
+    <string name="let_the_giver_scan_the_qr_code_to_start_the_transaction">Let the giver scan the QR-Code to start the transaction.</string>
+    <string name="button_done">Done</string>
 </resources>

@@ -34,9 +34,9 @@ fun HourMinutesPicker(
         Row (modifier = Modifier.fillMaxWidth()){
             Spacer(modifier = Modifier.width(8.dp))
             CircularValuePicker(
-                modifier = Modifier.size(250.dp).weight(0.5f),
+                modifier = Modifier.weight(0.5f),
                 initialValue = hours.value,
-                maxValue = 12,
+                maxValue = 24,
                 unit = "h",
                 onPositionChange = { position ->
                     hours.value = position
@@ -45,8 +45,8 @@ fun HourMinutesPicker(
             )
             Spacer(modifier = Modifier.width(16.dp))
             CircularValuePicker(
-                modifier = Modifier.size(250.dp).weight(0.5f),
-                initialValue = minutes.value,
+                modifier = Modifier.weight(0.5f),
+                initialValue = minutes.value / 5,
                 maxValue = 12,
                 stepSize = 5,
                 unit = "m",
@@ -66,7 +66,7 @@ fun HourMinutesPickerPreview() {
     val hoursFocusRequester = remember { FocusRequester() }
     val minutesFocusRequester = remember { FocusRequester() }
     val hours = remember { mutableStateOf(3) }
-    val minutes = remember { mutableStateOf(30 / 5) }
+    val minutes = remember { mutableStateOf(30) }
     val total = remember { mutableStateOf(360UL) }
     val amount = remember { mutableStateOf(360UL) }
     HourMinutesPicker(hours, minutes, total, amount)
