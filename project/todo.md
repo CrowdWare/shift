@@ -42,6 +42,8 @@
 - Multiple Themes to choose from (i personally like orange on dark background)
 - Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
 - Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
+- Request focus when dragging the cirlular picker
+- isScooping should only be true if connected to the internet, and not in flightmode
 
 # App 3.0
 - Pay function using IPv8 trustchain
