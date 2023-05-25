@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
@@ -20,6 +23,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +31,7 @@ import kotlin.math.*
 import at.crowdware.shift.ui.theme.*
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CircularValuePicker(
     modifier: Modifier = Modifier,
@@ -59,6 +64,7 @@ fun CircularValuePicker(
     var oldPositionValue by remember {
         mutableStateOf(initialValue)
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = modifier
@@ -69,6 +75,7 @@ fun CircularValuePicker(
                 .pointerInput(true) {
                     detectDragGestures(
                         onDragStart = { offset ->
+                            keyboardController!!.hide()
                             dragStartedAngle = atan2(
                                 x = circleCenter.y - offset.y,
                                 y = circleCenter.x - offset.x
@@ -106,7 +113,6 @@ fun CircularValuePicker(
             // the 80f was just try and error, should be calculated from line length
             val circleRadius = (width - circleThickness - 80f) / 2
             circleCenter = Offset(x = width / 2f, y = height / 2f)
-
 
             drawCircle(
                 brush = Brush.radialGradient(
@@ -222,6 +228,7 @@ fun CircularValuePicker(
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
+    val focusRequester = remember { FocusRequester() }
     CircularValuePicker(
         modifier = Modifier
             .size(250.dp)

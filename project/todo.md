@@ -40,6 +40,8 @@
 - All webservice calls errors ignored, if WebService is offline(in case someone wants to dissturb us with DOS attacks on the server) 
 - Stromverbrauchswarnung from Android, how to avoid this?
 - Multiple Themes to choose from (i personally like orange on dark background)
+- Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
+- Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
 
 # App 3.0
 - Pay function using IPv8 trustchain
@@ -99,6 +101,7 @@ Aggreement: 260 B
 - https://www.reddit.com/
 - https://news.ycombinator.com/
 - https://www.willmcgugan.com/blog/tech/post/promoting-your-open-source-project-or-how-to-get-your-first-1k-github-stars/
+- https://hambacherfest1832.blog/ueber/kontakt/  Dr. Wolfgang Kochanek
 
 # Book
 Write a book about this project, so that someone else is able to continue my work.

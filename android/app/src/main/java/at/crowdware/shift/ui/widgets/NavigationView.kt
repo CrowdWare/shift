@@ -41,14 +41,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
+import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -57,6 +60,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
     val selectedItem = remember { mutableStateOf("home") }
 
     NavigationManager.setNavController(navController)
+    val receiveViewModel = viewModel<ReceiveViewModel>()
 
     NavHost(navController = navController, startDestination = "home") {
         for(index in items.indices) {
@@ -66,7 +70,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
                         "home" -> ScoopPage()
                         "friendlist" -> Friendlist()
                         "settings" -> Settings()
-                        "receive_gratitude" -> ReceiveGratitude()
+                        "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()
