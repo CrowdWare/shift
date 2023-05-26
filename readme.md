@@ -101,7 +101,7 @@ So that we will not flood the planet, the liquid will vaporate every day a small
 
 # Security / Integrity
 The local database has been encrypted. So this makes it nearly impossible for someone to change any data in the local database. Which of course is also true for the balance.
-When we are transfering LMC between two mobile phones, also the data will be encrypted. So this transer data can only be decrypted with the original app.
+When we are transfering LMC between two mobile phones, also the data will be encrypted. So this transfer data can only be decrypted with the original app.
 
 If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The guy with the faked mobile app will not tell you that the transfer has been aborted, because otherwise you will find out that cheating is around.
 
