@@ -106,3 +106,12 @@ When we are transfering LMC between two mobile phones, also the data will be enc
 If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The guy with the faked mobile app will not tell you that the transfer has been aborted, because otherwise you will find out that cheating is around.
 
 If someone wants to transfer LMC to your account, then your app will not accept this transfer due to incorrect decrypted data.
+
+
+# Forking
+You might of course fork this repo for your need.  
+But please keep in mind that if you would also deliver the same or a similar app it will not be compatible with our app because we are using API keys which are not public for security reasons.  So the users of your app will not be able to interact with users of our app.   
+
+If you like to enhance this app instead then build a plugin and publish it to our users, so that they can install it.   
+
+If you have ideas to change this app let us know, but we will not react on pull requests.
