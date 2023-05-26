@@ -62,7 +62,7 @@ We are using the trustchain implementation from IPv8 a university in Delft Nethe
 ## TWO
 When we reach 1.000.000 users, we will come to phase TWO.
 At the moment there are just a few people working on the app.  
-The mark 1.000.000 will motivate some additonal developers to join in, because they see that the people want this app and the developers will be kind of payed with LMC instead of real money.
+The mark 1.000.000 will motivate some additonal developers to join in, because they see that the people want this app and the developers will be kind of paid with LMC instead of real money.
 
 There will be a **chat function**.  
 There will also be a **micro blogging engine**, so that you are able to share things and services.    
