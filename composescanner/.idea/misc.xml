@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/compose-model-1648361985621.xml" value="0.7425925925925926" />
+        <entry key="../../../../layout/compose-model-1648364767163.xml" value="0.29458665547629037" />
+        <entry key="../../../../layout/compose-model-1648525102087.xml" value="0.28745279060008394" />
+        <entry key="../../Library/Android/sdk/platforms/android-32/data/res/drawable/btn_dialog.xml" value="0.341" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

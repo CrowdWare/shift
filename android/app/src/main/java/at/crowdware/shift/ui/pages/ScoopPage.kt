@@ -136,7 +136,7 @@ fun ScoopPage(isPreview: Boolean = false) {
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
-                    onClick = {},
+                    onClick = {NavigationManager.navigate("give_gratitude")},
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Secondary,

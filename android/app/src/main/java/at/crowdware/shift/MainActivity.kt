@@ -79,6 +79,7 @@ class MainActivity : ComponentActivity() {
                         startService(serviceIntent)
                     }
                     if (hasJoined.value) {
+                        // also code these in NavigationView.kt
                         val list = mutableListOf(
                             NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
                             NavigationItem("friendlist",Icons.Default.Face, stringResource(R.string.navigation_friendlist)),
@@ -89,6 +90,7 @@ class MainActivity : ComponentActivity() {
                         // navigation targets which are not listed in the drawer
                         list.add(NavigationItem(id="receive_gratitude_qrcode"))
                         list.add(NavigationItem(id="receive_gratitude"))
+                        list.add(NavigationItem(id="give_gratitude"))
                         NavigationView(list)
                     }
                     else

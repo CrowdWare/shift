@@ -48,10 +48,12 @@ import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.pages.Friendlist
+import at.crowdware.shift.ui.pages.GiveGratitude
 import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
+import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch
 
@@ -62,17 +64,20 @@ fun NavigationView(items: MutableList<NavigationItem>) {
 
     NavigationManager.setNavController(navController)
     val receiveViewModel = viewModel<ReceiveViewModel>()
+    val giveViewModel = viewModel<GiveViewModel>()
 
     NavHost(navController = navController, startDestination = "home") {
         for(index in items.indices) {
             composable(items[index].id) {
                 ModalNavigationDrawer(items, selectedItem) {
                     when(items[index].id) {
+                        // have a look at MainActivity for navigation
                         "home" -> ScoopPage()
                         "friendlist" -> Friendlist()
                         "settings" -> Settings()
                         "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
                         "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
+                        "give_gratitude" -> GiveGratitude(giveViewModel)
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()
