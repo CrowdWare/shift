@@ -28,16 +28,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.theme.Tertiary
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import it.warpmobile.scanner.BuildCameraUI
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import nl.tudelft.ipv8.android.IPv8Android
+import nl.tudelft.ipv8.keyvault.PublicKey
+import nl.tudelft.ipv8.util.hexToBytes
 import java.text.NumberFormat
 import java.util.Locale
 
-data class Lmp(val pubKey: String, val amount: ULong, val description: String, val type:String)
+data class Lmp(val pubKey: String, val amount: Long, val purpose: String, val type:String, val from: String)
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
 @Composable
@@ -45,7 +48,7 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
     viewModel.balance.value = Backend.getBalance()
 
     var code by remember {
-        mutableStateOf(if(isPreview) {"{\"pubKey\":\"1234567890abcedef\",\"amount\":450,\"description\":\"Haircut and Massage\",\"type\":\"LMP\"}"} else {""})
+        mutableStateOf(if(isPreview) {"{\"pubKey\":\"1234567890abcedef\",\"amount\":450,\"purpose\":\"Haircut and Massage\",\"type\":\"LMP\",\"from\":\"Sender\"}"} else {""})
     }
     var showScanner by remember { mutableStateOf(!isPreview) }
 
@@ -61,7 +64,7 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
         Spacer(modifier = Modifier.height(8.dp))
         if(showScanner) {
             Text(
-                "Scan the QR code to get the offer from the receiver.",
+                stringResource(R.string.scan_the_qr_code_to_get_the_offer_from_the_receiver),
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(fontSize = 20.sp)
             )
@@ -76,7 +79,7 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
             val gson = Gson()
             val trans: Lmp = gson.fromJson(code, Lmp::class.java)
             Text(
-                "Agree to the proposal to start the transaction.",
+                stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(fontSize = 20.sp)
             )
@@ -85,18 +88,33 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 containerColor = Tertiary)
             ){
                 Text(
-                    text = "Description",
+                    text = stringResource(R.string.purpose),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth().padding(4.dp)
                 )
                 Text(
-                    text = trans.description,
+                    text = trans.purpose,
                     fontSize = 18.sp,
                     modifier = Modifier
                         .fillMaxWidth().padding(4.dp)
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.from),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .fillMaxWidth().padding(4.dp)
+                )
+                Text(
+                    text = trans.from,
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .fillMaxWidth().padding(4.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -106,7 +124,7 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
 
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Amount", fontWeight = FontWeight.Bold,
+                        stringResource(R.string.amount), fontWeight = FontWeight.Bold,
                         style = TextStyle(fontSize = 18.sp),
                         modifier = Modifier.align(Alignment.TopStart)
                     )
@@ -125,20 +143,22 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            if(viewModel.balance.value / 1000UL >= trans.amount) {
+            if(viewModel.balance.value / 1000L >= trans.amount) {
                 Button(
-                    onClick = { NavigationManager.navigate("home") },
+                    onClick = {
+                        Backend.addTransactionToTrustChain(trans.amount.toLong(), TransactionType.LMP, trans.purpose, trans.from, trans.pubKey.hexToBytes())
+                        NavigationManager.navigate("home") },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Agree", style = TextStyle(fontSize = 20.sp))
+                    Text(stringResource(R.string.button_agree), style = TextStyle(fontSize = 20.sp))
                 }
             } else {
                 Button(
-                    onClick = { NavigationManager.navigate("home") },
+                    onClick = { },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = false
                 ) {
-                    Text("You balance is below the amount ordered.", color= Color.Red,style = TextStyle(fontSize = 20.sp))
+                    Text(stringResource(R.string.your_balance_is_below_the_amount_ordered), color= Color.Red,style = TextStyle(fontSize = 20.sp))
                 }
             }
         }
@@ -154,6 +174,6 @@ fun GiveGratitudePreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     val giveViewModel = viewModel<GiveViewModel>()
-    giveViewModel.balance.value = 678000UL
+    giveViewModel.balance.value = 678000L
     ModalNavigationDrawer(list, selectedItem){ GiveGratitude(giveViewModel, true) }
 }

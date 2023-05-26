@@ -49,7 +49,6 @@ import java.time.LocalDate
 
 
 object Network {
-
     var isStarted = false
         private set
 
@@ -125,14 +124,15 @@ object Network {
             ): ValidationResult {
                 if (block.isAgreement)
                     return ValidationResult.Valid
-                val (amount, type, date) = Backend.parseTransaction(block)
-                return if ((type == TransactionType.INITIAL_BOOKING && date == LocalDate.now())
-                    || (type == TransactionType.SCOOPED && amount * 1000UL <= Backend.getMaxGrow().toULong()
-                            && date == LocalDate.now().minusDays(1))) {
+                val trans = Backend.parseTransaction(block)
+                return if ((trans.type == TransactionType.INITIAL_BOOKING && trans.date == LocalDate.now())
+                    || (trans.type == TransactionType.SCOOPED && trans.amount * 1000L <= Backend.getMaxGrow().toLong()
+                            && trans.date == LocalDate.now().minusDays(1))
+                    || (trans.type == TransactionType.LMP && trans.amount > 0L && trans.date >= LocalDate.now().minusDays(1))) {
                     Log.d("TrustChainDemo", "Validating block true")
                     ValidationResult.Valid
                 } else {
-                    Log.d("TrustChainDemo", "Validating block false: $amount, $type, $date")
+                    Log.d("TrustChainDemo", "Validating block false: ${trans.amount}, ${trans.type}, ${trans.date}")
                     ValidationResult.Invalid(listOf(""))
                 }
             }

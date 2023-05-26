@@ -132,7 +132,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = { NavigationManager.navigate("receive_gratitude") },
                     modifier = Modifier.weight(1f)) {
-                    Text("Receive", style = TextStyle(fontSize = 20.sp))
+                    Text(stringResource(R.string.button_receive), style = TextStyle(fontSize = 20.sp))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
@@ -143,7 +143,7 @@ fun ScoopPage(isPreview: Boolean = false) {
                         contentColor = OnSecondary
                     )
                 ) {
-                    Text("Give", style = TextStyle(fontSize = 20.sp))
+                    Text(stringResource(R.string.button_give), style = TextStyle(fontSize = 20.sp))
                 }
             }
 
@@ -203,7 +203,7 @@ fun ServiceStartRequest(openDialog: Boolean, onDismiss: () -> Unit, onConfirm: (
                 )
             },
             confirmButton = { TextButton(onClick = onConfirm ) { Text("OK") } },
-            dismissButton = { TextButton(onClick = onDismiss ) { Text("Dismiss") } }
+            dismissButton = { TextButton(onClick = onDismiss ) { Text(stringResource(R.string.dismiss)) } }
         )
     }
 }

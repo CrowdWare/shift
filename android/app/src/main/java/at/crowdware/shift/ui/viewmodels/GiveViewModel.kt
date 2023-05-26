@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 
 
 class GiveViewModel: ViewModel() {
-    var balance = mutableStateOf(0UL)
+    var balance = mutableStateOf(0L)
     /*var hours = mutableStateOf(0)
     var minutes = mutableStateOf(0)
     var total = mutableStateOf(0UL)

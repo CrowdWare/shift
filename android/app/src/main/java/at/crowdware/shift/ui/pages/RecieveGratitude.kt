@@ -49,7 +49,7 @@ import at.crowdware.shift.ui.widgets.TotalDisplay
 @Composable
 fun ReceiveGratitude(viewModel: ReceiveViewModel) {
     viewModel.balance.value =
-        (Backend.getBalance() / 1000UL) * 1000UL // that should round down to full liter
+        (Backend.getBalance() / 1000L) * 1000L // that should round down to full liter
     val scrollState = rememberScrollState()
 
     Column(
@@ -81,15 +81,15 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
                 if (filteredInput.isNotEmpty()) {
                     // Catch NumberFormatException in case the number is larger than Long.MAX_VALUE
                     try {
-                        viewModel.longNumber.value = filteredInput.toULong()
+                        viewModel.longNumber.value = filteredInput.toLong()
                     } catch (e: NumberFormatException) {
                         // Handle the error if needed
                     }
                 } else {
-                    viewModel.longNumber.value = 0UL
+                    viewModel.longNumber.value = 0L
                 }
                 viewModel.total.value =
-                    (viewModel.hours.value * 60 + viewModel.minutes.value).toULong() + viewModel.longNumber.value
+                    (viewModel.hours.value * 60 + viewModel.minutes.value).toLong() + viewModel.longNumber.value
             },
             label = { Text(stringResource(R.string.enter_an_amount_to_add_to_the_time)) }
         )
@@ -107,7 +107,7 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
         Button(
             onClick = { NavigationManager.navigate("receive_gratitude_qrcode") },
             modifier = Modifier.fillMaxWidth(),
-            enabled = viewModel.total.value > 0UL
+            enabled = viewModel.total.value > 0L
         ) {
             Text(stringResource(R.string.button_continue), style = TextStyle(fontSize = 20.sp))
         }

@@ -23,7 +23,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
-fun TotalDisplay(total: ULong) {
+fun TotalDisplay(total: Long) {
     Card(modifier = Modifier.fillMaxWidth().height(120.dp), colors = CardDefaults.cardColors(
         containerColor = Tertiary,
     )) {
@@ -57,6 +57,6 @@ fun TotalDisplay(total: ULong) {
 @Preview
 @Composable
 fun TotalDisplayPreview() {
-    val total = remember { mutableStateOf(240UL) }
+    val total = remember { mutableStateOf(240L) }
     TotalDisplay(total.value)
 }

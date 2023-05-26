@@ -8,18 +8,18 @@ class ReceiveViewModel: ViewModel() {
     fun reset() {
         hours.value = 0
         minutes.value = 0
-        total.value = 0UL
+        total.value = 0L
         description.value = ""
-        longNumber.value = 0UL
+        longNumber.value = 0L
         longNumberText.value = ""
 
     }
 
-    var balance = mutableStateOf(0UL)
+    var balance = mutableStateOf(0L)
     var hours = mutableStateOf(0)
     var minutes = mutableStateOf(0)
-    var total = mutableStateOf(0UL)
+    var total = mutableStateOf(0L)
     var description = mutableStateOf("")
-    var longNumber = mutableStateOf(0UL)
+    var longNumber = mutableStateOf(0L)
     var longNumberText = mutableStateOf("")
 }

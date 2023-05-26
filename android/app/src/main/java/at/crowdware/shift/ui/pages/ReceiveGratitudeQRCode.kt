@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
@@ -25,24 +27,26 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.logic.Backend.Companion.toHex
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
-import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
-import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.android.IPv8Android
 import com.google.gson.Gson
 
 @Composable
 fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(8.dp))
@@ -55,10 +59,10 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
         )
 
         val map = mutableMapOf("type" to "LMP")  // liquid micro payment
-        map["pubKey"] = IPv8Android.getInstance().myPeer.publicKey.toString()
+        map["pubKey"] = IPv8Android.getInstance().myPeer.publicKey.keyToBin().toHex()
         map["amount"] = viewModel.total.value.toString()
-        map["name"] = Backend.getAccount().name
-        map["description"] = viewModel.description.value
+        map["purpose"] = viewModel.description.value
+        map["from"] = Backend.getAccount().name
         val gson = Gson()
         val mapString = gson.toJson(map)
 
@@ -76,7 +80,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
                 viewModel.reset()
                 NavigationManager.navigate("home") },
             modifier = Modifier.fillMaxWidth(),
-            enabled = viewModel.total.value > 0UL
+            enabled = viewModel.total.value > 0L
         ) {
             Text(stringResource(R.string.button_done), style = TextStyle(fontSize = 20.sp))
         }
@@ -92,6 +96,6 @@ fun ReceiveGratitudeQRCodePreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     val receiveViewModel = viewModel<ReceiveViewModel>()
-    receiveViewModel.total.value = 580UL
+    receiveViewModel.total.value = 580L
     ModalNavigationDrawer(list, selectedItem){ ReceiveGratitudeQRCode(receiveViewModel) }
 }

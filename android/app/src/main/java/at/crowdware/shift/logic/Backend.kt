@@ -38,6 +38,7 @@ import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainBlock
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.keyvault.PrivateKey
+import nl.tudelft.ipv8.keyvault.PublicKey
 import nl.tudelft.ipv8.util.hexToBytes
 import org.json.JSONObject
 import java.time.LocalDate
@@ -260,33 +261,35 @@ class Backend {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             for(block in trustchain.database.getAllBlocks()) {
                 if (block.isProposal && block.type == BLOCK_TYPE) {
-                    val (amount, type, date) = parseTransaction(block)
-
-                    if ((type == TransactionType.INITIAL_BOOKING
-                                || type == TransactionType.SCOOPED)
-                    ) {
-                        list.add(0, Transaction(amount = amount, date = date, type = type))
+                    val trans = parseTransaction(block)
+                    if(trans.type == TransactionType.LMP) {
+                        if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin()))
+                            trans.amount *= -1
                     }
+                    list.add(0, trans)
                 }
             }
             return list
         }
 
-        fun getBalance(): ULong {
-            var balance: ULong = 0u
+        fun getBalance(): Long {
+            var balance: Long = 0
 
             if(!Network.isStarted)
-                return 0u
+                return 0
 
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             // collect amounts from blockchain
             for(block in trustchain.database.getAllBlocks()) {
                 if (block.type == BLOCK_TYPE && block.isProposal) {
-                    val (amount, type, date) = parseTransaction(block)
-                    if ((type == TransactionType.INITIAL_BOOKING
-                                || type == TransactionType.SCOOPED)
-                    ) {
-                        balance += calculateWorth(amount, date)
+                    val trans = parseTransaction(block)
+                    if(trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) {
+                        balance += calculateWorth(trans.amount, trans.date)
+                    } else if(trans.type == TransactionType.LMP) {
+                        if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin()))
+                            balance -= calculateWorth(trans.amount, trans.date)
+                        else
+                            balance += calculateWorth(trans.amount, trans.date)
                     }
                 }
             }
@@ -296,26 +299,26 @@ class Backend {
             }
             val minutes = ShiftChainService.minutesScooping()
             val amountOf20Minutes = minutes / 20f
-            balance += (calcGrowPer20Minutes().toFloat() * amountOf20Minutes).toULong()
+            balance += (calcGrowPer20Minutes().toFloat() * amountOf20Minutes).toLong()
             return balance
         }
 
-        fun addLiquid(context: Context, minutes: UInt) {
+        fun addLiquid(context: Context, minutes: Int) {
             val growPer20Minutes = calcGrowPer20Minutes()
-            val amountOf20Minutes = (minutes / 20u)
+            val amountOf20Minutes = (minutes / 20)
             // if there is an old transaction we accumulate them and put them in the blockchain
             if (account.transactions.size > 0 && account.transactions.last().date != LocalDate.now()) {
-                var balance = 0UL
+                var balance = 0L
                 for(t in account.transactions) {
                     balance += t.amount
                 }
                 // only book full liters
-                val liter = (balance / 1000UL).toLong()
+                val liter = (balance / 1000L).toLong()
                 if(liter > 0)
-                    addTransactionToTrustChain(liter, TransactionType.SCOOPED, LocalDate.now().minusDays(1))
+                    addTransactionToTrustChain(liter, TransactionType.SCOOPED, bookingDate = LocalDate.now().minusDays(1))
                 account.transactions.clear()
             }
-            account.transactions.add(Transaction(growPer20Minutes * amountOf20Minutes, date = LocalDate.now(), type=TransactionType.SCOOPED))
+            account.transactions.add(Transaction(growPer20Minutes.toLong() * amountOf20Minutes, "", date = LocalDate.now(), type=TransactionType.SCOOPED))
             account.scooping = 0u
             Database.saveAccount(context)
             setScooping(context)
@@ -334,7 +337,7 @@ class Backend {
 
         fun dumpBlocks() {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
-            var balance = 0UL
+            var balance = 0L
             println("Scooping for ${ShiftChainService.minutesScooping()} minutes")
             for(block in trustchain.database.getAllBlocks()) {
                 if (block.type == BLOCK_TYPE) {
@@ -343,9 +346,20 @@ class Backend {
                         block.isAgreement -> "agreement"
                         else -> "unknown  "
                     }
-                    val (amount, _, date) = parseTransaction(block)
-                    balance += calculateWorth(amount, date)
-                    println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, ${block.transaction}, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                    if(block.isProposal) {
+                        val trans = parseTransaction(block)
+                        if(trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) {
+                            balance += calculateWorth(trans.amount, trans.date)
+                        }
+                        else if(trans.type == TransactionType.LMP) {
+                            if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
+                                balance -= calculateWorth(trans.amount, trans.date)
+                            } else {
+                                balance += calculateWorth(trans.amount, trans.date)
+                            }
+                        }
+                    }
+                    println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
             }
             var i = 0
@@ -357,12 +371,14 @@ class Backend {
             println("Balance: $balance")
         }
 
-        fun parseTransaction(block: TrustChainBlock): Triple<ULong, TransactionType, LocalDate> {
+        fun parseTransaction(block: TrustChainBlock): Transaction {
             val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-            val amount = (block.transaction["amount"] as String).toULong()
+            val amount = (block.transaction["amount"] as String).toLong()
             val type = TransactionType.fromString(block.transaction["type"] as String)
             val date = LocalDate.parse(block.transaction["date"] as String, formatter)
-            return Triple(amount, type, date)
+            val purpose = block.transaction["purpose"] as String
+            val from = block.transaction["from"] as String
+            return Transaction(amount, from, date, purpose, type)
         }
 
         /**
@@ -370,20 +386,26 @@ class Backend {
          *
          * @param amount The value in liter
          * @param type Transaction type like INITIAL_BOOKING, SCOOPING or LMP (liquid micro payment)
+         * @param purpose Reason to send transaction
          * @param bookingDate When is the transaction created. When scooping the day before is used,
          * because the amount is cumulated on the day before.
+         * @param publicKey The public key of the recipient
          */
-        fun addTransactionToTrustChain(amount: Long, type: TransactionType, bookingDate:LocalDate = LocalDate.now()) {
+        fun addTransactionToTrustChain(amount: Long,
+                                       type: TransactionType,
+                                       purpose: String = "",
+                                       from: String = "",
+                                       publicKey: ByteArray = IPv8Android.getInstance().myPeer.publicKey.keyToBin(),
+                                       bookingDate:LocalDate = LocalDate.now()) {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
             val formatter = DateTimeFormatter.ISO_LOCAL_DATE
             val transaction = mapOf(
                 "amount" to amount.toString(),
                 "date" to bookingDate.format(formatter),
-                "type" to type.toString())
-            val publicKey = IPv8Android.getInstance().myPeer.publicKey.keyToBin()
-
-            println("trans: $transaction")
-            // self signed so send to your own public key
+                "type" to type.toString(),
+                "purpose" to purpose,
+                "from" to from)
+            // if publicKey is omitted block will be self signed (scooping)
             trustchain.createProposalBlock(BLOCK_TYPE, transaction, publicKey)
         }
 
@@ -394,13 +416,12 @@ class Backend {
          * @param transactionDate The date of the transaction or the date of scooping.
          * @return The current worth of the amount in milli liter.
          */
-        fun calculateWorth(amount: ULong, transactionDate: LocalDate): ULong {
+        private fun calculateWorth(amount: Long, transactionDate: LocalDate): Long {
             val currentDate = LocalDate.now()
             val daysPassed = ChronoUnit.DAYS.between(transactionDate, currentDate)
             val demurrageRate = 0.27 / 100
-            val amountInLiter = amount
-            var worth = (1000 * (1 - demurrageRate).pow(daysPassed.toInt())).toULong()
-            worth *= amountInLiter
+            var worth = (1000 * (1 - demurrageRate).pow(daysPassed.toInt())).toLong()
+            worth *= amount
             return worth
         }
     }

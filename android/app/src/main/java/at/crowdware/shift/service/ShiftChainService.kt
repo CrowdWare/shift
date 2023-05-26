@@ -121,7 +121,7 @@ class ShiftChainService : IPv8Service() {
             // we book 3 times an hour
             val minutes = minutesScooping()
             if (minutes >= 20f) {
-                Backend.addLiquid(this, minutes.toUInt())
+                Backend.addLiquid(this, minutes.toInt())
             }
         }
         Backend.dumpBlocks()

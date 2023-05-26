@@ -27,7 +27,7 @@ import java.util.Locale
 
 
 @Composable
-fun BalanceDisplay(balance: ULong, displayLiterOnly: Boolean = false) {
+fun BalanceDisplay(balance: Long, displayLiterOnly: Boolean = false) {
     var displayMilliliter by remember { mutableStateOf(!displayLiterOnly) }
     Card(
         modifier = Modifier
@@ -80,5 +80,5 @@ fun BalanceDisplay(balance: ULong, displayLiterOnly: Boolean = false) {
 @Preview
 @Composable
 fun BalanceDisplayPreview() {
-    BalanceDisplay(balance = 13000UL )
+    BalanceDisplay(balance = 13000L )
 }

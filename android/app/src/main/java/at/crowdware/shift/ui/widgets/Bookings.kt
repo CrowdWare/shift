@@ -49,6 +49,7 @@ fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
                 val txt = when (transaction.type) {
                     TransactionType.SCOOPED -> stringResource(R.string.transaction_liquid_scooped)
                     TransactionType.INITIAL_BOOKING -> stringResource(R.string.transaction_initial_liquid)
+                    TransactionType.LMP -> transaction.purpose
                 }
                 Text(txt, style = TextStyle(fontSize = 18.sp))
                 Box(

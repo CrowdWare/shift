@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 fun HourMinutesPicker(
     hours: MutableState<Int>,
     minutes: MutableState<Int>,
-    total: MutableState<ULong>,
-    longNumber: MutableState<ULong>,
+    total: MutableState<Long>,
+    longNumber: MutableState<Long>,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -40,7 +40,7 @@ fun HourMinutesPicker(
                 unit = "h",
                 onPositionChange = { position ->
                     hours.value = position
-                    total.value = (hours.value * 60 + minutes.value).toULong() + longNumber.value
+                    total.value = (hours.value * 60 + minutes.value).toLong() + longNumber.value
                 }
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -52,7 +52,7 @@ fun HourMinutesPicker(
                 unit = "m",
                 onPositionChange = { position ->
                     minutes.value = position * 5
-                    total.value = (hours.value * 60 + minutes.value).toULong() + longNumber.value
+                    total.value = (hours.value * 60 + minutes.value).toLong() + longNumber.value
                 }
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -67,7 +67,7 @@ fun HourMinutesPickerPreview() {
     val minutesFocusRequester = remember { FocusRequester() }
     val hours = remember { mutableStateOf(3) }
     val minutes = remember { mutableStateOf(30) }
-    val total = remember { mutableStateOf(360UL) }
-    val amount = remember { mutableStateOf(360UL) }
+    val total = remember { mutableStateOf(360L) }
+    val amount = remember { mutableStateOf(360L) }
     HourMinutesPicker(hours, minutes, total, amount)
 }

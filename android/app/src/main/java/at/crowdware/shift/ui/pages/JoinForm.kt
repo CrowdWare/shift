@@ -101,12 +101,14 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
+            singleLine = true,
             label = { Text(stringResource(R.string.name_or_nickname)) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = friend,
             onValueChange = { friend = it },
+            singleLine = true,
             label = { Text(stringResource(R.string.invitation_code)) }
         )
         Spacer(modifier = Modifier.height(16.dp))

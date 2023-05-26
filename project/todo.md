@@ -47,7 +47,7 @@
 - Why does service crashes also when app crashes? service should run independently
 - Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends.
 - settings, language survives recreate
-- ?Firebase for push notifications and crash reports (only in the beginning, later we kick it out)
+
 
 # App 3.0
 - Pay function using IPv8 trustchain

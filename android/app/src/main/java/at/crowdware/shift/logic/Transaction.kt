@@ -24,7 +24,8 @@ import java.time.LocalDate
 
 enum class TransactionType(val value: UInt) {
     INITIAL_BOOKING(1u),
-    SCOOPED(2u);
+    SCOOPED(2u),
+    LMP(3u);
 
     override fun toString(): String {
         return value.toString()
@@ -39,9 +40,9 @@ enum class TransactionType(val value: UInt) {
 }
 
 data class Transaction(
-    var amount: ULong,
-    var from: String = "",
+    var amount: Long,
+    var from: String,
     val date: LocalDate,
-    var description: String = "",
+    var purpose: String = "",
     var type: TransactionType):
     Serializable
