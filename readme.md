@@ -39,7 +39,7 @@ That means the shift service has to run on your mobile and on their mobile.
 |4|75 l|(1000 x 75 ml) for each of the invited user friends (up to 1000)|
 
 That would be max 141 l each day in theory if everybody of these users are actually scooping. 
-So you will be able to pay people for their works for 141 minutes a day.  
+So you will be able to pay people for their work for 141 minutes a day.  
 All you have to do is to spread the word about SHIFT and make it popular.
 
 But lets be realistical. You invite 3 friends, they also invite 3 people and so on.
