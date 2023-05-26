@@ -78,8 +78,8 @@ At that point we will cut the connection to the server and the platform will be 
 When we are talking about salaries and money, then we also talk about liquidity. So when you have got enough money you are liquid.  
 In fact we don't wanne use money anymore, because in the old system as we knew it from before 2020, some people abused money to hort it. With this action they stopped the free flow of energy. So they created a blockade to keep much money for themselves. All other people where dryed out and had to suffer.  
 
-With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 ml (milli-liters) of LMC. So one ml per minute.  
-So a softwaredeveloper in Norway will get 60 ml of LMC every hour and so does a hairdresser in India.  
+With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 l (liters) of LMC. So one liter per minute.  
+So a softwaredeveloper in Norway will get 60 l of LMC every hour and so does a hairdresser in India.  
 Just fair ins'nt it.  
 
 # About the Shift service
