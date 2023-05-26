@@ -10,7 +10,7 @@ Also nobody can stop it, because it will run decentral.
 # GOAL
 We are going to create a very simple app which the users can use to create new liquid on a daily base.   
 We gave the name **LMC** to this new virtual liquid.  
-LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude and liquidity.
+LMC is the abreviation of **Liquid Micro Coins** and represents the gratitude and liquidity.
 
 # RELEASE PHASES
 ## ONE
