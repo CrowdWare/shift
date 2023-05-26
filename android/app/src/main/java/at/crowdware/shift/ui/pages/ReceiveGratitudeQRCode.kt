@@ -35,6 +35,7 @@ import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
 import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.android.IPv8Android
+import com.google.gson.Gson
 
 @Composable
 fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
@@ -58,7 +59,8 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
         map["amount"] = viewModel.total.value.toString()
         map["name"] = Backend.getAccount().name
         map["description"] = viewModel.description.value
-        val mapString = map.toString()
+        val gson = Gson()
+        val mapString = gson.toJson(map)
 
         Barcode(
             modifier = Modifier.align(Alignment.CenterHorizontally)
