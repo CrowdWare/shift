@@ -60,7 +60,7 @@ We are using the trustchain implementation from IPv8 a university in Delft Nethe
 [TrustChain: A Sybil-resistant scalable blockchain](https://www.sciencedirect.com/science/article/abs/pii/S0167739X17318988)
  
 ## TWO
-Whenwe reach 1.000.000 users, we will come tophase TWO.
+When we reach 1.000.000 users, we will come tophase TWO.
 At the moment there are just a few people working on the app.  
 The mark 1.000.000 will motivate some additonal developers to join in, because they see that the people want this app and the developers will be kind of payed with LMC instead of real money.
 
