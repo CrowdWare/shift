@@ -50,7 +50,6 @@
 - settings, language survives recreate
 
 
-
 # App 3.0
 - Pay function using IPv8 trustchain
 - Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
