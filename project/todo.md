@@ -31,36 +31,47 @@
 - Release build has some dependencies to libsodium, so build all submodules as signed apk
 + Transaction should only store full liters.
 - Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
-- create an easy to use API for payments
+- create an easy to use API (see API requirements)
 + Payment scan and send functionionality
-- isScooping should only be true if connected to the internet, and not in flightmode
+- isScooping should only be true if connected to the internet and not in flightmode
 - Key exchange via text or QR-code or TOFU
 - bugfix: see crashlog
-- To validate a giver we have to crawl the trustchain to verify the last x blocks.
+- To validate a giver we have to crawl the trustchain to verify the last x blocks and verify scooping values.
 - The balance on the display is less than the amount in the blocks + in shift.db
 - Display value from blocks can be cached...only load daily blocks from shift.db 
 - We have unwanted blocks in the blockchain like message=pak, we might need a different service ID to form a separate trustchain 
 - Also think of an own discovery overlay, for above reason (or just change the existing) 
 - Stromverbrauchswarnung from Android, how to avoid this?
-- Multiple Themes to choose from (i personally like orange on dark background)
-- Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
+- Multiple themes to choose from (I personally like orange on dark gray background)
++ Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
 - Request focus when dragging the cirlular picker
 - Why does service crashes also when app crashes? service should run independently
-- Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends.
+- Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends. Put a trailing button to scan qr code. 
 - settings, language survives recreate
+- ? Posibility to change secret keys in higher versions but be downwards compatible
+- Drawer is visible on Tablet
+- Balance display should only display booked blocks when in liter mode (needed for giving, not to spent liquid from nonexisting/theoretically scooped blocks), ? maybe it should only display persistent transactions when in milli mode
 
 
 # App 3.0
-- Pay function using IPv8 trustchain
 - Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
 - DHT is already implemented in IPv8 for Python 
 - Posts for micro blogging
 - Additional to hours and minutes we should be able to enter days, weeks, months. 
 - All webservice calls errors ignored, if WebService is offline(in case someone wants to dissturb us with DOS attacks on the server)
 
+
+# API Requirements
+- Library to use in plugins (also a place for the interface ShiftPlugin)
++ Gratitude function
+- Change title in the appbar
+- Get Colors from theme for corporate identity
+
+
 # Plugin Ideas
 - 13 moons calendar (https://www.lawoftime.org/thirteenmoon/tutorial.html)
 - Open houses, map of open houses to occupy
+- Newspaper with only positive messages
 
 # Project
 - Should the name say something like TIME instead of LIQUID?  LUNA GRATIA FLUO (LGF), LUNA GRATIA LIQUIDO (LGL)
@@ -69,6 +80,8 @@
 
 # Web
 - Introduction to animate people to join (video)
+- Video showing the uses cases of the app
+- Book showing how to build a plugin 
 + New screen print of the app
 + Translate to Esperanto, French, Spanish, Portuguese
 - Tutorial to create plugins
@@ -80,24 +93,13 @@ Maybe also use trust on first use (TOFU) for messaging and sign the contact as T
 
 
 # Desktop App
-- A desktop app can be used to transfer liquid from mobile to desktop to be able to save the data.
+- A desktop app can be used to transfer liquid from mobile to desktop to be able to save the liquid (to save liquid we could also use our tablet or a friends mobile)
 - It could also be used as DHT node to store posts and messages for chat and blogging
 
 # P2P
 - https://github.com/Tribler/trustchain-superapp
 - https://github.com/Tribler/kotlin-ipv8
 - https://github.com/Tribler/py-ipv8
-
-# Contact Matt Skala or so else from BlockchainLab
-info@tudelft.nl 
-https://www.blockchain-lab.org
-
-Questions: 
-- Do we really need the DiscoveryCommunity, because it throws exceptions? (Maybe DOS attacks)
-- How to really make payments with proposal and agreement. 
-- Why broadcast the pair?
-- Why crawl the trustchain? Maybe check the integrity of the chain? Check the amount of scooped liquid? 
-- How to create our own TrustChainCommunity/DiscoveryCommunity?
 
 
 # Additional use cases for the app
