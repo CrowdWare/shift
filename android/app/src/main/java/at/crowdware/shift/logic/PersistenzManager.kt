@@ -23,18 +23,18 @@ import android.content.Context
 
 object PersistanceManager{
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
-    private const val DELETE_WARNING_SEEN = "delete_warning_pref"
+    private const val DELETE_WARNING_SEEN = "delete_warning_seen_pref"
+    private const val DISPLAY_MILLILITER = "display_milliliter_pref"
     private const val APP_PREFS = "app_prefs"
 
     fun hasSeenDeleteWarning(context: Context): Boolean {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        val has = preferences.getString(DELETE_WARNING_SEEN, "false")
-        return has == "true"
+        return preferences.getBoolean(DELETE_WARNING_SEEN, false)
     }
 
     fun putHasSeenDeleteWarning(context: Context) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        preferences.edit().putString(DELETE_WARNING_SEEN, "true").apply()
+        preferences.edit().putBoolean(DELETE_WARNING_SEEN, true).apply()
     }
 
     fun getLanguage(context: Context): String? {
@@ -45,5 +45,15 @@ object PersistanceManager{
     fun setLanguageCode(context: Context, language: String) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putString(LANGUAGE_CODE_PREF, language).apply()
+    }
+
+    fun getDisplayMillis(context: Context): Boolean {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        return preferences.getBoolean(DISPLAY_MILLILITER, true)
+    }
+
+    fun setDisplayMillis(context: Context, displaMillis: Boolean) {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        preferences.edit().putBoolean(DISPLAY_MILLILITER, displaMillis).apply()
     }
 }

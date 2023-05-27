@@ -28,6 +28,7 @@
 + We need a better hour and minute picker design
 + Writing a block after day change should use the date from the day before. 
 - Balance Display state should be saved in prefs or/and it should switch to liter when amount > X
+- Release build has some dependencies to libsodium, so build all submodules as signed apk
 + Transaction should only store full liters.
 - Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
 - create an easy to use API for payments
