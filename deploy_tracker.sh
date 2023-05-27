@@ -1,4 +1,4 @@
+systemctl stop tracker.service
+mv /var/log/tracker.log /var/log/tracker_$(date +%Y%m%d).log
 cp -r tracker /home/shift
-cd /home/shift/tracker/bin
-./tracker.sh
-cd /home/shift/sourcecode/Shift
+systemctl start tracker.service

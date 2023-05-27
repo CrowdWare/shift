@@ -1,0 +1,15 @@
+[Unit]
+Description=SHIFT Tracker Service
+
+[Service]
+User=shift
+WorkingDirectory=/home/shift/tracker
+ExecStart=/home/shift/tracker/bin/tracker.sh
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardOutput=file:/var/log/tracker.log
+StandardError=file:/var/log/tracker.log
+
+[Install]
+WantedBy=multi-user.target
