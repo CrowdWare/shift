@@ -10,7 +10,7 @@ Also nobody can stop it, because it will run decentral.
 # GOAL
 We are going to create a very simple app which the users can use to create new liquid on a daily base.   
 We gave the name **LMC** to this new virtual liquid.  
-LMC is the abreviation off **Liquid Micro Coins** and represents the gratitude and liquidity.
+LMC is the abreviation of **Liquid Micro Coins** and represents the gratitude and liquidity.
 
 # RELEASE PHASES
 ## ONE
@@ -23,8 +23,8 @@ All these feature are driven by YOU without the idea to make profit at all.
 
 You as the users can create about, lets say 11.800 ml (12l) of LMC every day. You can start the process in the app just cklicking a button.  
 You can also invite your friend to join and if they do join you can earn 1.800 ml of LMC for every referred user per day.   
-Every user can add up to 10 other friends.
-If the referred users also refer other friends then you will earn additionally 360 ml LMC for each refered user.  
+Every user can add other people.
+If the referred users also refer other people then you will earn additionally 360 ml LMC for each refered user.  
 This will also happen if these user refer others and you will earn additionally 72 ml LMC for each refered user.  
 You can make the math.  
 Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on and all of them started scooping not longer than 24 hours ago.  
@@ -39,7 +39,7 @@ That means the shift service has to run on your mobile and on their mobile.
 |4|75 l|(1000 x 75 ml) for each of the invited user friends (up to 1000)|
 
 That would be max 141 l each day in theory if everybody of these users are actually scooping. 
-So will be able to pay people for their works for 141 minutes a day.  
+So you will be able to pay people for their work for 141 minutes a day.  
 All you have to do is to spread the word about SHIFT and make it popular.
 
 But lets be realistical. You invite 3 friends, they also invite 3 people and so on.
@@ -60,9 +60,9 @@ We are using the trustchain implementation from IPv8 a university in Delft Nethe
 [TrustChain: A Sybil-resistant scalable blockchain](https://www.sciencedirect.com/science/article/abs/pii/S0167739X17318988)
  
 ## TWO
-Whenwe reach 1.000.000 users, we will come tophase TWO.
+When we reach 1.000.000 users, we will come to phase TWO.
 At the moment there are just a few people working on the app.  
-The mark 1.000.000 will motivate some additonal developers to join in, because they see that the people want this app and the developers will be kind of payed with LMC instead of real money.
+The mark 1.000.000 will motivate some additonal developers to join in, because they see that the people want this app and the developers will be kind of paid with LMC instead of real money.
 
 There will be a **chat function**.  
 There will also be a **micro blogging engine**, so that you are able to share things and services.    
@@ -78,8 +78,8 @@ At that point we will cut the connection to the server and the platform will be 
 When we are talking about salaries and money, then we also talk about liquidity. So when you have got enough money you are liquid.  
 In fact we don't wanne use money anymore, because in the old system as we knew it from before 2020, some people abused money to hort it. With this action they stopped the free flow of energy. So they created a blockade to keep much money for themselves. All other people where dryed out and had to suffer.  
 
-With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 ml (milli-liters) of LMC. So one ml per minute.  
-So a softwaredeveloper in Norway will get 60 ml of LMC every hour and so does a hairdresser in India.  
+With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 l (liters) of LMC. So one liter per minute.  
+So a softwaredeveloper in Norway will get 60 l of LMC every hour and so does a hairdresser in India.  
 Just fair ins'nt it.  
 
 # About the Shift service
@@ -101,7 +101,7 @@ So that we will not flood the planet, the liquid will vaporate every day a small
 
 # Security / Integrity
 The local database has been encrypted. So this makes it nearly impossible for someone to change any data in the local database. Which of course is also true for the balance.
-When we are transfering LMC between two mobile phones, also the data will be encrypted. So this transer data can only be decrypted with the original app.
+When we are transfering LMC between two mobile phones, also the data will be encrypted. So this transfer data can only be decrypted with the original app.
 
 If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The guy with the faked mobile app will not tell you that the transfer has been aborted, because otherwise you will find out that cheating is around.
 
