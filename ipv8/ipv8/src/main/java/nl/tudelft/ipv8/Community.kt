@@ -666,8 +666,9 @@ abstract class Community : Overlay {
             // py-ipv8 + LibNaCL
             //IPv4Address("131.180.27.161", 6427), sends bad INTRODUCTION_REQUESTS
             // kotlin-ipv8
-            IPv4Address("131.180.27.188", 1337),
-            IPv4Address("131.180.27.187", 1337)
+            //IPv4Address("131.180.27.188", 1337),
+            //IPv4Address("131.180.27.187", 1337)
+            IPv4Address("128.140.48.116", 8090)
         )
 
         // Timeout before we bootstrap again (bootstrap kills performance)

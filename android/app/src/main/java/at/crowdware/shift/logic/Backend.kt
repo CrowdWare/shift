@@ -27,6 +27,14 @@ import android.util.Log
 import at.crowdware.shift.BuildConfig
 import at.crowdware.shift.R
 import at.crowdware.shift.service.ShiftChainService
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.SyncHttpClient
 import com.loopj.android.http.TextHttpResponseHandler
@@ -41,6 +49,7 @@ import nl.tudelft.ipv8.keyvault.PrivateKey
 import nl.tudelft.ipv8.keyvault.PublicKey
 import nl.tudelft.ipv8.util.hexToBytes
 import org.json.JSONObject
+import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.UUID
@@ -48,6 +57,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import kotlin.math.min
 import java.time.temporal.ChronoUnit
+import javax.crypto.spec.GCMParameterSpec
 import kotlin.math.pow
 
 class Backend {
@@ -71,6 +81,15 @@ class Backend {
             return result.toString()
         }
 
+        fun String.hexToByteArray(): ByteArray {
+            val data = ByteArray(length / 2)
+            for (i in data.indices) {
+                data[i] = ((Character.digit(this[i * 2], 16) shl 4) + Character.digit(this[i * 2 + 1], 16)).toByte()
+            }
+            return data
+        }
+
+
         fun encryptStringGCM(value: String): String {
             val keySpec = SecretKeySpec(secretKey.toByteArray(Charsets.UTF_8), "AES")
             val cipher = Cipher.getInstance(algorithm)
@@ -79,6 +98,28 @@ class Backend {
             val iv = cipher.iv.copyOf()
             return iv.plus(result).toHex()
         }
+
+        fun decryptStringGCM(value: String): String {
+            val encryptedData = value.hexToByteArray()
+            val iv = encryptedData.copyOfRange(0, 12) // GCM IV is usually 12 bytes
+            val cipherText = encryptedData.copyOfRange(12, encryptedData.size)
+
+            val keySpec = SecretKeySpec(secretKey.toByteArray(Charsets.UTF_8), "AES")
+            val cipher = Cipher.getInstance(algorithm)
+            val gcmSpec = GCMParameterSpec(128, iv) // 128 bit auth tag length
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, gcmSpec)
+
+            val result = cipher.doFinal(cipherText)
+            return String(result, Charsets.UTF_8)
+        }
+
+        fun testEncryptDecrypt() {
+            val tst = "This is a test string"
+            val enc = encryptStringGCM(tst)
+            val out = decryptStringGCM(enc)
+            println("Test: $out $enc")
+        }
+
         fun setAccount(acc: Account) { account = acc }
 
         fun getAccount(): Account { return account }
@@ -371,14 +412,36 @@ class Backend {
             println("Balance: $balance")
         }
 
+        private fun getGson(): Gson {
+            val gson = GsonBuilder()
+                .registerTypeAdapter(LocalDate::class.java, object : JsonSerializer<LocalDate> {
+                    override fun serialize(
+                        src: LocalDate,
+                        typeOfSrc: Type,
+                        context: JsonSerializationContext
+                    ): JsonElement {
+                        return JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                    }
+                })
+                .registerTypeAdapter(LocalDate::class.java, object : JsonDeserializer<LocalDate> {
+                    override fun deserialize(
+                        json: JsonElement,
+                        typeOfT: Type,
+                        context: JsonDeserializationContext
+                    ): LocalDate {
+                        return LocalDate.parse(json.asString, DateTimeFormatter.ISO_LOCAL_DATE)
+                    }
+                })
+                .create()
+            return gson
+        }
+
         fun parseTransaction(block: TrustChainBlock): Transaction {
-            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-            val amount = (block.transaction["amount"] as String).toLong()
-            val type = TransactionType.fromString(block.transaction["type"] as String)
-            val date = LocalDate.parse(block.transaction["date"] as String, formatter)
-            val purpose = block.transaction["purpose"] as String
-            val from = block.transaction["from"] as String
-            return Transaction(amount, from, date, purpose, type)
+            val gson = getGson()
+            val data = block.transaction["data"] as String
+            val json = decryptStringGCM(data)
+            val trans: Transaction = gson.fromJson(json, Transaction::class.java)
+            return Transaction(trans.amount, trans.from, trans.date, trans.purpose, trans.type)
         }
 
         /**
@@ -398,15 +461,13 @@ class Backend {
                                        publicKey: ByteArray = IPv8Android.getInstance().myPeer.publicKey.keyToBin(),
                                        bookingDate:LocalDate = LocalDate.now()) {
             val trustchain = IPv8Android.getInstance().getOverlay<TrustChainCommunity>()!!
-            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-            val transaction = mapOf(
-                "amount" to amount.toString(),
-                "date" to bookingDate.format(formatter),
-                "type" to type.toString(),
-                "purpose" to purpose,
-                "from" to from)
+            val gson = getGson()
+            val trans = Transaction(amount, from, bookingDate, purpose, type)
+            val json = gson.toJson(trans)
+            // fraud protection
+            val enc = encryptStringGCM(json)
             // if publicKey is omitted block will be self signed (scooping)
-            trustchain.createProposalBlock(BLOCK_TYPE, transaction, publicKey)
+            trustchain.createProposalBlock(BLOCK_TYPE, mapOf("data" to enc), publicKey)
         }
 
         /**
