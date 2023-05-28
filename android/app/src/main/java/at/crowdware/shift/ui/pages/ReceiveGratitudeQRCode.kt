@@ -65,6 +65,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
         map["from"] = Backend.getAccount().name
         val gson = Gson()
         val mapString = gson.toJson(map)
+        val enc = Backend.encryptStringGCM(mapString)
 
         Barcode(
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -72,7 +73,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
                 .height(300.dp),
             resolutionFactor = 10,
             type = BarcodeType.QR_CODE,
-            value = mapString
+            value = enc
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(

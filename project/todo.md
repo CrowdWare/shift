@@ -52,7 +52,6 @@
 - Drawer is visible on Tablet
 - Balance display should only display booked blocks when in liter mode (needed for giving, not to spent liquid from nonexisting/theoretically scooped blocks), ? maybe it should only display persistent transactions when in milli mode
 - Avoid replay attacks on webservice
-- Use api key for give receive, avoid replay attacks
 
 
 # App 3.0
@@ -98,7 +97,7 @@ We need to make sure that only original apps can make transactions.
 Therefore when request to recieve LMC the QR code with (Amount, purpose, name) from the receiver comes encrypted.
 If the receiver is the attacker, then the giver will find out, because he cannot decrypt and read the QR code.  
 
-In case the giver is the attacker, this will be rejected from receiver when wrong api key is encrypted in the transaction.
+In case the giver is the attacker, this will be rejected from receiver when transaction can not be decrypted.
 
 Additionally we need key rotation, so that when a key expires, a new key will be used on all devices.
 

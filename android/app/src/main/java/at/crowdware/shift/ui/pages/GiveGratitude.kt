@@ -1,5 +1,6 @@
 package at.crowdware.shift.ui.pages
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.theme.Tertiary
+import at.crowdware.shift.ui.theme.TertiaryError
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import it.warpmobile.scanner.BuildCameraUI
@@ -37,6 +39,7 @@ import com.google.gson.Gson
 import nl.tudelft.ipv8.android.IPv8Android
 import nl.tudelft.ipv8.keyvault.PublicKey
 import nl.tudelft.ipv8.util.hexToBytes
+import java.lang.Exception
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -71,94 +74,139 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
             Spacer(modifier = Modifier.height(64.dp))
             BuildCameraUI(closeScanListener = {
             }) { qrcode ->
-                code = qrcode
+                try {,
+                    code = Backend.decryptStringGCM(qrcode)
+                }
+                catch(e: Exception) {
+                    code = "FRAUD"
+                    Log.e("Security", "QR code could not be decrypted.")
+                }
                 showScanner = false
             }
             Spacer(modifier = Modifier.height(8.dp))
         } else {
-            val gson = Gson()
-            val trans: Lmp = gson.fromJson(code, Lmp::class.java)
-            Text(
-                stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
-                modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(fontSize = 20.sp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Card(colors = CardDefaults.cardColors(
-                containerColor = Tertiary)
-            ){
-                Text(
-                    text = stringResource(R.string.purpose),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .fillMaxWidth().padding(4.dp)
-                )
-                Text(
-                    text = trans.purpose,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .fillMaxWidth().padding(4.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.from),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .fillMaxWidth().padding(4.dp)
-                )
-                Text(
-                    text = trans.from,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .fillMaxWidth().padding(4.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
+            if(code == "FRAUD") {
+                Card(
+                    colors = CardDefaults.cardColors(
+                    containerColor = TertiaryError)
                 ) {
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        stringResource(R.string.amount), fontWeight = FontWeight.Bold,
-                        style = TextStyle(fontSize = 18.sp),
-                        modifier = Modifier.align(Alignment.TopStart)
-                    )
-                    AutoSizeText(
-                        NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
-                            maximumFractionDigits = 3
-                        }.format(trans.amount.toDouble()),
-                        style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
-                    )
-                    Text(
-                        "LMC (liter)",
+                    Text("Please tell the receiver that he or she is not using the original app from CrowdWare.",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.BottomEnd)
-                    )
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp))
                 }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            if(viewModel.balance.value / 1000L >= trans.amount) {
-                Button(
-                    onClick = {
-                        Backend.addTransactionToTrustChain(trans.amount.toLong(), TransactionType.LMP, trans.purpose, trans.from, trans.pubKey.hexToBytes())
-                        NavigationManager.navigate("home") },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(stringResource(R.string.button_agree), style = TextStyle(fontSize = 20.sp))
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(onClick = {NavigationManager.navigate("home") },
+                    modifier = Modifier.fillMaxWidth()) {
+                    Text("Go Back", style = TextStyle(fontSize = 20.sp))
                 }
             } else {
-                Button(
-                    onClick = { },
+                val gson = Gson()
+                val trans: Lmp = gson.fromJson(code, Lmp::class.java)
+                Text(
+                    stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = false
+                    style = TextStyle(fontSize = 20.sp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Tertiary
+                    )
                 ) {
-                    Text(stringResource(R.string.your_balance_is_below_the_amount_ordered), color= Color.Red,style = TextStyle(fontSize = 20.sp))
+                    Text(
+                        text = stringResource(R.string.purpose),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Text(
+                        text = trans.purpose,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.from),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Text(
+                        text = trans.from,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            stringResource(R.string.amount), fontWeight = FontWeight.Bold,
+                            style = TextStyle(fontSize = 18.sp),
+                            modifier = Modifier.align(Alignment.TopStart)
+                        )
+                        AutoSizeText(
+                            NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
+                                maximumFractionDigits = 3
+                            }.format(trans.amount.toDouble()),
+                            style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
+                        )
+                        Text(
+                            "LMC (liter)",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.align(Alignment.BottomEnd)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                if (viewModel.balance.value / 1000L >= trans.amount) {
+                    Button(
+                        onClick = {
+                            Backend.addTransactionToTrustChain(
+                                trans.amount.toLong(),
+                                TransactionType.LMP,
+                                trans.purpose,
+                                trans.from,
+                                trans.pubKey.hexToBytes()
+                            )
+                            NavigationManager.navigate("home")
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            stringResource(R.string.button_agree),
+                            style = TextStyle(fontSize = 20.sp)
+                        )
+                    }
+                } else {
+                    Button(
+                        onClick = { },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = false
+                    ) {
+                        Text(
+                            stringResource(R.string.your_balance_is_below_the_amount_ordered),
+                            color = Color.Red,
+                            style = TextStyle(fontSize = 20.sp)
+                        )
+                    }
                 }
             }
         }
