@@ -113,13 +113,6 @@ class Backend {
             return String(result, Charsets.UTF_8)
         }
 
-        fun testEncryptDecrypt() {
-            val tst = "This is a test string"
-            val enc = encryptStringGCM(tst)
-            val out = decryptStringGCM(enc)
-            println("Test: $out $enc")
-        }
-
         fun setAccount(acc: Account) { account = acc }
 
         fun getAccount(): Account { return account }

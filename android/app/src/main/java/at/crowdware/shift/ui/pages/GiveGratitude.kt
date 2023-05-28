@@ -74,7 +74,7 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
             Spacer(modifier = Modifier.height(64.dp))
             BuildCameraUI(closeScanListener = {
             }) { qrcode ->
-                try {,
+                try {
                     code = Backend.decryptStringGCM(qrcode)
                 }
                 catch(e: Exception) {
