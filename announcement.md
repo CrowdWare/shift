@@ -1,3 +1,5 @@
+![logo](./images/logo.png "logo")  
+
 # Introducing Shift: A New Era of Decentralized Social Media
 
 We're excited to announce the upcoming alpha release of Shift, a revolutionary approach to decentralized social networking. This innovative platform aims to create a social network free from advertisements, censorship, and the constraints of traditional social media.
@@ -12,5 +14,7 @@ What's more, with Shift you can start expressing your gratitude to others right 
 
 At Shift, we believe in the power of community and the potential of decentralized social media. We invite you to join us in this exciting new endeavor and become a pioneer in the future of social networking.
 
-Keep in tough to join the Shift alpha release and earn your Early Adoption Reward (EAR). Let's shape the future of social media together!
+Keep in tough to join the Shift alpha release and earn your Early Adoption Reward (EAR).   
+Let's shape the future of social media together!  
+
 Join us on [telegram](https://t.me/crowdware).
