@@ -27,6 +27,6 @@ fi
 CLASSPATH="$APP_HOME/lib/tracker.jar:$APP_HOME/lib/ipv8-jvm.jar:$APP_HOME/lib/ipv8.jar:$APP_HOME/lib/kotlin-reflect-1.7.10.jar:$APP_HOME/lib/kotlin-logging-1.7.7.jar:$APP_HOME/lib/sqlite-driver-1.5.2.jar:$APP_HOME/lib/jdbc-driver-1.5.2.jar:$APP_HOME/lib/runtime-jvm-1.5.2.jar:$APP_HOME/lib/kotlinx-coroutines-core-jvm-1.6.4.jar:$APP_HOME/lib/kotlin-stdlib-jdk8-1.7.10.jar:$APP_HOME/lib/kotlin-stdlib-jdk7-1.7.10.jar:$APP_HOME/lib/kotlin-stdlib-1.7.10.jar:$APP_HOME/lib/lazysodium-java-5.1.4.jar:$APP_HOME/lib/resource-loader-2.0.2.jar:$APP_HOME/lib/jna-5.12.1.jar:$APP_HOME/lib/slf4j-simple-2.0.6.jar:$APP_HOME/lib/kotlin-stdlib-common-1.7.10.jar:$APP_HOME/lib/annotations-13.0.jar:$APP_HOME/lib/slf4j-api-2.0.6.jar:$APP_HOME/lib/commons-net-3.6.jar:$APP_HOME/lib/json-20201115.jar:$APP_HOME/lib/bcprov-jdk15to18-1.63.jar:$APP_HOME/lib/sqlite-jdbc-3.34.0.jar"
 
 # Execute tracker
-"$JAVA_EXE" $DEFAULT_JVM_OPTS $JAVA_OPTS $TRACKER_OPTS -classpath "$CLASSPATH" nl.tudelft.ipv8.tracker.TrackerKt "$@"
+nohup "$JAVA_EXE" $DEFAULT_JVM_OPTS $JAVA_OPTS $TRACKER_OPTS -classpath "$CLASSPATH" nl.tudelft.ipv8.tracker.TrackerKt "$@" > /dev/null 2>&1 &
 
 exit $?
