@@ -19,4 +19,4 @@ Let's shape the future of social media together!
 
 Join us on [telegram](https://t.me/crowdware).
 
-More details you'll find [here](https://github.com/CrowdWare/Shift/blob/main/readme.md).
+More details you'll find [here](https://github.com/CrowdWare/Shift/blob/main/readme.md) and here on our website [http://shift.crowdware.at](http://shift.crowdware.at).
