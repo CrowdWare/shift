@@ -90,7 +90,8 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                     colors = CardDefaults.cardColors(
                     containerColor = TertiaryError)
                 ) {
-                    Text("Please tell the receiver that he or she is not using the original app from CrowdWare.",
+                    Text(
+                        stringResource(R.string.receiver_app_not_original),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
