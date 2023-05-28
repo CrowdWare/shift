@@ -1,6 +1,6 @@
 ![logo](./images/logo.png "logo")  
 
-# Introducing Shift: A New Era of Decentralized Social Media
+# Introducing SHIFT - A New Era of Decentralized Social Media
 
 We're excited to announce the upcoming alpha release of Shift, a revolutionary approach to decentralized social networking. This innovative platform aims to create a social network free from advertisements, censorship, and the constraints of traditional social media.
 
