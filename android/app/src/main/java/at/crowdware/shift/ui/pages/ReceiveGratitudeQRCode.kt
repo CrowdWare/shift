@@ -29,7 +29,7 @@ import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Backend.Companion.toHex
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
-import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
@@ -98,5 +98,5 @@ fun ReceiveGratitudeQRCodePreview() {
     )
     val receiveViewModel = viewModel<ReceiveViewModel>()
     receiveViewModel.total.value = 580L
-    ModalNavigationDrawer(list, selectedItem){ ReceiveGratitudeQRCode(receiveViewModel) }
+    NavigationDrawer(list, selectedItem){ ReceiveGratitudeQRCode(receiveViewModel) }
 }

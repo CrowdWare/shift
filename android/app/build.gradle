@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
 def getProps(String propName) {
     def propsFile = rootProject.file('config.properties')
     if (propsFile.exists()) {
@@ -18,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId "at.crowdware.shift"
-        minSdk 28
+        minSdk 30
         targetSdk 33
         versionCode 1
         versionName "2.0"
@@ -83,15 +84,13 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.5.1'
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation platform('androidx.compose:compose-bom:2023.05.01')
+    implementation 'androidx.compose.ui:ui:1.4.3'
+    implementation 'androidx.compose.ui:ui-graphics:1.4.3'
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.4.3'
     implementation 'androidx.compose.material3:material3:1.1.0'
-    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.4.3'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest:1.4.3'
 
     implementation "androidx.preference:preference:1.1.0"
 

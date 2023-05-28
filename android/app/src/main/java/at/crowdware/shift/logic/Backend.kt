@@ -341,7 +341,7 @@ class Backend {
             val growPer20Minutes = calcGrowPer20Minutes()
             val amountOf20Minutes = (minutes / 20)
             // if there is an old transaction we accumulate them and put them in the blockchain
-            if (account.transactions.size > 0 && account.transactions.last().date != LocalDate.now()) {
+            if (account.transactions.size > 0 && account.transactions.last().date < LocalDate.now()) {
                 var balance = 0L
                 for(t in account.transactions) {
                     balance += t.amount
@@ -393,7 +393,7 @@ class Backend {
                             }
                         }
                     }
-                    println("Block: ${block.transaction}  ${block.sequenceNumber} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                    println("Block: ${block.transaction}  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
             }
             var i = 0

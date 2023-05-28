@@ -1,6 +1,6 @@
 # ToDo
 
-# App 2.0
+# Alpha 2.0
 + Invite friends
 + Read and display last x transactions
 + Page to display mates
@@ -9,7 +9,6 @@
 + Fontsize of balance should be autosize, one should toggle the display between liter and ml
 + Embed some Esperanto
 + Localize app
-- Color for drawer select background should be blueish, general theme check
 + For benefits only count mates that were scooping the last 24h
 + The icon should be larger on the splash screen, maybe we show something with a water drop or other liquids
 + Drawer shall look smarter with logo and the name of the user, (C) CrowdWare
@@ -28,33 +27,34 @@
 + We need a better hour and minute picker design
 + Writing a block after day change should use the date from the day before. 
 + Balance Display state should be saved in prefs or/and it should switch to liter when amount > X
-- Release build has some dependencies to libsodium, so build all submodules as signed apk
 + Transaction should only store full liters.
-- Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
-- create an easy to use API (see API requirements)
 + Payment scan and send functionionality
++ We have unwanted blocks in the blockchain like message=pak, we might need a different service ID to form a separate trustchain 
++ Also think of an own discovery overlay, for above reason (or just change the existing) 
++ Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
+- Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends. Put a trailing button to scan qr code. 
++ Drawer is visible on Tablet
+- Release build has some dependencies to libsodium, so build all submodules as signed apk
+  
+# Beta 2.0
+- Color for drawer select background should be blueish, general theme check
 - isScooping should only be true if connected to the internet and not in flightmode
-- Key exchange via text or QR-code or TOFU
 - bugfix: see crashlog
-- To validate a giver we have to crawl the trustchain to verify the last x blocks and verify scooping values.
 - The balance on the display is less than the amount in the blocks + in shift.db
 - Display value from blocks can be cached...only load daily blocks from shift.db 
-- We have unwanted blocks in the blockchain like message=pak, we might need a different service ID to form a separate trustchain 
-- Also think of an own discovery overlay, for above reason (or just change the existing) 
 - Stromverbrauchswarnung from Android, how to avoid this?
 - Multiple themes to choose from (I personally like orange on dark gray background)
-+ Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
 - Request focus when dragging the cirlular picker
 - Why does service crashes also when app crashes? service should run independently
-- Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends. Put a trailing button to scan qr code. 
 - settings, language survives recreate
-- ? Posibility to change secret keys in higher versions but be downwards compatible
-- Drawer is visible on Tablet
 - Balance display should only display booked blocks when in liter mode (needed for giving, not to spent liquid from nonexisting/theoretically scooped blocks), ? maybe it should only display persistent transactions when in milli mode
 - Avoid replay attacks on webservice
+- Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
+- create an easy to use API (see API requirements)
 
 
 # App 3.0
+- Key exchange via text or QR-code or TOFU
 - Chat function based on DHT for async messages (have a look at Telegram for voicechat and calls) 
 - DHT is already implemented in IPv8 for Python 
 - Posts for micro blogging
@@ -144,8 +144,5 @@ Topics
 
 # Demurage
 The demurage of the liquid per day is 0.27% so that an amount of 1000 ml is worth below 1.0 after 7 years (2555 days)
-
-
-
 
 

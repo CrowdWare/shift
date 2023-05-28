@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,6 +38,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -69,7 +72,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
     NavHost(navController = navController, startDestination = "home") {
         for(index in items.indices) {
             composable(items[index].id) {
-                ModalNavigationDrawer(items, selectedItem) {
+                NavigationDrawer(items, selectedItem) {
                     when(items[index].id) {
                         // have a look at MainActivity for navigation
                         "home" -> ScoopPage()
@@ -91,7 +94,7 @@ fun NavigationView(items: MutableList<NavigationItem>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalNavigationDrawer(items: List<NavigationItem>, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
+fun NavigationDrawer(items: List<NavigationItem>, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -109,7 +112,7 @@ fun ModalNavigationDrawer(items: List<NavigationItem>, selectedItem: MutableStat
             Column() {
                 CenterAlignedTopAppBar(
                     title = { Text("SHIFT") },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         titleContentColor = MaterialTheme.colorScheme.onPrimary,
                         navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,

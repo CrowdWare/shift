@@ -40,7 +40,7 @@ import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.HourMinutesPicker
-import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
@@ -124,6 +124,6 @@ fun ReceiveGratitudePreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     val receiveViewModel = viewModel<ReceiveViewModel>()
-    ModalNavigationDrawer(list, selectedItem){ ReceiveGratitude(receiveViewModel) }
+    NavigationDrawer(list, selectedItem){ ReceiveGratitude(receiveViewModel) }
 }
 

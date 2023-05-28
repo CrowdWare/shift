@@ -52,7 +52,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Friend
@@ -170,5 +170,5 @@ fun FriendlistPreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
 
-    ModalNavigationDrawer(list, selectedItem){ Friendlist() }
+    NavigationDrawer(list, selectedItem){ Friendlist() }
 }

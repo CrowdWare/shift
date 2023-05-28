@@ -56,7 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.theme.OnSecondary
@@ -188,7 +188,7 @@ fun MainPagePreview() {
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
-    ModalNavigationDrawer(list, selectedItem){ ScoopPage(true) }
+    NavigationDrawer(list, selectedItem){ ScoopPage(true) }
 }
 
 @Composable

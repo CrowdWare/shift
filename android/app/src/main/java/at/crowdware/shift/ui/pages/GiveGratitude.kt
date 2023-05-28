@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.widgets.BalanceDisplay
-import at.crowdware.shift.ui.widgets.ModalNavigationDrawer
+import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.widgets.NavigationManager
@@ -224,5 +224,5 @@ fun GiveGratitudePreview() {
     )
     val giveViewModel = viewModel<GiveViewModel>()
     giveViewModel.balance.value = 678000L
-    ModalNavigationDrawer(list, selectedItem){ GiveGratitude(giveViewModel, true) }
+    NavigationDrawer(list, selectedItem){ GiveGratitude(giveViewModel, true) }
 }
