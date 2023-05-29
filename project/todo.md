@@ -50,7 +50,6 @@
 - settings, language survives recreate
 - Balance display should only display booked blocks when in liter mode (needed for giving, not to spent liquid from nonexisting/theoretically scooped blocks), ? maybe it should only display persistent transactions when in milli mode
 - Avoid replay attacks on webservice
-
 - create an easy to use API (see API requirements)
 
 
