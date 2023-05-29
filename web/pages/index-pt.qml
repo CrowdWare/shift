@@ -61,10 +61,10 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 &lt;div class=&quot;box-content&quot;&gt;
 	&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
-	&lt;h4&gt;&lt;strong&gt;Rendimento Básico&lt;/strong&gt;&lt;/h4&gt;
-	&lt;p&gt;Estamos enfrentando tempos difíceis. E se criarmos nosso próprio rendimento básico?&lt;/p&gt;
+	&lt;h4&gt;&lt;strong&gt;Troca de Valor&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Estamos navegando por tempos desafiadores. E se repensarmos a maneira como valorizamos e recompensamos uns aos outros?&lt;/p&gt;
 &lt;/div&gt;
-</div>"
+&lt;/div&gt;"
                     adminlabel: "Rendimento Básico"
                 }
             }
@@ -122,16 +122,12 @@ Content {
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-A ideia por trás do SHIFT é criar um rendimento básico universal com um novo líquido virtual que é coletado pelas pessoas. 
-A possibilidade de usar nosso próprio líquido como meio de troca de energia facilita a todos nós compartilhar coisas, 
-prestar serviços e expressar nossa gratidão. Nunca seremos obrigados a pagar impostos sobre ele, 
-porque na verdade não é dinheiro. É apenas um líquido virtual!
-</p>
-<h3>Objetivo</h3>
-<p class=&quot;lead&quot;>
-Criamos um aplicativo no qual você pode coletar diariamente um novo líquido.
-Demos a esse novo líquido virtual o nome de LMC. LMC significa <b>L</b>íquido<b>M</b>icro<b>C</b>oins (moedas micro líquidas).
-</p>"
+A ideia principal por trás de Shift é estabelecer uma nova forma de troca de valor usando um líquido virtual único, coletado pelas pessoas. Este líquido virtual, conhecido como Liquid Micro Coins (LMC), revoluciona a maneira como interagimos, compartilhamos e fornecemos serviços em nossa rede. Com LMC, podemos expressar gratidão, pagar por serviços e contribuir para a comunidade sem esforço.
+&lt;/p&gt;
+&lt;h3&gt;Meta&lt;/h3&gt;
+&lt;p class=&quot;lead&quot;&gt;
+Um dos principais benefícios do LMC é a sua imunidade às restrições financeiras tradicionais. Não é dinheiro em si, mas uma nova forma de valor que está imune à tributação. É um líquido virtual, um símbolo de nosso apreço mútuo, criado e usado pela comunidade. Junte-se a nós para criar uma rede social mais equitativa e livre que valoriza a contribuição e a participação. Com Shift, vamos mudar a dinâmica da interação online juntos!
+&lt;/p&gt;"
                 }
             }
         }

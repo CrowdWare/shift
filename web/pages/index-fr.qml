@@ -64,8 +64,8 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Revenu de base&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Nous traversons actuellement des moments difficiles. Et si nous créons notre propre revenu de base.&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Échange de Valeurs&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Nous naviguons à travers des temps difficiles. Et si nous repensions la façon dont nous valorisons et récompensons les uns les autres?&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
                     adminlabel: "Revenu de base"
@@ -126,16 +126,12 @@ Content {
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-L'idée derrière SHIFT est de créer un revenu de base universel avec un nouveau liquide virtuel qui est collecté par les gens.
-La possibilité d'utiliser notre propre liquide comme moyen d'échange d'énergie nous permet de partager facilement des choses,
-de fournir des services et d'exprimer notre gratitude. Nous ne serons jamais obligés de payer des impôts dessus,
-car ce n'est pas de l'argent du tout. C'est juste un liquide virtuel !
-</p>
-<h3>Objectif</h3>
-<p class=&quot;lead&quot;>
-Nous avons créé une application avec laquelle vous pouvez collecter quotidiennement un nouveau fluide.
-Nous avons donné à ce nouveau fluide virtuel le nom de LMC. LMC signifie <b>L</b>iquid<b>M</b>icro<b>C</b>oins (micro-coins liquides).
-</p>"
+L&#x27;idée principale derrière Shift est d&#x27;établir une nouvelle forme d&#x27;échange de valeur utilisant un liquide virtuel unique, puisé par les gens. Ce liquide virtuel, connu sous le nom de Liquid Micro Coins (LMC), révolutionne la façon dont nous interagissons, partageons et fournissons des services dans notre réseau. Avec LMC, nous pouvons exprimer notre gratitude, payer pour des services et contribuer à la communauté en toute simplicité.
+&lt;/p&gt;
+&lt;h3&gt;Objectif&lt;/h3&gt;
+&lt;p class=&quot;lead&quot;&gt;
+L&#x27;un des avantages significatifs du LMC est son immunité face aux contraintes financières traditionnelles. Ce n&#x27;est pas de l&#x27;argent en soi, mais une nouvelle forme de valeur qui est à l&#x27;abri de la fiscalité. C&#x27;est un liquide virtuel, un symbole de notre appréciation mutuelle, créé et utilisé par la communauté. Rejoignez-nous pour créer un réseau social plus équitable et libre qui valorise la contribution et la participation. Avec Shift, changeons ensemble la dynamique de l&#x27;interaction en ligne !
+&lt;/p&gt;"
                 }
             }
         }

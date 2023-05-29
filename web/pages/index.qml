@@ -64,11 +64,11 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Basic Income&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;We are facing real hard times right now. What if we create our own basic income.&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Value Exchange&lt;/strong&gt;&lt;/h4&gt;
+		&lt;p&gt;We are navigating through challenging times. What if we rethink the way we value and reward each other?&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
-                    adminlabel: "Basic Income"
+                    adminlabel: "Value Exchange "
                 }
             }
 
@@ -125,15 +125,17 @@ Content {
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-	The idea behind the shift is to create a universal basic income with a new virtual liquid that is scooped by people. 
-	The possibility to use our own liquid as a means of energy exchange makes it easy for all of us to share things, 
-	provide services, and express our gratitude. We will never be forced to pay taxes on it, 
-	because it is not money at all. It is just a virtual liquid!
+	The primary idea behind Shift is to establish a novel form of value exchange using a unique virtual liquid, scooped by people. 
+    This virtual liquid, known as Liquid Micro Coins (LMC), revolutionizes the way we interact, share, and provide services in our network. 
+    With LMC, we can effortlessly express gratitude, pay for services, and contribute to the community.
 &lt;/p&gt;
 &lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-	We have created an app with which you can daily scoop new fluid. 
-	We gave this new virtual fluid the name LMC. LMC stands for &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins (liquid micro coins).
+	One of the significant benefits of LMC is its immunity to traditional financial constraints. 
+	It&#x27;s not money per se, but a new form of value that&#x27;s immune to taxation. It is a virtual liquid, a symbol of our mutual appreciation, 
+	created and used by the community.
+	Join us in creating a more equitable and free social network that values contribution and participation. With Shift, 
+	let&#x27;s change the dynamics of online interaction together!
 &lt;/p&gt;"
                 }
             }

@@ -41,7 +41,6 @@
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
 - isScooping should only be true if connected to the internet and not in flightmode
-- bugfix: see crashlog
 - The balance on the display is less than the amount in the blocks + in shift.db
 - Display value from blocks can be cached...only load daily blocks from shift.db 
 - Stromverbrauchswarnung from Android, how to avoid this?

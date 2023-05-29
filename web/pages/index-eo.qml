@@ -61,10 +61,10 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 &lt;div class=&quot;box-content&quot;&gt;
 	&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
-	&lt;h4&gt;&lt;strong&gt;Baza Reddito&lt;/strong&gt;&lt;/h4&gt;
-	&lt;p&gt;Ni enfrontas malfacilajn tempojn. Kion se ni kreas nian propran bazan redditon.&lt;/p&gt;
+	&lt;h4&gt;&lt;strong&gt;Valorinterŝanĝo&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Ni navigas tra defiitaj tempoj. Kio se ni repensus la manieron, laŭ kiu ni valoras kaj rekompencas unu la alian?&lt;/p&gt;
 &lt;/div&gt;
-</div>"
+&lt;/div&gt;"
                     adminlabel: "Baza Reddito"
                 }
             }
@@ -124,16 +124,19 @@ ikro-Blogo"
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-La ideo malantaŭ SHIFT estas krei universalan bazan redditon kun nova virtuala likvo, kiun homoj kolektas. 
-La ebleco uzi nian propran likvon kiel energiinterŝanĝa medio faciligas al ni ĉiuj dividi aĵojn, 
-provizi servojn, kaj esprimi nian dankemon. Ni neniam devos pagi impostojn pri tio, 
-ĉar tio ne estas mono ĉe ĉio. Tio estas nur virtuala likvo!
-</p>
-<h3>Celaro</h3>
-<p class=&quot;lead&quot;>
-Ni kreis aplikaĵon, per kiu vi povas ĉiutage kolekti novan likvon.
-Ni donis al tiu nova virtuala likvo la nomon LMC. LMC signifas <b>L</b>ikva<b>M</b>ikro<b>C</b>oinoj (likvaj mikro-moneroj).
-</p>"
+La ĉefa ideo malantaŭ Shift estas establi novan formon de valoro-interŝanĝo per unika virtuala likvaĵo, kiun homoj kolektas. 
+Tiu ĉi virtuala likvaĵo, konata kiel Liquid Micro Coins (LMC), revolucias la manieron, laŭ kiu ni interagas, dividas kaj provizas 
+servojn en nia reto. Per LMC, ni povas senpena esprimi dankon, pagi por servoj kaj kontribui al la komunumo.
+&lt;/p&gt;
+&lt;h3&gt;Celo&lt;/h3&gt;
+&lt;p class=&quot;lead&quot;&gt;
+Unu el la gravaj avantagoj de LMC estas ĝia imuneco al tradiciaj financaj limigoj. Ĝi ne estas mono en si mem, sed nova formo de 
+valoro kiu estas imuna al impostado. Ĝi estas virtuala likvaĵo, simbolo de nia reciproka aprezado, kreita kaj uzata de la komunumo. 
+Aliĝu al ni por krei pli egalan kaj liberan socian reton, kiu valoras kontribuon kaj partoprenon. Kun Shift, ni kune ŝanĝos la 
+dinamikon de interreta interago!
+&lt;/p&gt;
+
+"
                 }
             }
         }

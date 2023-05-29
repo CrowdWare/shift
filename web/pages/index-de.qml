@@ -63,8 +63,8 @@ Content {
                     text: "&lt;div class=&quot;featured-box nobg border-only&quot;&gt;
 	&lt;div class=&quot;box-content&quot;&gt;
 		&lt;i class=&quot;fa fa-bolt&quot;&gt;&lt;/i&gt;
-		&lt;h4&gt;&lt;strong&gt;Grundeinkommen&lt;/strong&gt;&lt;/h4&gt;
-		&lt;p&gt;Wir stehen gerade vor schweren Zeiten. Was ist, wenn wir unser eigenes Grundeinkommen schaffen?&lt;/p&gt;
+		&lt;h4&gt;&lt;strong&gt;Wertausgleich&lt;/strong&gt;&lt;/h4&gt;
+	&lt;p&gt;Wir bewegen uns durch herausfordernde Zeiten. Was wäre, wenn wir die Art und Weise, wie wir uns gegenseitig wertschätzen und belohnen, neu überdenken?&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;"
                     adminlabel: "Grundeinkommen"
@@ -124,19 +124,18 @@ Content {
 
                 Text {
                     text: "&lt;p class=&quot;lead&quot;&gt;
-	Die Idee hinter dem Wandel ist die Möglichkeit, mit einer neuen virtuellen Flüssigkeit, 
-	die von Menschen geschöpft wird, ein universelles Grundeinkommen zu schaffen. 
-	Die Möglichkeit, eine eigene Flüssigkeit als Energieaustausch zu nutzen, macht es uns allen leicht, 
-	Dinge zu teilen, Dienstleistungen zu erbringen und unseren Dank auszudrücken.
-	Wir werden niemals gezwungen sein, Steuern darauf zu zahlen, weil es überhaupt kein Geld ist.
-	Es ist nur eine virtuelle Flüssigkeit!
+Die Hauptidee hinter Shift besteht darin, eine neue Form des Wertaustauschs zu etablieren, der eine einzigartige virtuelle 
+Flüssigkeit verwendet, die von Menschen geschöpft wird. Diese virtuelle Flüssigkeit, bekannt als Liquid Micro Coins (LMC), 
+revolutioniert die Art und Weise, wie wir interagieren, teilen und Dienstleistungen in unserem Netzwerk anbieten. 
+Mit LMC können wir mühelos Dankbarkeit ausdrücken, für Dienstleistungen bezahlen und zur Gemeinschaft beitragen.
 &lt;/p&gt;
-
 &lt;h3&gt;Ziel&lt;/h3&gt;
 &lt;p class=&quot;lead&quot;&gt;
-	Wir haben eine App erstellt, mit der du täglich neue Flüssigkeit schöpfen kannst.
-	Wir haben dieser neuen virtuellen Flüssigkeit den Namen LMC gegeben.
-	LMC ist die Abkürzung für &lt;b&gt;L&lt;/b&gt;iquid&lt;b&gt;M&lt;/b&gt;icro&lt;b&gt;C&lt;/b&gt;oins (flüssige mikro Münzen).
+Einer der bedeutenden Vorteile von LMC ist seine Immunität gegenüber traditionellen finanziellen Beschränkungen. 
+Es ist nicht Geld per se, sondern eine neue Form von Wert, die vor Besteuerung geschützt ist. 
+Es handelt sich um eine virtuelle Flüssigkeit, ein Symbol unserer gegenseitigen Wertschätzung, das von der Gemeinschaft 
+erstellt und verwendet wird. Schließen Sie sich uns an, um ein gerechteres und freies soziales Netzwerk zu schaffen, 
+das Beitrag und Teilnahme schätzt. Mit Shift ändern wir gemeinsam die Dynamik der Online-Interaktion!
 &lt;/p&gt;"
                 }
             }
