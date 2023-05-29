@@ -1,5 +1,5 @@
 ![logo](./images/logo.png "logo")  
-The idea behind **SHIFT** is the possibily to create a social network without advertises, censorship and bullshit.
+The idea behind **SHIFT** is the possibily to create a social network without advertises, censorship and bullshit.  
 At the heart of Shift is a unique value exchange system. even if it looks like, this is not meant as universal basic income, but a reward system for early adopters and pioneers.  
 By participating in the network, users have the opportunity to earn Liquid Micro Coins (LMC), our platform's virtual liquid.
 The possibilities to have an own liquid to use as energy exchange, makes it easy for us all to share things, give services and to express our gratitude to other people.  
