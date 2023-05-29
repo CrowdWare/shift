@@ -1,11 +1,11 @@
 ![logo](./images/logo.png "logo")  
 The idea behind **SHIFT** is the possibily to create a social network without advertises, censorship and bullshit.  
-At the heart of Shift is a unique value exchange system. even if it looks like, this is not meant as universal basic income, but a reward system for early adopters and pioneers.  
+At the heart of Shift is a unique value exchange system, which we also use as a reward system for early adopters and pioneers.  
 By participating in the network, users have the opportunity to earn Liquid Micro Coins (LMC), our platform's virtual liquid.
 The possibilities to have an own liquid to use as energy exchange, makes it easy for us all to share things, give services and to express our gratitude to other people.  
 We will never be forced to pay taxes on it, because it's not money at all.  
 It's just a virtual liquid.  
-Also nobody can stop it, because it will run decentral.  
+Also nobody can stop our network, because it will run decentral.  
 
 # GOAL
 We are going to create a very simple app which the users can use to create new liquid on a daily base.   
