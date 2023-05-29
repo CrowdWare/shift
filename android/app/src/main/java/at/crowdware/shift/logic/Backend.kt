@@ -395,7 +395,7 @@ class Backend {
                             }
                         }
                     }
-                    println("Block: $amount  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                    println("Block: ${amount*1000}  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
             }
             var i = 0
