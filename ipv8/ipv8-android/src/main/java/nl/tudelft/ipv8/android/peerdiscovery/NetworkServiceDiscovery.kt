@@ -87,12 +87,22 @@ class NetworkServiceDiscovery(
 
         override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
             logger.error("Discovery failed: $errorCode")
-            nsdManager.stopServiceDiscovery(this)
+            try {
+                nsdManager.stopServiceDiscovery(this)
+            }
+            catch(e: Exception) {
+                logger.error("Unable to stop Discovery: ${e.message}")
+            }
         }
 
         override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
             logger.error { "Discovery failed: $errorCode" }
-            nsdManager.stopServiceDiscovery(this)
+            try {
+                nsdManager.stopServiceDiscovery(this)
+            }
+            catch(e: Exception) {
+                logger.error("Unable to stop Discovery: ${e.message}")
+            }
         }
     }
 

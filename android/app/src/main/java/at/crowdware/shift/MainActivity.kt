@@ -73,10 +73,11 @@ class MainActivity : ComponentActivity() {
                     // that means the user should have agreed to start the service
                     if(Backend.getAccount().isScooping) {
                         Network.initIPv8(applicationContext as Application)
-
-                        val serviceIntent = Intent(this, ShiftChainService::class.java)
-                        serviceIntent.putExtra("language", LocaleManager.getLanguage())
-                        startService(serviceIntent)
+                        if(!ShiftChainService.isStarted()) {
+                            val serviceIntent = Intent(this, ShiftChainService::class.java)
+                            serviceIntent.putExtra("language", LocaleManager.getLanguage())
+                            startService(serviceIntent)
+                        }
                     }
                     if (hasJoined.value) {
                         // also code these in NavigationView.kt

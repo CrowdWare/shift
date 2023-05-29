@@ -39,13 +39,13 @@ import kotlin.math.min
 
 class ShiftChainService : IPv8Service() {
     private val INTERVAL: Long = 1000 * 60 // 1 minute pause
-    private var isServiceStarted = false
     private var wakeLock: PowerManager.WakeLock? = null
     private val serviceScope = CoroutineScope(Dispatchers.Main)
 
-
     companion object {
         private var startTime: ULong = 0UL
+        private var isServiceStarted = false
+        fun isStarted(): Boolean {return isServiceStarted}
 
         fun minutesScooping(): Float {
             val time = (System.currentTimeMillis() / 1000).toULong()
