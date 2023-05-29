@@ -98,8 +98,10 @@ fun CircularValuePicker(
                             val higherThreshold = currentAngle + (360f / (maxValue - minValue) * 5)
 
                             if (dragStartedAngle in lowerThreshold..higherThreshold) {
-                                positionValue =
-                                    (oldPositionValue + (changeAngle / (360f / (maxValue - minValue))).roundToInt())
+                                positionValue = min(
+                                    (oldPositionValue + (changeAngle / (360f / (maxValue - minValue))).roundToInt()),
+                                    maxValue - 1
+                                )
                             }
                         },
                         onDragEnd = {

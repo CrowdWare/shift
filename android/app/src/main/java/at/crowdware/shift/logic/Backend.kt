@@ -380,8 +380,10 @@ class Backend {
                         block.isAgreement -> "agreement"
                         else -> "unknown  "
                     }
+                    var amount = 0L
                     if(block.isProposal) {
                         val trans = parseTransaction(block)
+                        amount = trans.amount
                         if(trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) {
                             balance += calculateWorth(trans.amount, trans.date)
                         }
@@ -393,7 +395,7 @@ class Backend {
                             }
                         }
                     }
-                    println("Block: ${block.transaction}  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                    println("Block: $amount  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
             }
             var i = 0

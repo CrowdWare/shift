@@ -22,7 +22,7 @@ android {
         minSdk 26
         targetSdk 33
         versionCode 1
-        versionName "2.0"
+        versionName "2.0.1 Alpha"
         buildConfigField "String", "API_KEY", getProps("api_key")
         buildConfigField "String", "SECRET_KEY", getProps("secret_key")
         buildConfigField "String", "WEB_SERVICE_URL", getProps("web_service_url")
@@ -37,10 +37,16 @@ android {
         }
     }
 
+    flavorDimensions "default"
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            applicationIdSuffix ".debug"
         }
     }
 
