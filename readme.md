@@ -71,7 +71,7 @@ Our data will not be used for selling or advertising.
 We dont even know who is behind the data, because the users dont have to register themselves.
 
 ## THREE
-After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 12 l a day, so that all users are getting an equal amount per day without the amount of LMC for advertising. At that point we almost have a **universal basic income**. 
+After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 12 l a day, so that all users are getting an equal amount per day without the amount of LMC for advertising.  
 At that point we will cut the connection to the server and the platform will be running totally decentral and can not be stopped by legal forces.
 
 # About the liquid
