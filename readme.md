@@ -1,6 +1,7 @@
 ![logo](./images/logo.png "logo")  
 The idea behind **SHIFT** is the possibily to create a social network without advertises, censorship and bullshit.
-Also a universal basic income with a new virtual liquid made by men is created.  
+At the heart of Shift is a unique value exchange system. even if it looks like, this is not meant as universal basic income, but a reward system for early adopters and pioneers.  
+By participating in the network, users have the opportunity to earn Liquid Micro Coins (LMC), our platform's virtual liquid.
 The possibilities to have an own liquid to use as energy exchange, makes it easy for us all to share things, give services and to express our gratitude to other people.  
 We will never be forced to pay taxes on it, because it's not money at all.  
 It's just a virtual liquid.  
@@ -70,7 +71,7 @@ Our data will not be used for selling or advertising.
 We dont even know who is behind the data, because the users dont have to register themselves.
 
 ## THREE
-After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 12 l a day, so that all users are getting an equal amount per day without the amount of LMC for advertising. At that point we have **universal basic income**. 
+After reaching the amount of 10.000.000 users the creation of liquid will be dropped down to 12 l a day, so that all users are getting an equal amount per day without the amount of LMC for advertising. At that point we almost have a **universal basic income**. 
 At that point we will cut the connection to the server and the platform will be running totally decentral and can not be stopped by legal forces.
 
 # About the liquid
