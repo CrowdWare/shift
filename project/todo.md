@@ -35,6 +35,7 @@
 - Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends. Put a trailing button to scan qr code. 
 + Drawer is visible on Tablet
 + Release build has some dependencies to libsodium, so build all submodules as signed apk
++ Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
@@ -49,7 +50,7 @@
 - settings, language survives recreate
 - Balance display should only display booked blocks when in liter mode (needed for giving, not to spent liquid from nonexisting/theoretically scooped blocks), ? maybe it should only display persistent transactions when in milli mode
 - Avoid replay attacks on webservice
-- Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
+
 - create an easy to use API (see API requirements)
 
 
