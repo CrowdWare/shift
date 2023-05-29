@@ -1,4 +1,4 @@
-# Create an maintain a websercice
+# Create and maintain a websercice using uswgi
 
 This guide is for internal usage only.  
 If you want to run your own webservice then you have to alter some paths.  
