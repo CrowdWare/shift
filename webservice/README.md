@@ -1,4 +1,8 @@
-# Create an maintain a websercice
+# Create and maintain a websercice using uswgi
+
+This guide is for internal usage only.  
+If you want to run your own webservice then you have to alter some paths.  
+
 
 ## Creation
 - Create or copy the file shift.service to /etc/systemd/system
@@ -26,4 +30,9 @@ sudo systemctl restart shift.service
 ## truncate the log file
 ```console
 sudo truncate -s 0 /var/log/shift.log
+```  
+
+## archivate log file
+```console
+mv /var/log/shift.log /var/log/shift_$(date +%Y%m%d).log
 ```
