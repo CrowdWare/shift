@@ -1,4 +1,4 @@
-# Create an maintain a ipv8 tracker
+# Create and maintain a ipv8 tracker
 The tracker is a node which will be installed on a few server nodes to be used to bootstrap teh SHIFT network.  
 It is used by devices to have a first connection point to gather other online nodes and devices.  
 
