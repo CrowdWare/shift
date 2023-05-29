@@ -1,4 +1,3 @@
-# SHIFT  
 ![logo](./images/logo.png "logo")  
 The idea behind **SHIFT** is the possibily to create a social network without advertises, censorship and bullshit.
 Also a universal basic income with a new virtual liquid made by men is created.  
