@@ -13,6 +13,7 @@ buildscript {
     }
 }
 
+
 plugins {
     id "com.squareup.sqldelight" version '1.5.2' apply false
     id 'com.android.application' version '8.0.1' apply false
@@ -20,7 +21,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
     id 'org.jetbrains.kotlin.jvm' version '1.8.10' apply false
 }
-
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.freeCompilerArgs += [

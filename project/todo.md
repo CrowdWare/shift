@@ -34,7 +34,7 @@
 + Transaction amount should only be in full liter, we cannot pay for half a minute or the like. In case of scooping we should round amount down.
 - Instead of entering a key onjoin, qr code scan would be easier. This is also true for inviting friends. Put a trailing button to scan qr code. 
 + Drawer is visible on Tablet
-- Release build has some dependencies to libsodium, so build all submodules as signed apk
++ Release build has some dependencies to libsodium, so build all submodules as signed apk
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check

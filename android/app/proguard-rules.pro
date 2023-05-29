@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn com.goterl.lazysodium.LazySodiumJava
+-dontwarn com.goterl.lazysodium.SodiumJava
+-dontwarn nl.tudelft.ipv8.keyvault.JavaCryptoProvider
+
+
+-keep class at.crowdware.shift.ui.widgets.Country { *; }
+-keep class at.crowdware.shift.logic.Transaction { *; }
+-keep class at.crowdware.shift.logic.Account { *; }
+-keep class at.crowdware.shift.ui.pages.Lmp { *; }
+
+
+

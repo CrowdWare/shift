@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.toSize
 import at.crowdware.shift.R
 import com.google.gson.GsonBuilder
 import kotlin.math.min
+
 fun readCountryData(context: Context): List<String> {
     val gson = GsonBuilder().create()
     val json = context.resources.openRawResource(R.raw.countries).bufferedReader().use { it.readText() }

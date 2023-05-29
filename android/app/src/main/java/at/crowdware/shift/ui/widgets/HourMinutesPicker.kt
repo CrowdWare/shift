@@ -63,8 +63,6 @@ fun HourMinutesPicker(
 @Preview
 @Composable
 fun HourMinutesPickerPreview() {
-    val hoursFocusRequester = remember { FocusRequester() }
-    val minutesFocusRequester = remember { FocusRequester() }
     val hours = remember { mutableStateOf(3) }
     val minutes = remember { mutableStateOf(30) }
     val total = remember { mutableStateOf(360L) }

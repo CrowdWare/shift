@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId "at.crowdware.shift"
-        minSdk 30
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "2.0"
@@ -37,20 +37,10 @@ android {
         }
     }
 
-    signingConfigs {
-        release {
-            storeFile file("my-release-key.keystore")
-            storePassword ""
-            keyAlias "myalias"
-            keyPassword ""
-        }
-    }
-
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 
@@ -125,12 +115,12 @@ dependencies {
     implementation('com.squareup.sqldelight:sqlite-driver:1.5.2')
     implementation('com.squareup.sqldelight:android-driver:1.5.3')
 
-    // Crypto
-    implementation "com.goterl:lazysodium-android:5.0.1@aar"
-    implementation 'net.java.dev.jna:jna:5.5.0@aar'
-
     implementation 'commons-net:commons-net:3.6'
     implementation 'androidx.preference:preference:1.2.0'
+
+    // Crypto
+    implementation "com.goterl:lazysodium-android:5.1.0@aar"
+    implementation "net.java.dev.jna:jna:5.8.0@aar"
 
     // BLE
     implementation 'no.nordicsemi.android:ble:2.2.0-alpha06'
@@ -138,10 +128,9 @@ dependencies {
 
     implementation 'com.google.accompanist:accompanist-permissions:0.23.1'
 
-
-    implementation files('../../ipv8/ipv8-android/build/outputs/aar/ipv8-android-debug.aar')
     implementation files('../../ipv8/ipv8/build/libs/ipv8.jar')
-    implementation files('../../composescanner/scanner/build/outputs/aar/scanner-debug.aar')
+    implementation files('../../ipv8/ipv8-android/build/outputs/aar/ipv8-android-release.aar')
+    implementation files('../../composescanner/scanner/build/outputs/aar/scanner-release.aar')
 
     implementation "androidx.camera:camera-camera2:1.0.2"
     implementation "androidx.camera:camera-lifecycle:1.0.2"
