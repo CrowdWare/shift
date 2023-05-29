@@ -30,4 +30,9 @@ sudo systemctl restart shift.service
 ## truncate the log file
 ```console
 sudo truncate -s 0 /var/log/shift.log
+```  
+
+## archivate log file
+```console
+mv /var/log/shift.log /var/log/shift_$(date +%Y%m%d).log
 ```
