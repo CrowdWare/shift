@@ -1,5 +1,9 @@
 # Create an maintain a websercice
 
+This guide is for internal usage only.  
+If you want to run your own webservice then you have to alter some paths.  
+
+
 ## Creation
 - Create or copy the file shift.service to /etc/systemd/system
 - Create or copy the file uswgi.ini to /home/shift/webservice
