@@ -143,6 +143,5 @@ Topics
 
 
 # Demurage
-The demurage of the liquid per day is 0.27% so that an amount of 1000 ml is worth below 1.0 after 7 years (2555 days)
-
+The demurrage of the liquid per day is 0.27% so that an amount of 1000 ml is worth below 1.0 after 7 years (2555 days)
 

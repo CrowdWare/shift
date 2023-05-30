@@ -317,13 +317,16 @@ class Backend {
             for(block in trustchain.database.getAllBlocks()) {
                 if (block.type == BLOCK_TYPE && block.isProposal) {
                     val trans = parseTransaction(block)
-                    if(trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) {
+                    if((trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) && block.publicKey.contentEquals(
+                            IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                         balance += calculateWorth(trans.amount, trans.date)
                     } else if(trans.type == TransactionType.LMP) {
-                        if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin()))
+                        if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                             balance -= calculateWorth(trans.amount, trans.date)
-                        else
+                        }
+                        else if(block.linkPublicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                             balance += calculateWorth(trans.amount, trans.date)
+                        }
                     }
                 }
             }
@@ -384,13 +387,14 @@ class Backend {
                     if(block.isProposal) {
                         val trans = parseTransaction(block)
                         amount = trans.amount
-                        if(trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) {
+                        if((trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) && block.publicKey.contentEquals(
+                                IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                             balance += calculateWorth(trans.amount, trans.date)
                         }
                         else if(trans.type == TransactionType.LMP) {
                             if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                                 balance -= calculateWorth(trans.amount, trans.date)
-                            } else {
+                            } else if(block.linkPublicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())){
                                 balance += calculateWorth(trans.amount, trans.date)
                             }
                         }
