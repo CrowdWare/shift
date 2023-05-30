@@ -297,10 +297,16 @@ class Backend {
                 if (block.isProposal && block.type == BLOCK_TYPE) {
                     val trans = parseTransaction(block)
                     if(trans.type == TransactionType.LMP) {
-                        if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin()))
+                        if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                             trans.amount *= -1
+                            list.add(0, trans)
+                        } else if(block.linkPublicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
+                            list.add(0, trans)
+                        }
+                    } else if((trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING)
+                        && block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
+                        list.add(0, trans)
                     }
-                    list.add(0, trans)
                 }
             }
             return list
@@ -384,22 +390,26 @@ class Backend {
                         else -> "unknown  "
                     }
                     var amount = 0L
+                    var isUsed = " "
                     if(block.isProposal) {
                         val trans = parseTransaction(block)
                         amount = trans.amount
                         if((trans.type == TransactionType.SCOOPED || trans.type == TransactionType.INITIAL_BOOKING) && block.publicKey.contentEquals(
                                 IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                             balance += calculateWorth(trans.amount, trans.date)
+                            isUsed = "*"
                         }
                         else if(trans.type == TransactionType.LMP) {
                             if (block.publicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())) {
                                 balance -= calculateWorth(trans.amount, trans.date)
+                                isUsed = "*"
                             } else if(block.linkPublicKey.contentEquals(IPv8Android.getInstance().myPeer.publicKey.keyToBin())){
                                 balance += calculateWorth(trans.amount, trans.date)
+                                isUsed = "*"
                             }
                         }
                     }
-                    println("Block: ${amount*1000}  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
+                    println("Block: $isUsed${amount*1000}  ${block.sequenceNumber}, insertTime: ${block.insertTime} ${block.publicKey.toHex()}, $blocktype, Gen: ${block.isGenesis} Self: ${block.isSelfSigned}")
                 }
             }
             var i = 0
