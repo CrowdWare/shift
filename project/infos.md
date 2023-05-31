@@ -12,3 +12,9 @@ https://developer.android.com/jetpack/compose
 
 # Compose on Github
 https://github.com/androidx/androidx/tree/androidx-main/compose
+
+# P2P
+- https://github.com/Tribler/trustchain-superapp
+- https://github.com/Tribler/kotlin-ipv8
+- https://github.com/MattSkala/kotlin-ipv8
+- https://github.com/Tribler/py-ipv8
