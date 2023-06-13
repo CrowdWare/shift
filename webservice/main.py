@@ -212,9 +212,9 @@ def friendlist():
     if test == "true":
         not_scooping = int((datetime.now() - timedelta(seconds=72001) - datetime(1970, 1, 1)).total_seconds())
         scooping = int((datetime.now() - timedelta(seconds=71999) - datetime(1970, 1, 1)).total_seconds())
-        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'country' : 'England', 'scooping' : isScooping(0)})
-        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'country' : 'Germany' ,'scooping' : isScooping(not_scooping)})
-        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'country' : 'Brasil' , 'scooping' : isScooping(scooping)})
+        accounts.append({'uuid' : '1234567890', 'name' : 'Testuser 1', 'country' : 'England', 'scooping' : isScooping(0), 'friends_count' : '3'})
+        accounts.append({'uuid' : '1234567891', 'name' : 'Testuser 2', 'country' : 'Germany' ,'scooping' : isScooping(not_scooping), 'friends_count' : '4'})
+        accounts.append({'uuid' : '1234567892', 'name' : 'Testuser 3', 'country' : 'Brasil' , 'scooping' : isScooping(scooping), 'friends_count' : '5'})
     else:
         conn = None
         try:
