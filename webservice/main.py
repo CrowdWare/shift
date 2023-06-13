@@ -149,7 +149,12 @@ def scooping():
     level_1 = 0
     level_2 = 0
     level_3 = 0
-    if test != "true":
+    
+    if test == "true"
+        level_1 = 9
+        level_2 = 99
+        level_3 = 999
+    else:
         conn = None
         scoopTime24HoursAgo = getScoopTimeHoursAgo()
 
