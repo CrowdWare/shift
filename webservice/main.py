@@ -59,18 +59,15 @@ def getScoopTimeHoursAgo(hoursAgo=24):
     seconds -= hoursAgo * 60 * 60
     return seconds
 
-""" def decryptString(cipherText: str) -> str:
-    cipherText = base64.b64decode(cipherText)
-    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_CBC, bytearray(b'\x01\x23\x45\x67\x89\xab\xcd\xef\xfe\xdc\xba\x98\x76\x54\x32\x10'))
-    plainText = cipher.decrypt(cipherText)
-    return plainText.decode('latin-1')[:16] """
-
 def decryptStringGCM(cipherText: str) -> str:
-    data = binascii.unhexlify(cipherText)
-    iv, tag = data[:12], data[-16:]
-    cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_GCM, iv)
-    plaintext = cipher.decrypt_and_verify(data[12:-16], tag)
-    return plaintext.decode("utf-8")
+    try:
+        data = binascii.unhexlify(cipherText)
+        iv, tag = data[:12], data[-16:]
+        cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_GCM, iv)
+        plaintext = cipher.decrypt_and_verify(data[12:-16], tag)
+        return plaintext.decode("utf-8")
+    except ValueError as error:
+        return ""
 
 app = Flask(__name__)
 
