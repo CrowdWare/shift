@@ -18,7 +18,7 @@
  *
  ****************************************************************************/
 package at.crowdware.shift.logic
-
+/*
 import android.app.Application
 import android.content.Intent
 import android.util.Log
@@ -152,3 +152,5 @@ object Network {
         })
     }
 }
+
+ */

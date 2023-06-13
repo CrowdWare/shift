@@ -33,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
@@ -56,6 +57,8 @@ import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.logic.Friend
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
 import java.time.LocalDate
 
@@ -68,7 +71,7 @@ fun Friendlist() {
         action = Intent.ACTION_SEND
         putExtra(
             Intent.EXTRA_TEXT,
-            stringResource(id = R.string.invite_message, stringResource(id = R.string.website_url), Backend.getAccount().uuid)
+            stringResource(id = R.string.invite_message, stringResource(id = R.string.website_url), ""/*Backend.getAccount().uuid*/)
         )
         type = "text/plain"
     }
@@ -82,8 +85,10 @@ fun Friendlist() {
     }
 
     LaunchedEffect(Unit) {
-        Backend.getFriendlist(context, onFriendlistSucceed, onFriendlistFailed)
+        //Backend.getFriendlist(context, onFriendlistSucceed, onFriendlistFailed)
     }
+
+    // rTNV7cTZ8kWU6JwUohKGIA==
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -113,6 +118,10 @@ fun Friendlist() {
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ),
             onClick = { context.startActivity(shareIntent) },
             modifier = Modifier.fillMaxWidth()
         ) {

@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.Backend.Companion.toHex
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
@@ -35,7 +37,7 @@ import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
-import nl.tudelft.ipv8.android.IPv8Android
+//import nl.tudelft.ipv8.android.IPv8Android
 import com.google.gson.Gson
 
 @Composable
@@ -59,13 +61,13 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
         )
 
         val map = mutableMapOf("type" to "LMP")  // liquid micro payment
-        map["pubKey"] = IPv8Android.getInstance().myPeer.publicKey.keyToBin().toHex()
+        //map["pubKey"] = IPv8Android.getInstance().myPeer.publicKey.keyToBin().toHex()
         map["amount"] = viewModel.total.value.toString()
         map["purpose"] = viewModel.description.value
-        map["from"] = Backend.getAccount().name
+        map["from"] = ""/*Backend.getAccount().name*/
         val gson = Gson()
         val mapString = gson.toJson(map)
-        val enc = Backend.encryptStringGCM(mapString)
+        val enc = ""/*Backend.encryptStringGCM(mapString)*/
 
         Barcode(
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -81,6 +83,10 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
                 viewModel.reset()
                 NavigationManager.navigate("home") },
             modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ),
             enabled = viewModel.total.value > 0L
         ) {
             Text(stringResource(R.string.button_done), style = TextStyle(fontSize = 20.sp))

@@ -59,7 +59,10 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.widget.Toast
+import androidx.compose.material3.ButtonDefaults
 import at.crowdware.shift.R
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 
 fun getFileNameFromUri(contentResolver: ContentResolver, uri: Uri): String? {
     var fileName: String? = null
@@ -249,7 +252,12 @@ fun Settings() {
             }
         }
         Spacer(modifier = Modifier.height(4.dp))
-        Button(onClick = { showFilePicker = true }) {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ),
+            onClick = { showFilePicker = true }) {
             Text("Install plugin")
         }
     }

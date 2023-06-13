@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.PersistanceManager
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 
@@ -66,10 +69,10 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
         CenterAlignedTopAppBar(
             title = { Text(stringResource(R.string.intro)) },
             colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                containerColor = Primary,
+                titleContentColor = OnPrimary,
+                navigationIconContentColor = OnPrimary,
+                actionIconContentColor = OnPrimary,
             )
         )
         Row(Modifier.height(150.dp)) {
@@ -97,7 +100,10 @@ fun Intro(hasSeenDeleteWarning: MutableState<Boolean>) {
             label = stringResource(R.string.select_preferred_language),
             stateHolder = stateHolderLanguage)
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
+        Button( colors = ButtonDefaults.buttonColors(
+            containerColor = Primary,
+            contentColor = OnPrimary
+        ),onClick = {
             PersistanceManager.putHasSeenDeleteWarning(context)
             hasSeenDeleteWarning.value = true
         },

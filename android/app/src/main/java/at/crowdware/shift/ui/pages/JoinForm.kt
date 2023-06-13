@@ -19,6 +19,7 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.pages
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,22 +45,36 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontLoadingStrategy.Companion.Blocking
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+
+import lib.Lib.createAccount
+import java.util.UUID
+import java.util.concurrent.BlockingDeque
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
-    val context = LocalContext.current.applicationContext
-    val res = LocalContext.current.resources
+    val context = LocalContext.current
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
@@ -84,10 +99,10 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
         CenterAlignedTopAppBar(
             title = { Text(stringResource(R.string.join_shift)) },
             colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                containerColor = Primary,
+                titleContentColor = OnPrimary,
+                navigationIconContentColor = OnPrimary,
+                actionIconContentColor = OnPrimary
             )
         )
         Row(Modifier.weight(1f)) {
@@ -119,18 +134,45 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
 
         Text(text = errorMessage, color = Color.Red)
         Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ),
             onClick = {
-                Backend.createAccount(
-                    context, name, friend,
-                    stateHolderCountry.value, language, onJoinSucceed, onJoinFailed, res
-                )
+                GlobalScope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        createAccount(
+                            name,
+                            UUID.randomUUID().toString(),
+                            friend,
+                            stateHolderCountry.value,
+                            language
+                        )
+                    }
+                    if (result == 0L) {
+                        withContext(Dispatchers.Main) {
+                            onJoinSucceed()
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            var msg = ""
+                            when (result) {
+                                1L -> msg = context.getString(R.string.please_enter_your_name)
+                                2L -> msg = context.getString(R.string.please_enter_the_invitation_code)
+                                3L -> msg = context.getString(R.string.please_select_your_country)
+                                5L -> msg = context.getString(R.string.a_network_error_occurred)
+                                6L -> msg = context.getString(R.string.a_network_error_occurred)
+                            }
+                            onJoinFailed(msg)
+                        }
+                    }
+                }
             },
         ) {
             Text(stringResource(R.string.button_join_the_shift))
         }
     }
 }
-
 
 @Preview(showSystemUi = true)
 @Composable

@@ -19,9 +19,7 @@
  ****************************************************************************/
 package at.crowdware.shift
 
-import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,20 +35,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
-import at.crowdware.shift.logic.Database
 import at.crowdware.shift.logic.LocaleManager
-import at.crowdware.shift.logic.Network
 import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shift.logic.PluginManager
-import at.crowdware.shift.service.ShiftChainService
 import at.crowdware.shift.ui.pages.Intro
 import at.crowdware.shift.ui.pages.JoinForm
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationView
-import nl.tudelft.ipv8.android.keyvault.AndroidCryptoProvider
-import nl.tudelft.ipv8.keyvault.defaultCryptoProvider
+
+import lib.Lib.hasJoined
+import lib.Lib.isScooping
+import lib.Lib.init
 
 class MainActivity : ComponentActivity() {
 
@@ -63,21 +59,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    defaultCryptoProvider = AndroidCryptoProvider
                     LocaleManager.init(applicationContext, resources)
-
-                    val hasJoined = remember { mutableStateOf(hasJoined(applicationContext)) }
+                    init(applicationContext.filesDir.absolutePath)
+                    val hasJoined = remember { mutableStateOf(hasJoined()) }
                     val hasSeenDeleteWarning = remember { mutableStateOf(false) }
 
                     // first the account has to be created and user should have to trigger "Start Scooping" before starting the service
                     // that means the user should have agreed to start the service
-                    if(Backend.getAccount().isScooping) {
-                        Network.initIPv8(applicationContext as Application)
-                        if(!ShiftChainService.isStarted()) {
-                            val serviceIntent = Intent(this, ShiftChainService::class.java)
-                            serviceIntent.putExtra("language", LocaleManager.getLanguage())
-                            startService(serviceIntent)
-                        }
+                    if(isScooping()) {
+                        // TODO Start service here
                     }
                     if (hasJoined.value) {
                         // also code these in NavigationView.kt
@@ -106,11 +96,6 @@ class MainActivity : ComponentActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleManager.wrapContext(newBase!!))
-    }
-
-    fun hasJoined(applicationContext: Context): Boolean
-    {
-        return Database.readAccount(applicationContext) != null
     }
 }
 

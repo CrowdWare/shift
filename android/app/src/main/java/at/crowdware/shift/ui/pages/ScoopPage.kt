@@ -59,7 +59,9 @@ import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.OnSecondary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.theme.Secondary
 import at.crowdware.shift.ui.widgets.NavigationItem
 import kotlinx.coroutines.delay
@@ -82,17 +84,17 @@ fun ScoopPage(isPreview: Boolean = false) {
             stringResource(
                 id = R.string.invite_message,
                 stringResource(id = R.string.website_url),
-                Backend.getAccount().uuid
+                /*Backend.getAccount().uuid*/ ""
             )
         )
         type = "text/plain"
     }
-    val transactions = remember { mutableStateListOf(*Backend.getTransactions().toTypedArray()) }
+    //val transactions = remember { mutableStateListOf(*Backend.getTransactions().toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
     val application = LocalContext.current.applicationContext
-    var balance by remember { mutableStateOf(Backend.getBalance()) }
-    var isScooping by remember { mutableStateOf(Backend.getAccount().isScooping) }
+    var balance by remember { mutableStateOf(/*Backend.getBalance()*/0L) }
+    var isScooping by remember { mutableStateOf(/*Backend.getAccount().isScooping*/false) }
 
     if(isPreview) {
         isScooping = true
@@ -100,14 +102,14 @@ fun ScoopPage(isPreview: Boolean = false) {
     }
     LaunchedEffect(true) {
         while (true) {
-            isScooping = Backend.getAccount().isScooping
-            if (isScooping) {
-                balance = Backend.getBalance()
-                transactions.clear()
-                for(t in Backend.getTransactions()) {
-                    transactions.add(t)
-                }
-            }
+            //isScooping = Backend.getAccount().isScooping
+            //if (isScooping) {
+                //balance = Backend.getBalance()
+                //transactions.clear()
+                //for(t in Backend.getTransactions()) {
+                //    transactions.add(t)
+                //}
+            //}
             delay(3000L)
         }
     }
@@ -130,7 +132,12 @@ fun ScoopPage(isPreview: Boolean = false) {
         Text(errorMessage, color = Color.Red)
         if (isScooping) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                Button(onClick = { NavigationManager.navigate("receive_gratitude") },
+                Button(
+                    onClick = { NavigationManager.navigate("receive_gratitude") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    ),
                     modifier = Modifier.weight(1f)) {
                     Text(stringResource(R.string.button_receive), style = TextStyle(fontSize = 20.sp))
                 }
@@ -149,6 +156,10 @@ fun ScoopPage(isPreview: Boolean = false) {
 
         } else {
             Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = OnPrimary
+                ),
                 onClick = { openDialog.value = true },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -165,9 +176,13 @@ fun ScoopPage(isPreview: Boolean = false) {
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Bookings(transactions, modifier = Modifier.weight(1f))
+        //Bookings(transactions, modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.height(16.dp))
         Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ),
             onClick = { context.startActivity(shareIntent) },
             modifier = Modifier.fillMaxWidth()
         ) {

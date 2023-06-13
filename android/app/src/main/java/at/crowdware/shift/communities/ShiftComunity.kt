@@ -18,7 +18,7 @@
  *
  ****************************************************************************/
 package at.crowdware.shift.communities
-
+/*
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -146,3 +146,4 @@ class ShiftCommunity : Community() {
         }
     }
 }
+*/

@@ -18,7 +18,7 @@
  *
  ****************************************************************************/
 package at.crowdware.shift.service
-
+/*
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -131,3 +131,4 @@ class ShiftChainService : IPv8Service() {
         super.attachBaseContext(LocaleManager.wrapContext(newBase!!))
     }
 }
+*/

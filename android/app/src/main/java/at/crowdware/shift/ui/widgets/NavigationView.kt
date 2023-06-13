@@ -56,6 +56,8 @@ import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch
@@ -113,10 +115,10 @@ fun NavigationDrawer(items: List<NavigationItem>, selectedItem: MutableState<Str
                 CenterAlignedTopAppBar(
                     title = { Text("SHIFT") },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                        actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                        containerColor = Primary,
+                        titleContentColor = OnPrimary,
+                        navigationIconContentColor = OnPrimary,
+                        actionIconContentColor = OnPrimary
                     ),
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {

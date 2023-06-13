@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +38,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Backend
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.HourMinutesPicker
@@ -49,7 +52,7 @@ import at.crowdware.shift.ui.widgets.TotalDisplay
 @Composable
 fun ReceiveGratitude(viewModel: ReceiveViewModel) {
     viewModel.balance.value =
-        (Backend.getBalance() / 1000L) * 1000L // that should round down to full liter
+        (/*Backend.getBalance()*/0L / 1000L) * 1000L // that should round down to full liter
     val scrollState = rememberScrollState()
 
     Column(
@@ -107,6 +110,10 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
         Button(
             onClick = { NavigationManager.navigate("receive_gratitude_qrcode") },
             modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ),
             enabled = viewModel.total.value > 0L
         ) {
             Text(stringResource(R.string.button_continue), style = TextStyle(fontSize = 20.sp))

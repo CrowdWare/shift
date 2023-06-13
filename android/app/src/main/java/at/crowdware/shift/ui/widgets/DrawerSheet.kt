@@ -68,6 +68,8 @@ import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 
 data class NavigationItem( val id: String, val icon: ImageVector? = null, val text: String = "", val plugin: ShiftPlugin? = null, val index: Int = 0)
 
@@ -83,7 +85,7 @@ fun DrawerSheet(drawerState: DrawerState, items: List<NavigationItem>, selectedI
         ) {
             Box(
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(Primary)
                     .fillMaxWidth()
                     .height(200.dp)
             ) {
@@ -93,9 +95,9 @@ fun DrawerSheet(drawerState: DrawerState, items: List<NavigationItem>, selectedI
                         contentDescription = stringResource(id = R.string.icon),
                         modifier = Modifier.weight(1f),
                     )
-                    Text("© 2023 CrowdWare", color = MaterialTheme.colorScheme.onPrimary)
+                    Text("© 2023 CrowdWare", color = OnPrimary)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("http://shift.crowdware.at", color = MaterialTheme.colorScheme.onPrimary)
+                    Text("http://shift.crowdware.at", color = OnPrimary)
                 }
             }
             Spacer(Modifier.height(12.dp))

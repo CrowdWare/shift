@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -30,15 +31,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.logic.TransactionType
+import at.crowdware.shift.ui.theme.OnPrimary
+import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.theme.Tertiary
 import at.crowdware.shift.ui.theme.TertiaryError
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import it.warpmobile.scanner.BuildCameraUI
+//import it.warpmobile.scanner.BuildCameraUI
 import com.google.gson.Gson
-import nl.tudelft.ipv8.android.IPv8Android
-import nl.tudelft.ipv8.keyvault.PublicKey
-import nl.tudelft.ipv8.util.hexToBytes
+//import nl.tudelft.ipv8.android.IPv8Android
+//import nl.tudelft.ipv8.keyvault.PublicKey
+//import nl.tudelft.ipv8.util.hexToBytes
 import java.lang.Exception
 import java.text.NumberFormat
 import java.util.Locale
@@ -48,7 +51,7 @@ data class Lmp(val pubKey: String, val amount: Long, val purpose: String, val ty
 @OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
-    viewModel.balance.value = Backend.getBalance()
+    viewModel.balance.value = 0L/*Backend.getBalance()*/
 
     var code by remember {
         mutableStateOf(if(isPreview) {"{\"pubKey\":\"1234567890abcedef\",\"amount\":450,\"purpose\":\"Haircut and Massage\",\"type\":\"LMP\",\"from\":\"Sender\"}"} else {""})
@@ -72,7 +75,7 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 style = TextStyle(fontSize = 20.sp)
             )
             Spacer(modifier = Modifier.height(64.dp))
-            BuildCameraUI(closeScanListener = {
+            /*BuildCameraUI(closeScanListener = {
             }) { qrcode ->
                 try {
                     code = Backend.decryptStringGCM(qrcode)
@@ -83,6 +86,8 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 }
                 showScanner = false
             }
+
+             */
             Spacer(modifier = Modifier.height(8.dp))
         } else {
             if(code == "FRAUD") {
@@ -100,6 +105,10 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(onClick = {NavigationManager.navigate("home") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    ),
                     modifier = Modifier.fillMaxWidth()) {
                     Text("Go Back", style = TextStyle(fontSize = 20.sp))
                 }
@@ -179,14 +188,18 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 Spacer(modifier = Modifier.height(8.dp))
                 if (viewModel.balance.value / 1000L >= trans.amount) {
                     Button(
-                        onClick = {
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Primary,
+                            contentColor = OnPrimary
+                        ),
+                        onClick = {/*
                             Backend.addTransactionToTrustChain(
                                 trans.amount.toLong(),
                                 TransactionType.LMP,
                                 trans.purpose,
                                 trans.from,
-                                trans.pubKey.hexToBytes()
-                            )
+                                //trans.pubKey.hexToBytes()
+                            )*/
                             NavigationManager.navigate("home")
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -198,6 +211,10 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                     }
                 } else {
                     Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Primary,
+                            contentColor = OnPrimary
+                        ),
                         onClick = { },
                         modifier = Modifier.fillMaxWidth(),
                         enabled = false
