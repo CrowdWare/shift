@@ -55,12 +55,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
-import at.crowdware.shift.logic.Backend
-import at.crowdware.shift.logic.Friend
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
-import java.time.LocalDate
+import org.json.JSONArray
+
+import lib.Lib.getUuid
+import lib.Lib.getMatelist
+import lib.TransactionTO
+
 
 @Composable
 fun Friendlist() {
@@ -71,7 +74,8 @@ fun Friendlist() {
         action = Intent.ACTION_SEND
         putExtra(
             Intent.EXTRA_TEXT,
-            stringResource(id = R.string.invite_message, stringResource(id = R.string.website_url), ""/*Backend.getAccount().uuid*/)
+            stringResource(id = R.string.invite_message,
+                stringResource(id = R.string.website_url), getUuid())
         )
         type = "text/plain"
     }
@@ -88,7 +92,6 @@ fun Friendlist() {
         //Backend.getFriendlist(context, onFriendlistSucceed, onFriendlistFailed)
     }
 
-    // rTNV7cTZ8kWU6JwUohKGIA==
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -130,6 +133,26 @@ fun Friendlist() {
     }
 }
 
+data class Friend(val Name: String, val Scooping: Boolean, val Uuid: String, val Country: String, val FriendsCount: Int)
+
+fun getFriendsFromJSON(jsonString: String): List<Friend> {
+    val jsonArray = JSONArray(jsonString)
+    val friends = mutableListOf<Friend>()
+
+    for (i in 0 until jsonArray.length()) {
+        val jsonObject = jsonArray.getJSONObject(i)
+        val friend = Friend(
+            jsonObject.getString("Name"),
+            jsonObject.getBoolean("Scooping"),
+            jsonObject.getString("Uuid"),
+            jsonObject.getString("Country"),
+            jsonObject.getInt("FriendsCount")
+        )
+        friends.add(friend)
+    }
+    return friends
+}
+
 @Composable
 fun FriendListItem(friend: Friend) {
     Card(
@@ -147,11 +170,11 @@ fun FriendListItem(friend: Friend) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = friend.name, fontWeight = FontWeight.Bold)
-                Text(text = friend.country)
-                Text(friend.friends_count.toString() + stringResource(R.string.friends_invited))
+                Text(text = friend.Name, fontWeight = FontWeight.Bold)
+                Text(text = friend.Country)
+                Text(friend.FriendsCount.toString() + stringResource(R.string.friends_invited))
             }
-            if (friend.scooping) {
+            if (friend.Scooping) {
                 Text(stringResource(R.string.is_scooping), modifier = Modifier.padding(16.dp))
                 Checkbox(
                     checked = true,
@@ -165,7 +188,7 @@ fun FriendListItem(friend: Friend) {
 @Preview(showBackground = true)
 @Composable
 fun FriendlistItemPreview() {
-    FriendListItem(friend = Friend(name="Hans Meiser", true, "788323754", "Brasil", 5))
+    FriendListItem(friend = Friend("Hans Meiser", true, "788323754", "Brasil", 5))
 }
 
 

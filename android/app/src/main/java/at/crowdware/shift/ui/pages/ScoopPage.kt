@@ -36,7 +36,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -58,7 +57,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
-import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.OnSecondary
 import at.crowdware.shift.ui.theme.Primary
@@ -67,12 +65,15 @@ import at.crowdware.shift.ui.widgets.NavigationItem
 import kotlinx.coroutines.delay
 import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.Bookings
-import at.crowdware.shift.ui.widgets.HourMinutesPicker
 import at.crowdware.shift.ui.widgets.NavigationManager
-import at.crowdware.shift.ui.widgets.TotalDisplay
+import org.json.JSONArray
 
+import lib.Lib.startScooping
+import lib.Lib.isScooping
+import lib.Lib.getBalance
+import lib.Lib.getTransactions
+import lib.Lib.getUuid
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoopPage(isPreview: Boolean = false) {
     val errorMessage by remember { mutableStateOf("") }
@@ -84,32 +85,33 @@ fun ScoopPage(isPreview: Boolean = false) {
             stringResource(
                 id = R.string.invite_message,
                 stringResource(id = R.string.website_url),
-                /*Backend.getAccount().uuid*/ ""
+                getUuid()
             )
         )
         type = "text/plain"
     }
-    //val transactions = remember { mutableStateListOf(*Backend.getTransactions().toTypedArray()) }
+
+    val transactions = remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
     val application = LocalContext.current.applicationContext
-    var balance by remember { mutableStateOf(/*Backend.getBalance()*/0L) }
-    var isScooping by remember { mutableStateOf(/*Backend.getAccount().isScooping*/false) }
+    var balance by remember { mutableStateOf(getBalance()) }
+    var isScooping by remember { mutableStateOf(isScooping()) }
 
     if(isPreview) {
         isScooping = true
-
     }
+
     LaunchedEffect(true) {
         while (true) {
-            //isScooping = Backend.getAccount().isScooping
-            //if (isScooping) {
-                //balance = Backend.getBalance()
-                //transactions.clear()
-                //for(t in Backend.getTransactions()) {
-                //    transactions.add(t)
-                //}
-            //}
+            isScooping = isScooping()
+            if (isScooping) {
+                balance = getBalance()
+                transactions.clear()
+                for(t in getTransactionsFromJSON(getTransactions())) {
+                    transactions.add(t)
+                }
+            }
             delay(3000L)
         }
     }
@@ -118,8 +120,8 @@ fun ScoopPage(isPreview: Boolean = false) {
         onDismiss = { openDialog.value = false },
         onConfirm = {
             openDialog.value = false
-            if(application is Application)
-                Backend.startScooping(application)
+            startScooping()
+            isScooping = true
         }
     )
     Column(
@@ -176,7 +178,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        //Bookings(transactions, modifier = Modifier.weight(1f))
+        Bookings(transactions, modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             colors = ButtonDefaults.buttonColors(
@@ -192,6 +194,25 @@ fun ScoopPage(isPreview: Boolean = false) {
             )
         }
     }
+}
+
+data class Transaction (val amount: Long, val purpose: String, val date: Long, val typ: Long)
+
+fun getTransactionsFromJSON(jsonString: String): List<Transaction> {
+    val jsonArray = JSONArray(jsonString)
+    val transactions = mutableListOf<Transaction>()
+
+    for (i in 0 until jsonArray.length()) {
+        val jsonObject = jsonArray.getJSONObject(i)
+        val transaction = Transaction(
+            jsonObject.getLong("Amount"),
+            jsonObject.getString("Purpose"),
+            jsonObject.getLong("Date"),
+            jsonObject.getLong("Typ")
+        )
+        transactions.add(transaction)
+    }
+    return transactions
 }
 
 @Preview(

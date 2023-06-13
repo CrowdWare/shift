@@ -22,9 +22,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
-import at.crowdware.shift.logic.Transaction
-import at.crowdware.shift.logic.TransactionType
+import at.crowdware.shift.ui.pages.Transaction
 import java.time.format.DateTimeFormatter
+
+import lib.TransactionTO
+import lib.Lib.InitialBooking
+import lib.Lib.Scooped
+import lib.Lib.Lmp
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.FormatStyle
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
@@ -35,21 +45,19 @@ fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
     ) {
         items(transactions.size) { index ->
             val transaction = transactions[index]
-            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
             Row {
                 Column {
-
-                    Text(
-                        transaction.date.format(formatter),
+                    Text(unixToDate(transaction.date),
                         style = TextStyle(fontSize = 18.sp)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                val txt = when (transaction.type) {
-                    TransactionType.SCOOPED -> stringResource(R.string.transaction_liquid_scooped)
-                    TransactionType.INITIAL_BOOKING -> stringResource(R.string.transaction_initial_liquid)
-                    TransactionType.LMP -> transaction.purpose
+                val txt = when (transaction.typ) {
+                    Scooped -> stringResource(R.string.transaction_liquid_scooped)
+                    InitialBooking -> stringResource(R.string.transaction_initial_liquid)
+                    Lmp -> transaction.purpose
+                    else -> ""
                 }
                 Text(txt, style = TextStyle(fontSize = 18.sp))
                 Box(
@@ -65,4 +73,12 @@ fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
             }
         }
     }
+}
+
+fun unixToDate(unixTimestamp: Long): String {
+    val instant = Instant.ofEpochSecond(unixTimestamp)
+    val date = Date.from(instant)
+    val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.getDefault())
+    return localDate.format(formatter)
 }

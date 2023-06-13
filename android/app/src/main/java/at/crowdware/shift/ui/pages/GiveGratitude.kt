@@ -1,13 +1,11 @@
 package at.crowdware.shift.ui.pages
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
-import at.crowdware.shift.logic.Backend
 import at.crowdware.shift.ui.widgets.NavigationManager
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -30,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import at.crowdware.shift.logic.TransactionType
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.theme.Tertiary
@@ -42,7 +39,6 @@ import com.google.gson.Gson
 //import nl.tudelft.ipv8.android.IPv8Android
 //import nl.tudelft.ipv8.keyvault.PublicKey
 //import nl.tudelft.ipv8.util.hexToBytes
-import java.lang.Exception
 import java.text.NumberFormat
 import java.util.Locale
 
