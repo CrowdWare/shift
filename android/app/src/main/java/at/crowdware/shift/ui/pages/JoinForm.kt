@@ -65,23 +65,12 @@ import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
-    val context = LocalContext.current
+fun JoinForm(language: String) {
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
-
-    val onJoinFailed: (String?) -> Unit = { message ->
-        if (message != null)
-            errorMessage = message
-    }
-
-    val onJoinSucceed: () -> Unit = {
-        errorMessage = ""
-        joinSuccessful.value = true
-    }
 
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
@@ -121,7 +110,8 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
         Spacer(modifier = Modifier.height(16.dp))
         DropDownListbox(
             label = stringResource(R.string.select_your_country),
-            stateHolder = stateHolderCountry)
+            stateHolder = stateHolderCountry
+        )
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = errorMessage, color = Color.Red)
@@ -131,34 +121,13 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
                 contentColor = OnPrimary
             ),
             onClick = {
-                GlobalScope.launch {
-                    val result = withContext(Dispatchers.IO) {
-                        createAccount(
-                            name,
-                            UUID.randomUUID().toString(),
-                            friend,
-                            stateHolderCountry.value,
-                            language
-                        )
-                    }
-                    if (result == 0L) {
-                        withContext(Dispatchers.Main) {
-                            onJoinSucceed()
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            var msg = ""
-                            when (result) {
-                                1L -> msg = context.getString(R.string.please_enter_your_name)
-                                2L -> msg = context.getString(R.string.please_enter_the_invitation_code)
-                                3L -> msg = context.getString(R.string.please_select_your_country)
-                                5L -> msg = context.getString(R.string.a_network_error_occurred)
-                                6L -> msg = context.getString(R.string.a_network_error_occurred)
-                            }
-                            onJoinFailed(msg)
-                        }
-                    }
-                }
+                createAccount(
+                    name,
+                    UUID.randomUUID().toString(),
+                    friend,
+                    stateHolderCountry.value,
+                    language
+                )
             },
         ) {
             Text(stringResource(R.string.button_join_the_shift))
@@ -170,7 +139,6 @@ fun JoinForm(joinSuccessful: MutableState<Boolean>, language: String) {
 @Composable
 fun JoinFormPreview()
 {
-    val joinSuccessful = remember { mutableStateOf(false) }
-    JoinForm(joinSuccessful, "de")
+    JoinForm("de")
 }
 

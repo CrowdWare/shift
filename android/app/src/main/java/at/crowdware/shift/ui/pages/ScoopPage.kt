@@ -77,7 +77,6 @@ import lib.Lib.getUuid
 @Composable
 fun ScoopPage(isPreview: Boolean = false) {
     val errorMessage by remember { mutableStateOf("") }
-    val openDialog = remember { mutableStateOf(false) }
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(
@@ -94,7 +93,6 @@ fun ScoopPage(isPreview: Boolean = false) {
     val transactions = remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
-    val application = LocalContext.current.applicationContext
     var balance by remember { mutableStateOf(getBalance()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
 
@@ -115,15 +113,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             delay(3000L)
         }
     }
-    ServiceStartRequest(
-        openDialog = openDialog.value,
-        onDismiss = { openDialog.value = false },
-        onConfirm = {
-            openDialog.value = false
-            startScooping()
-            isScooping = true
-        }
-    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -162,7 +152,10 @@ fun ScoopPage(isPreview: Boolean = false) {
                     containerColor = Primary,
                     contentColor = OnPrimary
                 ),
-                onClick = { openDialog.value = true },
+                onClick = {
+                    startScooping()
+                    isScooping = true
+                          },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -225,21 +218,4 @@ fun MainPagePreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     NavigationDrawer(list, selectedItem){ ScoopPage(true) }
-}
-
-@Composable
-fun ServiceStartRequest(openDialog: Boolean, onDismiss: () -> Unit, onConfirm: () -> Unit) {
-    if (openDialog) {
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            title = { Text(text = stringResource(id = R.string.button_start_scooping)) },
-            text = {
-                Text(
-                    stringResource(R.string.servive_start_request_message)
-                )
-            },
-            confirmButton = { TextButton(onClick = onConfirm ) { Text("OK") } },
-            dismissButton = { TextButton(onClick = onDismiss ) { Text(stringResource(R.string.dismiss)) } }
-        )
-    }
 }

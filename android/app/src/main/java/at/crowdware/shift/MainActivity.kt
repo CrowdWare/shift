@@ -64,11 +64,6 @@ class MainActivity : ComponentActivity() {
                     val hasJoined = remember { mutableStateOf(hasJoined()) }
                     val hasSeenDeleteWarning = remember { mutableStateOf(false) }
 
-                    // first the account has to be created and user should have to trigger "Start Scooping" before starting the service
-                    // that means the user should have agreed to start the service
-                    if(isScooping()) {
-                        // TODO Start service here
-                    }
                     if (hasJoined.value) {
                         // also code these in NavigationView.kt
                         val list = mutableListOf(
@@ -86,7 +81,7 @@ class MainActivity : ComponentActivity() {
                     }
                     else
                         if(hasSeenDeleteWarning.value || PersistanceManager.hasSeenDeleteWarning(this))
-                            JoinForm(hasJoined, LocaleManager.getLanguage())
+                            JoinForm(LocaleManager.getLanguage())
                         else
                             Intro(hasSeenDeleteWarning)
                 }
