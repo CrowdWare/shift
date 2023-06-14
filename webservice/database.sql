@@ -9,4 +9,4 @@ CREATE TABLE account
     FOREIGN KEY (ruuid) REFERENCES account(uuid)
 );
 
-INSERT INTO account VALUES("rTNV7cTZ8kWU6JwUohKGIA==", "rTNV7cTZ8kWU6JwUohKGIA==", "Genesis", 0, "", "")
+INSERT INTO account VALUES("4634f957-8048-4a1d-bf1f-614047b7c621", "4634f957-8048-4a1d-bf1f-614047b7c621", "Genesis", 0, "", "")
