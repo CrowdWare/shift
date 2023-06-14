@@ -40,16 +40,9 @@
 + Release build has some dependencies to libsodium, so build all submodules as signed apk
 + Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
 + Bevor starting the service, check if its already running to avoid crashes
-- Drop webservice
-- Drop all related references to the webservice
-- Ping friends to count if they are online to calculate scooping
 - Theme chooser
-- Remove start scooping button...  Put a description what to do... "Invite people and exchange public keys to be able to scoop"
-- Enable start scooping button after adding X friends 
-- Instead of self signed blocks for scooping send proposal to all online friends and wait for agreement before counting them (transaction list and balance). At least two friends have to sign a scoop block.
-- Method to exchange keys with additional chain crawling
-- Secure transactions, only send agreement block for verified friends
-- Secure transaction also against replay attacks, like when another app tries to reuse the public key of a friend.
+- Scan proposal, unmarshal transaction, fraud detection 
+- Book transaction to account
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
