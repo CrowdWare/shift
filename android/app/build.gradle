@@ -10,7 +10,7 @@ android {
         minSdk 28
         targetSdk 33
         versionCode 1
-        versionName "2.0.1"
+        versionName "2.0.0 Alpha"
 
         vectorDrawables {
             useSupportLibrary true
@@ -128,9 +128,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
-    //implementation("com.google.mlkit:barcode-scanning:16.0.3")
+    implementation("com.google.mlkit:barcode-scanning:17.1.0")
     implementation("com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0")
 
     implementation files('libs/libshift.aar')
+    implementation files('libs/scanner-release.aar')
 }
 

@@ -45,7 +45,6 @@ import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationView
 
 import lib.Lib.hasJoined
-import lib.Lib.isScooping
 import lib.Lib.init
 
 class MainActivity : ComponentActivity() {
@@ -81,7 +80,7 @@ class MainActivity : ComponentActivity() {
                     }
                     else
                         if(hasSeenDeleteWarning.value || PersistanceManager.hasSeenDeleteWarning(this))
-                            JoinForm(LocaleManager.getLanguage())
+                            JoinForm(hasJoined, LocaleManager.getLanguage())
                         else
                             Intro(hasSeenDeleteWarning)
                 }

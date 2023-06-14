@@ -71,6 +71,7 @@ import org.json.JSONArray
 import lib.Lib.startScooping
 import lib.Lib.isScooping
 import lib.Lib.getBalance
+import lib.Lib.getScoopedBalance
 import lib.Lib.getTransactions
 import lib.Lib.getUuid
 
@@ -93,7 +94,7 @@ fun ScoopPage(isPreview: Boolean = false) {
     val transactions = remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
-    var balance by remember { mutableStateOf(getBalance()) }
+    var balance by remember { mutableStateOf(getBalance() * 1000 + getScoopedBalance()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
 
     if(isPreview) {
@@ -104,7 +105,7 @@ fun ScoopPage(isPreview: Boolean = false) {
         while (true) {
             isScooping = isScooping()
             if (isScooping) {
-                balance = getBalance()
+                balance = getBalance() * 1000 + getScoopedBalance()
                 transactions.clear()
                 for(t in getTransactionsFromJSON(getTransactions())) {
                     transactions.add(t)

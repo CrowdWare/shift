@@ -1,3 +1,22 @@
+/****************************************************************************
+ * Copyright (C) 2023 CrowdWare
+ *
+ * This file is part of SHIFT.
+ *
+ *  SHIFT is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  SHIFT is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ****************************************************************************/
 package at.crowdware.shift.ui.pages
 
 import androidx.compose.foundation.layout.Column
@@ -36,8 +55,8 @@ import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
-//import nl.tudelft.ipv8.android.IPv8Android
-import com.google.gson.Gson
+
+import lib.Lib.getProposalQRCode
 
 @Composable
 fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
@@ -59,14 +78,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
             style = TextStyle(fontSize = 20.sp)
         )
 
-        val map = mutableMapOf("type" to "LMP")  // liquid micro payment
-        //map["pubKey"] = IPv8Android.getInstance().myPeer.publicKey.keyToBin().toHex()
-        map["amount"] = viewModel.total.value.toString()
-        map["purpose"] = viewModel.description.value
-        map["from"] = ""/*Backend.getAccount().name*/
-        val gson = Gson()
-        val mapString = gson.toJson(map)
-        val enc = ""/*Backend.encryptStringGCM(mapString)*/
+        val enc = getProposalQRCode(viewModel.total.value, viewModel.description.value)
 
         Barcode(
             modifier = Modifier.align(Alignment.CenterHorizontally)

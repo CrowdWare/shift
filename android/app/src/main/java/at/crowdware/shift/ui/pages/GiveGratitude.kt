@@ -1,5 +1,25 @@
+/****************************************************************************
+ * Copyright (C) 2023 CrowdWare
+ *
+ * This file is part of SHIFT.
+ *
+ *  SHIFT is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  SHIFT is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ****************************************************************************/
 package at.crowdware.shift.ui.pages
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
@@ -8,7 +28,6 @@ import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -34,20 +53,20 @@ import at.crowdware.shift.ui.theme.Tertiary
 import at.crowdware.shift.ui.theme.TertiaryError
 import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-//import it.warpmobile.scanner.BuildCameraUI
+import it.warpmobile.scanner.BuildCameraUI
 import com.google.gson.Gson
-//import nl.tudelft.ipv8.android.IPv8Android
-//import nl.tudelft.ipv8.keyvault.PublicKey
-//import nl.tudelft.ipv8.util.hexToBytes
+import lib.Lib.getBalance
 import java.text.NumberFormat
 import java.util.Locale
+
+import lib.Lib.getTransactionFromQRCode
 
 data class Lmp(val pubKey: String, val amount: Long, val purpose: String, val type:String, val from: String)
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
-    viewModel.balance.value = 0L/*Backend.getBalance()*/
+    viewModel.balance.value = getBalance() * 1000
 
     var code by remember {
         mutableStateOf(if(isPreview) {"{\"pubKey\":\"1234567890abcedef\",\"amount\":450,\"purpose\":\"Haircut and Massage\",\"type\":\"LMP\",\"from\":\"Sender\"}"} else {""})
@@ -71,19 +90,11 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 style = TextStyle(fontSize = 20.sp)
             )
             Spacer(modifier = Modifier.height(64.dp))
-            /*BuildCameraUI(closeScanListener = {
+            BuildCameraUI(closeScanListener = {
             }) { qrcode ->
-                try {
-                    code = Backend.decryptStringGCM(qrcode)
-                }
-                catch(e: Exception) {
-                    code = "FRAUD"
-                    Log.e("Security", "QR code could not be decrypted.")
-                }
+                    code = getTransactionFromQRCode(qrcode)
                 showScanner = false
             }
-
-             */
             Spacer(modifier = Modifier.height(8.dp))
         } else {
             if(code == "FRAUD") {

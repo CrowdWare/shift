@@ -33,17 +33,17 @@ That means the shift service has to run on your mobile and on their mobile.
 
 | Level | Liter | Description |
 |-|-|-|
-|1|12 l|for you|  
+|1|10 l|for you|  
 |2|18 l|(10 x 1800 ml) for each friend (up to 10)|
 |3|36 l|(100 x 360 ml) for each of the invited users (up to 100)|
 |4|75 l|(1000 x 75 ml) for each of the invited user friends (up to 1000)|
 
-That would be max 141 l each day in theory if everybody of these users are actually scooping. 
-So you will be able to pay people for their work for 141 minutes a day.  
+That would be max 139 l each day in theory if everybody of these users are actually scooping. 
+So you will be able to pay people for their work for 139 minutes a day.  
 All you have to do is to spread the word about SHIFT and make it popular.
 
 But lets be realistical. You invite 3 friends, they also invite 3 people and so on.
-That would result in 12 l + 3 * 1.800 ml + 9 * 360 ml + 27 * 75 ml = 22 l  
+That would result in 10 l + 3 * 1.800 ml + 9 * 360 ml + 27 * 75 ml = 20 l  
 That's not enough to be able to live from it, but if this app is running for about 1 month this will sum up to 660 l (worth 11 hours of work), and we have got a new currency. Also you are able to give services like massage, art, trainings etc and will earn additionally LMC.
 Just imagine if we don't have to deal with these banksters and financial departments anymore!  
 - No interest rates  

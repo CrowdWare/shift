@@ -55,17 +55,14 @@ import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import lib.Lib
 
 import lib.Lib.createAccount
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JoinForm(language: String) {
+fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
@@ -128,6 +125,7 @@ fun JoinForm(language: String) {
                     stateHolderCountry.value,
                     language
                 )
+                hasJoined.value = true
             },
         ) {
             Text(stringResource(R.string.button_join_the_shift))
@@ -139,6 +137,7 @@ fun JoinForm(language: String) {
 @Composable
 fun JoinFormPreview()
 {
-    JoinForm("de")
+    val hasJoined = remember { mutableStateOf(false) }
+    JoinForm(hasJoined, "de")
 }
 
