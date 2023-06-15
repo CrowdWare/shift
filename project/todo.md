@@ -43,6 +43,7 @@
 - Theme chooser
 - Scan proposal, unmarshal transaction, fraud detection 
 - Book transaction to account
++ Subtract demurrage from GetBalance
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
@@ -95,3 +96,22 @@ Topics
 - How to install plugins
 - How to build plugins
 - How to use the payments API 
+
+
+# QR code
+QR codes print as gutschein on a desktop app
+Scan function to check if QR code is valid
+The QR code will present an address on Storj encrypt(AccessKey, Bucketname, key).
+The value of the record is the encrypted transaction.
+After reading this record it will be deleted and then booked into account.
+This avoid double spending.
+This record also has a demurrage.
+The Storj-bucket belongs to the user. So each user has its own, up to 25 GB free bucket. 
+
+# Desktop app for business
+When a company want to pay their employees they need a big amounts of LMC.
+So they can buy a QR code to be scanned. Lets create QR codes and sell them against dollars or euros.
+That will pay the development cost and CrowdWare can use this fiat money to invest into sustainable projects like creating UBUNTU villages.
+
+# POS
+Point of sale app
