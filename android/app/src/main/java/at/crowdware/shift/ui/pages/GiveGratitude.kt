@@ -62,9 +62,10 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView
 
 import lib.Lib.acceptProposal
 import lib.Lib.getTransactionFromQRCode
+import java.lang.Math.abs
 
 
-data class Lmp(val pubKey: String, val amount: Long, val purpose: String, val type:String, val from: String)
+data class Lmp(val Amount: Long, val Date: String, val From: String, val Purpose: String, val Typ:String)
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -109,7 +110,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
     mainActivity.barcodeView.decodeContinuous(callback)
 
     val barcodeView = remember { mainActivity.barcodeView }
-    if(permissionState.allPermissionsGranted) {
+    if (permissionState.allPermissionsGranted) {
         DisposableEffect(Unit) {
             barcodeView.resume()
             onDispose {
@@ -127,36 +128,37 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Spacer(modifier = Modifier.height(8.dp))
-        if(showScanner) {
+        if (showScanner) {
             Text(
                 stringResource(R.string.scan_the_qr_code_to_get_the_offer_from_the_receiver),
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(fontSize = 20.sp)
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if(permissionState.allPermissionsGranted) {
+            if (permissionState.allPermissionsGranted) {
                 AndroidView(
                     modifier = Modifier.fillMaxSize(),
                     factory = { mainActivity.root },
                 )
-            }
-            else {
+            } else {
                 CameraPermission(
                     multiplePermissionsState = permissionState,
                     mainActivity.barcodeView
                 )
                 Button(
                     onClick = { permissionState.launchMultiplePermissionRequest() },
-                    modifier = Modifier.fillMaxWidth(),) {
-                    Text("Grant Camera Permission",style = TextStyle(fontSize = 20.sp))
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Grant Camera Permission", style = TextStyle(fontSize = 20.sp))
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
         } else {
-            if(code == "FRAUD") {
+            if (code == "FRAUD") {
                 Card(
                     colors = CardDefaults.cardColors(
-                    containerColor = TertiaryError)
+                        containerColor = TertiaryError
+                    )
                 ) {
                     Text(
                         stringResource(R.string.receiver_app_not_original),
@@ -164,94 +166,97 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(4.dp))
+                            .padding(4.dp)
+                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Button(onClick = {NavigationManager.navigate("home") },
+                Button(
+                    onClick = { NavigationManager.navigate("home") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Primary,
                         contentColor = OnPrimary
                     ),
-                    modifier = Modifier.fillMaxWidth()) {
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text("Go Back", style = TextStyle(fontSize = 20.sp))
                 }
             } else {
                 val gson = Gson()
                 val trans: Lmp = gson.fromJson(code, Lmp::class.java)
 
-                    Text(
-                        stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
-                        modifier = Modifier.fillMaxWidth(),
-                        style = TextStyle(fontSize = 20.sp)
+                Text(
+                    stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
+                    modifier = Modifier.fillMaxWidth(),
+                    style = TextStyle(fontSize = 20.sp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Tertiary
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = Tertiary
-                        )
+                ) {
+                    Text(
+                        text = stringResource(R.string.purpose),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Text(
+                        text = trans.Purpose,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.from),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Text(
+                        text = trans.From,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = stringResource(R.string.purpose),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                        )
-                        Text(
-                            text = if(trans.purpose == null) {""} else {trans.purpose},
-                            fontSize = 18.sp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = stringResource(R.string.from),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                        )
-                        Text(
-                            text = if(trans.from == null) {""} else {trans.from},
-                            fontSize = 18.sp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
 
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                stringResource(R.string.amount), fontWeight = FontWeight.Bold,
-                                style = TextStyle(fontSize = 18.sp),
-                                modifier = Modifier.align(Alignment.TopStart)
-                            )
-                            AutoSizeText(
-                                NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
-                                    maximumFractionDigits = 3
-                                }.format(trans.amount.toDouble()),
-                                style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
-                            )
-                            Text(
-                                "LMC (liter)",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.align(Alignment.BottomEnd)
-                            )
-                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            stringResource(R.string.amount), fontWeight = FontWeight.Bold,
+                            style = TextStyle(fontSize = 18.sp),
+                            modifier = Modifier.align(Alignment.TopStart)
+                        )
+                        AutoSizeText(
+                            NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
+                                maximumFractionDigits = 3
+                            }.format(kotlin.math.abs(trans.Amount).toDouble()),
+                            style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
+                        )
+                        Text(
+                            "LMC (liter)",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.align(Alignment.BottomEnd)
+                        )
                     }
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
-                if (viewModel.balance.value / 1000L >= trans.amount) {
+                if (viewModel.balance.value / 1000L >= kotlin.math.abs(trans.Amount)) {
                     Button(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Primary,
