@@ -69,7 +69,6 @@ import at.crowdware.shift.logic.Plugin
 import at.crowdware.shift.logic.PluginManager
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
-import com.darkrockstudios.libraries.mpfilepicker.FilePicker
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -79,7 +78,9 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.AndroidDownloader
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 
@@ -129,6 +130,7 @@ fun Settings() {
         LocaleManager.setLocale(context, idx)
         currentActivity?.recreate()
     }
+    val url = remember { mutableStateOf("https://github.com/CrowdWare/Shift/blob/main/plugins/PluginSample/sampleplugin/build/outputs/apk/debug/sampleplugin-debug.apk") }
     val stateHolderLanguage =
         rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
     //endregion
@@ -140,36 +142,11 @@ fun Settings() {
         Toast.makeText(context, context.getString(R.string.the_plugin_has_been_removed_you_should_restart_your_app_now), Toast.LENGTH_LONG).show()
     }
 
-    var showFilePicker by remember { mutableStateOf(false) }
+    //var showFilePicker by remember { mutableStateOf(false) }
     val t1 = stringResource(R.string.the_plugin_has_been_installed_you_should_restart_your_app_now)
     val t2 = stringResource(R.string.there_was_an_error_copying_the_plugin)
     val t3 = stringResource(R.string.there_was_an_error_installing_the_plugin)
 
-    FilePicker(showFilePicker, fileExtensions = listOf("apk") ) {
-        if(it != null) {
-            val uri = Uri.parse(it.path)
-            val contentResolver: ContentResolver = applicationContext.contentResolver
-            val pp = File(pluginPath)
-            if(!pp.exists()) {
-                pp.mkdir()
-            }
-            try {
-                if(copyFileFromUri(contentResolver, uri, pp)) {
-                    Toast.makeText(
-                        context,
-                        t1,
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else
-                    Toast.makeText(context, t2, Toast.LENGTH_LONG).show()
-            }
-            catch (e: Exception) {
-                Toast.makeText(context, t3, Toast.LENGTH_LONG).show()
-            }
-
-        }
-        showFilePicker = false
-    }
 
     Column(
         modifier = Modifier
@@ -270,13 +247,23 @@ fun Settings() {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(4.dp))
+        Text("Download APK", fontWeight = FontWeight.Bold,
+            style = TextStyle(fontSize = 18.sp),
+            modifier = Modifier.align(Alignment.Start))
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = url.value,
+            onValueChange = {it -> url.value = it},
+            label = { Text(stringResource(R.string.enter_the_url)) })
+        Spacer(modifier = Modifier.height(8.dp))
         Button(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Primary,
                 contentColor = OnPrimary
             ),
-            onClick = { showFilePicker = true }) {
+            onClick = {
+                val downloader = AndroidDownloader(applicationContext)
+                downloader.downloadFile(url.value) }) {
             Text("Install plugin")
         }
     }

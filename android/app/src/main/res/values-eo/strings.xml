@@ -75,5 +75,6 @@
     <string name="uninstall_warning">Dankon pro la instalo de ĉi tiu aplikaĵo.\n\nShift kreas novan formon de mono, kiun ni povas uzi por servo kaj aĵoj.\nBONVOLU KONSTATI.\nĈiuj datumoj kaj transakcioj estas konservataj nur en ĉi tiu aparato. Se vi malinstalos ĉi tiun aplikaĵon, via saldo kaj transakcioj estos forigitaj. Tio estas kiel forĵeti vian monujon.</string>
     <string name="the_purpose_needs_to_be_entered">La celo devas esti enigita.</string>
     <string name="you_have_scanned_a_wrong_qrcode">Vi skanis malĝustan QR-kodon.</string>
+    <string name="enter_the_url">Enigu la URL-on de la APK.</string>
 
 </resources>

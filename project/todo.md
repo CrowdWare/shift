@@ -44,8 +44,10 @@
 + Scan proposal, unmarshal transaction, fraud detection 
 + Book transaction to account
 + Subtract demurrage from GetBalance
-- Make QR-Code save against replay attack
-- Balance display should online display balance without scooped when in liter mode
++ Make QR-Code save against replay attack
++ Balance display should online display balance without scooped when in liter mode
+- Settings change name
+- Filechooser is kinda broken (black screen)
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
@@ -125,3 +127,11 @@ Proposal transaction has UUID from receiver and agreement transaction also has t
 
 Avoid replay attacks:
 When an agreement transaction is booked we have to make sure, that this transaction has not been used before. This can be archived because of the timestamp. Two transactions from the same app can not have the same timestamp.
+
+# Paid version
+Let us think about the release of a paid version to collect development cost.
+What about a free version with 1 l initial liquid.
+A paid version for 1,- with 10 l initial liquid.
+A paid version for companies for 100,- with 200 l initial liquid.
+
+Sell on Elopage

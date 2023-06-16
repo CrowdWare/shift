@@ -74,5 +74,6 @@
     <string name="uninstall_warning">Vielen Dank für die Installation dieser App.\n\nShift schöpft ein neues Zahlungsmittel, das wir für Dienstleistungen und Dinge verwenden können.\nBITTE BEACHTE.\nAlle Daten und Transaktionen werden nur auf diesem Gerät gespeichert. Wenn Du diese App deinstallierst, wird Dein Guthaben und deine Transaktionen gelöscht. Es ist so, als wenn Du Deine Brieftasche wegwerfen würdest.</string>
     <string name="the_purpose_needs_to_be_entered">Der Verwendungszweck muss eingegeben werden.</string>
     <string name="you_have_scanned_a_wrong_qrcode">Du hast den falschen QR-Code gescannt.</string>
+    <string name="enter_the_url">Gebe die URL der APK ein.</string>
 
 </resources>

@@ -75,5 +75,6 @@
     <string name="uninstall_warning">Thank you for installing this app.\n\nShift creates a new form of currency that we can use for services and things.\nPLEASE NOTE.\nAll data and transactions are stored only on this device. If you uninstall this app, your balance and transactions will be deleted. It\'s like throwing away your wallet.</string>
     <string name="the_purpose_needs_to_be_entered">The purpose needs to be entered.</string>
     <string name="you_have_scanned_a_wrong_qrcode">You have scanned the wrong QR-Code.</string>
+    <string name="enter_the_url">Enter the URL of the APK</string>
 
 </resources>
