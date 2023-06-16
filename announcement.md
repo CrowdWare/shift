@@ -10,7 +10,8 @@ In addition, Shift introduces an exciting new concept: the Early Adoption Reward
 
 As an early adopter, you'll have the opportunity to create LMC on a daily basis, offering a unique form of value exchange in our burgeoning platform. As Shift grows and evolves, the potential to earn and use LMC within the platform will expand.
 
-What's more, with Shift you can start expressing your gratitude to others right away by giving LMC as a form of payment. Our platform also encourages creativity and innovation, allowing users to create plugins that enhance the platform's functionality.
+What's more, with Shift you can start expressing your gratitude to others right away by giving LMC as a form of payment. You don't even need an internet connection or Bluetooth for transactions, its all done via QR-Code scanning. LMC has got a demurrage of 0.28 % / day and is strictly time based to avoid speculations.    
+Our platform also encourages creativity and innovation, allowing users to create plugins that enhance the platform's functionality.
 
 At Shift, we believe in the power of community and the potential of decentralized social media. We invite you to join us in this exciting new endeavor and become a pioneer in the future of social networking.
 
