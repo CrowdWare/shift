@@ -56,8 +56,7 @@ Just imagine if we don't have to deal with these banksters and financial departm
 
 In other words: **PEACE**, **FREEDOM**
 
-We are using the trustchain implementation from IPv8 a university in Delft Netherlands.  
-[TrustChain: A Sybil-resistant scalable blockchain](https://www.sciencedirect.com/science/article/abs/pii/S0167739X17318988)
+We don't even need an internet connection to scoop liquid and to give gratitude.
  
 ## TWO
 When we reach 1.000.000 users, we will come to phase TWO.
