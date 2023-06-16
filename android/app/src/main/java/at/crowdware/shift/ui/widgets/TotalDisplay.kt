@@ -43,7 +43,7 @@ import java.util.Locale
 
 @Composable
 fun TotalDisplay(total: Long) {
-    Card(modifier = Modifier.fillMaxWidth().height(120.dp), colors = CardDefaults.cardColors(
+    Card(modifier = Modifier.fillMaxWidth().height(110.dp), colors = CardDefaults.cardColors(
         containerColor = Tertiary,
     )) {
         Box(

@@ -1,6 +1,5 @@
 package at.crowdware.shift.ui.widgets
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,22 +29,26 @@ import java.util.Locale
 
 
 @Composable
-fun BalanceDisplay(balance: Long, scooped: Long, displayLiterOnly: Boolean = false) {
+fun BalanceDisplay(balance: Long, scooped: Long = 0L, scoopingHours: Double = 0.00, displayBalanceOnly: Boolean = false, test:Boolean = false) {
     val context = LocalContext.current
-    var initValue = !displayLiterOnly
-    if(!displayLiterOnly) {
-        initValue = PersistanceManager.getDisplayMillis(context)
+    var initValue = !displayBalanceOnly
+    if(!displayBalanceOnly) {
+        initValue = PersistanceManager.getDisplayScooping(context)
     }
-    var displayMilliliter by remember { mutableStateOf(initValue) }
+    var displayBalance by remember { mutableStateOf(initValue) }
+    if (test) {
+        displayBalance = true
+        initValue = true
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp)
+            .height(110.dp)
             .let {
-                if (!displayLiterOnly) {
+                if (!displayBalanceOnly) {
                     it.clickable() {
-                        displayMilliliter = !displayMilliliter
-                        PersistanceManager.setDisplayMillis(context, displayMilliliter)
+                        displayBalance = !displayBalance
+                        PersistanceManager.setDisplayScooping(context, displayBalance)
                     }
                 } else {
                     it
@@ -58,15 +61,19 @@ fun BalanceDisplay(balance: Long, scooped: Long, displayLiterOnly: Boolean = fal
                 .padding(4.dp), contentAlignment = Alignment.Center
         ) {
             Text(
-                stringResource(R.string.balance), fontWeight = FontWeight.Bold,
+                if(displayBalance){
+                stringResource(R.string.scooping_since) + " " + NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
+                    maximumFractionDigits = 2
+                }.format(scoopingHours) + " / 20 h"} else {
+                    stringResource(R.string.balance)}, fontWeight = FontWeight.Bold,
                 style = TextStyle(fontSize = 18.sp),
                 modifier = Modifier.align(Alignment.TopStart)
             )
             AutoSizeText(
-                if (displayMilliliter) {
+                if (displayBalance) {
                     NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
                         maximumFractionDigits = 3
-                    }.format(balance.toDouble() + scooped.toDouble())
+                    }.format(scooped.toDouble())
                 } else {
                     NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
                         maximumFractionDigits = 0
@@ -75,7 +82,7 @@ fun BalanceDisplay(balance: Long, scooped: Long, displayLiterOnly: Boolean = fal
                 style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
             )
             Text(
-                text = if (displayMilliliter) {
+                text = if (displayBalance) {
                     "LMC (ml)"
                 } else {
                     "LMC (liter)"
@@ -91,5 +98,5 @@ fun BalanceDisplay(balance: Long, scooped: Long, displayLiterOnly: Boolean = fal
 @Preview
 @Composable
 fun BalanceDisplayPreview() {
-    BalanceDisplay(balance = 13000L , scooped = 1000L)
+    BalanceDisplay(balance = 13000L , scooped = 5500L, scoopingHours = 10.565577354, test=true)
 }

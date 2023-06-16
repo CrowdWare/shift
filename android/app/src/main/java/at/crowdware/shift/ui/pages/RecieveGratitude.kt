@@ -77,7 +77,7 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(viewModel.balance.value, 0L, true)
+        BalanceDisplay(viewModel.balance.value,  displayBalanceOnly = true)
         Spacer(modifier = Modifier.height(8.dp))
         HourMinutesPicker(
             viewModel.hours,
@@ -110,12 +110,12 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
                 viewModel.total.value =
                     (viewModel.hours.value * 60 + viewModel.minutes.value).toLong() + viewModel.longNumber.value
             },
-            label = { Text(stringResource(R.string.enter_an_amount_to_add_to_the_time)) }
+            label = { Text(stringResource(R.string.additional_amount)) }
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(value = viewModel.description.value,
             onValueChange = { viewModel.description.value = it },
-            placeholder = { Text(stringResource(R.string.enter_the_purpose_of_the_transaction)) },
+            placeholder = { Text(stringResource(R.string.purpose)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             textStyle = TextStyle(fontSize = 20.sp)

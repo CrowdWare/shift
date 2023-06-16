@@ -45,8 +45,6 @@
     <string name="the_plugin_has_been_installed_you_should_restart_your_app_now">Das Plugin wurde installiert. Du solltest jetzt deine App neu starten.</string>
     <string name="there_was_an_error_copying_the_plugin">Beim Kopieren des Plugins ist ein Fehler aufgetreten.</string>
     <string name="there_was_an_error_installing_the_plugin">Bei der Installation des Plugins ist ein Fehler aufgetreten.</string>
-    <string name="enter_an_amount_to_add_to_the_time">Gebe einen Betrag ein, der zur Zeit hinzugefügt werden soll</string>
-    <string name="enter_the_purpose_of_the_transaction">Gebe den Zweck der Transaktion ein</string>
     <string name="let_the_giver_scan_the_qr_code_to_start_the_transaction">Lass den Geber den QR-Code scannen, um die Transaktion zu starten.</string>
     <string name="button_done">Fertig</string>
     <string name="dismiss">Schließen</string>
@@ -55,7 +53,6 @@
     <string name="button_agree">Zustimmen</string>
     <string name="amount">Betrag</string>
     <string name="from">Von</string>
-    <string name="purpose">Zweck</string>
     <string name="agree_to_the_proposal_to_start_the_transaction">Stimme dem Angebot zu, um die Transaktion zu starten.</string>
     <string name="scan_the_qr_code_to_get_the_offer_from_the_receiver">Scanne den QR-Code, um das Angebot vom Empfänger zu erhalten.</string>
     <string name="receiver_app_not_original">Bitte teile dem Empfänger mit, dass er oder sie nicht die Original-App von CrowdWare verwendet.</string>
@@ -75,5 +72,8 @@
     <string name="the_purpose_needs_to_be_entered">Der Verwendungszweck muss eingegeben werden.</string>
     <string name="you_have_scanned_a_wrong_qrcode">Du hast den falschen QR-Code gescannt.</string>
     <string name="enter_the_url">Gebe die URL der APK ein.</string>
+    <string name="scooping_since">Scooping seit</string>
+    <string name="additional_amount">Zusatzbetrag</string>
+    <string name="purpose">Verwendungszweck</string>
 
 </resources>

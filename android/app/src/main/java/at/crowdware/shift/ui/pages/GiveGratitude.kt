@@ -62,7 +62,6 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView
 
 import lib.Lib.acceptProposal
 import lib.Lib.getProposalFromQRCode
-import java.lang.Math.abs
 
 
 data class Lmp(val Amount: Long, val Date: String, val From: String, val Purpose: String, val Typ:String)
@@ -124,7 +123,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(viewModel.balance.value, 0L,true)
+        BalanceDisplay(viewModel.balance.value, displayBalanceOnly = true)
         Spacer(modifier = Modifier.height(8.dp))
 
         Spacer(modifier = Modifier.height(8.dp))

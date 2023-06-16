@@ -80,7 +80,6 @@ import android.widget.Toast
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import at.crowdware.shift.R
-import at.crowdware.shift.logic.AndroidDownloader
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 
@@ -130,9 +129,7 @@ fun Settings() {
         LocaleManager.setLocale(context, idx)
         currentActivity?.recreate()
     }
-    val url = remember { mutableStateOf("https://github.com/CrowdWare/Shift/blob/main/plugins/PluginSample/sampleplugin/build/outputs/apk/debug/sampleplugin-debug.apk") }
-    val stateHolderLanguage =
-        rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
+    val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
     //endregion
 
     fun onDelete(item: Plugin) {
@@ -247,14 +244,7 @@ fun Settings() {
                 }
             }
         }
-        Text("Download APK", fontWeight = FontWeight.Bold,
-            style = TextStyle(fontSize = 18.sp),
-            modifier = Modifier.align(Alignment.Start))
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = url.value,
-            onValueChange = {it -> url.value = it},
-            label = { Text(stringResource(R.string.enter_the_url)) })
+
         Spacer(modifier = Modifier.height(8.dp))
         Button(
             colors = ButtonDefaults.buttonColors(
@@ -262,8 +252,7 @@ fun Settings() {
                 contentColor = OnPrimary
             ),
             onClick = {
-                val downloader = AndroidDownloader(applicationContext)
-                downloader.downloadFile(url.value) }) {
+                }) {
             Text("Install plugin")
         }
     }

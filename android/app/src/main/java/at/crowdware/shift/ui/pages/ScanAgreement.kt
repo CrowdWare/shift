@@ -103,7 +103,7 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(viewModel.balance.value, 0L,true)
+        BalanceDisplay(viewModel.balance.value, displayBalanceOnly = true)
         Spacer(modifier = Modifier.height(8.dp))
 
         if (showScanner) {

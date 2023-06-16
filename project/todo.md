@@ -47,7 +47,8 @@
 + Make QR-Code save against replay attack
 + Balance display should online display balance without scooped when in liter mode
 - Settings change name
-- Filechooser is kinda broken (black screen)
+- Filechooser is kinda broken (black screen). Just add APKs from Download directory for installation.
++ Balance display should switch between balance and scooping and should display the hours left for next scooping.
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check

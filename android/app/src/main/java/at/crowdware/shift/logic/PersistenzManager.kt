@@ -24,7 +24,7 @@ import android.content.Context
 object PersistanceManager{
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
     private const val DELETE_WARNING_SEEN = "delete_warning_seen_pref"
-    private const val DISPLAY_MILLILITER = "display_milliliter_pref"
+    private const val DISPLAY_SCOOPING = "display_scooping_pref"
     private const val APP_PREFS = "app_prefs"
 
     fun hasSeenDeleteWarning(context: Context): Boolean {
@@ -47,13 +47,13 @@ object PersistanceManager{
         preferences.edit().putString(LANGUAGE_CODE_PREF, language).apply()
     }
 
-    fun getDisplayMillis(context: Context): Boolean {
+    fun getDisplayScooping(context: Context): Boolean {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        return preferences.getBoolean(DISPLAY_MILLILITER, true)
+        return preferences.getBoolean(DISPLAY_SCOOPING, true)
     }
 
-    fun setDisplayMillis(context: Context, displaMillis: Boolean) {
+    fun setDisplayScooping(context: Context, displaMillis: Boolean) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
-        preferences.edit().putBoolean(DISPLAY_MILLILITER, displaMillis).apply()
+        preferences.edit().putBoolean(DISPLAY_SCOOPING, displaMillis).apply()
     }
 }

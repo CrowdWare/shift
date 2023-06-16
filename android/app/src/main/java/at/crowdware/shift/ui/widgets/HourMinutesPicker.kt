@@ -48,7 +48,7 @@ fun HourMinutesPicker(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(160.dp)
+            .height(150.dp)
     ) {
         Row (modifier = Modifier.fillMaxWidth()){
             Spacer(modifier = Modifier.width(8.dp))

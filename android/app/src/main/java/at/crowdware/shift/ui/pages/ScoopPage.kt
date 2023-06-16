@@ -68,6 +68,7 @@ import lib.Lib.startScooping
 import lib.Lib.isScooping
 import lib.Lib.getBalanceInMillis
 import lib.Lib.getScoopedBalance
+import lib.Lib.getScoopingHours
 import lib.Lib.getTransactions
 import lib.Lib.getUuid
 
@@ -92,6 +93,7 @@ fun ScoopPage(isPreview: Boolean = false) {
     val context = LocalContext.current
     var balance by remember { mutableStateOf(getBalanceInMillis()) }
     var scooped by remember { mutableStateOf(getScoopedBalance()) }
+    var scoopingHours by remember { mutableStateOf(getScoopingHours()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
 
     if(isPreview) {
@@ -104,6 +106,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             if (isScooping) {
                 balance = getBalanceInMillis()
                 scooped = getScoopedBalance()
+                scoopingHours = getScoopingHours()
                 transactions.clear()
                 for(t in getTransactionsFromJSON(getTransactions())) {
                     transactions.add(t)
@@ -119,7 +122,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(balance, scooped)
+        BalanceDisplay(balance, scooped, scoopingHours)
         Text(errorMessage, color = Color.Red)
         if (isScooping) {
             Row(modifier = Modifier.fillMaxWidth()) {
