@@ -56,7 +56,9 @@ Just imagine if we don't have to deal with these banksters and financial departm
 
 In other words: **PEACE**, **FREEDOM**
 
-We don't even need an internet connection to scoop liquid and to give gratitude.
+We don't even need an internet connection to scoop liquid and to give gratitude.  
+Transactions are made via QR-Code scans.
+So there are no transactions traveling through the internet.
  
 ## TWO
 When we reach 1.000.000 users, we will come to phase TWO.
