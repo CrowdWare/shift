@@ -81,7 +81,10 @@ In fact we don't wanne use money anymore, because in the old system as we knew i
 
 With LMC all human beings will be equal. First of all we should think about gratitude for every hour. So when we do something for an hour for someone else, than this someone can show gratitude giving 60 l (liters) of LMC. So one liter per minute.  
 So a softwaredeveloper in Norway will get 60 l of LMC every hour and so does a hairdresser in India.  
-Just fair ins'nt it.  
+Just fair insn't it.  
+When we say all human beings will be equal, then we know that not all people are able to afford a mobile phone for scooping, but we are working on a solution.  
+For now just think of printed out coupons with a QR-Code on it. These coupons can be printed out and be given to the poor. Then they can be used to pay things.  
+To avoid double spending we will use Storj, a decentralized storage, to store a token for each QR-Code. So the receiver needs an internet connection to validate the coupon.
 
 # Hiring Developer, Tester, Promoter, Designer and Influencer
 If you are a developer, tester, promoter, designer and influencer and want to be part of the team and you are willing to accept LMC let me know.  
