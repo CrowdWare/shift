@@ -21,11 +21,11 @@ Another feature is dating. So you can find musicians, likeminded people or even 
 Maybe we can make automatic gratitute via LMP to musicians downloading their music.
 All these feature are driven by YOU without the idea to make profit at all.
 
-You as the users can create about, lets say 11.800 ml (12l) of LMC every day. You can start the process in the app just cklicking a button.  
+You as the users can create about, lets say 10.000 ml (10l) of LMC every day. You can start the process in the app just cklicking a button.  
 You can also invite your friend to join and if they do join you can earn 1.800 ml of LMC for every referred user per day.   
 Every user can add other people.
 If the referred users also refer other people then you will earn additionally 360 ml LMC for each refered user.  
-This will also happen if these user refer others and you will earn additionally 72 ml LMC for each refered user.  
+This will also happen if these user refer others and you will earn additionally 75 ml LMC for each refered user.  
 You can make the math.  
 Lets assume that you invite 10 friends and each of your friends also invite 10 friends and so on and all of them started scooping not longer than 24 hours ago.  
 To make it clear. You only get benefits for inviting friends if they are actually scooping liquid.  
