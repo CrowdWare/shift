@@ -117,3 +117,11 @@ That will pay the development cost and CrowdWare can use this fiat money to inve
 
 # POS
 Point of sale app
+
+
+# QC-Code
+Avoid double spending: 
+Proposal transaction has UUID from receiver and agreement transaction also has this UUID, so only the receiver can can use the agreement transaction.
+
+Avoid replay attacks:
+When an agreement transaction is booked we have to make sure, that this transaction has not been used before. This can be archived because of the timestamp. Two transactions from the same app can not have the same timestamp.
