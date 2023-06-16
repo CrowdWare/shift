@@ -83,13 +83,6 @@ With LMC all human beings will be equal. First of all we should think about grat
 So a softwaredeveloper in Norway will get 60 l of LMC every hour and so does a hairdresser in India.  
 Just fair ins'nt it.  
 
-# About the Shift service
-When you start scooping in your app a service is started. A service on Android means that there is a program running even if you stop the app.  
-Unlike all the services from google which are running hidden, our service leaves a notification on your mobile where you are able to stop it.
-This service makes it possible to receive messages and forward them to the receiver. So your mobile becomes a server. You can compare it to bittorrent.
-With this technology we are free of traditional servers where all our messages can be seens by the service provider. 
-No one can stop the network, no one can censor our data, no one can pollute our network with ads.
-
 # Hiring Developer, Tester, Promoter, Designer and Influencer
 If you are a developer, tester, promoter, designer and influencer and want to be part of the team and you are willing to accept LMC let me know.  
 You will earn 60 l LMC per hour.  
@@ -108,6 +101,11 @@ If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The g
 
 If someone wants to transfer LMC to your account, then your app will not accept this transfer due to incorrect decrypted data.
 
+# Open Source
+I personally like software to be open source and free to use, but we have decided to make the Android code open source and the business logic close source.  
+The reason why we are doing this, is to keep our app secure from fraudulent attacks.  
+We have to be sure that when accepting gratitude from another app, that this app is also the original version and not a faked version where the app might start with a much higher balance or is scooping higher amounts of LMC.  
+Therefor we have coded the business logic in Go which results in native machine code which is harder to reverse engineer than Kotlin code, which we had before. And we closed the source, to make it even harder for attackers. Also we are changing the encryption keys on a daily base and we don't want attackers to see how we are archiving this.
 
 # Forking
 You might of course fork this repo for your need.  
