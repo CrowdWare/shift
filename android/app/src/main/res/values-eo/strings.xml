@@ -31,7 +31,6 @@
     <string name="service_description">Memoru, ke la Shift-reto estas senservila kaj pro tio tiu servo konektas uzantojn kaj prilaboras mesaĝojn en la fono.</string>
     <string name="broadcasts_channel">Dissendoj</string>
     <string name="open_link">Malfermi ligilon</string>
-    <string name="uninstall_warning">Dankon pro la instalo de tiu ĉi aplikaĵo.\n\nShift povas krei virtualan monon, kiun ni povas uzi por pago de servoj kaj varoj.\nBONVOLU ATENTI.\nNi laboras sen konservado de viaj datumoj sur servilo. Ĉiuj transakcioj estos konservitaj en tiu ĉi aparato. Se vi malinstalas tiun ĉi aplikaĵon, ĉiuj akumulitaj monsumoj kaj transakcioj estos forigitaj. Estas kiel vi forĵetus vian monujon plenan de mono.</string>
     <string name="intro">Enkonduko</string>
     <string name="email">Retpoŝto, se vi deziras ricevi ĝisdatigojn</string>
     <string name="button_continue">Daŭrigi</string>
@@ -54,7 +53,6 @@
     <string name="dismiss">Forigi</string>
     <string name="button_give">Doni</string>
     <string name="button_receive">Ricevi</string>
-    <string name="your_balance_is_below_the_amount_ordered">Via saldo estas sub la petita sumo.</string>
     <string name="button_agree">Konsenti</string>
     <string name="amount">Sumo</string>
     <string name="from">De</string>
@@ -67,8 +65,15 @@
     <string name="scan_the_qr_code_to_finalize_the_transaction">Skenu la QR-kodon por finfini la transakcion.</string>
     <string name="giver_app_not_original">Bonvolu informi la donanton, ke li aŭ ŝi ne uzas la originalan aplikaĵon de CrowdWare.</string>
     <string name="press_button_to_book_in_the_amount">Premu la butonon por rezervi la sumon.</string>
-    <string name="button_book">Akcepti sumon</string>
     <string name="invite_message" formatted="false">SHIFT estas nova aplikaĵo por mobilaj aparatoj. Nun vi povas ricevi viajn unuajn likvidajn mikromonerojn, se vi sekvas ĉi tiun ligilon %s, elŝutas la aplikaĵon, lanĉas ĝin kaj uzas ĉi tiun kodon\n%s kiel invitan kodon.</string>
     <string name="about_dialog_text">SHIFT KUNIGAS NIN ĈIUN\nSHIFT estas sencentra kaj tial ne funkcias sur servilo.\nVia SHIFT-konto estas anonima, nur viaj realaj amikoj scias, kiu estas malantaŭ via konto.\nNeniu registrado necesas.\nNeniu servilo signifas ankaŭ neniun cenzuron kaj neniujn reklamojn.\nSHIFT ankaŭ kreas likvidajn mikromonerojn kaj povas esti uzata por montri dankon al aliaj membroj.</string>
+    <string name="button_scan_agreement">Skani la konsenton</string>
+    <string name="button_grant_camera_permission">Permesi kamero-permeson</string>
+    <string name="transaction_has_been_booked">La transakcio estis registrita sur via konto.</string>
+    <string name="qrcode_allread_booked">Ĉi tiu transakcio jam estis registrita.</string>
+    <string name="your_balance_is_below_the_amount_ordered">Via saldo estas sub la petita sumo.</string>
+    <string name="uninstall_warning">Dankon pro la instalo de ĉi tiu aplikaĵo.\n\nShift kreas novan formon de mono, kiun ni povas uzi por servo kaj aĵoj.\nBONVOLU KONSTATI.\nĈiuj datumoj kaj transakcioj estas konservataj nur en ĉi tiu aparato. Se vi malinstalos ĉi tiun aplikaĵon, via saldo kaj transakcioj estos forigitaj. Tio estas kiel forĵeti vian monujon.</string>
+    <string name="the_purpose_needs_to_be_entered">La celo devas esti enigita.</string>
+    <string name="you_have_scanned_a_wrong_qrcode">Vi skanis malĝustan QR-kodon.</string>
 
 </resources>

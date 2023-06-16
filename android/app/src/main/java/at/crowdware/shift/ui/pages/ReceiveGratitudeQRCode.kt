@@ -91,8 +91,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = {
-                viewModel.reset()
-                NavigationManager.navigate("home") },
+                NavigationManager.navigate("scan_agreement") },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Primary,
@@ -100,7 +99,7 @@ fun ReceiveGratitudeQRCode(viewModel: ReceiveViewModel) {
             ),
             enabled = viewModel.total.value > 0L
         ) {
-            Text(stringResource(R.string.button_done), style = TextStyle(fontSize = 20.sp))
+            Text(stringResource(R.string.button_scan_agreement), style = TextStyle(fontSize = 20.sp))
         }
     }
 }

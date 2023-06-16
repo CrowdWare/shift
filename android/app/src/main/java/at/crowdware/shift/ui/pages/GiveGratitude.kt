@@ -61,7 +61,7 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 
 import lib.Lib.acceptProposal
-import lib.Lib.getTransactionFromQRCode
+import lib.Lib.getProposalFromQRCode
 import java.lang.Math.abs
 
 
@@ -99,11 +99,11 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
 
     val callback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
-            if (result.text == null) {
+            if (result.text == null || result.text.length < 300) {
                 return
             }
             mainActivity.barcodeView.pause()
-            code = getTransactionFromQRCode(result.text)
+            code = getProposalFromQRCode(result.text)
             showScanner = false
         }
     }
@@ -124,7 +124,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(viewModel.balance.value, true)
+        BalanceDisplay(viewModel.balance.value, 0L,true)
         Spacer(modifier = Modifier.height(8.dp))
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -149,7 +149,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                     onClick = { permissionState.launchMultiplePermissionRequest() },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Grant Camera Permission", style = TextStyle(fontSize = 20.sp))
+                    Text(stringResource(R.string.button_grant_camera_permission), style = TextStyle(fontSize = 20.sp))
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -264,7 +264,8 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                         ),
                         onClick = {
                             acceptProposal()
-                            NavigationManager.navigate("home")
+                            viewModel.total.value = trans.Amount
+                            NavigationManager.navigate("give_gratitude_qrcode")
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {

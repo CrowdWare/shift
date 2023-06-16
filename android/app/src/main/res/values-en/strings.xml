@@ -31,7 +31,6 @@
     <string name="service_description">Keep in mind that the shift network is serverless and therefore this service is connecting users and is processing messages in the background.</string>
     <string name="broadcasts_channel">Broadcasts</string>
     <string name="open_link">Open Link</string>
-    <string name="uninstall_warning">Thank you for installing this app.\n\nShift is able to create a virtual currency which we can use to pay for services and things.\nPLEASE KEEP IN MIND.\nWe work without storing your data on a server. All transactions will be stored on this device. If you uninstall this app, all created currency and transactions will be deleted. It\'s like throwing away your wallet full of money.</string>
     <string name="intro">Intro</string>
     <string name="email">Email if you want to be updated</string>
     <string name="button_continue">Continue</string>
@@ -54,7 +53,6 @@
     <string name="dismiss">Dismiss</string>
     <string name="button_give">Give</string>
     <string name="button_receive">Receive</string>
-    <string name="your_balance_is_below_the_amount_ordered">Your balance is below the amount ordered.</string>
     <string name="button_agree">Agree</string>
     <string name="amount">Amount</string>
     <string name="from">From</string>
@@ -67,8 +65,15 @@
     <string name="scan_the_qr_code_to_finalize_the_transaction">Scan the QR-Code to finalize the transaction.</string>
     <string name="giver_app_not_original">Please tell the giver that he or she is not using the original app from CrowdWare.</string>
     <string name="press_button_to_book_in_the_amount">Press the button to book the amount.</string>
-    <string name="button_book">Accept Amount</string>
     <string name="invite_message" formatted="false">SHIFT is a new app for mobile. Get your first liquid micro coins now, by following this link %s , download the app, start it and use this id\n%s as invitation code.</string>
     <string name="about_dialog_text">SHIFT CONNECTS US ALL\nSHIFT is decentralized and will therefore not run on a server.\nYour SHIFT account is anonymous, only your real friends know who is behind your account.\nNo registration needed.\nNo server means, also no censorship and no ads.\nSHIFT also creates liquid micro coins and can be used to show gratitude to other members.</string>
+    <string name="button_scan_agreement">Scan Agreement</string>
+    <string name="button_grant_camera_permission">Grant Camera Permission</string>
+    <string name="transaction_has_been_booked">Transaction has been booked to your account.</string>
+    <string name="qrcode_allread_booked">This exact transaction has already been booked.</string>
+    <string name="your_balance_is_below_the_amount_ordered">Your balance is below the amount asked for.</string>
+    <string name="uninstall_warning">Thank you for installing this app.\n\nShift creates a new form of currency that we can use for services and things.\nPLEASE NOTE.\nAll data and transactions are stored only on this device. If you uninstall this app, your balance and transactions will be deleted. It\'s like throwing away your wallet.</string>
+    <string name="the_purpose_needs_to_be_entered">The purpose needs to be entered.</string>
+    <string name="you_have_scanned_a_wrong_qrcode">You have scanned the wrong QR-Code.</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package at.crowdware.shift.logic
 
+import com.loopj.android.http.AsyncHttpClient.log
 import org.json.JSONArray
 
 data class Transaction (val amount: Long, val purpose: String, val date: Long, val typ: Long)

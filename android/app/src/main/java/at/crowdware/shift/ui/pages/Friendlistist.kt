@@ -55,6 +55,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.Friend
+import at.crowdware.shift.logic.getFriendsFromJSON
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
@@ -80,16 +82,11 @@ fun Friendlist() {
         type = "text/plain"
     }
     val shareIntent = Intent.createChooser(sendIntent, null)
-    val onFriendlistFailed: (String?) -> Unit = { message ->
-        if (message != null)
-            errorMessage = message
-    }
-    val onFriendlistSucceed: (List<Friend>) -> Unit = { dataList ->
-        friendListState.value = dataList
-    }
 
     LaunchedEffect(Unit) {
-        //Backend.getFriendlist(context, onFriendlistSucceed, onFriendlistFailed)
+        val json = getMatelist()
+        val friendlist = getFriendsFromJSON(json)
+        friendListState.value = friendlist
     }
 
     Column(
@@ -105,7 +102,7 @@ fun Friendlist() {
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        if(friendListState.value.size > 0) {
+        if(friendListState.value.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
@@ -131,26 +128,6 @@ fun Friendlist() {
             Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
         }
     }
-}
-
-data class Friend(val Name: String, val Scooping: Boolean, val Uuid: String, val Country: String, val FriendsCount: Int)
-
-fun getFriendsFromJSON(jsonString: String): List<Friend> {
-    val jsonArray = JSONArray(jsonString)
-    val friends = mutableListOf<Friend>()
-
-    for (i in 0 until jsonArray.length()) {
-        val jsonObject = jsonArray.getJSONObject(i)
-        val friend = Friend(
-            jsonObject.getString("Name"),
-            jsonObject.getBoolean("Scooping"),
-            jsonObject.getString("Uuid"),
-            jsonObject.getString("Country"),
-            jsonObject.getInt("FriendsCount")
-        )
-        friends.add(friend)
-    }
-    return friends
 }
 
 @Composable

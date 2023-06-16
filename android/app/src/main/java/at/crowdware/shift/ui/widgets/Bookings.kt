@@ -47,6 +47,7 @@ import java.time.format.DateTimeFormatter
 import lib.Lib.InitialBooking
 import lib.Lib.Scooped
 import lib.Lib.Lmp
+import lib.Lib.Lmr
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.FormatStyle
@@ -74,6 +75,7 @@ fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
                     Scooped -> stringResource(R.string.transaction_liquid_scooped)
                     InitialBooking -> stringResource(R.string.transaction_initial_liquid)
                     Lmp -> transaction.purpose
+                    Lmr -> transaction.purpose
                     else -> ""
                 }
                 Text(txt, style = TextStyle(fontSize = 18.sp))

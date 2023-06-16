@@ -55,8 +55,9 @@ import lib.Lib.getBalanceInMillis
 import java.text.NumberFormat
 import java.util.Locale
 
-import lib.Lib.getTransactionFromQRCode
+import lib.Lib.getProposalFromQRCode
 import lib.Lib.acceptProposal
+import lib.Lib.getAgreementFromQRCode
 
 data class Lmr(val pubKey: String, val amount: Long, val purpose: String, val type:String, val from: String)
 
@@ -77,11 +78,11 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
 
     val callback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
-            if (result.text == null) {
+            if (result.text == null || result.text.length < 300) {
                 return
             }
             mainActivity.barcodeView.pause()
-            code = getTransactionFromQRCode(result.text)
+            code = getAgreementFromQRCode(result.text)
             showScanner = false
         }
     }
@@ -102,7 +103,7 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(viewModel.balance.value, true)
+        BalanceDisplay(viewModel.balance.value, 0L,true)
         Spacer(modifier = Modifier.height(8.dp))
 
         if (showScanner) {
@@ -119,7 +120,7 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
                 Button(
                     onClick = { permissionState.launchMultiplePermissionRequest() },
                     modifier = Modifier.fillMaxWidth(),) {
-                    Text("Grant Camera Permission",style = TextStyle(fontSize = 20.sp))
+                    Text(stringResource(R.string.button_grant_camera_permission),style = TextStyle(fontSize = 20.sp))
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -150,97 +151,94 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
                 ) {
                     Text("Go Back", style = TextStyle(fontSize = 20.sp))
                 }
+            } else if (code == "WRONG_TYP") {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = TertiaryError
+                    )
+                ) {
+                    Text(
+                        stringResource(R.string.you_have_scanned_a_wrong_qrcode),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = {
+                        viewModel.reset()
+                        NavigationManager.navigate("home") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Go Back", style = TextStyle(fontSize = 20.sp))
+                }
+            } else if (code == "DOUBLE_SPENT") {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = TertiaryError
+                    )
+                ) {
+                    Text(
+                        stringResource(R.string.qrcode_allread_booked),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = {
+                        viewModel.reset()
+                        NavigationManager.navigate("home") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Go Back", style = TextStyle(fontSize = 20.sp))
+                }
             } else {
-                val gson = Gson()
-                val trans: Lmr = gson.fromJson(code, Lmr::class.java)
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = Tertiary
                     )
                 ) {
                     Text(
-                        text = stringResource(R.string.purpose),
+                        stringResource(R.string.transaction_has_been_booked),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(4.dp)
                     )
-                    Text(
-                        text = trans.purpose,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(R.string.from),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Text(
-                        text = trans.from,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            stringResource(R.string.amount), fontWeight = FontWeight.Bold,
-                            style = TextStyle(fontSize = 18.sp),
-                            modifier = Modifier.align(Alignment.TopStart)
-                        )
-                        AutoSizeText(
-                            NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
-                                maximumFractionDigits = 3
-                            }.format(trans.amount.toDouble()),
-                            style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
-                        )
-                        Text(
-                            "LMC (liter)",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.align(Alignment.BottomEnd)
-                        )
-                    }
                 }
-                Text(
-                    stringResource(R.string.press_button_to_book_in_the_amount),
-                    modifier = Modifier.fillMaxWidth(),
-                    style = TextStyle(fontSize = 20.sp)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Primary,
                         contentColor = OnPrimary
                     ),
                     onClick = {
-                        acceptProposal()
+                        viewModel.reset()
                         NavigationManager.navigate("home")
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        stringResource(R.string.button_book),
+                        stringResource(R.string.button_done),
                         style = TextStyle(fontSize = 20.sp)
                     )
                 }
-
             }
         }
     }

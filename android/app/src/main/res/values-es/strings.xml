@@ -31,7 +31,6 @@
     <string name="service_description">Ten en cuenta que la red Shift es sin servidor y, por lo tanto, este servicio conecta a los usuarios y procesa mensajes en segundo plano.</string>
     <string name="broadcasts_channel">Transmisiones</string>
     <string name="open_link">Abrir enlace</string>
-    <string name="uninstall_warning">Gracias por instalar esta aplicación.\n\nShift puede crear una moneda virtual que podemos usar para pagar servicios y cosas.\nPOR FAVOR, TEN EN CUENTA.\nTrabajamos sin almacenar tus datos en un servidor. Todas las transacciones se guardarán en este dispositivo. Si desinstalas esta aplicación, se eliminará toda la moneda acumulada y todas las transacciones. Es como si estuvieras tirando tu billetera llena de dinero.</string>
     <string name="intro">Introducción</string>
     <string name="email">Correo electrónico si deseas recibir actualizaciones</string>
     <string name="button_continue">Continuar</string>
@@ -54,7 +53,6 @@
     <string name="dismiss">Cerrar</string>
     <string name="button_give">Dar</string>
     <string name="button_receive">Recibir</string>
-    <string name="your_balance_is_below_the_amount_ordered">Su saldo es inferior al monto solicitado.</string>
     <string name="button_agree">Aceptar</string>
     <string name="amount">Cantidad</string>
     <string name="from">De</string>
@@ -67,8 +65,15 @@
     <string name="scan_the_qr_code_to_finalize_the_transaction">Escanea el código QR para finalizar la transacción.</string>
     <string name="giver_app_not_original">Por favor, informa al donante que no está utilizando la aplicación original de CrowdWare.</string>
     <string name="press_button_to_book_in_the_amount">Presione el botón para reservar el monto.</string>
-    <string name="button_book">Aceptar monto</string>
     <string name="invite_message" formatted="false">SHIFT es una nueva aplicación móvil. Obtén tus primeras micro monedas líquidas ahora, siguiendo este enlace %s, descarga la aplicación, iníciala y usa este código\n%s como código de invitación.</string>
     <string name="about_dialog_text">SHIFT NOS UNE A TODOS\nSHIFT es descentralizado y por lo tanto no se ejecutará en un servidor.\nTu cuenta de SHIFT es anónima, solo tus verdaderos amigos saben quién está detrás de tu cuenta.\nNo es necesario registrarse.\nNo hay servidor, lo que también significa sin censura y sin anuncios.\nSHIFT también crea micro monedas líquidas y se pueden usar para mostrar gratitud hacia otros miembros.</string>
+    <string name="button_scan_agreement">Escanear acuerdo</string>
+    <string name="button_grant_camera_permission">Conceder permiso de cámara</string>
+    <string name="transaction_has_been_booked">La transacción ha sido registrada en su cuenta.</string>
+    <string name="qrcode_allread_booked">Esta transacción ya ha sido registrada.</string>
+    <string name="your_balance_is_below_the_amount_ordered">Su saldo es inferior al monto solicitado.</string>
+    <string name="uninstall_warning">Gracias por instalar esta aplicación.\n\nShift crea una nueva forma de moneda que podemos usar para servicios y cosas.\nTENGA EN CUENTA.\nTodos los datos y transacciones se almacenan únicamente en este dispositivo. Si desinstala esta aplicación, se eliminarán su saldo y sus transacciones. Es como tirar su billetera.</string>
+    <string name="the_purpose_needs_to_be_entered">Es necesario ingresar el propósito.</string>
+    <string name="you_have_scanned_a_wrong_qrcode">Has escaneado el código QR incorrecto.</string>
 
 </resources>

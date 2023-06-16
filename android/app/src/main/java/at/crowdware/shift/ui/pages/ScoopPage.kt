@@ -90,7 +90,8 @@ fun ScoopPage(isPreview: Boolean = false) {
     val transactions = remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
-    var balance by remember { mutableStateOf(getBalanceInMillis() + getScoopedBalance()) }
+    var balance by remember { mutableStateOf(getBalanceInMillis()) }
+    var scooped by remember { mutableStateOf(getScoopedBalance()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
 
     if(isPreview) {
@@ -101,7 +102,8 @@ fun ScoopPage(isPreview: Boolean = false) {
         while (true) {
             isScooping = isScooping()
             if (isScooping) {
-                balance = getBalanceInMillis() + getScoopedBalance()
+                balance = getBalanceInMillis()
+                scooped = getScoopedBalance()
                 transactions.clear()
                 for(t in getTransactionsFromJSON(getTransactions())) {
                     transactions.add(t)
@@ -117,7 +119,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(balance)
+        BalanceDisplay(balance, scooped)
         Text(errorMessage, color = Color.Red)
         if (isScooping) {
             Row(modifier = Modifier.fillMaxWidth()) {

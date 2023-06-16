@@ -68,7 +68,7 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
     var friend by rememberSaveable { mutableStateOf("") }
     val countries = readCountryData(LocalContext.current.applicationContext)
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
-
+    val enter_name = stringResource(R.string.please_enter_your_name)
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -94,14 +94,12 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            singleLine = true,
             label = { Text(stringResource(R.string.name_or_nickname)) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = friend,
             onValueChange = { friend = it },
-            singleLine = true,
             label = { Text(stringResource(R.string.invitation_code)) }
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -118,14 +116,18 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
                 contentColor = OnPrimary
             ),
             onClick = {
-                createAccount(
-                    name,
-                    UUID.randomUUID().toString(),
-                    friend,
-                    stateHolderCountry.value,
-                    language
-                )
-                hasJoined.value = true
+                if (name.isNullOrEmpty()) {
+                    errorMessage = enter_name
+                } else {
+                    createAccount(
+                        name,
+                        UUID.randomUUID().toString(),
+                        friend,
+                        stateHolderCountry.value,
+                        language
+                    )
+                    hasJoined.value = true
+                }
             },
         ) {
             Text(stringResource(R.string.button_join_the_shift))

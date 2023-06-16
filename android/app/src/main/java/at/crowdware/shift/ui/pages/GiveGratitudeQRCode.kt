@@ -28,37 +28,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
-import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
-import at.crowdware.shift.ui.widgets.NavigationDrawer
-import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
 import lib.Lib.getAgreementQRCode
-
-import lib.Lib.getProposalQRCode
+import kotlin.math.abs
 
 @Composable
 fun GiveGratitudeQRCode(viewModel: GiveViewModel) {
@@ -72,14 +61,14 @@ fun GiveGratitudeQRCode(viewModel: GiveViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(8.dp))
-        TotalDisplay(viewModel.total.value)
+        TotalDisplay(abs(viewModel.total.value))
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             stringResource(R.string.let_the_receiver_scan_the_qr_code_to_finalize_the_transaction),
             modifier = Modifier.fillMaxWidth(),
             style = TextStyle(fontSize = 20.sp)
         )
-        val enc = getAgreementQRCode(viewModel.total.value, viewModel.description.value)
+        val enc = getAgreementQRCode()
 
         Barcode(
             modifier = Modifier.align(Alignment.CenterHorizontally)

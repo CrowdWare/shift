@@ -30,7 +30,7 @@ import java.util.Locale
 
 
 @Composable
-fun BalanceDisplay(balance: Long, displayLiterOnly: Boolean = false) {
+fun BalanceDisplay(balance: Long, scooped: Long, displayLiterOnly: Boolean = false) {
     val context = LocalContext.current
     var initValue = !displayLiterOnly
     if(!displayLiterOnly) {
@@ -66,7 +66,7 @@ fun BalanceDisplay(balance: Long, displayLiterOnly: Boolean = false) {
                 if (displayMilliliter) {
                     NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
                         maximumFractionDigits = 3
-                    }.format(balance.toDouble())
+                    }.format(balance.toDouble() + scooped.toDouble())
                 } else {
                     NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
                         maximumFractionDigits = 0
@@ -91,5 +91,5 @@ fun BalanceDisplay(balance: Long, displayLiterOnly: Boolean = false) {
 @Preview
 @Composable
 fun BalanceDisplayPreview() {
-    BalanceDisplay(balance = 13000L )
+    BalanceDisplay(balance = 13000L , scooped = 1000L)
 }

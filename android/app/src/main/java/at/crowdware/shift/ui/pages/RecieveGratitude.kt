@@ -41,6 +41,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -64,9 +65,11 @@ import lib.Lib.getBalanceInMillis
 
 @Composable
 fun ReceiveGratitude(viewModel: ReceiveViewModel) {
-    viewModel.balance.value = getBalanceInMillis() * 1000
+    viewModel.balance.value = getBalanceInMillis()
 
     val scrollState = rememberScrollState()
+    var message = remember { mutableStateOf("") }
+    var purpose_needed = stringResource(R.string.the_purpose_needs_to_be_entered)
 
     Column(
         modifier = Modifier.verticalScroll(scrollState)
@@ -74,7 +77,7 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(viewModel.balance.value, true)
+        BalanceDisplay(viewModel.balance.value, 0L, true)
         Spacer(modifier = Modifier.height(8.dp))
         HourMinutesPicker(
             viewModel.hours,
@@ -120,8 +123,14 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
         TotalDisplay(viewModel.total.value)
         Spacer(modifier = Modifier.height(8.dp))
+        Text(message.value, color = Color.Red)
+        Spacer(modifier = Modifier.height(8.dp))
         Button(
-            onClick = { NavigationManager.navigate("receive_gratitude_qrcode") },
+            onClick = {
+                if (viewModel.description.value.isNullOrEmpty()) {
+                    message.value = purpose_needed
+                } else {
+                NavigationManager.navigate("receive_gratitude_qrcode") }},
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Primary,
