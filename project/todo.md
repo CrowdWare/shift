@@ -101,7 +101,7 @@ Topics
 
 
 # QR code
-QR codes print as gutschein on a desktop app
+QR codes print as coupon on a desktop app
 Scan function to check if QR code is valid
 The QR code will present an address on Storj encrypt(AccessKey, Bucketname, key).
 The value of the record is the encrypted transaction.

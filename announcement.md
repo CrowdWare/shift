@@ -4,7 +4,7 @@
 
 We're excited to announce the upcoming alpha release of Shift, a revolutionary approach to decentralized social networking. This innovative platform aims to create a social network free from advertisements, censorship, and the constraints of traditional social media.
 
-Built on the trustchain implementation from IPv8 by a university in Delft, Netherlands, Shift offers a truly decentralized and secure platform. Our goal is to provide a platform that empowers users, respects their privacy, and promotes freedom of expression.
+Shift offers a truly decentralized and secure platform. Our goal is to provide a platform that empowers users, respects their privacy, and promotes freedom of expression.
 
 In addition, Shift introduces an exciting new concept: the Early Adoption Reward. EAR is a reward system for early adopters and pioneers on our platform. Users will have the opportunity to earn Liquid Micro Coins (LMC) by participating in the network, offering a unique benefit for those who join in the early stages of our platform.
 
