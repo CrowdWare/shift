@@ -54,26 +54,20 @@
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
-- isScooping should only be true if connected to the internet and not in flight mode
-- The balance on the display is less than the amount in the blocks + in shift.db
-- Display value from blocks can be cached...only load daily blocks from shift.db 
-- Stromverbrauchswarnung from Android, how to avoid this?
+- Display value can be cached...only load daily blocks from shift.db 
 - Multiple themes to choose from (I personally like orange on dark grey background)
 - Request focus when dragging the circular picker
-- Why does service crashes also when app crashes? service should run independently
-- settings, language survives recreate
-- Balance display should only display booked blocks when in litre mode (needed for giving, not to spent liquid from non-existing/theoretically scooped blocks), ? maybe it should only display persistent transactions when in milli mode
 - Avoid replay attacks on webservice
 - create an easy to use API (see API requirements)
 
 
 # App 3.0
 - Key exchange via text or QR-code or TOFU
-- Chat function based on DHT for async messages (have a look at Telegram for voice chat and calls) 
-- DHT is already implemented in IPv8 for Python 
+- Chat function based on Storj for async messages (have a look at Telegram for voice chat and calls) 
 - Posts for micro blogging
 - Additional to hours and minutes we should be able to enter days, weeks, months. 
 - All webservice calls errors ignored, if WebService is offline(in case someone wants to disturb us with DOS attacks on the server)
+- In app purchase or ability to buy LMC for companies, so that they can pay employees
 
 
 # Web
