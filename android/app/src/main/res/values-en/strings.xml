@@ -2,7 +2,6 @@
 <resources>
     <string name="icon">Shift Icon</string>
     <string name="website_url">http://shift.crowdware.at</string>
-    <string name="invite_message" formatted="false">"SHIFT is a new app for Android, among other things, to create a worldwide basic income. Get your first coins now by following this link: %s, downloading the app, starting it, and using this ID %s as an invitation code."</string>
     <string name="button_start_scooping">Start Scooping</string>
     <string name="button_invite_friends">Invite friends</string>
     <string name="balance">Balance</string>
@@ -24,7 +23,6 @@
     <string name="navigation_friendlist">Friendlist</string>
     <string name="navigation_about">About</string>
     <string name="about_shift">About SHIFT</string>
-    <string name="about_dialog_text">"SHIFT CONNECTS US ALL\nSHIFT will be decentralized and will therefore not run on a single server.\nYour SHIFT account is anonymous, only your real friends know who is behind your account.\nNo registration needed.\nNo server means, also no censorship and no ads.\nSHIFT also creates a universal basic income and can be used to show gratitude to other members."</string>
     <string name="is_scooping">is scooping</string>
     <string name="friends_invited">" friends invited"</string>
     <string name="bluetooth_rational">Enable Bluetooth Connection for Secure and Instant Liquid Transactions!</string>
@@ -65,4 +63,12 @@
     <string name="scan_the_qr_code_to_get_the_offer_from_the_receiver">Scan the QR code to get the offer from the receiver.</string>
     <string name="receiver_app_not_original">Please tell the receiver that he or she is not using the original app from CrowdWare.</string>
     <string name="a_network_error_occurred">A network error occurred. Please try again later.</string>
+    <string name="let_the_receiver_scan_the_qr_code_to_finalize_the_transaction">Let the receiver scan the QR-Code to finalize the transaction.</string>
+    <string name="scan_the_qr_code_to_finalize_the_transaction">Scan the QR-Code to finalize the transaction.</string>
+    <string name="giver_app_not_original">Please tell the giver that he or she is not using the original app from CrowdWare.</string>
+    <string name="press_button_to_book_in_the_amount">Press the button to book the amount.</string>
+    <string name="button_book">Accept Amount</string>
+    <string name="invite_message" formatted="false">SHIFT is a new app for mobile. Get your first liquid micro coins now, by following this link %s , download the app, start it and use this id\n%s as invitation code.</string>
+    <string name="about_dialog_text">SHIFT CONNECTS US ALL\nSHIFT is decentralized and will therefore not run on a server.\nYour SHIFT account is anonymous, only your real friends know who is behind your account.\nNo registration needed.\nNo server means, also no censorship and no ads.\nSHIFT also creates liquid micro coins and can be used to show gratitude to other members.</string>
+
 </resources>

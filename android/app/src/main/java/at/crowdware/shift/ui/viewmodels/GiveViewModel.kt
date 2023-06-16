@@ -24,12 +24,11 @@ import androidx.lifecycle.ViewModel
 
 
 class GiveViewModel: ViewModel() {
+    fun reset() {
+        total.value = 0L
+        description.value = ""
+    }
     var balance = mutableStateOf(0L)
-    /*var hours = mutableStateOf(0)
-    var minutes = mutableStateOf(0)
-    var total = mutableStateOf(0UL)
+    var total = mutableStateOf(0L)
     var description = mutableStateOf("")
-    var longNumber = mutableStateOf(0UL)
-    var longNumberText = mutableStateOf("")
-    */
 }

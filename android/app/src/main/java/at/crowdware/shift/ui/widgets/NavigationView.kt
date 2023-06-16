@@ -44,11 +44,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.GiveGratitude
+import at.crowdware.shift.ui.pages.GiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
+import at.crowdware.shift.ui.pages.ScanAgreement
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
 import at.crowdware.shift.ui.theme.OnPrimary
@@ -58,7 +61,7 @@ import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun NavigationView(items: MutableList<NavigationItem>) {
+fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivity) {
     val navController = rememberNavController()
     val selectedItem = remember { mutableStateOf("home") }
 
@@ -77,7 +80,9 @@ fun NavigationView(items: MutableList<NavigationItem>) {
                         "settings" -> Settings()
                         "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
                         "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
-                        "give_gratitude" -> GiveGratitude(giveViewModel)
+                        "give_gratitude" -> GiveGratitude(giveViewModel, mainActivity)
+                        "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
+                        "scan_agreement" -> ScanAgreement(giveViewModel , mainActivity)
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()

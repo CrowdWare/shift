@@ -60,11 +60,11 @@ import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 
-import lib.Lib.getBalance
+import lib.Lib.getBalanceInMillis
 
 @Composable
 fun ReceiveGratitude(viewModel: ReceiveViewModel) {
-    viewModel.balance.value = getBalance() * 1000
+    viewModel.balance.value = getBalanceInMillis() * 1000
 
     val scrollState = rememberScrollState()
 

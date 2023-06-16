@@ -19,7 +19,6 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.pages
 
-import android.app.Application
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,12 +31,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -57,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.getTransactionsFromJSON
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.OnSecondary
 import at.crowdware.shift.ui.theme.Primary
@@ -66,11 +63,10 @@ import kotlinx.coroutines.delay
 import at.crowdware.shift.ui.widgets.BalanceDisplay
 import at.crowdware.shift.ui.widgets.Bookings
 import at.crowdware.shift.ui.widgets.NavigationManager
-import org.json.JSONArray
 
 import lib.Lib.startScooping
 import lib.Lib.isScooping
-import lib.Lib.getBalance
+import lib.Lib.getBalanceInMillis
 import lib.Lib.getScoopedBalance
 import lib.Lib.getTransactions
 import lib.Lib.getUuid
@@ -94,7 +90,7 @@ fun ScoopPage(isPreview: Boolean = false) {
     val transactions = remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
-    var balance by remember { mutableStateOf(getBalance() * 1000 + getScoopedBalance()) }
+    var balance by remember { mutableStateOf(getBalanceInMillis() + getScoopedBalance()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
 
     if(isPreview) {
@@ -105,7 +101,7 @@ fun ScoopPage(isPreview: Boolean = false) {
         while (true) {
             isScooping = isScooping()
             if (isScooping) {
-                balance = getBalance() * 1000 + getScoopedBalance()
+                balance = getBalanceInMillis() + getScoopedBalance()
                 transactions.clear()
                 for(t in getTransactionsFromJSON(getTransactions())) {
                     transactions.add(t)
@@ -188,25 +184,6 @@ fun ScoopPage(isPreview: Boolean = false) {
             )
         }
     }
-}
-
-data class Transaction (val amount: Long, val purpose: String, val date: Long, val typ: Long)
-
-fun getTransactionsFromJSON(jsonString: String): List<Transaction> {
-    val jsonArray = JSONArray(jsonString)
-    val transactions = mutableListOf<Transaction>()
-
-    for (i in 0 until jsonArray.length()) {
-        val jsonObject = jsonArray.getJSONObject(i)
-        val transaction = Transaction(
-            jsonObject.getLong("Amount"),
-            jsonObject.getString("Purpose"),
-            jsonObject.getLong("Date"),
-            jsonObject.getLong("Typ")
-        )
-        transactions.add(transaction)
-    }
-    return transactions
 }
 
 @Preview(

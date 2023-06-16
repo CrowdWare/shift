@@ -41,9 +41,11 @@
 + Input for minutes should stop at 55 and not wrap to zero (bad dragging behaviour). Hours should stop at 11.
 + Bevor starting the service, check if its already running to avoid crashes
 - Theme chooser
-- Scan proposal, unmarshal transaction, fraud detection 
-- Book transaction to account
++ Scan proposal, unmarshal transaction, fraud detection 
++ Book transaction to account
 + Subtract demurrage from GetBalance
+- Make QR-Code save against replay attack
+- Balance display should online display balance without scooped when in liter mode
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check

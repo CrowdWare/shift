@@ -19,10 +19,15 @@
  ****************************************************************************/
 package at.crowdware.shift
 
+import android.Manifest
+import android.view.KeyEvent
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -43,14 +48,28 @@ import at.crowdware.shift.ui.pages.Intro
 import at.crowdware.shift.ui.pages.JoinForm
 import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationView
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeCallback
+import com.journeyapps.barcodescanner.BarcodeResult
+import com.journeyapps.barcodescanner.DecoratedBarcodeView
+import com.journeyapps.barcodescanner.DefaultDecoderFactory
+import lib.Lib
+
 
 import lib.Lib.hasJoined
 import lib.Lib.init
 
 class MainActivity : ComponentActivity() {
+    lateinit var barcodeView: DecoratedBarcodeView
+    lateinit var root: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        root = layoutInflater.inflate(R.layout.layout, null)
+        barcodeView = root.findViewById(R.id.barcode_scanner)
+        val formats = listOf(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39)
+        barcodeView.barcodeView.decoderFactory = DefaultDecoderFactory(formats)
+        barcodeView.initializeFromIntent(intent)
 
         setContent {
             ShiftComposeTheme {
@@ -76,7 +95,9 @@ class MainActivity : ComponentActivity() {
                         list.add(NavigationItem(id="receive_gratitude_qrcode"))
                         list.add(NavigationItem(id="receive_gratitude"))
                         list.add(NavigationItem(id="give_gratitude"))
-                        NavigationView(list)
+                        list.add(NavigationItem(id="give_gratitude_qrcode"))
+                        list.add(NavigationItem(id="scan_agreement"))
+                        NavigationView(list, this)
                     }
                     else
                         if(hasSeenDeleteWarning.value || PersistanceManager.hasSeenDeleteWarning(this))
@@ -87,6 +108,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleManager.wrapContext(newBase!!))

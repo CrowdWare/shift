@@ -2,7 +2,6 @@
 <resources>
     <string name="icon">Ícone do Shift</string>
     <string name="website_url">http://shift.crowdware.at</string>
-    <string name="invite_message" formatted="false">"SHIFT é um novo aplicativo para Android que tem como objetivo criar uma renda básica universal em todo o mundo. Obtenha suas primeiras moedas agora, seguindo este link %s, baixando o aplicativo, iniciando-o e usando este ID %s como código de convite."</string>
     <string name="button_start_scooping">Iniciar escavação</string>
     <string name="button_invite_friends">Convidar amigos</string>
     <string name="balance">Saldo</string>
@@ -24,7 +23,6 @@
     <string name="navigation_friendlist">Lista de amigos</string>
     <string name="navigation_about">Sobre</string>
     <string name="about_shift">Sobre o SHIFT</string>
-    <string name="about_dialog_text">"O SHIFT NOS CONECTA TODOS\nO SHIFT será descentralizado e, portanto, não será executado em um único servidor.\nSua conta no SHIFT é anônima, apenas seus amigos reais sabem quem está por trás da sua conta.\nNão há necessidade de registro.\nSem servidor, também não há censura e nem anúncios.\nO SHIFT também cria uma renda básica universal e pode ser usado para mostrar gratidão a outros membros."</string>
     <string name="is_scooping">está coletando</string>
     <string name="friends_invited"> amigos convidados</string>
     <string name="bluetooth_rational">Ative a conexão Bluetooth para transações líquidas seguras e instantâneas!</string>
@@ -65,5 +63,12 @@
     <string name="scan_the_qr_code_to_get_the_offer_from_the_receiver">Escaneie o código QR para obter a oferta do receptor.</string>
     <string name="receiver_app_not_original">Por favor, informe ao destinatário que ele não está usando o aplicativo original da CrowdWare.</string>
     <string name="a_network_error_occurred">Ocorreu um erro de rede. Por favor, tente novamente mais tarde.</string>
+    <string name="let_the_receiver_scan_the_qr_code_to_finalize_the_transaction">Deixe o destinatário escanear o código QR para finalizar a transação.</string>
+    <string name="scan_the_qr_code_to_finalize_the_transaction">Escaneie o código QR para finalizar a transação.</string>
+    <string name="giver_app_not_original">Por favor, informe ao doador que ele ou ela não está usando o aplicativo original da CrowdWare.</string>
+    <string name="press_button_to_book_in_the_amount">Pressione o botão para reservar o valor.</string>
+    <string name="button_book">Aceitar valor</string>
+    <string name="invite_message" formatted="false">SHIFT é um novo aplicativo para dispositivos móveis. Obtenha suas primeiras micro moedas líquidas agora, seguindo este link %s, baixe o aplicativo, inicie-o e use este código\n%s como código de convite.</string>
+    <string name="about_dialog_text">SHIFT NOS CONECTA A TODOS\nSHIFT é descentralizado e, portanto, não funciona em um servidor.\nSua conta no SHIFT é anônima, apenas seus amigos reais sabem quem está por trás da sua conta.\nNão é necessário se registrar.\nSem servidor significa também sem censura e sem anúncios.\nO SHIFT também cria micro moedas líquidas e pode ser usado para demonstrar gratidão a outros membros.</string>
 
 </resources>

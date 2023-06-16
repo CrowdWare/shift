@@ -19,19 +19,13 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.pages
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.Manifest
 import androidx.compose.runtime.Composable
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.widgets.BalanceDisplay
-import at.crowdware.shift.ui.widgets.NavigationDrawer
-import at.crowdware.shift.ui.widgets.NavigationItem
 import at.crowdware.shift.ui.widgets.NavigationManager
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -44,35 +38,85 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.theme.Tertiary
 import at.crowdware.shift.ui.theme.TertiaryError
 import at.crowdware.shift.ui.widgets.AutoSizeText
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import it.warpmobile.scanner.BuildCameraUI
 import com.google.gson.Gson
-import lib.Lib.getBalance
+import lib.Lib.getBalanceInMillis
 import java.text.NumberFormat
 import java.util.Locale
 
+import at.crowdware.shift.MainActivity
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.MultiplePermissionsState
+import com.google.accompanist.permissions.PermissionsRequired
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.journeyapps.barcodescanner.BarcodeCallback
+import com.journeyapps.barcodescanner.BarcodeResult
+import com.journeyapps.barcodescanner.DecoratedBarcodeView
+
+import lib.Lib.acceptProposal
 import lib.Lib.getTransactionFromQRCode
+
 
 data class Lmp(val pubKey: String, val amount: Long, val purpose: String, val type:String, val from: String)
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
+
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
-    viewModel.balance.value = getBalance() * 1000
-
-    var code by remember {
-        mutableStateOf(if(isPreview) {"{\"pubKey\":\"1234567890abcedef\",\"amount\":450,\"purpose\":\"Haircut and Massage\",\"type\":\"LMP\",\"from\":\"Sender\"}"} else {""})
+fun CameraPermission(
+    multiplePermissionsState: MultiplePermissionsState,
+    barcodeView: DecoratedBarcodeView
+) {
+    PermissionsRequired(
+        multiplePermissionsState =  multiplePermissionsState,
+        permissionsNotGrantedContent = {  },
+        permissionsNotAvailableContent = { }
+    ) {
+        barcodeView.resume()
     }
-    var showScanner by remember { mutableStateOf(!isPreview) }
+}
 
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
+    viewModel.balance.value = getBalanceInMillis()
+
+    var code by remember { mutableStateOf("") }
+    var showScanner by remember { mutableStateOf(true) }
+
+    val permissionState = rememberMultiplePermissionsState(
+        listOf<String>(
+            Manifest.permission.CAMERA,
+        )
+    )
+
+    val callback = object : BarcodeCallback {
+        override fun barcodeResult(result: BarcodeResult) {
+            if (result.text == null) {
+                return
+            }
+            mainActivity.barcodeView.pause()
+            code = getTransactionFromQRCode(result.text)
+            showScanner = false
+        }
+    }
+    mainActivity.barcodeView.decodeContinuous(callback)
+
+    val barcodeView = remember { mainActivity.barcodeView }
+    if(permissionState.allPermissionsGranted) {
+        DisposableEffect(Unit) {
+            barcodeView.resume()
+            onDispose {
+                barcodeView.pause()
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,11 +133,23 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(fontSize = 20.sp)
             )
-            Spacer(modifier = Modifier.height(64.dp))
-            BuildCameraUI(closeScanListener = {
-            }) { qrcode ->
-                    code = getTransactionFromQRCode(qrcode)
-                showScanner = false
+            Spacer(modifier = Modifier.height(16.dp))
+            if(permissionState.allPermissionsGranted) {
+                AndroidView(
+                    modifier = Modifier.fillMaxSize(),
+                    factory = { mainActivity.root },
+                )
+            }
+            else {
+                CameraPermission(
+                    multiplePermissionsState = permissionState,
+                    mainActivity.barcodeView
+                )
+                Button(
+                    onClick = { permissionState.launchMultiplePermissionRequest() },
+                    modifier = Modifier.fillMaxWidth(),) {
+                    Text("Grant Camera Permission",style = TextStyle(fontSize = 20.sp))
+                }
             }
             Spacer(modifier = Modifier.height(8.dp))
         } else {
@@ -122,76 +178,78 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
             } else {
                 val gson = Gson()
                 val trans: Lmp = gson.fromJson(code, Lmp::class.java)
-                Text(
-                    stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
-                    modifier = Modifier.fillMaxWidth(),
-                    style = TextStyle(fontSize = 20.sp)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = Tertiary
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.purpose),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Text(
-                        text = trans.purpose,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(R.string.from),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Text(
-                        text = trans.from,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
 
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            stringResource(R.string.amount), fontWeight = FontWeight.Bold,
-                            style = TextStyle(fontSize = 18.sp),
-                            modifier = Modifier.align(Alignment.TopStart)
+                    Text(
+                        stringResource(R.string.agree_to_the_proposal_to_start_the_transaction),
+                        modifier = Modifier.fillMaxWidth(),
+                        style = TextStyle(fontSize = 20.sp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = Tertiary
                         )
-                        AutoSizeText(
-                            NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
-                                maximumFractionDigits = 3
-                            }.format(trans.amount.toDouble()),
-                            style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
-                        )
+                    ) {
                         Text(
-                            "LMC (liter)",
+                            text = stringResource(R.string.purpose),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.align(Alignment.BottomEnd)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
                         )
+                        Text(
+                            text = if(trans.purpose == null) {""} else {trans.purpose},
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(R.string.from),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                        )
+                        Text(
+                            text = if(trans.from == null) {""} else {trans.from},
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                stringResource(R.string.amount), fontWeight = FontWeight.Bold,
+                                style = TextStyle(fontSize = 18.sp),
+                                modifier = Modifier.align(Alignment.TopStart)
+                            )
+                            AutoSizeText(
+                                NumberFormat.getNumberInstance(Locale("de", "DE")).apply {
+                                    maximumFractionDigits = 3
+                                }.format(trans.amount.toDouble()),
+                                style = TextStyle(fontSize = 70.sp, fontWeight = FontWeight.Bold),
+                            )
+                            Text(
+                                "LMC (liter)",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.align(Alignment.BottomEnd)
+                            )
+                        }
                     }
-                }
+
                 Spacer(modifier = Modifier.height(8.dp))
                 if (viewModel.balance.value / 1000L >= trans.amount) {
                     Button(
@@ -199,14 +257,8 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
                             containerColor = Primary,
                             contentColor = OnPrimary
                         ),
-                        onClick = {/*
-                            Backend.addTransactionToTrustChain(
-                                trans.amount.toLong(),
-                                TransactionType.LMP,
-                                trans.purpose,
-                                trans.from,
-                                //trans.pubKey.hexToBytes()
-                            )*/
+                        onClick = {
+                            acceptProposal()
                             NavigationManager.navigate("home")
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -236,17 +288,4 @@ fun GiveGratitude(viewModel: GiveViewModel, isPreview: Boolean = false) {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun GiveGratitudePreview() {
-    val selectedItem = remember { mutableStateOf("Home") }
-    val list = mutableListOf(
-        NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
-        NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
-    )
-    val giveViewModel = viewModel<GiveViewModel>()
-    giveViewModel.balance.value = 678000L
-    NavigationDrawer(list, selectedItem){ GiveGratitude(giveViewModel, true) }
 }

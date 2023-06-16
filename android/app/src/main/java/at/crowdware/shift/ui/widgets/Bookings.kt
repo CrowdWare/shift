@@ -41,15 +41,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
-import at.crowdware.shift.ui.pages.Transaction
+import at.crowdware.shift.logic.Transaction
 import java.time.format.DateTimeFormatter
 
-import lib.TransactionTO
 import lib.Lib.InitialBooking
 import lib.Lib.Scooped
 import lib.Lib.Lmp
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.FormatStyle
 import java.util.Date
