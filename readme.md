@@ -108,7 +108,7 @@ We have to be sure that when accepting gratitude from another app, that this app
 Therefore we have coded the business logic in Go which results in native machine code which is harder to reverse engineer than Kotlin code, which we had before. And we closed the source, to make it even harder for attackers. Also we are changing the encryption keys on a daily base and we don't want attackers to see how we are archiving this.
 
 # Forking
-You might of course fork this repo for your need.  
+You might of course fork this repo for your needs.  
 But please keep in mind that if you would also deliver the same or a similar app it will not be compatible with our app because we are using API keys which are not public for security reasons.  So the users of your app will not be able to interact with users of our app.   
 
 If you like to enhance this app instead then build a plugin and publish it to our users, so that they can install it.   
