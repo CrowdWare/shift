@@ -2,11 +2,9 @@
 <resources>
     <style name="Theme.Shift" parent="android:Theme.Material.Light.NoActionBar">
     <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:navigationBarColor">@color/splash_background</item>
     </style>
     <style name="SplashScreenTheme" parent="Theme.Shift">
         <item name="android:windowBackground">@drawable/shift_text</item>
     </style>
 </resources>
-
-
-
