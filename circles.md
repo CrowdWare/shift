@@ -36,5 +36,6 @@ Here are some benefits above fiat money:
 - No interest rates
 - No bank service fees
 - People are scooping LMC on a daily base, so they can invest into additional servives
-- Our transactions cannot be tracked by authorities (like they can with Bitcoin)
+- Our transactions cannot be tracked by authorities (like they can with Bitcoin)  
+
 The more people using Shift the faster it will become an alternative to fiat money an all the other crypto coins.
