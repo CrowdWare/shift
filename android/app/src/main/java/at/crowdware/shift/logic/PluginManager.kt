@@ -72,6 +72,9 @@ object PluginManager {
                 )
             }
         } catch(e: FileNotFoundException) {
+            println("file not found ${e.message.toString()}")
+            e.printStackTrace()
+        } catch(e: ClassNotFoundException) {
             println("class not found ${e.message.toString()}")
             e.printStackTrace()
         }

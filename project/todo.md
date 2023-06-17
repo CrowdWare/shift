@@ -48,7 +48,7 @@
 + Balance display should online display balance without scooped when in liter mode
 - Settings change name
 - Setting language should select actual language
-- Filechooser is kinda broken (black screen). Just add APKs from Download directory for installation.
++ Filechooser is kinda broken (black screen). Just add APKs from Download directory for installation.
 + Balance display should switch between balance and scooping and should display the hours left for next scooping.
 
   
