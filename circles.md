@@ -26,3 +26,6 @@ We can create all of these things ourselves, without relying on the industrial s
 By the way, most of the profits from earning money with Shift will be invested in Ubuntu villages. In Ubuntu villages, there is no money, no trading, and no bartering. People can live in these villages for free as they are self-sustained, producing their own food. Everyone in an Ubuntu village pursues what they desire and are skilled at, without the need for money. Consequently, these individuals may not even require LMC.
 
 It's a grand vision, but it's already a reality, at least in South Africa.
+
+# What you can do now
+Spread the word about Shift. The more people using Shift the faster it will become an alternative to fiat money an all the other crypto coins.
