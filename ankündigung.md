@@ -1,4 +1,5 @@
-# Ankündigung von SHIFT - Eine neue Vision für dezentrale soziale Medien
+# Ankündigung von SHIFT
+## Eine neue Vision für dezentrale soziale Medien
 
 Wir freuen uns, Ihnen unsere Vision für Shift vorstellen zu können, eine bahnbrechende Initiative, die das Ziel hat, unsere Wahrnehmung und Interaktion mit sozialen Medien neu zu definieren. Unser Ehrgeiz ist es, ein dezentrales Netzwerk zu schaffen, frei von Werbung und Zensur, die oft traditionelle soziale Medien überschatten.
 
