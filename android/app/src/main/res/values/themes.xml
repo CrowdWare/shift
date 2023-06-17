@@ -4,7 +4,7 @@
     <item name="android:statusBarColor">@color/splash_background</item>
     </style>
     <style name="SplashScreenTheme" parent="Theme.Shift">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowBackground">@drawable/shift_text</item>
     </style>
 </resources>
 
