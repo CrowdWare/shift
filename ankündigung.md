@@ -16,3 +16,7 @@ Wir planen auch, Innovation zu fördern, indem wir zukünftigen Entwicklern erm�
 Bei Shift vertrauen wir auf die Stärke der Gemeinschaft und das enorme Potenzial, das dezentrale soziale Medien bieten. Wir laden Sie ein, Teil dieses bahnbrechenden Vorhabens zu sein und mit uns die Zukunft der sozialen Netzwerke zu gestalten.
 
 Bleiben Sie auf dem Laufenden über weitere Neuigkeiten zu Shift und erfahren Sie, wie Sie Ihre Early Adoption Reward (EAR) verdienen können. Zusammen revolutionieren wir die Landschaft der sozialen Medien!
+
+Folge uns auf [Telegram](https://t.me/crowdware).
+
+Mehr Details findest Du [hier](https://github.com/CrowdWare/Shift/blob/main/readme.md) und hier auf unser Webseite [http://shift.crowdware.at](http://shift.crowdware.at/index-de.html).
