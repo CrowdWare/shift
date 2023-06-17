@@ -39,6 +39,6 @@ Here are some benefits of Shift over fiat money:
 - No interest rates: Shift does not involve interest rates, which can benefit individuals and businesses by eliminating the burden of interest payments.
 - No bank service fees: Shift transactions do not incur bank service fees, reducing costs and increasing accessibility.
 - Daily LMC accumulation: People accumulate LMC on a daily basis, enabling them to invest in additional services and opportunities.
-- Enhanced privacy: Unlike Bitcoin, our transactions cannot be easily tracked by authorities, providing an added layer of privacy.
+- Enhanced privacy: Unlike Bitcoin, our transactions cannot be tracked by authorities, providing an added layer of privacy.
 
 The more people who use Shift, the faster it will emerge as a viable alternative to fiat money and other cryptocurrencies.
