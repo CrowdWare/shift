@@ -28,4 +28,13 @@ By the way, most of the profits from earning money with Shift will be invested i
 It's a grand vision, but it's already a reality, at least in South Africa.
 
 # What you can do now
-Spread the word about Shift. The more people using Shift the faster it will become an alternative to fiat money an all the other crypto coins.
+Spread the word about Shift. Make yourself familiar with Shift and help others to see the benefits having our own currency.  
+Here are some benefits above fiat money:
+- No hoarding because of the demurrage (LMC looses 0.28 % of worth each day)
+- Because of the demurrage the liquid is free flowing
+- No taxes. I believe, because LMC is not money at all. And if they say its money, then we will pay taxes with LMC. At least we as human beeings have to fight for our rights. Its our world.
+- No interest rates
+- No bank service fees
+- People are scooping LMC on a daily base, so they can invest into additional servives
+- Our transactions cannot be tracked by authorities (like they can with Bitcoin)
+The more people using Shift the faster it will become an alternative to fiat money an all the other crypto coins.
