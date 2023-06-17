@@ -27,15 +27,16 @@ By the way, most of the profits from earning money with Shift will be invested i
 
 It's a grand vision, but it's already a reality, at least in South Africa.
 
-# What you can do now
-Spread the word about Shift. Make yourself familiar with Shift and help others to see the benefits having our own currency.  
-Here are some benefits above fiat money:
-- No hoarding because of the demurrage (LMC looses 0.28 % of worth each day)
-- Because of the demurrage the liquid is free flowing
-- No taxes. I believe, because LMC is not money at all. And if they say its money, then we will pay taxes with LMC. At least we as human beeings have to fight for our rights. Its our world.
-- No interest rates
-- No bank service fees
-- People are scooping LMC on a daily base, so they can invest into additional servives
-- Our transactions cannot be tracked by authorities (like they can with Bitcoin)  
+# What You Can Do Now
 
-The more people using Shift the faster it will become an alternative to fiat money an all the other crypto coins.
+Spread the word about Shift and familiarize yourself with its benefits to help others understand the advantages of having our own currency. Here are some benefits of Shift over fiat money:
+
+- No hoarding due to demurrage: LMC loses 0.28% of its value each day, discouraging hoarding and promoting free-flowing liquidity.
+- Demurrage enables free-flowing liquidity: The demurrage system ensures that the currency remains in circulation, contributing to a dynamic economy.
+- Potential tax advantages: While I personally believe LMC is not considered traditional money, if it is classified as such, then we should explore the possibility of paying taxes with LMC. It's essential for us, as human beings, to advocate for our rights and shape our world.
+- No interest rates: Shift does not involve interest rates, which can benefit individuals and businesses by eliminating the burden of interest payments.
+- No bank service fees: Shift transactions do not incur bank service fees, reducing costs and increasing accessibility.
+- Daily LMC accumulation: People accumulate LMC on a daily basis, enabling them to invest in additional services and opportunities.
+- Enhanced privacy: Unlike Bitcoin, our transactions cannot be easily tracked by authorities, providing an added layer of privacy.
+
+The more people who use Shift, the faster it will emerge as a viable alternative to fiat money and other cryptocurrencies.
