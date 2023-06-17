@@ -153,6 +153,6 @@ fun ReceiveGratitudePreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     val receiveViewModel = viewModel<ReceiveViewModel>()
-    NavigationDrawer(list, selectedItem){ ReceiveGratitude(receiveViewModel) }
+    NavigationDrawer(list, selectedItem, "SHIFT"){ ReceiveGratitude(receiveViewModel) }
 }
 

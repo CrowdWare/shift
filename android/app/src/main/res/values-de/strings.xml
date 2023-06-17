@@ -75,5 +75,8 @@
     <string name="scooping_since">Scooping seit</string>
     <string name="additional_amount">Zusatzbetrag</string>
     <string name="purpose">Verwendungszweck</string>
+    <string name="receive_gratitude">Dankbarkeit empfangen</string>
+    <string name="give_gratitude">Dankbarkeit zeigen</string>
+    <string name="language">Sprache</string>
 
 </resources>

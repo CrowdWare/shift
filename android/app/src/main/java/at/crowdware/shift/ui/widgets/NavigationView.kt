@@ -68,11 +68,23 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
     NavigationManager.setNavController(navController)
     val receiveViewModel = viewModel<ReceiveViewModel>()
     val giveViewModel = viewModel<GiveViewModel>()
+    val title = remember { mutableStateOf("SHIFT") }
 
     NavHost(navController = navController, startDestination = "home") {
         for(index in items.indices) {
             composable(items[index].id) {
-                NavigationDrawer(items, selectedItem) {
+                when(items[index].id) {
+                    "home" -> title.value = "SHIFT"
+                    "friendlist" -> title.value = stringResource(R.string.friendlist)
+                    "settings" -> title.value = stringResource(R.string.settings)
+                    "receive_gratitude" -> title.value = stringResource(R.string.receive_gratitude)
+                    "receive_gratitude_qrcode" -> title.value = stringResource(R.string.receive_gratitude)
+                    "give_gratitude" -> title.value = stringResource(R.string.give_gratitude)
+                    "give_gratitude_qrcode" -> title.value = stringResource(R.string.give_gratitude)
+                    "scan_agreement" -> title.value = stringResource(R.string.receive_gratitude)
+                    else -> title.value = items[index].text
+                }
+                NavigationDrawer(items, selectedItem, title.value) {
                     when(items[index].id) {
                         // have a look at MainActivity for navigation
                         "home" -> ScoopPage()
@@ -96,10 +108,16 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationDrawer(items: List<NavigationItem>, selectedItem: MutableState<String>, content: @Composable() () -> Unit) {
+fun NavigationDrawer(
+    items: List<NavigationItem>,
+    selectedItem: MutableState<String>,
+    title: String,
+    content: @Composable () -> Unit
+) {
     val openDialog = remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
 
     if (openDialog.value) {
         About(
@@ -113,7 +131,7 @@ fun NavigationDrawer(items: List<NavigationItem>, selectedItem: MutableState<Str
         content = {
             Column() {
                 CenterAlignedTopAppBar(
-                    title = { Text("SHIFT") },
+                    title = { Text(title) },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Primary,
                         titleContentColor = OnPrimary,

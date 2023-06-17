@@ -153,7 +153,7 @@ fun Settings() {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            stringResource(R.string.settings), fontWeight = FontWeight.Bold,
+            stringResource(R.string.language), fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 18.sp),
             modifier = Modifier.align(Alignment.Start)
         )

@@ -76,4 +76,8 @@
     <string name="scooping_since">Scooping desde</string>
     <string name="additional_amount">Monto adicional</string>
     <string name="purpose">Propósito</string>
+    <string name="receive_gratitude">Recibir Gratitud</string>
+    <string name="give_gratitude">Dar Gratitud</string>
+    <string name="language">Idioma</string>
+
 </resources>

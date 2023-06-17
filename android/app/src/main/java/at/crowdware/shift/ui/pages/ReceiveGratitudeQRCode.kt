@@ -114,5 +114,5 @@ fun ReceiveGratitudeQRCodePreview() {
     )
     val receiveViewModel = viewModel<ReceiveViewModel>()
     receiveViewModel.total.value = 580L
-    NavigationDrawer(list, selectedItem){ ReceiveGratitudeQRCode(receiveViewModel) }
+    NavigationDrawer(list, selectedItem, "SHIFT"){ ReceiveGratitudeQRCode(receiveViewModel) }
 }

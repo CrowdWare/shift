@@ -76,4 +76,8 @@
     <string name="scooping_since">Skopante ekde</string>
     <string name="additional_amount">Plia sumo</string>
     <string name="purpose">Celcelo</string>
+    <string name="receive_gratitude">Ricevi Dankemon</string>
+    <string name="give_gratitude">Doni Dankemon</string>
+    <string name="language">Lingvo</string>
+
 </resources>

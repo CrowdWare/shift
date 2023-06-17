@@ -60,11 +60,9 @@ import at.crowdware.shift.logic.getFriendsFromJSON
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
-import org.json.JSONArray
 
 import lib.Lib.getUuid
 import lib.Lib.getMatelist
-import lib.TransactionTO
 
 
 @Composable
@@ -96,12 +94,6 @@ fun Friendlist() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            stringResource(R.string.friendlist), fontWeight = FontWeight.Bold,
-            style = TextStyle(fontSize = 18.sp),
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
         if(friendListState.value.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
@@ -179,5 +171,5 @@ fun FriendlistPreview() {
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
 
-    NavigationDrawer(list, selectedItem){ Friendlist() }
+    NavigationDrawer(list, selectedItem, "SHIFT"){ Friendlist() }
 }

@@ -200,5 +200,5 @@ fun MainPagePreview() {
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
         NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
-    NavigationDrawer(list, selectedItem){ ScoopPage(true) }
+    NavigationDrawer(list, selectedItem, "SHIFT"){ ScoopPage(true) }
 }
