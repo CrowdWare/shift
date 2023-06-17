@@ -79,5 +79,8 @@
     <string name="receive_gratitude">Ricevi Dankemon</string>
     <string name="give_gratitude">Doni Dankemon</string>
     <string name="language">Lingvo</string>
+    <string name="transaction">Transakcio</string>
+    <string name="transaction_not_found">Transakcio ne trovita.</string>
+    <string name="transaction_not_lmp">Nur LMP (Liquid Micro Payments) povas esti montritaj ĉi tie.</string>
 
 </resources>

@@ -19,35 +19,44 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.widgets
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Transaction
+import com.simonsickle.compose.barcodes.Barcode
+import com.simonsickle.compose.barcodes.BarcodeType
 import java.time.format.DateTimeFormatter
 
 import lib.Lib.InitialBooking
 import lib.Lib.Scooped
 import lib.Lib.Lmp
 import lib.Lib.Lmr
+import lib.Lib.getAgreementQRCode
+import lib.Lib.getAgreementQRCodeForTransaction
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.FormatStyle
@@ -56,6 +65,14 @@ import java.util.Locale
 
 @Composable
 fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
+    val openDialog = remember { mutableStateOf(false) }
+    val trans = remember { mutableStateOf(Transaction("",0,"", 0L, 1)) }
+    if (openDialog.value) {
+        QRCodeDialog(
+            openDialog = openDialog.value,
+            onDismiss = { openDialog.value = false },
+            transaction = trans.value)
+    }
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
@@ -63,7 +80,9 @@ fun Bookings(transactions: SnapshotStateList<Transaction>, modifier: Modifier) {
     ) {
         items(transactions.size) { index ->
             val transaction = transactions[index]
-            Row {
+            Row (modifier=Modifier.clickable {
+                trans.value = transaction
+                openDialog.value = true }) {
                 Column {
                     Text(unixToDate(transaction.date),
                         style = TextStyle(fontSize = 18.sp)
@@ -100,4 +119,39 @@ fun unixToDate(unixTimestamp: Long): String {
     val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
     val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.getDefault())
     return localDate.format(formatter)
+}
+
+@Composable
+fun QRCodeDialog(openDialog: Boolean, transaction: Transaction, onDismiss: () -> Unit) {
+    if (openDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(text = stringResource(R.string.transaction)) },
+            text = {
+                Column {
+                    val enc = getAgreementQRCodeForTransaction(transaction.pkey)
+                    when (enc) {
+                        "NOT_FOUND" -> Text(stringResource(R.string.transaction_not_found))
+                        "NOT LMP" -> Text(stringResource(R.string.transaction_not_lmp))
+                        else -> {
+                            Text(
+                                stringResource(R.string.let_the_receiver_scan_the_qr_code_to_finalize_the_transaction)
+                            )
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Barcode(
+                                modifier = Modifier
+                                    .width(300.dp)
+                                    .height(300.dp),
+                                resolutionFactor = 10,
+                                type = BarcodeType.QR_CODE,
+                                value = enc
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = onDismiss) { Text("OK") } },
+            dismissButton = {}
+        )
+    }
 }

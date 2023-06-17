@@ -46,10 +46,14 @@
 + Subtract demurrage from GetBalance
 + Make QR-Code save against replay attack
 + Balance display should online display balance without scooped when in liter mode
-- Settings change name
++ Settings change name
 - Setting language should select actual language
 + Filechooser is kinda broken (black screen). Just add APKs from Download directory for installation.
 + Balance display should switch between balance and scooping and should display the hours left for next scooping.
+- Splashscreen is looking awful
++ If last step of transaction is overstepped, we need a possibilty to reshow the QR-Code. (click transaction and show QR)
+- Invitecode edit if user has not yet join correctly
+- Display message when register account has not been performed because invite was wrong.
 
   
 # Beta 2.0

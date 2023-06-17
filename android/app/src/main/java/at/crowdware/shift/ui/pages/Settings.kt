@@ -75,18 +75,19 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import android.content.ContentResolver
 import android.net.Uri
-import android.os.Environment
 import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.window.Dialog
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
+import lib.Lib.getName
+import lib.Lib.setName
 
 fun getFileNameFromUri(contentResolver: ContentResolver, uri: Uri): String? {
     var fileName: String? = null
@@ -123,8 +124,8 @@ fun Settings() {
     val items = PluginManager.getPluginList()
     val pluginPath = LocalContext.current.filesDir.path + "/plugins/"
     val applicationContext = LocalContext.current.applicationContext
-
-
+    val name = remember { mutableStateOf(getName()) }
+    var saveButtonEnabled by remember { mutableStateOf(false) }
     val selectedFileUri = remember { mutableStateOf<Uri?>(null) }
     val filePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
         selectedFileUri.value = uri
@@ -182,6 +183,26 @@ fun Settings() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
+        Text(stringResource(R.string.name_or_nickname),
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontSize = 18.sp),
+            modifier = Modifier.align(Alignment.Start))
+        Spacer(modifier = Modifier.height(4.dp))
+        OutlinedTextField(value = name.value, onValueChange = {it ->
+            name.value = it
+            saveButtonEnabled = !name.value.isNullOrEmpty()
+        })
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(colors = ButtonDefaults.buttonColors(
+            containerColor = Primary,
+            contentColor = OnPrimary
+        ),enabled = saveButtonEnabled, onClick = {
+            setName(name.value)
+            saveButtonEnabled = false
+        }) {
+            Text("Save Name")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             stringResource(R.string.language), fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 18.sp),

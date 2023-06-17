@@ -79,5 +79,8 @@
     <string name="receive_gratitude">Receber Gratidão</string>
     <string name="give_gratitude">Expressar Gratidão</string>
     <string name="language">Idioma</string>
+    <string name="transaction">Transação</string>
+    <string name="transaction_not_found">Transação não encontrada.</string>
+    <string name="transaction_not_lmp">Apenas LMP (Liquid Micro Payments) podem ser exibidos aqui.</string>
 
 </resources>

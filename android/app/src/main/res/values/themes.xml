@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Shift" parent="android:Theme.Material.Light.NoActionBar">
+<style name="Theme.Shift" parent="android:Theme.Material.Light.NoActionBar">
     <item name="android:statusBarColor">@color/splash_background</item>
-        <item name="android:navigationBarColor">@color/splash_background</item>
-    </style>
-    <style name="SplashScreenTheme" parent="Theme.Shift">
-        <item name="android:windowBackground">@drawable/shift_text</item>
-    </style>
+    <item name="android:navigationBarColor">@color/splash_background</item>
+</style>
+<style name="SplashScreenTheme" parent="Theme.Shift">
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+</style>
 </resources>

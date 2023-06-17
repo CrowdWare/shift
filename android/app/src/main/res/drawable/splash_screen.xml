@@ -5,8 +5,8 @@
     </item>
 
     <item android:drawable="@drawable/shift_text"
-        android:width="218.93dp"
-        android:height="245.975dp"
+        android:width="240dp"
+        android:height="240dp"
         android:gravity="center" />
 
 </layer-list>
