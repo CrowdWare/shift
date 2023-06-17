@@ -1,6 +1,7 @@
 ![logo](./images/logo.png "logo")  
 
-# Announcing SHIFT - A New Vision for Decentralized Social Media
+# Announcing SHIFT 
+## A New Vision for Decentralized Social Media
 We are thrilled to share our vision for Shift, a groundbreaking initiative aiming to redefine the way we perceive and interact with social media. Our ambition is to create a decentralized network, free from advertisements and censorship that often shadow traditional social media platforms.
 
 Shift promises a highly secure platform, leveraging the strengths of Storj, a decentralized storage platform. We aspire to create a space that values user empowerment, respects privacy, and fosters freedom of expression.
