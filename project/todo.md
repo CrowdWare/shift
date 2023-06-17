@@ -132,3 +132,6 @@ A paid version for 1,- with 10 l initial liquid.
 A paid version for companies for 100,- with 200 l initial liquid.
 
 Sell on Elopage
+
+# Storage
+Each user is able to allocate up to 25 GB free space on Storj. There the user can create a bucket, store posts, messages, files etc and can share these with friends. In the app the users enters the access key and the bucket name

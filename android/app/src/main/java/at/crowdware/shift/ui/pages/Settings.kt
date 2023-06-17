@@ -75,10 +75,15 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import android.content.ContentResolver
 import android.net.Uri
+import android.os.Environment
 import android.provider.OpenableColumns
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.window.Dialog
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
@@ -112,13 +117,18 @@ fun copyFileFromUri(contentResolver: ContentResolver, uri: Uri, destinationDirec
     return false
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings() {
     val items = PluginManager.getPluginList()
     val pluginPath = LocalContext.current.filesDir.path + "/plugins/"
     val applicationContext = LocalContext.current.applicationContext
+
+
+    val selectedFileUri = remember { mutableStateOf<Uri?>(null) }
+    val filePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
+        selectedFileUri.value = uri
+    }
 
     //region vars for the DropDownlistbox
     val context = LocalContext.current
@@ -139,11 +149,31 @@ fun Settings() {
         Toast.makeText(context, context.getString(R.string.the_plugin_has_been_removed_you_should_restart_your_app_now), Toast.LENGTH_LONG).show()
     }
 
-    //var showFilePicker by remember { mutableStateOf(false) }
     val t1 = stringResource(R.string.the_plugin_has_been_installed_you_should_restart_your_app_now)
     val t2 = stringResource(R.string.there_was_an_error_copying_the_plugin)
     val t3 = stringResource(R.string.there_was_an_error_installing_the_plugin)
 
+    LaunchedEffect(selectedFileUri.value) {
+        if(selectedFileUri.value != null) {
+            val contentResolver: ContentResolver = applicationContext.contentResolver
+            val pp = File(pluginPath)
+            if (!pp.exists()) {
+                pp.mkdir()
+            }
+            try {
+                if (copyFileFromUri(contentResolver, selectedFileUri.value!!, pp)) {
+                    Toast.makeText(
+                        context,
+                        t1,
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else
+                    Toast.makeText(context, t2, Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(context, t3, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -252,6 +282,7 @@ fun Settings() {
                 contentColor = OnPrimary
             ),
             onClick = {
+                filePickerLauncher.launch("application/vnd.android.package-archive")
                 }) {
             Text("Install plugin")
         }
