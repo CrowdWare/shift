@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.PersistanceManager
@@ -57,6 +58,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
+
         root = layoutInflater.inflate(R.layout.layout, null)
         barcodeView = root.findViewById(R.id.barcode_scanner)
         val formats = listOf(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39)

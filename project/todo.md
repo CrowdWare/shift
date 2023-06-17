@@ -54,6 +54,7 @@
 + If last step of transaction is overstepped, we need a possibilty to reshow the QR-Code. (click transaction and show QR)
 - Invitecode edit if user has not yet join correctly
 - Display message when register account has not been performed because invite was wrong.
+- Instead of or additional show transaction data in the dialog.
 
   
 # Beta 2.0

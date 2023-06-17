@@ -91,7 +91,7 @@ fun DrawerSheet(drawerState: DrawerState, items: List<NavigationItem>, selectedI
             ) {
                 Column(modifier = Modifier.padding(8.dp)) {
                     Image(
-                        painter = painterResource(id = R.drawable.icon_400x400),
+                        painter = painterResource(id = R.drawable.icon),
                         contentDescription = stringResource(id = R.string.icon),
                         modifier = Modifier.weight(1f),
                     )
