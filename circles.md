@@ -29,7 +29,9 @@ It's a grand vision, but it's already a reality, at least in South Africa.
 
 # What You Can Do Now
 
-Spread the word about Shift and familiarize yourself with its benefits to help others understand the advantages of having our own currency. Here are some benefits of Shift over fiat money:
+Spread the word about Shift and familiarize yourself with its benefits to help others understand the advantages of having our own currency.  
+
+Here are some benefits of Shift over fiat money:
 
 - No hoarding due to demurrage: LMC loses 0.28% of its value each day, discouraging hoarding and promoting free-flowing liquidity.
 - Demurrage enables free-flowing liquidity: The demurrage system ensures that the currency remains in circulation, contributing to a dynamic economy.
