@@ -85,7 +85,7 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
         )
         Row(Modifier.weight(1f)) {
             Image(
-                painter = painterResource(id = R.drawable.icon_400x400),
+                painter = painterResource(id = R.drawable.icon),
                 contentDescription = stringResource(id = R.string.icon),
                 modifier = Modifier.fillMaxHeight(),
             )

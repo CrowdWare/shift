@@ -46,12 +46,14 @@ import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay
 import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
+import lib.Lib.getBalanceInMillis
 import lib.Lib.getAgreementQRCode
 import kotlin.math.abs
 
 @Composable
 fun GiveGratitudeQRCode(viewModel: GiveViewModel) {
     val scrollState = rememberScrollState()
+    viewModel.balance.value = getBalanceInMillis()
 
     Column(
         modifier = Modifier

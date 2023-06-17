@@ -31,7 +31,6 @@ class ReceiveViewModel: ViewModel() {
         description.value = ""
         longNumber.value = 0L
         longNumberText.value = ""
-
     }
 
     var balance = mutableStateOf(0L)

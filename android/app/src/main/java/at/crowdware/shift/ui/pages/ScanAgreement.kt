@@ -64,7 +64,6 @@ data class Lmr(val pubKey: String, val amount: Long, val purpose: String, val ty
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
-
     viewModel.balance.value = getBalanceInMillis()
 
     var code by remember { mutableStateOf("") }

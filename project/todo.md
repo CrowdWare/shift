@@ -55,6 +55,7 @@
 - Invitecode edit if user has not yet join correctly
 - Display message when register account has not been performed because invite was wrong.
 - Instead of or additional show transaction data in the dialog.
+- Have a look at StartScooping !!!
 
   
 # Beta 2.0

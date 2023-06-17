@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.evaluateExpression
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
@@ -87,6 +88,8 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
             modifier = Modifier.focusable()
         )
         Spacer(modifier = Modifier.height(8.dp))
+        TotalDisplay(viewModel.total.value)
+        Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = viewModel.longNumberText.value,
             modifier = Modifier.fillMaxWidth(),
@@ -95,18 +98,21 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
             singleLine = true,
             onValueChange = { input ->
                 viewModel.longNumberText.value = input
+
                 // Filter the input to accept only digits
-                val filteredInput = input.filter { it.isDigit() }
-                if (filteredInput.isNotEmpty()) {
+                //val filteredInput = input.filter { it.isDigit() }
+                //if (filteredInput.isNotEmpty()) {
                     // Catch NumberFormatException in case the number is larger than Long.MAX_VALUE
                     try {
-                        viewModel.longNumber.value = filteredInput.toLong()
+                        //viewModel.longNumber.value = filteredInput.toLong()
+                        viewModel.longNumber.value = evaluateExpression(input)
                     } catch (e: NumberFormatException) {
                         // Handle the error if needed
                     }
-                } else {
-                    viewModel.longNumber.value = 0L
-                }
+                //} else {
+                //    viewModel.longNumber.value = 0L
+                //}
+
                 viewModel.total.value =
                     (viewModel.hours.value * 60 + viewModel.minutes.value).toLong() + viewModel.longNumber.value
             },
@@ -115,14 +121,13 @@ fun ReceiveGratitude(viewModel: ReceiveViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(value = viewModel.description.value,
             onValueChange = { viewModel.description.value = it },
-            placeholder = { Text(stringResource(R.string.purpose)) },
+            label = { Text(stringResource(R.string.purpose)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             textStyle = TextStyle(fontSize = 20.sp)
         )
         Spacer(modifier = Modifier.height(8.dp))
-        TotalDisplay(viewModel.total.value)
-        Spacer(modifier = Modifier.height(8.dp))
+
         Text(message.value, color = Color.Red)
         Spacer(modifier = Modifier.height(8.dp))
         Button(
