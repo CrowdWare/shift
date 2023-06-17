@@ -141,3 +141,8 @@ Sell on Elopage
 
 # Storage
 Each user is able to allocate up to 25 GB free space on Storj. There the user can create a bucket, store posts, messages, files etc and can share these with friends. In the app the users enters the access key and the bucket name
+Each installation can store there friends shared accounts and poll for update (new files).
+## Messaging
+Sending a message from A to B means -> A is sending a message to the bucket (inbox) of B and B polls his own bucket for updates.
+## Blogging
+A is blogging and stores its content on its own bucket. Their friends poll this bucket for updates.
