@@ -12,7 +12,7 @@
 | Check if we need to calculate a demurrage when paying | Should be ok, but we need a proof |
 | StartScooping is public | Only registered accounts may scoop. While registration we could check some things.<br>We also check registration on setScooping every time.|
 |Hackers might simulate the webservice in order to be able to scoop.|The webservice is encrypting the response and the client is aware that the response is not from the origianl webserver.|
-|Hackers might fake the webservice and just replays the enrypted response.| We need to also put a time based value into the encrypted response.|
+|Hackers might fake the webservice and just replays the enrypted response.| We put a time based value into the encrypted response.|
 |Someone might steal my computer with secret data| Build the lib on the server to hide this data.<br>Generate keys on the server and don't store them anywhere.|
 |Users cannot scoop anymore when webservice is down.|In case someone removed the webserver. Only the scooping function is broken. The app can still be used to give gratitude.<br>Also no exceptions are thrown if disconnected from the internet.|
 |Hackers might scan the APK for password and keys.|We switched to Go which creates native machine code. Also the keys are not stored in the APK. They are generated on runtime.<br>Thats the reason why our business logic is now close source.|

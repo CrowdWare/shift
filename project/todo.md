@@ -56,7 +56,7 @@
 - Display message when register account has not been performed because invite was wrong.
 - Instead of QR code show transaction data in the dialog when not Lmr.
 + Webservice should encrypt the response to avoid a faked webservice.
-- The response should also encrypt the scooping time comming from the client, so that the response can not be replayed.
++ The response should also encrypt the scooping time comming from the client, so that the response can not be replayed.
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
