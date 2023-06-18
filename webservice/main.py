@@ -30,12 +30,8 @@ from shift_keys import SHIFT_SECRET_KEY
 from mysql.connector import connect
 from mysql.connector.errors import IntegrityError
 from Crypto.Cipher import AES
-import base64
-import json
 import binascii
 
-
-## pip install pycryptodome
 
 def dbConnect():
     db = connect(unix_socket="/var/run/mysqld/mysqld.sock",

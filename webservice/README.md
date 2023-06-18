@@ -1,3 +1,9 @@
+# Install pre
+pip install pycryptodome
+pip install flask
+pip install mysql-connector-python
+
+
 # Create and maintain a websercice using uswgi
 
 This guide is for internal usage only.  

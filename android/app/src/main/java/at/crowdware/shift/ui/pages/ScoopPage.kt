@@ -95,6 +95,7 @@ fun ScoopPage(isPreview: Boolean = false) {
     var scooped by remember { mutableStateOf(getScoopedBalance()) }
     var scoopingHours by remember { mutableStateOf(getScoopingHours()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
+    var displayBalanceOnly by remember { mutableStateOf(!isScooping) }
 
     if(isPreview) {
         isScooping = true
@@ -103,6 +104,7 @@ fun ScoopPage(isPreview: Boolean = false) {
     LaunchedEffect(true) {
         while (true) {
             isScooping = isScooping()
+            displayBalanceOnly = !isScooping
             if (isScooping) {
                 balance = getBalanceInMillis()
                 scooped = getScoopedBalance()
@@ -122,7 +124,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BalanceDisplay(balance, scooped, scoopingHours)
+        BalanceDisplay(balance, scooped, scoopingHours, displayBalanceOnly)
         Text(errorMessage, color = Color.Red)
         if (isScooping) {
             Row(modifier = Modifier.fillMaxWidth()) {

@@ -118,7 +118,11 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
                 CameraPermission(multiplePermissionsState = permissionState, mainActivity.barcodeView)
                 Button(
                     onClick = { permissionState.launchMultiplePermissionRequest() },
-                    modifier = Modifier.fillMaxWidth(),) {
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    )) {
                     Text(stringResource(R.string.button_grant_camera_permission),style = TextStyle(fontSize = 20.sp))
                 }
             }
