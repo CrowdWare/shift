@@ -52,10 +52,11 @@
 + Balance display should switch between balance and scooping and should display the hours left for next scooping.
 + Splashscreen is looking awful
 + If last step of transaction is overstepped, we need a possibilty to reshow the QR-Code. (click transaction and show QR)
-- Invitecode edit if user has not yet join correctly
+- Invitecode edit and register, if user has not yet join correctly
 - Display message when register account has not been performed because invite was wrong.
 - Instead of QR code show transaction data in the dialog when not Lmr.
-- Have a look at StartScooping !!!
++ Webservice should encrypt the response to avoid a faked webservice.
+- The response should also encrypt the scooping time comming from the client, so that the response can not be replayed.
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check

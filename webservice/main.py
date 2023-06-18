@@ -19,6 +19,7 @@
 #############################################################################
 
 from datetime import datetime, timedelta
+import os
 from flask import Flask
 from flask import request
 from flask import jsonify
@@ -27,6 +28,7 @@ from shift_keys import SHIFT_DB_PWD
 from shift_keys import SHIFT_DB_USER
 from shift_keys import SHIFT_DATABASE
 from shift_keys import SHIFT_SECRET_KEY
+from shift_keys import SHIFT_CLIENT_KEY
 from mysql.connector import connect
 from mysql.connector.errors import IntegrityError
 from Crypto.Cipher import AES
@@ -62,6 +64,18 @@ def decryptStringGCM(cipherText: str) -> str:
         cipher = AES.new(SHIFT_SECRET_KEY.encode('utf-8'), AES.MODE_GCM, iv)
         plaintext = cipher.decrypt_and_verify(data[12:-16], tag)
         return plaintext.decode("utf-8")
+    except ValueError as error:
+        return ""
+
+def encryptStringGCM(plainText):
+    try:
+        iv = os.urandom(12)
+        secretKey = SHIFT_SECRET_KEY.encode('utf-8')
+        cipher = AES.new(secretKey, AES.MODE_GCM, iv)
+        ciphertext, tag = cipher.encrypt_and_digest(plainText.encode('utf-8'))
+        encryptedData = iv + ciphertext + tag
+        encryptedHex = binascii.hexlify(encryptedData).decode('utf-8')
+        return encryptedHex
     except ValueError as error:
         return ""
 
@@ -134,6 +148,7 @@ def scooping():
     content = request.json
     key = decryptStringGCM(content['key'])
     uuid = content['uuid']
+    time = content['time']
     test = content["test"] # used only for unit testing
 
     if key != SHIFT_API_KEY:
@@ -156,6 +171,14 @@ def scooping():
 
         try:
             conn = dbConnect()
+            curs = conn.cursor(dictionary=True)
+            query = 'SELECT COUNT(*) AS count FROM account WHERE uuid = "' + uuid + '"'
+            curs.execute(query)
+            row = curs.fetchone()
+            count = row['count']
+            if count != 1:
+                return jsonify(isError=True, message="The user id is not registered.", statusCode=200)
+                
             curs = conn.cursor()
             query = 'UPDATE account SET scooping = ' + str(seconds) + ' WHERE uuid = "' + uuid + '"'
             curs.execute(query)
@@ -187,6 +210,7 @@ def scooping():
 
     return jsonify(isError = False,
                    message = "Success",
+                   key = encryptStringGCM(SHIFT_CLIENT_KEY + time),
                    statusCode = 200, 
                    count_1 = level_1,
                    count_2 = level_2,
