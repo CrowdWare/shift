@@ -50,13 +50,12 @@
 - Setting language should select actual language
 + Filechooser is kinda broken (black screen). Just add APKs from Download directory for installation.
 + Balance display should switch between balance and scooping and should display the hours left for next scooping.
-- Splashscreen is looking awful
++ Splashscreen is looking awful
 + If last step of transaction is overstepped, we need a possibilty to reshow the QR-Code. (click transaction and show QR)
 - Invitecode edit if user has not yet join correctly
 - Display message when register account has not been performed because invite was wrong.
-- Instead of or additional show transaction data in the dialog.
+- Instead of QR code show transaction data in the dialog when not Lmr.
 - Have a look at StartScooping !!!
-
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
@@ -86,11 +85,9 @@
 - Tutorial to install the app via APK download
 - Tutorial to install a plugin 
 
-
 # Desktop App
 - A desktop app can be used to transfer liquid from mobile to desktop to be able to save the liquid (to save liquid we could also use our tablet or a friends mobile)
 - It could also be used as DHT node to store posts and messages for chat and blogging
-
 
 # Book
 Write a book about this project, so that someone else is able to continue my work.
@@ -123,7 +120,6 @@ That will pay the development cost and CrowdWare can use this fiat money to inve
 # POS
 Point of sale app
 
-
 # QC-Code
 Avoid double spending: 
 Proposal transaction has UUID from receiver and agreement transaction also has this UUID, so only the receiver can use the agreement transaction.
@@ -134,10 +130,9 @@ When an agreement transaction is booked we have to make sure, that this transact
 # Paid version
 Let us think about the release of a paid version to collect development cost.
 What about a free version with 1 l initial liquid.
-A paid version for 1,- with 10 l initial liquid.
+A paid version for 1,- with 5 l initial liquid.
 A paid version for companies for 100,- with 200 l initial liquid.
 
-Sell on Elopage
 
 # Storage
 Each user is able to allocate up to 25 GB free space on Storj. There the user can create a bucket, store posts, messages, files etc and can share these with friends. In the app the users enters the access key and the bucket name
