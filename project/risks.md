@@ -5,7 +5,7 @@
 |User might not trust the app because a part is close source|They also trust Microsoft.<br>But maybe we can think about opening the source to distract hacker, wjen they see that its too hard to crack.|
 | Big Brother can read feed | encrypt the feed |
 | Big Brother knows the posters identity | no registration needed, so no private data will be stored about the user |
-| DDOS attacks| No central server, many pubs or plain p2p, StorJ |
+| DDOS attacks| No central server just StorJ |
 | Sybill attacks | can be ignored, because all human beings who use this app have got a good heart. The others are still using dollars and euros.|
 | AI might use the app on a simulator| People should meet in person to veryfiy the app, because the app is able to start scouping|
 | User is able to install the app, spent 10 L on another app, deinstall and gets again 10L for installing.|Don't pay out 10 L on install. Only 1L|

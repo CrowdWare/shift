@@ -57,6 +57,8 @@
 - Instead of QR code show transaction data in the dialog when not Lmr.
 + Webservice should encrypt the response to avoid a faked webservice.
 + The response should also encrypt the scooping time comming from the client, so that the response can not be replayed.
+- Start scooping button only visibel if registered.
+- Error decrypting servive url, only on device when start scooping
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
