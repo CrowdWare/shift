@@ -106,7 +106,7 @@ If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The g
 If someone wants to transfer LMC to your account, then your app will not accept this transfer due to incorrect decrypted data.
 
 # Open Source
-I personally like software to be open source and free to use, but we have decided to make the Android code open source and the business logic close source.  
+I personally like software to be open source and free to use, but we have decided to make the Android code open source and the business logic and the webservice close source.  
 The reason why we are doing this, is to keep our app secure from fraudulent attacks.  
 We have to be sure that when accepting gratitude from another app, that this app is also the original version and not a faked version where the app might start with a much higher balance or is scooping higher amounts of LMC.  
 Therefore we have coded the business logic in Go which results in native machine code which is harder to reverse engineer than Kotlin code, which we had before. And we closed the source, to make it even harder for attackers. Also we are changing the encryption keys on a daily base and we don't want attackers to see how we are archiving this.
