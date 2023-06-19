@@ -16,19 +16,19 @@ The enter a purpose like "Massage", "Haircut" etc and press Continue.
 On the next screen a QR-Code as a proposal will be displayed to be scanned the giver.  
 
 # Giving a payment  
-When you are ask to scan the proposal from the receiver you just have to press the Give button, activate the camera and scan the QR-Code. Then the proposal will be displayed. If you accept press the  Continie button. then another QR-Code is generated and displayed. At this point the amount of LMC is already booked from your account. To finalize the transaction just display teh WR-Code to the receiver at it scan.
+When you are ask to scan the proposal from the receiver you just have to press the Give button, activate the camera and scan the QR-Code. Then the proposal will be displayed. If you accept press the [Continie] button. then another QR-Code is generated and displayed. At this point the amount of LMC is already booked from your account. To finalize the transaction just display teh QR-Code to the receiver at it scan.
 
 # Final step
-Now the receiver just has to press the Continue button to open the camera and scan the agreement.   
+Now the receiver just has to press the [Scan Agreement] button to open the camera and scan the agreement.   
 After this final step the amount of LMC is booked on the receivers side.
 
 # Missing a step
 While testing we encountert a little problem.
-If the receiver does not scan the agreement, because he has just pressed teh Continue button.  
+If the receiver does not scan the agreement, because he has just pressed the [Continue[] button.  
 The transaction is not finally booked on his account.  
 So we created a solution.  
 On the main screen of the giver is a list of transactions. There should be at least one transaction with a negative amount. Just press the entry in the list and a dialog with a QR-Code opens. Now the receiver has to scan that code.  
 
-If the receiver also closed the screen he just have to again press Receive, enter an amount and a purpose, a QR-Code is generated, which can be ignored and the user should press Continue and then finally the camera opens and the user is able to scan the code.
+If the receiver also closed the screen he just have to again press Receive, enter an amount and a purpose, a QR-Code is generated, which can be ignored and the user should press [Continue[] and then finally the camera opens after pressing [Scan Agreement] and the user is able to scan the code.
 
 I know it might be a bit complicated but therefore we don't need an internet connection or Bluetooth at all. 
