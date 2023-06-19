@@ -5,6 +5,11 @@ android {
     namespace 'at.crowdware.shift'
     compileSdk 33
 
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "shift-${variant.name}-${defaultConfig.versionName}.apk"
+        }
+    }
     defaultConfig {
         applicationId "at.crowdware.shift"
         minSdk 28
@@ -21,7 +26,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }

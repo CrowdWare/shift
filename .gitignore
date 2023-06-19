@@ -3,4 +3,4 @@
 src/build-project/
 src/build-test/
 src/build-desktop/
-*.keystore
+keystore
