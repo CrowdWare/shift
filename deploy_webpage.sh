@@ -1,1 +1,0 @@
-cp -r docs/* /var/www/html/
