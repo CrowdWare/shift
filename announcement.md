@@ -18,6 +18,8 @@ At Shift, we trust in the strength of community and the immense potential that d
 
 Stay tuned for more updates about Shift and to learn how you can earn your Early Adoption Reward (EAR). Together, let's revolutionize the landscape of social media!
 
+Download the app [here](https://github.com/CrowdWare/shift/releases).
+
 Join us on [telegram](https://t.me/crowdware).
 
 More details you'll find [here](https://github.com/CrowdWare/Shift/blob/main/readme.md) and here on our website [http://shift.crowdware.at](http://shift.crowdware.at).
