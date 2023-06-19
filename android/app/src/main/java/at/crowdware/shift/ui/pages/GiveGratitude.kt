@@ -179,6 +179,32 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                 ) {
                     Text("Go Back", style = TextStyle(fontSize = 20.sp))
                 }
+            } else if (code == "WRONG_TYP"){
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = TertiaryError
+                    )
+                ) {
+                    Text(
+                        stringResource(R.string.you_have_scanned_a_wrong_qrcode),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = { NavigationManager.navigate("home") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Go Back", style = TextStyle(fontSize = 20.sp))
+                }
             } else {
                 val gson = Gson()
                 val trans: Lmp = gson.fromJson(code, Lmp::class.java)

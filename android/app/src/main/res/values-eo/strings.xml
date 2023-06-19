@@ -82,5 +82,8 @@
     <string name="transaction">Transakcio</string>
     <string name="transaction_not_found">Transakcio ne trovita.</string>
     <string name="transaction_not_lmp">Nur LMP (Liquid Micro Payments) povas esti montritaj ĉi tie.</string>
+    <string name="invalid_inviation_code">Nevalida invita kodo</string>
+    <string name="this_agreement_is_for_someone_else">Ĉi tiu interkonsento estis por alia persono.</string>
+    <string name="date">Dato</string>
 
 </resources>

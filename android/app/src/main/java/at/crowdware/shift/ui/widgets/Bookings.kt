@@ -47,6 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Transaction
+import at.crowdware.shift.ui.pages.Lmp
+import com.google.gson.Gson
 import com.simonsickle.compose.barcodes.Barcode
 import com.simonsickle.compose.barcodes.BarcodeType
 import java.time.format.DateTimeFormatter
@@ -55,7 +57,6 @@ import lib.Lib.InitialBooking
 import lib.Lib.Scooped
 import lib.Lib.Lmp
 import lib.Lib.Lmr
-import lib.Lib.getAgreementQRCode
 import lib.Lib.getAgreementQRCodeForTransaction
 import java.time.Instant
 import java.time.ZoneId
@@ -123,6 +124,11 @@ fun unixToDate(unixTimestamp: Long): String {
 
 @Composable
 fun QRCodeDialog(openDialog: Boolean, transaction: Transaction, onDismiss: () -> Unit) {
+    val amount = stringResource(R.string.amount)
+    val from = stringResource(R.string.from)
+    val date = stringResource(R.string.date)
+    val purpose = stringResource(R.string.purpose)
+
     if (openDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
@@ -130,22 +136,46 @@ fun QRCodeDialog(openDialog: Boolean, transaction: Transaction, onDismiss: () ->
             text = {
                 Column {
                     val enc = getAgreementQRCodeForTransaction(transaction.pkey)
-                    when (enc) {
+                    val tokens = enc.split("|")
+
+                    when (tokens[1]) {
                         "NOT_FOUND" -> Text(stringResource(R.string.transaction_not_found))
-                        "NOT LMP" -> Text(stringResource(R.string.transaction_not_lmp))
                         else -> {
-                            Text(
-                                stringResource(R.string.let_the_receiver_scan_the_qr_code_to_finalize_the_transaction)
+                            val gson = Gson()
+                            val trans: Lmp = gson.fromJson(tokens[0],
+                                at.crowdware.shift.ui.pages.Lmp::class.java
                             )
-                            Spacer(modifier = Modifier.width(16.dp))
-                            Barcode(
-                                modifier = Modifier
-                                    .width(300.dp)
-                                    .height(300.dp),
-                                resolutionFactor = 10,
-                                type = BarcodeType.QR_CODE,
-                                value = enc
-                            )
+                            if (tokens[1] == "NOT LMP") {
+                                Text("$amount: ${trans.Amount}")
+                                if(trans.Typ == "1")
+                                    Text("$purpose: " + stringResource(R.string.transaction_initial_liquid))
+                                else if(trans.Typ == "2")
+                                    Text("$purpose: Scooping")
+                                else
+                                    Text("$purpose: ${trans.Purpose}")
+                                if(trans.Typ == "4")
+                                    Text("$from: ${trans.From}")
+                                Text("$date: ${trans.Date.substring(0,10)}")
+                            } else {
+                                Text(
+                                    stringResource(R.string.let_the_receiver_scan_the_qr_code_to_finalize_the_transaction)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("$amount: ${trans.Amount}")
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("$purpose: ${trans.Purpose}")
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("$date: ${trans.Date.substring(0,10)}")
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Barcode(
+                                    modifier = Modifier
+                                        .width(300.dp)
+                                        .height(300.dp),
+                                    resolutionFactor = 10,
+                                    type = BarcodeType.QR_CODE,
+                                    value = tokens[1]
+                                )
+                            }
                         }
                     }
                 }

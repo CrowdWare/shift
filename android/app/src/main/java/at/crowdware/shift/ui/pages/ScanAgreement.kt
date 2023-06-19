@@ -45,21 +45,12 @@ import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.theme.Tertiary
 import at.crowdware.shift.ui.theme.TertiaryError
-import at.crowdware.shift.ui.widgets.AutoSizeText
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import lib.Lib.getBalanceInMillis
-import java.text.NumberFormat
-import java.util.Locale
-
-import lib.Lib.getProposalFromQRCode
-import lib.Lib.acceptProposal
 import lib.Lib.getAgreementFromQRCode
-
-data class Lmr(val pubKey: String, val amount: Long, val purpose: String, val type:String, val from: String)
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -146,6 +137,34 @@ fun ScanAgreement(viewModel: GiveViewModel, mainActivity: MainActivity) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = { NavigationManager.navigate("home") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Primary,
+                        contentColor = OnPrimary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Go Back", style = TextStyle(fontSize = 20.sp))
+                }
+            } else if(code == "WRONG_RECEIVER") {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = TertiaryError
+                    )
+                ) {
+                    Text(
+                        stringResource(R.string.this_agreement_is_for_someone_else),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = {
+                        viewModel.reset()
+                        NavigationManager.navigate("home") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Primary,
                         contentColor = OnPrimary

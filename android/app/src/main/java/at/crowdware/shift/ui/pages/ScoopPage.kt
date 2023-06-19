@@ -74,7 +74,7 @@ import lib.Lib.getUuid
 
 @Composable
 fun ScoopPage(isPreview: Boolean = false) {
-    val errorMessage by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(
@@ -88,7 +88,8 @@ fun ScoopPage(isPreview: Boolean = false) {
         type = "text/plain"
     }
 
-    val transactions = remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
+    val transactions =
+        remember { mutableStateListOf(*getTransactionsFromJSON(getTransactions()).toTypedArray()) }
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
     var balance by remember { mutableStateOf(getBalanceInMillis()) }
@@ -96,8 +97,9 @@ fun ScoopPage(isPreview: Boolean = false) {
     var scoopingHours by remember { mutableStateOf(getScoopingHours()) }
     var isScooping by remember { mutableStateOf(isScooping()) }
     var displayBalanceOnly by remember { mutableStateOf(!isScooping) }
+    val network_error = stringResource(R.string.a_network_error_occurred)
 
-    if(isPreview) {
+    if (isPreview) {
         isScooping = true
     }
 
@@ -110,7 +112,7 @@ fun ScoopPage(isPreview: Boolean = false) {
                 scooped = getScoopedBalance()
                 scoopingHours = getScoopingHours()
                 transactions.clear()
-                for(t in getTransactionsFromJSON(getTransactions())) {
+                for (t in getTransactionsFromJSON(getTransactions())) {
                     transactions.add(t)
                 }
             }
@@ -126,40 +128,48 @@ fun ScoopPage(isPreview: Boolean = false) {
     ) {
         BalanceDisplay(balance, scooped, scoopingHours, displayBalanceOnly)
         Text(errorMessage, color = Color.Red)
-        if (isScooping) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Button(
-                    onClick = { NavigationManager.navigate("receive_gratitude") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Primary,
-                        contentColor = OnPrimary
-                    ),
-                    modifier = Modifier.weight(1f)) {
-                    Text(stringResource(R.string.button_receive), style = TextStyle(fontSize = 20.sp))
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(
-                    onClick = {NavigationManager.navigate("give_gratitude")},
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Secondary,
-                        contentColor = OnSecondary
-                    )
-                ) {
-                    Text(stringResource(R.string.button_give), style = TextStyle(fontSize = 20.sp))
-                }
-            }
 
-        } else {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = { NavigationManager.navigate("receive_gratitude") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = OnPrimary
+                ),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    stringResource(R.string.button_receive),
+                    style = TextStyle(fontSize = 20.sp)
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = { NavigationManager.navigate("give_gratitude") },
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Secondary,
+                    contentColor = OnSecondary
+                )
+            ) {
+                Text(stringResource(R.string.button_give), style = TextStyle(fontSize = 20.sp))
+            }
+        }
+
+        if (!isScooping) {
+            Spacer(modifier = Modifier.height(8.dp))
             Button(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Primary,
                     contentColor = OnPrimary
                 ),
                 onClick = {
-                    startScooping()
-                    isScooping = true
-                          },
+                    val res = startScooping()
+                    when (res) {
+                        0L -> isScooping = true
+                        else -> errorMessage = network_error
+                    }
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(

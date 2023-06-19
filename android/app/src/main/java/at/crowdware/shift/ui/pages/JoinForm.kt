@@ -55,7 +55,6 @@ import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
-import lib.Lib
 
 import lib.Lib.createAccount
 import java.util.UUID
@@ -69,6 +68,10 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
     val countries = readCountryData(LocalContext.current.applicationContext)
     val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
     val enter_name = stringResource(R.string.please_enter_your_name)
+    val enter_invite = stringResource(R.string.please_enter_the_invitation_code )
+    val enter_country = stringResource(R.string.please_select_your_country)
+    val invalid_invite = stringResource(R.string.invalid_inviation_code)
+    val internal_error = stringResource(R.string.a_network_error_occurred)
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -118,15 +121,26 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
             onClick = {
                 if (name.isNullOrEmpty()) {
                     errorMessage = enter_name
+                } else if(friend.isNullOrEmpty()) {
+                    errorMessage = enter_invite
+                } else if(stateHolderCountry.value.isNullOrEmpty()) {
+                    errorMessage = enter_country
                 } else {
-                    createAccount(
+                    val res = createAccount(
                         name,
                         UUID.randomUUID().toString(),
                         friend,
                         stateHolderCountry.value,
                         language
                     )
-                    hasJoined.value = true
+                    if (res == 0L)
+                        hasJoined.value = true
+                    else {
+                        errorMessage = when(res){
+                            4L -> invalid_invite
+                            else -> internal_error
+                        }
+                    }
                 }
             },
         ) {

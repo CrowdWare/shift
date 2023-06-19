@@ -82,5 +82,8 @@
     <string name="transaction">Transação</string>
     <string name="transaction_not_found">Transação não encontrada.</string>
     <string name="transaction_not_lmp">Apenas LMP (Liquid Micro Payments) podem ser exibidos aqui.</string>
+    <string name="invalid_inviation_code">Código de convite inválido</string>
+    <string name="this_agreement_is_for_someone_else">Este acordo era para outra pessoa.</string>
+    <string name="date">Data</string>
 
 </resources>
