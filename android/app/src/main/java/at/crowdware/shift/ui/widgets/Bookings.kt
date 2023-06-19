@@ -126,6 +126,7 @@ fun unixToDate(unixTimestamp: Long): String {
 fun QRCodeDialog(openDialog: Boolean, transaction: Transaction, onDismiss: () -> Unit) {
     val amount = stringResource(R.string.amount)
     val from = stringResource(R.string.from)
+    val to = stringResource(R.string.to)
     val date = stringResource(R.string.date)
     val purpose = stringResource(R.string.purpose)
 
@@ -155,15 +156,17 @@ fun QRCodeDialog(openDialog: Boolean, transaction: Transaction, onDismiss: () ->
                                     Text("$purpose: ${trans.Purpose}")
                                 if(trans.Typ == "4")
                                     Text("$from: ${trans.From}")
+                                if (trans.Typ == "3")
+                                    Text("$to: ${trans.To}")
                                 Text("$date: ${trans.Date.substring(0,10)}")
                             } else {
-                                Text(
-                                    stringResource(R.string.let_the_receiver_scan_the_qr_code_to_finalize_the_transaction)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(stringResource(R.string.let_receiver_scan_if_forgotten))
+                                Spacer(modifier = Modifier.width(16.dp))
                                 Text("$amount: ${trans.Amount}")
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text("$purpose: ${trans.Purpose}")
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("$to: ${trans.To}")
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text("$date: ${trans.Date.substring(0,10)}")
                                 Spacer(modifier = Modifier.width(16.dp))

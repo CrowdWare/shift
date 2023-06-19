@@ -85,5 +85,7 @@
     <string name="invalid_inviation_code">Invalid invitation code</string>
     <string name="this_agreement_is_for_someone_else">This agreement was for someone else.</string>
     <string name="date">Date</string>
+    <string name="to">To</string>
+    <string name="let_receiver_scan_if_forgotten">Let the receiver scan the QR code if this step was forgotten.</string>
 
 </resources>

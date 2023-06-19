@@ -64,7 +64,7 @@ import lib.Lib.acceptProposal
 import lib.Lib.getProposalFromQRCode
 
 
-data class Lmp(val Amount: Long, val Date: String, val From: String, val Purpose: String, val Typ:String)
+data class Lmp(val Amount: Long, val Date: String, val From: String, val To: String, val Purpose: String, val Typ:String)
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -237,7 +237,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = stringResource(R.string.from),
+                        text = stringResource(R.string.to),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -245,7 +245,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                             .padding(4.dp)
                     )
                     Text(
-                        text = trans.From,
+                        text = trans.To,
                         fontSize = 18.sp,
                         modifier = Modifier
                             .fillMaxWidth()

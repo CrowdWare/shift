@@ -85,5 +85,7 @@
     <string name="invalid_inviation_code">Code d\'invitation invalide</string>
     <string name="this_agreement_is_for_someone_else">Cet accord était pour quelqu\'un d\'autre.</string>
     <string name="date">Date</string>
+    <string name="to">À</string>
+    <string name="let_receiver_scan_if_forgotten">Laissez le destinataire scanner le code QR si cette étape a été oubliée.</string>
 
 </resources>
