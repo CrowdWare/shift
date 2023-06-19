@@ -59,8 +59,8 @@
 + The response should also encrypt the scooping time comming from the client, so that the response can not be replayed.
 + Start scooping button only visible if registered.
 + Error decrypting servive url, only on device when start scooping
-- Warning when startscooping without internet connection
-- From is false on LMR
++ Warning when startscooping without internet connection
++ From is false on LMR
   
 # Beta 2.0
 - Color for drawer select background should be blueish, general theme check
