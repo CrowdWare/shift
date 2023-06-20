@@ -1,22 +1,25 @@
+# Introducing
 ![logo](./images/logo.png "logo")  
 
-# Announcing SHIFT 
-## A New Vision for Decentralized Social Media
-We are thrilled to share our vision for Shift, a groundbreaking initiative aiming to redefine the way we perceive and interact with social media. Our ambition is to create a decentralized network, free from advertisements and censorship that often shadow traditional social media platforms.
+## Empowering Decentralized Social Media with Innovative Payment Functionality and Unique Currency
 
-Shift promises a highly secure platform, leveraging the strengths of Storj, a decentralized storage platform. We aspire to create a space that values user empowerment, respects privacy, and fosters freedom of expression.
+We are excited to unveil Shift, a groundbreaking initiative that aims to revolutionize the world of social media. Our vision is to create a decentralized network that breaks free from the constraints of traditional platforms, offering a seamless payment experience and introducing our own unique currency.
 
-In an unprecedented move, we introduce the concept of the Early Adoption Reward (EAR). EAR is our unique reward system devised for pioneers and early adopters of our platform. Users can earn Liquid Micro Coins (LMC) by participating and contributing to our network, thus providing a distinct advantage for those who join during the early phases of Shift.
+Shift embraces the power of Storj, a decentralized storage platform, to ensure utmost security and privacy. Our mission is to establish a space that empowers users, respects their privacy, and encourages freedom of expression.
 
-As an early adopter, you can generate LMC on a daily basis, promoting a unique form of value exchange in our emerging platform. With the growth and evolution of Shift, the potential to earn and utilize LMC within the platform is anticipated to grow exponentially.
+In a truly unprecedented move, we are introducing the Early Adoption Reward (EAR), a one-of-a-kind system designed exclusively for pioneers and early adopters of Shift. By actively participating and contributing to our network, users can earn Liquid Micro Coins (LMC). This early involvement offers a distinct advantage, as LMC becomes an increasingly valuable asset within the Shift platform.
 
-What sets Shift apart is the ability to instantly express gratitude by giving LMC as a form of payment. With the convenience of QR-Code scanning, transactions can be completed without the need for an internet connection or Bluetooth. LMC incorporates a demurrage rate of 0.28% per day and is structured to be time-based, thereby discouraging speculative activities.
+As an early adopter, you will have the opportunity to generate LMC on a daily basis, creating a unique form of value exchange within our evolving platform. With the growth and development of Shift, the potential to earn and utilize LMC is expected to increase exponentially.
 
-We also plan to encourage innovation by allowing future developers to create plugins that enhance the platform's functionality using our plugin technology. However, it's important to note that we are currently in the process of laying the groundwork for Shift, and the development of the actual social media platform will be undertaken by these other developers.
+What sets Shift apart is the ability to express gratitude instantly through LMC as a form of payment. Our innovative QR-Code scanning technology enables seamless transactions, eliminating the need for an internet connection or Bluetooth. LMC incorporates a demurrage rate of 0.28% per day, discouraging speculative activities and ensuring a time-based value system.
 
-At Shift, we trust in the strength of community and the immense potential that decentralized social media holds. We invite you to be part of this pioneering endeavor and shape the future of social networking with us.
+Furthermore, we are committed to fostering innovation by allowing future developers to create plugins that enhance the functionality of the platform through our plugin technology. However, it is important to note that while we are currently laying the groundwork for Shift, the development of the actual social media platform will be undertaken by these dedicated developers.
 
-Stay tuned for more updates about Shift and to learn how you can earn your Early Adoption Reward (EAR). Together, let's revolutionize the landscape of social media!
+At Shift, we firmly believe in the power of community and the immense potential of decentralized social media. We invite you to join us in this pioneering endeavor, shaping the future of social networking together.
+
+Stay tuned for more updates on Shift and discover how you can earn your Early Adoption Reward (EAR). Together, let's revolutionize the social media landscape!
+
+Download the app [here](https://github.com/CrowdWare/shift/releases).
 
 Join us on [telegram](https://t.me/crowdware).
 

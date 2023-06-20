@@ -17,6 +17,8 @@ Bei Shift vertrauen wir auf die Stärke der Gemeinschaft und das enorme Potenzia
 
 Bleiben Sie auf dem Laufenden über weitere Neuigkeiten zu Shift und erfahren Sie, wie Sie Ihre Early Adoption Reward (EAR) verdienen können. Zusammen revolutionieren wir die Landschaft der sozialen Medien!
 
+Lade Dir die App [hier](https://github.com/CrowdWare/shift/releases) runter.
+
 Folge uns auf [Telegram](https://t.me/crowdware).
 
 Mehr Details findest Du [hier](https://github.com/CrowdWare/Shift/blob/main/readme.md) und hier auf unser Webseite [http://shift.crowdware.at](http://shift.crowdware.at/index-de.html).
