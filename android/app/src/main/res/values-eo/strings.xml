@@ -87,5 +87,14 @@
     <string name="date">Dato</string>
     <string name="to">Al</string>
     <string name="let_receiver_scan_if_forgotten">Lasu la ricevanton skani la QR-kodon, se tiu ĉi paŝo estis forgesita.</string>
+    <string name="plugin_settings">Aldonprogramaj agordoj</string>
+    <string name="save_changes">Konservi ŝanĝojn</string>
+    <string name="personal_data">Persona informo</string>
+    <string name="add_nearby_friend">Aldoni Proksiman Amikon</string>
+    <string name="add_remote_friend">Aldoni Malproksiman Amikon</string>
+    <string name="add_nearby_friend_info">Por aldoni proksiman personon, vi devas interŝanĝi publikajn ŝlosilojn kaj Storj-akceskodon enkodigitan kiel QR-kodo.</string>
+    <string name="you_have_not_entered_storj">Ŝajnas, ke vi ankoraŭ ne enigis la Storj-atestilon. Ni bezonas tiun memorejon por konservi mesaĝojn, blogaĵojn, bildojn kaj similajn. Bonvolu iri al la retejo de Storj ĉe </string>
+    <string name="you_have_not_entered_storj_part2">, kreu liberkonton kun 25 GB da spaco, aldonu "bucket"-on, kreu akceskodon kun permeso skribi, listi, forviŝi, kaj enigu tiujn aŭtentigaĵojn en la agordopagxo de tiu ĉi aplikaĵo. Poste revenu ĉi tien.</string>
+    <string name="scan_the_qr_code_to_get_the_keys">Skaniu la QR-kodon por ricevi la ŝlosilojn.</string>
 
 </resources>

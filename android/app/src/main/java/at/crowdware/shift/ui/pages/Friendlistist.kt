@@ -20,6 +20,9 @@
 package at.crowdware.shift.ui.pages
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,14 +31,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,18 +55,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Friend
 import at.crowdware.shift.logic.getFriendsFromJSON
-import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
+import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import at.crowdware.shift.ui.widgets.NavigationManager
 
 import lib.Lib.getUuid
 import lib.Lib.getMatelist
@@ -67,57 +75,130 @@ import lib.Lib.getMatelist
 
 @Composable
 fun Friendlist() {
-    val context = LocalContext.current
+    var isMenuOpen by remember { mutableStateOf(false) }
+    val rotationState by animateFloatAsState(if (isMenuOpen) 45f else 0f)
+
     val friendListState = remember { mutableStateOf(emptyList<Friend>()) }
     var errorMessage by remember { mutableStateOf("") }
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(
             Intent.EXTRA_TEXT,
-            stringResource(id = R.string.invite_message,
-                stringResource(id = R.string.website_url), getUuid())
+            stringResource(
+                id = R.string.invite_message,
+                stringResource(id = R.string.website_url), getUuid()
+            )
         )
         type = "text/plain"
     }
-    val shareIntent = Intent.createChooser(sendIntent, null)
 
     LaunchedEffect(Unit) {
         val json = getMatelist()
         val friendlist = getFriendsFromJSON(json)
         friendListState.value = friendlist
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        if(friendListState.value.isNotEmpty()) {
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
+            if (friendListState.value.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) {
+                    items(friendListState.value.size) { index ->
+                        FriendListItem(friend = friendListState.value[index])
+                    }
+                }
+                Text(errorMessage, color = Color.Red)
+            } else {
+                Text(stringResource(R.string.invite_advertise))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            /*
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = OnPrimary
+                ),
+                onClick = { context.startActivity(shareIntent) },
+                modifier = Modifier.fillMaxWidth()
             ) {
-                items(friendListState.value.size) { index ->
-                    FriendListItem(friend = friendListState.value[index])
+                Text(
+                    stringResource(R.string.button_invite_friends),
+                    style = TextStyle(fontSize = 20.sp)
+                )
+            }*/
+        }
+        FloatingActionButton(
+            onClick = {
+                isMenuOpen = !isMenuOpen
+            },
+            containerColor = Primary,
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.BottomEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Add,
+                contentDescription = "Add Friend",
+                tint = Color.White,
+                modifier = Modifier.rotate(rotationState)
+            )
+        }
+        AnimatedVisibility(
+            visible = isMenuOpen,
+            modifier = Modifier
+                .padding(vertical = 70.dp)
+                .align(Alignment.BottomEnd)
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.BottomEnd)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                ) {
+                    Text(text = stringResource(R.string.add_remote_friend), modifier = Modifier.padding(vertical = 16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
+                    FloatingActionButton(
+                        onClick = { NavigationManager.navigate("add_remote_friend") },
+                        containerColor = Primary,
+                        modifier = Modifier.padding(bottom = 72.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Email,
+                            contentDescription = "Add remote friend",
+                            tint = Color.White,
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                ) {
+                    Text(text = stringResource(R.string.add_nearby_friend), modifier = Modifier.padding(vertical = 16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
+                    FloatingActionButton(
+                        onClick = { NavigationManager.navigate("add_nearby_friend")},
+                        containerColor = Primary,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.PhotoCamera,
+                            contentDescription = "Add nearby friend",
+                            tint = Color.White,
+                        )
+                    }
                 }
             }
-            Text(errorMessage, color = Color.Red)
-        } else {
-            Text(stringResource(R.string.invite_advertise))
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Primary,
-                contentColor = OnPrimary
-            ),
-            onClick = { context.startActivity(shareIntent) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.button_invite_friends), style = TextStyle(fontSize = 20.sp))
         }
     }
 }

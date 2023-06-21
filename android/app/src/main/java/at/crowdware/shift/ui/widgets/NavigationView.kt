@@ -46,9 +46,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
+import at.crowdware.shift.ui.pages.AddNearbyFriend
+import at.crowdware.shift.ui.pages.AddRemoteFriend
 import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.GiveGratitude
 import at.crowdware.shift.ui.pages.GiveGratitudeQRCode
+import at.crowdware.shift.ui.pages.PluginSettings
 import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.ScanAgreement
@@ -82,6 +85,9 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                     "give_gratitude" -> title.value = stringResource(R.string.give_gratitude)
                     "give_gratitude_qrcode" -> title.value = stringResource(R.string.give_gratitude)
                     "scan_agreement" -> title.value = stringResource(R.string.receive_gratitude)
+                    "plugin_settings" -> title.value = stringResource(R.string.plugin_settings)
+                    "add_remote_friend" -> title.value = stringResource(R.string.add_remote_friend)
+                    "add_nearby_friend" -> title.value = stringResource(R.string.add_nearby_friend)
                     else -> title.value = items[index].text
                 }
                 NavigationDrawer(items, selectedItem, title.value) {
@@ -95,6 +101,9 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                         "give_gratitude" -> GiveGratitude(giveViewModel, mainActivity)
                         "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
                         "scan_agreement" -> ScanAgreement(giveViewModel , mainActivity)
+                        "plugin_settings" -> PluginSettings()
+                        "add_remote_friend" -> AddRemoteFriend()
+                        "add_nearby_friend" -> AddNearbyFriend(mainActivity)
                         else -> {
                             val plugin = items[index].plugin
                             plugin!!.pages()[items[index].index].invoke()

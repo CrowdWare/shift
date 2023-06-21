@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val splashScreen = installSplashScreen()
+        //val splashScreen = installSplashScreen()
 
         root = layoutInflater.inflate(R.layout.layout, null)
         barcodeView = root.findViewById(R.id.barcode_scanner)
@@ -92,6 +92,9 @@ class MainActivity : ComponentActivity() {
                         list.add(NavigationItem(id="give_gratitude"))
                         list.add(NavigationItem(id="give_gratitude_qrcode"))
                         list.add(NavigationItem(id="scan_agreement"))
+                        list.add(NavigationItem(id="plugin_settings"))
+                        list.add(NavigationItem(id="add_remote_friend"))
+                        list.add(NavigationItem(id="add_nearby_friend"))
                         NavigationView(list, this)
                     }
                     else

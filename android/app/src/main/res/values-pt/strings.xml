@@ -87,5 +87,14 @@
     <string name="date">Data</string>
     <string name="to">Para</string>
     <string name="let_receiver_scan_if_forgotten">Permita que o destinatário escaneie o código QR caso este passo tenha sido esquecido.</string>
+    <string name="plugin_settings">Configurações do plugin</string>
+    <string name="save_changes">Salvar alterações</string>
+    <string name="personal_data">Dados pessoais</string>
+    <string name="add_nearby_friend">Adicionar Amigo Próximo</string>
+    <string name="add_remote_friend">Adicionar Amigo Remoto</string>
+    <string name="add_nearby_friend_info">Para adicionar uma pessoa próxima, vocês precisam trocar as chaves públicas e um token de acesso Storj codificado como um QR-Code.</string>
+    <string name="you_have_not_entered_storj">Parece que você ainda não inseriu as credenciais do Storj. Precisamos desse armazenamento para guardar mensagens, posts de blog, fotos e coisas do tipo. Por favor, acesse o site do Storj em </string>
+    <string name="you_have_not_entered_storj_part2">, crie uma conta gratuita com 25 GB de espaço livre, adicione um bucket, crie um token de acesso com permissões de escrever, listar e deletar, e insira essas credenciais na página de configurações deste aplicativo. Depois, volte aqui.</string>
+    <string name="scan_the_qr_code_to_get_the_keys">Escaneie o código QR para obter as chaves.</string>
 
 </resources>

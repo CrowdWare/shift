@@ -91,9 +91,7 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
     var showScanner by remember { mutableStateOf(true) }
 
     val permissionState = rememberMultiplePermissionsState(
-        listOf<String>(
-            Manifest.permission.CAMERA,
-        )
+        listOf(Manifest.permission.CAMERA)
     )
 
     val callback = object : BarcodeCallback {
@@ -126,7 +124,6 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
         BalanceDisplay(viewModel.balance.value, displayBalanceOnly = true)
         Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
         if (showScanner) {
             Text(
                 stringResource(R.string.scan_the_qr_code_to_get_the_offer_from_the_receiver),

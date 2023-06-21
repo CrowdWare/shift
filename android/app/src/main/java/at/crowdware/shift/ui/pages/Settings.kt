@@ -80,56 +80,31 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.LaunchedEffect
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shift.ui.widgets.NavigationManager
+import lib.Lib.getAccessToken
+import lib.Lib.getBucketName
 import lib.Lib.getName
 import lib.Lib.setName
+import lib.Lib.setStorj
 
-fun getFileNameFromUri(contentResolver: ContentResolver, uri: Uri): String? {
-    var fileName: String? = null
-    val cursor = contentResolver.query(uri, null, null, null, null)
-    cursor?.use {
-        if (it.moveToFirst()) {
-            val displayNameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (displayNameIndex != -1) {
-                fileName = it.getString(displayNameIndex)
-            }
-        }
-    }
-    return fileName
-}
 
-fun copyFileFromUri(contentResolver: ContentResolver, uri: Uri, destinationDirectory: File): Boolean {
-    val inputStream = contentResolver.openInputStream(uri)
-    inputStream?.use { input ->
-        val fileName = getFileNameFromUri(contentResolver, uri)
-        if (fileName != null) {
-            val destinationPath = Paths.get(destinationDirectory.absolutePath, fileName)
-            Files.copy(input, destinationPath, StandardCopyOption.REPLACE_EXISTING)
-            return true
-        } else {
-          return false
-        }
-    }
-    return false
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings() {
-    val items = PluginManager.getPluginList()
-    val pluginPath = LocalContext.current.filesDir.path + "/plugins/"
-    val applicationContext = LocalContext.current.applicationContext
     val name = remember { mutableStateOf(getName()) }
+    val bucketName = remember { mutableStateOf(getBucketName()) }
+    val accessToken = remember { mutableStateOf(getAccessToken()) }
     var saveButtonEnabled by remember { mutableStateOf(false) }
-    val selectedFileUri = remember { mutableStateOf<Uri?>(null) }
-    val filePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
-        selectedFileUri.value = uri
-    }
+    var nameChanged = remember { mutableStateOf(false) }
+    var storjChanged = remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
     //region vars for the DropDownlistbox
     val context = LocalContext.current
@@ -143,169 +118,80 @@ fun Settings() {
     val stateHolderLanguage = rememberDropDownListboxStateHolder(languages, index, onSelectedIndexChanged)
     //endregion
 
-    fun onDelete(item: Plugin) {
-        val file = File(pluginPath + item.filename)
-        println("to delete: ${file.path}")
-        file.delete()
-        Toast.makeText(context, context.getString(R.string.the_plugin_has_been_removed_you_should_restart_your_app_now), Toast.LENGTH_LONG).show()
-    }
-
-    val t1 = stringResource(R.string.the_plugin_has_been_installed_you_should_restart_your_app_now)
-    val t2 = stringResource(R.string.there_was_an_error_copying_the_plugin)
-    val t3 = stringResource(R.string.there_was_an_error_installing_the_plugin)
-
-    LaunchedEffect(selectedFileUri.value) {
-        if(selectedFileUri.value != null) {
-            val contentResolver: ContentResolver = applicationContext.contentResolver
-            val pp = File(pluginPath)
-            if (!pp.exists()) {
-                pp.mkdir()
-            }
-            try {
-                if (copyFileFromUri(contentResolver, selectedFileUri.value!!, pp)) {
-                    Toast.makeText(
-                        context,
-                        t1,
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else
-                    Toast.makeText(context, t2, Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(context, t3, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        Text(stringResource(R.string.name_or_nickname),
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(fontSize = 18.sp),
-            modifier = Modifier.align(Alignment.Start))
-        Spacer(modifier = Modifier.height(4.dp))
-        OutlinedTextField(value = name.value, onValueChange = {it ->
-            name.value = it
-            saveButtonEnabled = !name.value.isNullOrEmpty()
-        })
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(colors = ButtonDefaults.buttonColors(
-            containerColor = Primary,
-            contentColor = OnPrimary
-        ),enabled = saveButtonEnabled, onClick = {
-            setName(name.value)
-            saveButtonEnabled = false
-        }) {
-            Text("Save Name")
-        }
-        Spacer(modifier = Modifier.height(8.dp))
         Text(
-            stringResource(R.string.language), fontWeight = FontWeight.Bold,
+            stringResource(R.string.personal_data), fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 18.sp),
             modifier = Modifier.align(Alignment.Start)
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         DropDownListbox(
             label = stringResource(R.string.select_preferred_language),
             stateHolder = stateHolderLanguage,
             modifier = Modifier.padding(16.dp)
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(value = name.value,
+            label = {Text(stringResource(R.string.name_or_nickname),)},
+            onValueChange = {it ->
+                name.value = it
+                nameChanged.value = true
+                saveButtonEnabled = true
+        })
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Text(
-            "Plugins", fontWeight = FontWeight.Bold,
+            "Storj", fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 18.sp),
             modifier = Modifier.align(Alignment.Start)
         )
-
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) {
-            items(items) { item ->
-                var deleted by remember { mutableStateOf(false) }
-
-                AnimatedVisibility(
-                    visible = !deleted,
-                    enter = expandVertically(),
-                    exit = shrinkVertically()
-                ) {
-                    val dismissState = rememberDismissState(
-                        confirmValueChange = { dismissValue ->
-                            if(dismissValue == DismissValue.DismissedToStart) {
-                                deleted = true
-                                onDelete(item)
-                                true
-                            } else {
-                                false
-                            }
-                        }
-                    )
-                    SwipeToDismiss(
-                        state = dismissState,
-                        background = {
-                            val direction =
-                                dismissState.dismissDirection ?: return@SwipeToDismiss
-                            val color by animateColorAsState(
-                                when (dismissState.targetValue) {
-                                    DismissValue.DismissedToStart -> Color.Red
-                                    else -> Color.LightGray
-                                }
-                            )
-                            val alignment = when (direction) {
-                                DismissDirection.EndToStart -> Alignment.CenterEnd
-                                else -> Alignment.CenterStart
-                            }
-                            val icon = Icons.Default.Delete
-                            val scale by animateFloatAsState(
-                                if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-                            )
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .background(color)
-                                    .padding(horizontal = 20.dp),
-                                contentAlignment = alignment
-                            ) {
-                                Icon(
-                                    icon,
-                                    contentDescription = "Localized description",
-                                    modifier = Modifier.scale(scale)
-                                )
-                            }
-                        },
-                        dismissContent = {
-                            Card () {
-                                ListItem(
-                                    headlineContent = {
-                                        Text(item.displayName, fontWeight = FontWeight.Bold)
-                                    },
-                                    supportingContent = { Text("Swipe left to uninstall.") },
-                                    trailingContent = {Text(item.version)}
-                                )
-                                Divider()
-                            }
-                        },
-                        directions = setOf(DismissDirection.EndToStart)
-                    )
-                }
-            }
-        }
-
         Spacer(modifier = Modifier.height(8.dp))
-        Button(
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Primary,
-                contentColor = OnPrimary
-            ),
+        OutlinedTextField(value = bucketName.value,
+            label = {Text("Bucket Name",)},
+            onValueChange = {it ->
+                bucketName.value = it
+                storjChanged.value = true
+                saveButtonEnabled = true
+        })
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(value = accessToken.value,
+            label = {Text("Access Token",)},
+            onValueChange = {it ->
+                accessToken.value = it
+                storjChanged.value = true
+                saveButtonEnabled = true
+        })
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(colors = ButtonDefaults.buttonColors(
+            containerColor = Primary,
+            contentColor = OnPrimary
+        ),enabled = saveButtonEnabled,
+            modifier = Modifier.fillMaxWidth(),
             onClick = {
-                filePickerLauncher.launch("application/vnd.android.package-archive")
-                }) {
-            Text("Install plugin")
+                if(nameChanged.value)
+                    setName(name.value)
+                if(storjChanged.value)
+                    setStorj(bucketName.value, accessToken.value)
+            saveButtonEnabled = false
+        }) {
+            Text(stringResource(R.string.save_changes))
+        }
+        Spacer(modifier = Modifier.height(32.dp))
+        Button(colors = ButtonDefaults.buttonColors(
+            containerColor = Primary,
+            contentColor = OnPrimary
+        ),
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { NavigationManager.navigate("plugin_settings") }) {
+            Text(stringResource(R.string.plugin_settings))
         }
     }
 }

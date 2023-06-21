@@ -15,7 +15,7 @@ android {
         minSdk 28
         targetSdk 33
         versionCode 1
-        versionName "1.2.32 Alpha"
+        versionName "1.2.37 Alpha"
 
         vectorDrawables {
             useSupportLibrary true
@@ -131,7 +131,9 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     //QR CODE
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'androidx.appcompat:appcompat-resources:1.6.1@aar'
+    implementation "androidx.compose.material:material-icons-extended"
 
-    implementation files('libs/libshift-debug-1.0.0.aar')
+    implementation files('libs/libshift-debug-1.1.0.aar')
 }
 
