@@ -3,7 +3,7 @@ After starting the app you should read the message, depending on your mobile you
 I just try to warn the users not to deinstall the app because of data loss.   
 
 In order to get benefits from inviting friends you have to use an invitation code. If you don't have one yet you can use mine   
-4634f957-8048-4a1d-bf1f-614047b7c622 
+4634f957-8048-4a1d-bf1f-614047b7c622   
 Thats the only reason for the next dialog. Just a name or nickname, the invite code and for us its important to see where you are located, so you have to select your country.  
 
 # Start Scooping LMC (Liquid Micro Coins)
