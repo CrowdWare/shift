@@ -1,6 +1,8 @@
 # First Start
 
-Here you will find a [video](https://youtu.be/52od5pRs2Ns) about the first steps in German language.
+
+Here you will find a [video](https://youtu.be/tJKrkFiTHNc) about the first steps.
+There is also a [German](https://youtu.be/52od5pRs2Ns) version.
 After starting the app you should read the message, depending on your mobile you might have to scroll down and then click the button.   
 I just try to warn the users not to deinstall the app because of data loss.   
 
