@@ -238,7 +238,7 @@ fun FriendListItem(friend: Friend) {
 @Preview(showBackground = true)
 @Composable
 fun FriendlistItemPreview() {
-    FriendListItem(friend = Friend("Hans Meiser", true, "788323754", "Brasil", 5))
+    FriendListItem(friend = Friend("Hans Meiser", true, "788323754", "Brasil", 5, false))
 }
 
 
