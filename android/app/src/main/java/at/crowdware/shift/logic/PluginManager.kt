@@ -20,7 +20,7 @@
 package at.crowdware.shift.logic
 
 import android.content.Context
-import at.crowdware.shift.ShiftPlugin
+import at.crowdware.shiftapi.ShiftPlugin
 import at.crowdware.shift.ui.widgets.NavigationItem
 import java.io.File
 import java.io.FileNotFoundException

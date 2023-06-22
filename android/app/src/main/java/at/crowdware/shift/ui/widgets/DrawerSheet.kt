@@ -19,15 +19,11 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.widgets
 
-import android.content.Context
-import android.util.DisplayMetrics
-import android.view.WindowManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -56,18 +52,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.R
-import at.crowdware.shift.ShiftPlugin
+import at.crowdware.shiftapi.ShiftPlugin
 import at.crowdware.shift.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import at.crowdware.shift.ui.theme.OnPrimary
 import at.crowdware.shift.ui.theme.Primary
 

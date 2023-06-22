@@ -63,4 +63,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    implementation files('libs/libshift-debug-1.1.0.aar')
+    implementation files('libs/shiftapi-debug.aar')
 }

@@ -16,3 +16,4 @@ rootProject.name = "Shift"
 
 include ':app'
 
+include ':shiftapi'

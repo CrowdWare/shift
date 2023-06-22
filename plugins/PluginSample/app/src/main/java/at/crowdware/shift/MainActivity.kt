@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import at.crowdware.shift.ui.theme.PluginSampleTheme
 import java.io.File
 import java.io.FileNotFoundException
+import at.crowdware.shiftapi.ShiftPlugin
 
 
 data class NavigationItem(val icon: ImageVector, val text: String, val id: String, val plugin: ShiftPlugin?, val index: Int)

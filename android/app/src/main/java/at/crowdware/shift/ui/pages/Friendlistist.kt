@@ -53,24 +53,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
-import at.crowdware.shift.logic.Friend
-import at.crowdware.shift.logic.getFriendsFromJSON
+import at.crowdware.shiftapi.Friend
 import at.crowdware.shift.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import at.crowdware.shift.ui.widgets.NavigationManager
+import at.crowdware.shiftapi.FriendApi
 
 import lib.Lib.getUuid
-import lib.Lib.getMatelist
 
 
 @Composable
@@ -93,8 +90,7 @@ fun Friendlist() {
     }
 
     LaunchedEffect(Unit) {
-        val json = getMatelist()
-        val friendlist = getFriendsFromJSON(json)
+        val friendlist = FriendApi.getFriendList()
         friendListState.value = friendlist
     }
     Box(modifier = Modifier.fillMaxSize()) {
