@@ -46,8 +46,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import at.crowdware.shift.R
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.ui.widgets.NavigationItem

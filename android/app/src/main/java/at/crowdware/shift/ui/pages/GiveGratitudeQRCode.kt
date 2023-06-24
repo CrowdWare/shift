@@ -39,8 +39,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shift.ui.widgets.TotalDisplay

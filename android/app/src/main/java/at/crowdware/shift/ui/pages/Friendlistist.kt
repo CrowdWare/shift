@@ -60,7 +60,7 @@ import androidx.compose.ui.unit.dp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shiftapi.Friend
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.ui.draw.rotate

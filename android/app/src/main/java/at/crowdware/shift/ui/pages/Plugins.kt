@@ -75,8 +75,8 @@ import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.Plugin
 import at.crowdware.shift.logic.PluginManager
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
 import lib.Lib
 import java.io.File
 import java.nio.file.Files

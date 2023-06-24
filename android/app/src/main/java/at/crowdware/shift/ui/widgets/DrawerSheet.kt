@@ -58,10 +58,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.R
 import at.crowdware.shiftapi.ShiftPlugin
-import at.crowdware.shift.ui.theme.ShiftComposeTheme
+import at.crowdware.shiftapi.ui.theme.ShiftComposeTheme
 import kotlinx.coroutines.launch
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
 
 data class NavigationItem( val id: String, val icon: ImageVector? = null, val text: String = "", val plugin: ShiftPlugin? = null, val index: Int = 0)
 

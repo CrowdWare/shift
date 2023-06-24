@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.PersistanceManager
+import at.crowdware.shiftapi.ui.widgets.AutoSizeText
 import java.text.NumberFormat
 import java.util.Locale
 

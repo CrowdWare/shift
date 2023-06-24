@@ -56,10 +56,10 @@ import androidx.compose.ui.unit.sp
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.PersistanceManager
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
-import at.crowdware.shift.ui.widgets.DropDownListbox
-import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
+import at.crowdware.shiftapi.ui.widgets.DropDownListbox
+import at.crowdware.shiftapi.ui.widgets.rememberDropDownListboxStateHolder
 
 @SuppressLint("FrequentlyChangedStateReadInComposition")
 @OptIn(ExperimentalMaterial3Api::class)

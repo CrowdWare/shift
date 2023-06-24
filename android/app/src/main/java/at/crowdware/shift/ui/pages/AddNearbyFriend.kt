@@ -57,8 +57,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationManager
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -104,7 +104,7 @@ fun AddNearbyFriend(mainActivity: MainActivity) {
                 return
             }
             mainActivity.barcodeView.pause()
-            val res = addPeerFromQRCode(result.text)
+            addPeerFromQRCode(result.text)
             openDialog.value = false
         }
     }

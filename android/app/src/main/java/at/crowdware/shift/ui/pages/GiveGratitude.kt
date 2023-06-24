@@ -41,11 +41,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
-import at.crowdware.shift.ui.theme.Tertiary
-import at.crowdware.shift.ui.theme.TertiaryError
-import at.crowdware.shift.ui.widgets.AutoSizeText
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.Tertiary
+import at.crowdware.shiftapi.ui.theme.TertiaryError
+import at.crowdware.shiftapi.ui.widgets.AutoSizeText
 import com.google.gson.Gson
 import lib.Lib.getBalanceInMillis
 import java.text.NumberFormat

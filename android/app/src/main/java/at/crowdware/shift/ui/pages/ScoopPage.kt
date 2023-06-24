@@ -54,10 +54,10 @@ import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
 import at.crowdware.shift.logic.getTransactionsFromJSON
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.OnSecondary
-import at.crowdware.shift.ui.theme.Primary
-import at.crowdware.shift.ui.theme.Secondary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.OnSecondary
+import at.crowdware.shiftapi.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.Secondary
 import at.crowdware.shift.ui.widgets.NavigationItem
 import kotlinx.coroutines.delay
 import at.crowdware.shift.ui.widgets.BalanceDisplay

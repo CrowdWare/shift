@@ -57,8 +57,8 @@ import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.ScanAgreement
 import at.crowdware.shift.ui.pages.ScoopPage
 import at.crowdware.shift.ui.pages.Settings
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch

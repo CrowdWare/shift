@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import at.crowdware.shiftapi.ui.widgets.CircularValuePicker
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

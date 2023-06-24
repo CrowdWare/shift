@@ -41,10 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import at.crowdware.shift.MainActivity
-import at.crowdware.shift.ui.theme.OnPrimary
-import at.crowdware.shift.ui.theme.Primary
-import at.crowdware.shift.ui.theme.Tertiary
-import at.crowdware.shift.ui.theme.TertiaryError
+import at.crowdware.shiftapi.ui.theme.OnPrimary
+import at.crowdware.shiftapi.ui.theme.Primary
+import at.crowdware.shiftapi.ui.theme.Tertiary
+import at.crowdware.shiftapi.ui.theme.TertiaryError
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.journeyapps.barcodescanner.BarcodeCallback
