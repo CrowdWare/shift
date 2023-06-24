@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,10 +42,11 @@ import java.nio.file.WatchEvent
 
 @Composable
 fun Chat() {
+    MessageManager.initialize(context = LocalContext.current)
     val messageListState = remember { mutableStateOf(emptyList<Message>()) }
 
     LaunchedEffect(Unit) {
-        val list = MessageManager.getMessages()
+        val list = MessageManager.getPeerMessages()
         messageListState.value = list
     }
 
@@ -55,7 +57,6 @@ fun Chat() {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
             if (messageListState.value.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
@@ -88,7 +89,7 @@ fun MessageListItem(msg: Message) {
         ) {
             RoundInitialImage(
                 name = msg.Name,
-                size = 45.dp,
+                size = 60.dp,
                 backgroundColor = Secondary,
                 textColor = Color.White.toArgb(),
                 textSize = 60.sp
@@ -100,10 +101,11 @@ fun MessageListItem(msg: Message) {
                 Text(text = msg.Name, fontWeight = FontWeight.Bold)
                 Text(text = "${msg.Message}", maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.width(250.dp))
+                    modifier = Modifier.width(300.dp))
             }
             Column() {
                 Text(text=msg.Time)
+                Text(text = "")
             }
         }
     }
@@ -113,5 +115,5 @@ fun MessageListItem(msg: Message) {
 @Preview
 @Composable
 fun MessageListItemPreview() {
-    MessageListItem(msg = Message("Hans Meiser", "Hallo wie geht es Dir? Diese Nachricht ist etwas länger.",  "1234",  "12:56"))
+    MessageListItem(msg = Message("","Hans Meiser", "Hallo wie geht es Dir? Diese Nachricht ist etwas länger.",  "1234",  "12:56"))
 }
