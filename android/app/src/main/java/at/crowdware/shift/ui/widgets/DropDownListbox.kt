@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shiftapi.ui.widgets
+package at.crowdware.shift.ui.widgets
 
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -50,7 +50,7 @@ import kotlin.math.min
 
 fun readCountryData(context: Context): List<String> {
     val gson = GsonBuilder().create()
-    val json = context.resources.openRawResource(R.raw.countries).bufferedReader().use { it.readText() }
+    val json = context.resources.openRawResource(at.crowdware.shift.R.raw.countries).bufferedReader().use { it.readText() }
     val countryList = gson.fromJson(json, Array<Country>::class.java)
     return countryList.map { it.Name }
 }

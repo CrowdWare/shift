@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,13 +30,7 @@ import at.crowdware.shift.plugin.logic.Message
 import at.crowdware.shift.plugin.logic.MessageManager
 import at.crowdware.shift.plugin.ui.widgets.RoundInitialImage
 import at.crowdware.shiftapi.ui.theme.Secondary
-import at.crowdware.shiftapi.Friend
-import at.crowdware.shiftapi.FriendApi
-
-import at.crowdware.shiftapi.deletePeerMessage
-import at.crowdware.shiftapi.doesPeerMessageExist
-import at.crowdware.shiftapi.sendPeerMessage
-import java.nio.file.WatchEvent
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -45,9 +38,12 @@ fun Chat() {
     MessageManager.initialize(context = LocalContext.current)
     val messageListState = remember { mutableStateOf(emptyList<Message>()) }
 
-    LaunchedEffect(Unit) {
-        val list = MessageManager.getPeerMessages()
-        messageListState.value = list
+    LaunchedEffect(true) {
+        while (true) {
+            val list = MessageManager.getPeerMessages()
+            messageListState.value = list
+            delay(3000L)
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

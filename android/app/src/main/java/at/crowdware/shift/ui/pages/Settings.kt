@@ -43,8 +43,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.logic.LocaleManager
-import at.crowdware.shiftapi.ui.widgets.DropDownListbox
-import at.crowdware.shiftapi.ui.widgets.rememberDropDownListboxStateHolder
+import at.crowdware.shift.ui.widgets.DropDownListbox
+import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults

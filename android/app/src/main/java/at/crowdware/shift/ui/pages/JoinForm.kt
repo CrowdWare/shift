@@ -50,9 +50,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.R
-import at.crowdware.shiftapi.ui.widgets.DropDownListbox
-import at.crowdware.shiftapi.ui.widgets.readCountryData
-import at.crowdware.shiftapi.ui.widgets.rememberDropDownListboxStateHolder
+import at.crowdware.shift.ui.widgets.DropDownListbox
+import at.crowdware.shift.ui.widgets.readCountryData
+import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.Primary
 

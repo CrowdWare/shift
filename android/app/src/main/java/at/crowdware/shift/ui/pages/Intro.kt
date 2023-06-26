@@ -58,8 +58,8 @@ import at.crowdware.shift.logic.LocaleManager
 import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.Primary
-import at.crowdware.shiftapi.ui.widgets.DropDownListbox
-import at.crowdware.shiftapi.ui.widgets.rememberDropDownListboxStateHolder
+import at.crowdware.shift.ui.widgets.DropDownListbox
+import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 
 @SuppressLint("FrequentlyChangedStateReadInComposition")
 @OptIn(ExperimentalMaterial3Api::class)

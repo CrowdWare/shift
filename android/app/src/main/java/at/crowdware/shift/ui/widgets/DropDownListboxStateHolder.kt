@@ -17,7 +17,7 @@
  *  along with SHIFT.  If not, see <http://www.gnu.org/licenses/>.
  *
  ****************************************************************************/
-package at.crowdware.shiftapi.ui.widgets
+package at.crowdware.shift.ui.widgets
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
