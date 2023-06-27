@@ -71,6 +71,7 @@ import lib.Lib.getScoopedBalance
 import lib.Lib.getScoopingHours
 import lib.Lib.getTransactions
 import lib.Lib.getUuid
+import lib.Lib.getEncodedUuid
 
 @Composable
 fun ScoopPage(isPreview: Boolean = false) {
@@ -82,7 +83,8 @@ fun ScoopPage(isPreview: Boolean = false) {
             stringResource(
                 id = R.string.invite_message,
                 stringResource(id = R.string.website_url),
-                getUuid()
+                getUuid(),
+                getEncodedUuid()
             )
         )
         type = "text/plain"

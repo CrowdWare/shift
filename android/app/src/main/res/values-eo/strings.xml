@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="icon">Shift-Ikono</string>
-    <string name="website_url">http://shift.crowdware.at</string>
+    <string name="website_url">http://shift.crowdware.at/index-eo.html</string>
     <string name="button_start_scooping">Startigi ŝarĝadon</string>
     <string name="button_invite_friends">Inviti amikojn</string>
     <string name="balance">Saldo</string>
@@ -62,7 +62,6 @@
     <string name="scan_the_qr_code_to_finalize_the_transaction">Skenu la QR-kodon por finfini la transakcion.</string>
     <string name="giver_app_not_original">Bonvolu informi la donanton, ke li aŭ ŝi ne uzas la originalan aplikaĵon de CrowdWare.</string>
     <string name="press_button_to_book_in_the_amount">Premu la butonon por rezervi la sumon.</string>
-    <string name="invite_message" formatted="false">SHIFT estas nova aplikaĵo por mobilaj aparatoj. Nun vi povas ricevi viajn unuajn likvidajn mikromonerojn, se vi sekvas ĉi tiun ligilon %s, elŝutas la aplikaĵon, lanĉas ĝin kaj uzas ĉi tiun kodon\n%s kiel invitan kodon.</string>
     <string name="about_dialog_text">SHIFT KUNIGAS NIN ĈIUN\nSHIFT estas sencentra kaj tial ne funkcias sur servilo.\nVia SHIFT-konto estas anonima, nur viaj realaj amikoj scias, kiu estas malantaŭ via konto.\nNeniu registrado necesas.\nNeniu servilo signifas ankaŭ neniun cenzuron kaj neniujn reklamojn.\nSHIFT ankaŭ kreas likvidajn mikromonerojn kaj povas esti uzata por montri dankon al aliaj membroj.</string>
     <string name="button_scan_agreement">Skani la konsenton</string>
     <string name="button_grant_camera_permission">Permesi kamero-permeson</string>
@@ -96,5 +95,6 @@
     <string name="you_have_not_entered_storj">Ŝajnas, ke vi ankoraŭ ne enigis la Storj-atestilon. Ni bezonas tiun memorejon por konservi mesaĝojn, blogaĵojn, bildojn kaj similajn. Bonvolu iri al la retejo de Storj ĉe </string>
     <string name="you_have_not_entered_storj_part2">, kreu liberkonton kun 25 GB da spaco, aldonu "bucket"-on, kreu akceskodon kun permeso skribi, listi, forviŝi, kaj enigu tiujn aŭtentigaĵojn en la agordopagxo de tiu ĉi aplikaĵo. Poste revenu ĉi tien.</string>
     <string name="scan_the_qr_code_to_get_the_keys">Skaniu la QR-kodon por ricevi la ŝlosilojn.</string>
+    <string name="invite_message" formatted="false">SHIFT estas nova aplikaĵo por mobilaj aparatoj. Nun akiru viajn unuajn likvidajn mikro-monerojn, sekvante ĉi tiun ligilon %s, elŝutu la aplikaĵon, lanĉu ĝin kaj uzu ĉi tiun %s aŭ ĉi tiun %s kiel invitsignokodon.</string>
 
 </resources>

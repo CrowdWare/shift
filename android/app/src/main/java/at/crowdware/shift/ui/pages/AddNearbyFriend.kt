@@ -82,7 +82,7 @@ fun AddNearbyFriend(mainActivity: MainActivity) {
     }
     var code = remember { mutableStateOf(getPeerQRCode()) }
     val annotatedString = buildAnnotatedString {
-        append(stringResource(R.string.you_have_not_entered_storj))
+        append(stringResource(R.string.you_have_not_entered_storj) + " ")
         pushStringAnnotation("URL", "https://www.storj.io/")
         withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
             append("https://www.storj.io/")

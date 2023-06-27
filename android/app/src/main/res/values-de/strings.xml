@@ -1,6 +1,6 @@
 <resources>
     <string name="icon">Shift-Icon</string>
-    <string name="website_url">http://shift.crowdware.at</string>
+    <string name="website_url">http://shift.crowdware.at/index-de.html</string>
     <string name="button_start_scooping">Schöpfen starten</string>
     <string name="button_invite_friends">Freunde einladen</string>
     <string name="balance">Kontostand</string>
@@ -61,7 +61,7 @@
     <string name="scan_the_qr_code_to_finalize_the_transaction">Scanne den QR-Code, um die Transaktion abzuschließen.</string>
     <string name="giver_app_not_original">Bitte teile dem Geber mit, dass er oder sie nicht die Original-App von CrowdWare verwendet.</string>
     <string name="press_button_to_book_in_the_amount">Bitte den Button drücken, um den Betrag anzunehmen.</string>
-    <string name="invite_message" formatted="false">SHIFT ist eine neue App für Mobilgeräte. Hole Dir jetzt Deine ersten Liquid Micro Coins, indem Du diesem Link folgst: %s, lade die App herunter, starte sie und verwende diesen Code\n%s als Einladungscode.</string>
+    <string name="invite_message" formatted="false">SHIFT ist eine neue App für Mobilgeräte. Hole Dir jetzt Deine ersten Liquid Micro Coins, indem Du diesem Link folgst: %s, lade die App herunter, starte sie und verwende diesen %s oder diesen %s Code als Einladungscode.</string>
     <string name="about_dialog_text">SHIFT VERBINDET UNS ALLE\nSHIFT ist dezentralisiert und läuft daher nicht auf einem Server.\nDein SHIFT-Konto ist anonym, nur Deine Freunde wissen, wer sich hinter Deinem Konto verbirgt.\nKeine Registrierung erforderlich.\nKein Server bedeutet auch keine Zensur und keine Werbung.\nSHIFT erzeugt auch Liquid Micro Coins und kann verwendet werden, um anderen Mitgliedern Dankbarkeit zu zeigen.</string>
     <string name="button_scan_agreement">Vereinbarung Scannen</string>
     <string name="button_grant_camera_permission">Kameraberechtigung gewähren</string>

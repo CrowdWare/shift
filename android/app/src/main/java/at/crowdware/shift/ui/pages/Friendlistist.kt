@@ -116,20 +116,6 @@ fun Friendlist() {
                 Text(stringResource(R.string.invite_advertise))
             }
             Spacer(modifier = Modifier.height(16.dp))
-            /*
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Primary,
-                    contentColor = OnPrimary
-                ),
-                onClick = { context.startActivity(shareIntent) },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    stringResource(R.string.button_invite_friends),
-                    style = TextStyle(fontSize = 20.sp)
-                )
-            }*/
         }
         FloatingActionButton(
             onClick = {

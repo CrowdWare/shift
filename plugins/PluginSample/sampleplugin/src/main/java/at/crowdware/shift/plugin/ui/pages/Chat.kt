@@ -10,7 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -29,12 +35,16 @@ import androidx.compose.ui.unit.sp
 import at.crowdware.shift.plugin.logic.Message
 import at.crowdware.shift.plugin.logic.MessageManager
 import at.crowdware.shift.plugin.ui.widgets.RoundInitialImage
+import at.crowdware.shiftapi.FriendApi
+import at.crowdware.shiftapi.sendPeerMessage
+import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shiftapi.ui.theme.Secondary
 import kotlinx.coroutines.delay
 
 
 @Composable
 fun Chat() {
+    val friends = FriendApi.getFriendList()
     MessageManager.initialize(context = LocalContext.current)
     val messageListState = remember { mutableStateOf(emptyList<Message>()) }
 
@@ -63,7 +73,31 @@ fun Chat() {
                         MessageListItem(msg = messageListState.value[index])
                     }
                 }
+            } else {
+                Text("There are no massages yet. Start clicking the [+] button to send a message.")
             }
+        }
+        FloatingActionButton(
+            onClick = {
+                for (friend in friends) {
+                    if(friend.HasPeerDat) {
+                        println("Sending a message to ${friend.Name} ${friend.Uuid}")
+                        sendPeerMessage(friend.Uuid, "Hello, greetings from me.")
+                    }
+                }
+            },
+            containerColor = Primary,
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.BottomEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Add,
+                contentDescription = "Add Friend",
+                tint = Color.White,
+                //modifier = Modifier.rotate(rotationState)
+            )
         }
     }
 }
