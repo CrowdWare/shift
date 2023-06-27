@@ -46,7 +46,7 @@ import kotlinx.coroutines.delay
 fun Chat() {
     val friends = FriendApi.getFriendList()
     MessageManager.initialize(context = LocalContext.current)
-    val messageListState = remember { mutableStateOf(emptyList<Message>()) }
+    val messageListState = remember { mutableStateOf(MessageManager.getPeerMessages()) }
 
     LaunchedEffect(true) {
         while (true) {
@@ -80,6 +80,7 @@ fun Chat() {
         FloatingActionButton(
             onClick = {
                 for (friend in friends) {
+                    println("Friend: ${friend.Name} ${friend.Uuid}")
                     if(friend.HasPeerDat) {
                         println("Sending a message to ${friend.Name} ${friend.Uuid}")
                         sendPeerMessage(friend.Uuid, "Hello, greetings from me.")

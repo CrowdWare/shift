@@ -96,5 +96,6 @@
     <string name="you_have_not_entered_storj_part2">, crea una cuenta gratuita con 25 GB de espacio libre, agrega un bucket, crea un token de acceso con permisos de escritura, listado y eliminación, e ingresa estas credenciales en la página de configuración de esta aplicación. Luego regresa aquí.</string>
     <string name="scan_the_qr_code_to_get_the_keys">Escanee el código QR para obtener las claves.</string>
     <string name="invite_message" formatted="false">SHIFT es una nueva aplicación para móviles. Obtén tus primeras micro monedas líquidas ahora, siguiendo este enlace %s, descarga la aplicación, iníciala y usa este código de invitación %s o %s.</string>
+    <string name="qr_scanned_peer_added">El código QR ha sido escaneado y el par se ha añadido.</string>
 
 </resources>

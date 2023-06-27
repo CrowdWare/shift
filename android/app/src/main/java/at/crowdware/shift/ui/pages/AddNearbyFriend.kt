@@ -73,10 +73,11 @@ import lib.Lib.getPeerQRCode
 @Composable
 fun AddNearbyFriend(mainActivity: MainActivity) {
     val openDialog = remember { mutableStateOf(false) }
+    val scanned = remember { mutableStateOf(false) }
     if (openDialog.value) {
         QRScanDialog(
             openDialog = openDialog.value,
-            onDismiss = { openDialog.value = false },
+            onDismiss = { openDialog.value = false;  scanned.value = true},
             mainActivity = mainActivity
         )
     }
@@ -159,8 +160,16 @@ fun AddNearbyFriend(mainActivity: MainActivity) {
                 value = code.value
             )
             Spacer(modifier = Modifier.height(8.dp))
+            if (scanned.value) {
+                Text(stringResource(R.string.qr_scanned_peer_added))
+                Spacer(modifier = Modifier.height(8.dp))
+            }
             if (permissionState.allPermissionsGranted) {
-                Button(onClick = { openDialog.value = true }) {
+                Button(colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = OnPrimary
+                ),
+                    onClick = { openDialog.value = true }) {
                     Text("Open Camera")
                 }
             } else {
@@ -168,7 +177,10 @@ fun AddNearbyFriend(mainActivity: MainActivity) {
                     multiplePermissionsState = permissionState,
                     mainActivity.barcodeView
                 )
-                Button(
+                Button(colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = OnPrimary
+                ),
                     onClick = { permissionState.launchMultiplePermissionRequest() },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
@@ -180,18 +192,6 @@ fun AddNearbyFriend(mainActivity: MainActivity) {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Button(
-            onClick = {
-                NavigationManager.navigate("friendlist")
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Primary,
-                contentColor = OnPrimary
-            ),
-        ) {
-            Text(stringResource(R.string.button_done), style = TextStyle(fontSize = 20.sp))
-        }
     }
 }
 

@@ -28,7 +28,7 @@ sealed class ApiResponse<out T> {
     data class Error(val error: String) : ApiResponse<Nothing>()
 }
 
-data class Message(val Key: String, val From: String, val Message: String, val Time: String, val Read: Boolean)
+data class Message(val Key: String, val From: String, val PeerUuid: String, val Message: String, val Time: String, val Read: Boolean)
 
 /**
  * Sends a message to a peer identified by the specified UUID.
@@ -106,6 +106,7 @@ private fun getMessageFromJSON(jsonString: String): List<Message> {
         val msg = Message(
             jsonObject.getString("Key"),
             jsonObject.getString("From"),
+            jsonObject.getString("PeerUuid"),
             jsonObject.getString("Message"),
             jsonObject.getString("Time"),
             jsonObject.getBoolean("Read")

@@ -21,6 +21,7 @@ package at.crowdware.shift.ui.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
@@ -72,25 +73,26 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
     val receiveViewModel = viewModel<ReceiveViewModel>()
     val giveViewModel = viewModel<GiveViewModel>()
     val title = remember { mutableStateOf("SHIFT") }
+    var navTarget = remember { mutableStateOf("") }
 
     NavHost(navController = navController, startDestination = "home") {
         for(index in items.indices) {
             composable(items[index].id) {
                 when(items[index].id) {
-                    "home" -> title.value = "SHIFT"
-                    "friendlist" -> title.value = stringResource(R.string.friendlist)
-                    "settings" -> title.value = stringResource(R.string.settings)
-                    "receive_gratitude" -> title.value = stringResource(R.string.receive_gratitude)
-                    "receive_gratitude_qrcode" -> title.value = stringResource(R.string.receive_gratitude)
-                    "give_gratitude" -> title.value = stringResource(R.string.give_gratitude)
-                    "give_gratitude_qrcode" -> title.value = stringResource(R.string.give_gratitude)
-                    "scan_agreement" -> title.value = stringResource(R.string.receive_gratitude)
-                    "plugin_settings" -> title.value = stringResource(R.string.plugin_settings)
-                    "add_remote_friend" -> title.value = stringResource(R.string.add_remote_friend)
-                    "add_nearby_friend" -> title.value = stringResource(R.string.add_nearby_friend)
-                    else -> title.value = items[index].text
+                    "home" -> {title.value = "SHIFT";navTarget.value = ""}
+                    "friendlist" -> {title.value = stringResource(R.string.friendlist);navTarget.value = ""}
+                    "settings" -> {title.value = stringResource(R.string.settings);navTarget.value = ""}
+                    "receive_gratitude" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
+                    "receive_gratitude_qrcode" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
+                    "give_gratitude" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "home"}
+                    "give_gratitude_qrcode" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "home"}
+                    "scan_agreement" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
+                    "plugin_settings" -> {title.value = stringResource(R.string.plugin_settings);navTarget.value = "settings"}
+                    "add_remote_friend" -> {title.value = stringResource(R.string.add_remote_friend);navTarget.value = "friendlist"}
+                    "add_nearby_friend" -> {title.value = stringResource(R.string.add_nearby_friend);navTarget.value = "friendlist"}
+                    else -> {title.value = items[index].text;navTarget.value = "home"}
                 }
-                NavigationDrawer(items, selectedItem, title.value) {
+                NavigationDrawer(items, selectedItem, title.value, navTarget.value) {
                     when(items[index].id) {
                         // have a look at MainActivity for navigation
                         "home" -> ScoopPage()
@@ -121,6 +123,7 @@ fun NavigationDrawer(
     items: List<NavigationItem>,
     selectedItem: MutableState<String>,
     title: String,
+    navTarget: String = "",
     content: @Composable () -> Unit
 ) {
     val openDialog = remember { mutableStateOf(false) }
@@ -148,8 +151,14 @@ fun NavigationDrawer(
                         actionIconContentColor = OnPrimary
                     ),
                     navigationIcon = {
-                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                            Icon(Icons.Filled.Menu, contentDescription = null)
+                        if(navTarget != "") {
+                            IconButton(onClick = { NavigationManager.navigate(navTarget)}) {
+                                Icon(Icons.Filled.ArrowBack, contentDescription = null)
+                            }
+                        } else {
+                            IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                Icon(Icons.Filled.Menu, contentDescription = null)
+                            }
                         }
                     },
                     actions = {

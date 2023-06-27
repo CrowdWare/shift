@@ -14,7 +14,11 @@ object MessageManager {
 
         // TODO: This should be done in a non blocking coroutine
         refreshMessages()
-        getMessages()
+        val list = getMessages()
+        messages.clear()
+        for(msg in list) {
+            messages.add(Message(Key = msg.Key, Name = msg.From, Message = msg.Message, PeerUuid = msg.PeerUuid, Time = msg.Time))
+        }
     }
 
     fun getPeerMessages(): List<Message>{

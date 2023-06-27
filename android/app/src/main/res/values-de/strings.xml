@@ -95,5 +95,6 @@
     <string name="you_have_not_entered_storj">Es scheint, als hättest Du die Storj-Anmeldeinformationen noch nicht eingegeben. Wir benötigen diesen Speicher, um Nachrichten, Blogposts, Bilder und Ähnliches zu speichern. Bitte besuche die Website von Storj unter </string>
     <string name="you_have_not_entered_storj_part2">, erstelle dort ein kostenloses Konto mit 25 GB freiem Speicherplatz, füge einen Bucket hinzu, erstelle einen Zugriffs-Token mit Schreib-, Listen- und Löschberechtigung und gebe diese Anmeldeinformationen in der Einstellungsseite dieser App ein. Komme dann hierher zurück.</string>
     <string name="scan_the_qr_code_to_get_the_keys">Scanne den QR-Code, um die Schlüssel zu erhalten.</string>
+    <string name="qr_scanned_peer_added">Der QR-Code wurde gescannt und der Teilnehmer wurde hinzugefügt.</string>
 
 </resources>

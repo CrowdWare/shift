@@ -96,5 +96,6 @@
     <string name="you_have_not_entered_storj_part2">, kreu liberkonton kun 25 GB da spaco, aldonu "bucket"-on, kreu akceskodon kun permeso skribi, listi, forviŝi, kaj enigu tiujn aŭtentigaĵojn en la agordopagxo de tiu ĉi aplikaĵo. Poste revenu ĉi tien.</string>
     <string name="scan_the_qr_code_to_get_the_keys">Skaniu la QR-kodon por ricevi la ŝlosilojn.</string>
     <string name="invite_message" formatted="false">SHIFT estas nova aplikaĵo por mobilaj aparatoj. Nun akiru viajn unuajn likvidajn mikro-monerojn, sekvante ĉi tiun ligilon %s, elŝutu la aplikaĵon, lanĉu ĝin kaj uzu ĉi tiun %s aŭ ĉi tiun %s kiel invitsignokodon.</string>
+    <string name="qr_scanned_peer_added">La QR-kodo estis skanita kaj la kunulo estis aldonita.</string>
 
 </resources>

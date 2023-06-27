@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Photo
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
@@ -64,8 +65,10 @@ import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationItem
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
 import at.crowdware.shift.ui.widgets.NavigationManager
 import at.crowdware.shiftapi.FriendApi
+import lib.Lib
 
 import lib.Lib.getUuid
 
@@ -74,7 +77,7 @@ import lib.Lib.getUuid
 fun Friendlist() {
     var isMenuOpen by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(if (isMenuOpen) 45f else 0f)
-
+    val context = LocalContext.current
     val friendListState = remember { mutableStateOf(emptyList<Friend>()) }
     var errorMessage by remember { mutableStateOf("") }
     val sendIntent: Intent = Intent().apply {
@@ -83,11 +86,14 @@ fun Friendlist() {
             Intent.EXTRA_TEXT,
             stringResource(
                 id = R.string.invite_message,
-                stringResource(id = R.string.website_url), getUuid()
+                stringResource(id = R.string.website_url),
+                getUuid(),
+                Lib.getEncodedUuid()
             )
         )
         type = "text/plain"
     }
+    val shareIntent = Intent.createChooser(sendIntent, null)
 
     LaunchedEffect(Unit) {
         val friendlist = FriendApi.getFriendList()
@@ -149,6 +155,24 @@ fun Friendlist() {
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                 ) {
+                    Text(text = stringResource(R.string.button_invite_friends), modifier = Modifier.padding(vertical = 16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
+                    FloatingActionButton(
+                        onClick = { context.startActivity(shareIntent) },
+                        containerColor = Primary,
+                        modifier = Modifier.padding(bottom = 144.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Photo,
+                            contentDescription = "Invite friend",
+                            tint = Color.White,
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                ) {
                     Text(text = stringResource(R.string.add_remote_friend), modifier = Modifier.padding(vertical = 16.dp))
                     Spacer(modifier = Modifier.width(16.dp))
                     FloatingActionButton(
@@ -203,8 +227,10 @@ fun FriendListItem(friend: Friend) {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = friend.Name, fontWeight = FontWeight.Bold)
-                Text(text = friend.Country)
-                Text(friend.FriendsCount.toString() + stringResource(R.string.friends_invited))
+                if(friend.Country != "")
+                    Text(text = friend.Country)
+                if(friend.FriendsCount > 0)
+                    Text(friend.FriendsCount.toString() + stringResource(R.string.friends_invited))
             }
             if (friend.Scooping) {
                 Text(stringResource(R.string.is_scooping), modifier = Modifier.padding(16.dp))
