@@ -106,14 +106,11 @@ If you transfer an amount of LMC to a faked mobile app. It doesn't matter. The g
 If someone wants to transfer LMC to your account, then your app will not accept this transfer due to incorrect decrypted data.
 
 # Open Source
-I personally like software to be open source and free to use, but we have decided to make the Android code open source and the business logic and the webservice close source.  
-The reason why we are doing this, is to keep our app secure from fraudulent attacks.  
-We have to be sure that when accepting gratitude from another app, that this app is also the original version and not a faked version where the app might start with a much higher balance or is scooping higher amounts of LMC.  
-Therefore we have coded the business logic in Go which results in native machine code which is harder to reverse engineer than Kotlin code, which we had before. And we closed the source, to make it even harder for attackers. Also we are changing the encryption keys on a daily base and we don't want attackers to see how we are archiving this.
+We have to be sure that when accepting gratitude from another app, that this app is also the original version and not a faked version where the app might start with a much higher balance or is scooping higher amounts of LMC. So we wrote the logic in Go which produces native machine code which makes a bit harder for hackers.
 
 # Forking
 You might of course fork this repo for your needs.  
-But please keep in mind that if you would also deliver the same or a similar app it will not be compatible with our app because we are using API keys which are not public for security reasons.  So the users of your app will not be able to interact with users of our app.   
+But please keep in mind that if you would also deliver the same or a similar app, it will not be compatible with our app because we are using API keys which are not public for security reasons.  So the users of your app will not be able to interact with users of our app.   
 
 If you like to enhance this app instead then build a plugin and publish it to our users, so that they can install it.   
 
