@@ -47,11 +47,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.widgets.DropDownListbox
-import at.crowdware.shift.ui.widgets.readCountryData
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.Primary
@@ -65,9 +63,6 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
-    //val continents = remember { mutableListOf("Africa","Antarctica", "Asia", "Europe", "North America", "Oceania", "South America") }
-    //val countries = readCountryData(LocalContext.current.applicationContext)
-    //val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
     val stateHolderContinents = rememberDropDownListboxStateHolder(mutableListOf("Africa","Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"))
     val enter_name = stringResource(R.string.please_enter_your_name)
     val enter_invite = stringResource(R.string.please_enter_the_invitation_code )

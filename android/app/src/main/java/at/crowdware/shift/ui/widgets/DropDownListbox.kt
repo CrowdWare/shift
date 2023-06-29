@@ -48,13 +48,6 @@ import at.crowdware.shiftapi.R
 import com.google.gson.GsonBuilder
 import kotlin.math.min
 
-fun readCountryData(context: Context): List<String> {
-    val gson = GsonBuilder().create()
-    val json = context.resources.openRawResource(at.crowdware.shift.R.raw.countries).bufferedReader().use { it.readText() }
-    val countryList = gson.fromJson(json, Array<Country>::class.java)
-    return countryList.map { it.Name }
-}
-
 data class Country(val Name: String, val Code: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -112,12 +105,4 @@ fun DropDownListbox(label: String, stateHolder: DropDownListboxStateHolder, modi
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CountrySelectorPreview() {
-    val countries = readCountryData(LocalContext.current.applicationContext)
-    val stateHolder = rememberDropDownListboxStateHolder(countries)
-    DropDownListbox(label = "Country", stateHolder = stateHolder)
 }
