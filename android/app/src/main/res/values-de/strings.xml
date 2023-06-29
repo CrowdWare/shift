@@ -35,7 +35,7 @@
     <string name="button_continue">Weiter</string>
     <string name="transaction_liquid_scooped">Geschöpfte Liquid</string>
     <string name="transaction_initial_liquid">Initiale Liquid</string>
-    <string name="please_select_your_country">Bitte wähle Sein Ihr Land aus.</string>
+    <string name="please_select_your_continent">Bitte wähle Dein Kontinent aus.</string>
     <string name="please_enter_the_invitation_code">Bitte gebe den Einladungscode ein.</string>
     <string name="please_enter_your_name">Bitte gebe Deinen Namen ein!</string>
     <string name="servive_start_request_message">Du bist dabei, einen Dienst zu starten, der im Hintergrund Liquid schöpfen wird, auch wenn Du diese App schließen solltest. Bitte beachte, dass der Schöpfprozess angehalten wird, wenn Du diesen Dienst stoppen solltest, bis Du die App erneut startetest.</string>

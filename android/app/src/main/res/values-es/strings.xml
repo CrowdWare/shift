@@ -36,7 +36,7 @@
     <string name="button_continue">Continuar</string>
     <string name="transaction_liquid_scooped">Líquido recogido</string>
     <string name="transaction_initial_liquid">Líquido inicial</string>
-    <string name="please_select_your_country">Por favor, seleccione su país.</string>
+    <string name="please_select_your_continent">Por favor, selecciona tu continente.</string>
     <string name="please_enter_the_invitation_code">Por favor, ingrese el código de invitación.</string>
     <string name="please_enter_your_name">Por favor, ingrese su nombre.</string>
     <string name="servive_start_request_message">Estás a punto de iniciar un servicio que va a recolectar líquido en segundo plano, incluso cuando cierres esta aplicación. Por favor, ten en cuenta que cuando detengas este servicio, el proceso de recolección se pausará hasta que vuelvas a iniciar la aplicación.</string>

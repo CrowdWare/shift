@@ -65,11 +65,13 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
-    val countries = readCountryData(LocalContext.current.applicationContext)
-    val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
+    //val continents = remember { mutableListOf("Africa","Antarctica", "Asia", "Europe", "North America", "Oceania", "South America") }
+    //val countries = readCountryData(LocalContext.current.applicationContext)
+    //val stateHolderCountry = rememberDropDownListboxStateHolder(countries)
+    val stateHolderContinents = rememberDropDownListboxStateHolder(mutableListOf("Africa","Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"))
     val enter_name = stringResource(R.string.please_enter_your_name)
     val enter_invite = stringResource(R.string.please_enter_the_invitation_code )
-    val enter_country = stringResource(R.string.please_select_your_country)
+    val enter_country = stringResource(R.string.please_select_your_continent)
     val invalid_invite = stringResource(R.string.invalid_inviation_code)
     val internal_error = stringResource(R.string.a_network_error_occurred)
     Column(
@@ -107,8 +109,8 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         DropDownListbox(
-            label = stringResource(R.string.select_your_country),
-            stateHolder = stateHolderCountry
+            label = stringResource(R.string.please_select_your_continent),
+            stateHolder = stateHolderContinents//stateHolderCountry
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -123,14 +125,14 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
                     errorMessage = enter_name
                 } else if(friend.isNullOrEmpty()) {
                     errorMessage = enter_invite
-                } else if(stateHolderCountry.value.isNullOrEmpty()) {
+                } else if(stateHolderContinents.value.isNullOrEmpty()) {
                     errorMessage = enter_country
                 } else {
                     val res = createAccount(
                         name,
                         UUID.randomUUID().toString(),
                         friend,
-                        stateHolderCountry.value,
+                        stateHolderContinents.value,
                         language
                     )
                     if (res == 0L)

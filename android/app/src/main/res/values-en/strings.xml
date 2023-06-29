@@ -36,7 +36,7 @@
     <string name="button_continue">Continue</string>
     <string name="transaction_liquid_scooped">Liquid scooped</string>
     <string name="transaction_initial_liquid">Initial liquid</string>
-    <string name="please_select_your_country">Please select your country.</string>
+    <string name="please_select_your_continent">Please select your continent.</string>
     <string name="please_enter_the_invitation_code">Please enter the invitation code.</string>
     <string name="please_enter_your_name">Please enter your name!</string>
     <string name="servive_start_request_message">You are about to start a service which will scoop liquid in the background, even when you close this app. Please be aware, that when you stop this service the scooping process will be paused until you start the app again.</string>
