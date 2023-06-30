@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "at.crowdware.shift.sampleplugin"
-        minSdk 28
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -64,6 +64,6 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
-    implementation files('libs/libshift-debug-1.1.0.aar')
-    implementation files('libs/shiftapi-debug.aar')
+    implementation files('libs/libshift-debug-1.2.0.aar')
+    implementation files('../../../android/shiftapi/build/outputs/aar/shiftapi-debug.aar')
 }
