@@ -12,10 +12,10 @@ android {
     }
     defaultConfig {
         applicationId "at.crowdware.shift"
-        minSdk 28
+        minSdk 21
         targetSdk 33
         versionCode 1
-        versionName "1.2.44 Alpha"
+        versionName "1.2.46 Beta"
 
         vectorDrawables {
             useSupportLibrary true

@@ -48,7 +48,6 @@ import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
 import at.crowdware.shift.ui.pages.AddNearbyFriend
-import at.crowdware.shift.ui.pages.AddRemoteFriend
 import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.GiveGratitude
 import at.crowdware.shift.ui.pages.GiveGratitudeQRCode
@@ -88,7 +87,6 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                     "give_gratitude_qrcode" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "home"}
                     "scan_agreement" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
                     "plugin_settings" -> {title.value = stringResource(R.string.plugin_settings);navTarget.value = "settings"}
-                    "add_remote_friend" -> {title.value = stringResource(R.string.add_remote_friend);navTarget.value = "friendlist"}
                     "add_nearby_friend" -> {title.value = stringResource(R.string.add_nearby_friend);navTarget.value = "friendlist"}
                     else -> {title.value = items[index].text;navTarget.value = "home"}
                 }
@@ -104,7 +102,6 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                         "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
                         "scan_agreement" -> ScanAgreement(giveViewModel , mainActivity)
                         "plugin_settings" -> PluginSettings()
-                        "add_remote_friend" -> AddRemoteFriend()
                         "add_nearby_friend" -> AddNearbyFriend(mainActivity)
                         else -> {
                             val plugin = items[index].plugin

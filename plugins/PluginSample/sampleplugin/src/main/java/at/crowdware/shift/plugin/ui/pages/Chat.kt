@@ -97,7 +97,6 @@ fun Chat() {
                 imageVector = Icons.Rounded.Add,
                 contentDescription = "Add Friend",
                 tint = Color.White,
-                //modifier = Modifier.rotate(rotationState)
             )
         }
     }
@@ -106,16 +105,15 @@ fun Chat() {
 @Composable
 fun MessageListItem(msg: Message) {
     Card(
-        //elevation = CardElevation(4.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
+            .clickable { }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { },
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             RoundInitialImage(

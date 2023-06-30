@@ -1,7 +1,2 @@
-/build/generated
-/build/intermediates
-/build/kotlin
-/build/tmp
-/build/outputs/logs
-/build/outputs/apk/androidTest
-/build/outputs/apk/debug/output*
+/build
+/libs

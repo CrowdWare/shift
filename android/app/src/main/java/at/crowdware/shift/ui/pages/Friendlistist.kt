@@ -160,29 +160,11 @@ fun Friendlist() {
                     FloatingActionButton(
                         onClick = { context.startActivity(shareIntent) },
                         containerColor = Primary,
-                        modifier = Modifier.padding(bottom = 144.dp)
+                        modifier = Modifier.padding(bottom = 72.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Photo,
                             contentDescription = "Invite friend",
-                            tint = Color.White,
-                        )
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                ) {
-                    Text(text = stringResource(R.string.add_remote_friend), modifier = Modifier.padding(vertical = 16.dp))
-                    Spacer(modifier = Modifier.width(16.dp))
-                    FloatingActionButton(
-                        onClick = { NavigationManager.navigate("add_remote_friend") },
-                        containerColor = Primary,
-                        modifier = Modifier.padding(bottom = 72.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Email,
-                            contentDescription = "Add remote friend",
                             tint = Color.White,
                         )
                     }

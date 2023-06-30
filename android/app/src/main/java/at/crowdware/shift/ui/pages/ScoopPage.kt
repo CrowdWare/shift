@@ -72,6 +72,7 @@ import lib.Lib.getScoopingHours
 import lib.Lib.getTransactions
 import lib.Lib.getUuid
 import lib.Lib.getEncodedUuid
+import lib.Lib.canScoop
 
 @Composable
 fun ScoopPage(isPreview: Boolean = false) {
@@ -158,7 +159,7 @@ fun ScoopPage(isPreview: Boolean = false) {
             }
         }
 
-        if (!isScooping) {
+        if (!isScooping && canScoop()) {
             Spacer(modifier = Modifier.height(8.dp))
             Button(
                 colors = ButtonDefaults.buttonColors(

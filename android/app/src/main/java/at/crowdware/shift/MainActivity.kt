@@ -91,7 +91,6 @@ class MainActivity : ComponentActivity() {
                         list.add(NavigationItem(id="give_gratitude_qrcode"))
                         list.add(NavigationItem(id="scan_agreement"))
                         list.add(NavigationItem(id="plugin_settings"))
-                        list.add(NavigationItem(id="add_remote_friend"))
                         list.add(NavigationItem(id="add_nearby_friend"))
                         NavigationView(list, this)
                     }
