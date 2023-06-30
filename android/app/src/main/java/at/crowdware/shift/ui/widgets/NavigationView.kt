@@ -51,6 +51,7 @@ import at.crowdware.shift.ui.pages.AddNearbyFriend
 import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.GiveGratitude
 import at.crowdware.shift.ui.pages.GiveGratitudeQRCode
+import at.crowdware.shift.ui.pages.Home
 import at.crowdware.shift.ui.pages.PluginSettings
 import at.crowdware.shift.ui.pages.ReceiveGratitude
 import at.crowdware.shift.ui.pages.ReceiveGratitudeQRCode
@@ -79,13 +80,14 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
             composable(items[index].id) {
                 when(items[index].id) {
                     "home" -> {title.value = "SHIFT";navTarget.value = ""}
+                    "scooping" -> {title.value = stringResource(R.string.scooping_menuitem);navTarget.value = ""}
                     "friendlist" -> {title.value = stringResource(R.string.friendlist);navTarget.value = ""}
                     "settings" -> {title.value = stringResource(R.string.settings);navTarget.value = ""}
-                    "receive_gratitude" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
-                    "receive_gratitude_qrcode" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
-                    "give_gratitude" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "home"}
-                    "give_gratitude_qrcode" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "home"}
-                    "scan_agreement" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "home"}
+                    "receive_gratitude" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
+                    "receive_gratitude_qrcode" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
+                    "give_gratitude" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "scooping"}
+                    "give_gratitude_qrcode" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "scooping"}
+                    "scan_agreement" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
                     "plugin_settings" -> {title.value = stringResource(R.string.plugin_settings);navTarget.value = "settings"}
                     "add_nearby_friend" -> {title.value = stringResource(R.string.add_nearby_friend);navTarget.value = "friendlist"}
                     else -> {title.value = items[index].text;navTarget.value = "home"}
@@ -93,7 +95,8 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                 NavigationDrawer(items, selectedItem, title.value, navTarget.value) {
                     when(items[index].id) {
                         // have a look at MainActivity for navigation
-                        "home" -> ScoopPage()
+                        "home" -> Home()
+                        "scooping" -> ScoopPage()
                         "friendlist" -> Friendlist()
                         "settings" -> Settings()
                         "receive_gratitude" -> ReceiveGratitude(receiveViewModel)

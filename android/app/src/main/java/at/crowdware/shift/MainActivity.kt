@@ -26,8 +26,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -79,6 +82,7 @@ class MainActivity : ComponentActivity() {
                         // also code these in NavigationView.kt
                         val list = mutableListOf(
                             NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
+                            NavigationItem("scooping", Icons.Default.AttachMoney, "Scooping"),
                             NavigationItem("friendlist",Icons.Default.Face, stringResource(R.string.navigation_friendlist)),
                             NavigationItem("settings", Icons.Default.Settings, stringResource(R.string.settings)),
                             NavigationItem("divider")

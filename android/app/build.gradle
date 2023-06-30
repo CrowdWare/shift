@@ -15,7 +15,7 @@ android {
         minSdk 21
         targetSdk 33
         versionCode 1
-        versionName "1.2.46 Beta"
+        versionName "1.2.47 Beta"
 
         vectorDrawables {
             useSupportLibrary true
@@ -134,6 +134,8 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'androidx.appcompat:appcompat-resources:1.6.1@aar'
     implementation "androidx.compose.material:material-icons-extended"
+
+    //implementation "com.yazantarifi:markdown-compose:1.0.2"
 
     implementation files('libs/libshift-debug-1.2.0.aar')
 }
