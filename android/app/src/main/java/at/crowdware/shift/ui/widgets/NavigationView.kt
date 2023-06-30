@@ -90,7 +90,7 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                     "scan_agreement" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
                     "plugin_settings" -> {title.value = stringResource(R.string.plugin_settings);navTarget.value = "settings"}
                     "add_nearby_friend" -> {title.value = stringResource(R.string.add_nearby_friend);navTarget.value = "friendlist"}
-                    else -> {title.value = items[index].text;navTarget.value = "home"}
+                    else -> {title.value = items[index].text;navTarget.value = ""}
                 }
                 NavigationDrawer(items, selectedItem, title.value, navTarget.value) {
                     when(items[index].id) {

@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
                         // also code these in NavigationView.kt
                         val list = mutableListOf(
                             NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
-                            NavigationItem("scooping", Icons.Default.AttachMoney, "Scooping"),
+                            NavigationItem("scooping", Icons.Default.AttachMoney, stringResource(R.string.scooping_menuitem)),
                             NavigationItem("friendlist",Icons.Default.Face, stringResource(R.string.navigation_friendlist)),
                             NavigationItem("settings", Icons.Default.Settings, stringResource(R.string.settings)),
                             NavigationItem("divider")
