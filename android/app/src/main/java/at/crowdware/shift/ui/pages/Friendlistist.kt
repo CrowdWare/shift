@@ -209,8 +209,7 @@ fun FriendListItem(friend: Friend) {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = friend.Name, fontWeight = FontWeight.Bold)
-                if(friend.Country != "")
-                    Text(text = friend.Country)
+                Text(text = friend.Country)
                 if(friend.FriendsCount > 0)
                     Text(friend.FriendsCount.toString() + stringResource(R.string.friends_invited))
             }

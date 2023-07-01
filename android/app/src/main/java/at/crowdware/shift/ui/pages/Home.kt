@@ -8,10 +8,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.webkit.WebSettings
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import at.crowdware.shift.logic.LocaleManager
 
@@ -55,6 +58,9 @@ fun OnlineWebView(url: String) {
     AndroidView(
         factory = { context ->
             WebView(context).apply {
+                val webSettings = settings
+                webSettings.cacheMode = WebSettings.LOAD_DEFAULT
+                clearCache(true)
                 loadUrl(url)
             }
         },
