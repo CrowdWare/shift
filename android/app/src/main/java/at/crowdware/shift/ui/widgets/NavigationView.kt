@@ -19,6 +19,8 @@
  ****************************************************************************/
 package at.crowdware.shift.ui.widgets
 
+import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -40,6 +42,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -64,6 +67,7 @@ import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivity) {
     val navController = rememberNavController()
@@ -74,26 +78,70 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
     val giveViewModel = viewModel<GiveViewModel>()
     val title = remember { mutableStateOf("SHIFT") }
     var navTarget = remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     NavHost(navController = navController, startDestination = "home") {
-        for(index in items.indices) {
+        for (index in items.indices) {
             composable(items[index].id) {
-                when(items[index].id) {
-                    "home" -> {title.value = "SHIFT";navTarget.value = ""}
-                    "scooping" -> {title.value = stringResource(R.string.scooping_menuitem);navTarget.value = ""}
-                    "friendlist" -> {title.value = stringResource(R.string.friendlist);navTarget.value = ""}
-                    "settings" -> {title.value = stringResource(R.string.settings);navTarget.value = ""}
-                    "receive_gratitude" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
-                    "receive_gratitude_qrcode" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
-                    "give_gratitude" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "scooping"}
-                    "give_gratitude_qrcode" -> {title.value = stringResource(R.string.give_gratitude);navTarget.value = "scooping"}
-                    "scan_agreement" -> {title.value = stringResource(R.string.receive_gratitude);navTarget.value = "scooping"}
-                    "plugin_settings" -> {title.value = stringResource(R.string.plugin_settings);navTarget.value = "settings"}
-                    "add_nearby_friend" -> {title.value = stringResource(R.string.add_nearby_friend);navTarget.value = "friendlist"}
-                    else -> {title.value = items[index].text;navTarget.value = ""}
+                when (items[index].id) {
+                    "home" -> {
+                        title.value = "SHIFT";navTarget.value = ""
+                    }
+
+                    "scooping" -> {
+                        title.value = stringResource(R.string.scooping_menuitem);navTarget.value =
+                            ""
+                    }
+
+                    "friendlist" -> {
+                        title.value = stringResource(R.string.friendlist);navTarget.value = ""
+                    }
+
+                    "settings" -> {
+                        title.value = stringResource(R.string.settings);navTarget.value = ""
+                    }
+
+                    "receive_gratitude" -> {
+                        title.value = stringResource(R.string.receive_gratitude);navTarget.value =
+                            "scooping"
+                    }
+
+                    "receive_gratitude_qrcode" -> {
+                        title.value = stringResource(R.string.receive_gratitude);navTarget.value =
+                            "scooping"
+                    }
+
+                    "give_gratitude" -> {
+                        title.value = stringResource(R.string.give_gratitude);navTarget.value =
+                            "scooping"
+                    }
+
+                    "give_gratitude_qrcode" -> {
+                        title.value = stringResource(R.string.give_gratitude);navTarget.value =
+                            "scooping"
+                    }
+
+                    "scan_agreement" -> {
+                        title.value = stringResource(R.string.receive_gratitude);navTarget.value =
+                            "scooping"
+                    }
+
+                    "plugin_settings" -> {
+                        title.value = stringResource(R.string.plugin_settings);navTarget.value =
+                            "settings"
+                    }
+
+                    "add_nearby_friend" -> {
+                        title.value = stringResource(R.string.add_nearby_friend);navTarget.value =
+                            "friendlist"
+                    }
+
+                    else -> {
+                        title.value = items[index].text;navTarget.value = ""
+                    }
                 }
                 NavigationDrawer(items, selectedItem, title.value, navTarget.value) {
-                    when(items[index].id) {
+                    when (items[index].id) {
                         // have a look at MainActivity for navigation
                         "home" -> Home()
                         "scooping" -> ScoopPage()
@@ -103,12 +151,18 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                         "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
                         "give_gratitude" -> GiveGratitude(giveViewModel, mainActivity)
                         "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
-                        "scan_agreement" -> ScanAgreement(giveViewModel , mainActivity)
+                        "scan_agreement" -> ScanAgreement(giveViewModel, mainActivity)
                         "plugin_settings" -> PluginSettings()
                         "add_nearby_friend" -> AddNearbyFriend(mainActivity)
                         else -> {
                             val plugin = items[index].plugin
+                            runCatching {
+
                             plugin!!.pages()[items[index].index].invoke()
+                            }.onFailure { exception ->
+                                val errorMessage = "Plugin ${plugin!!.getName()} has been crashed!"
+                                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
                 }

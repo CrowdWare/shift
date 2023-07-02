@@ -141,7 +141,10 @@ fun GiveGratitude(viewModel: GiveViewModel, mainActivity: MainActivity) {
                     multiplePermissionsState = permissionState,
                     mainActivity.barcodeView
                 )
-                Button(
+                Button(colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = OnPrimary
+                ),
                     onClick = { permissionState.launchMultiplePermissionRequest() },
                     modifier = Modifier.fillMaxWidth(),
                 ) {

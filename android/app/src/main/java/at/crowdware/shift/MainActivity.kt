@@ -27,10 +27,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachMoney
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -74,7 +72,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     LocaleManager.init(applicationContext, resources)
-                    init(applicationContext.filesDir.absolutePath)
+                    init(applicationContext.filesDir.absolutePath, PersistanceManager.getUseWebservice(applicationContext))
                     val hasJoined = remember { mutableStateOf(hasJoined()) }
                     val hasSeenDeleteWarning = remember { mutableStateOf(false) }
 

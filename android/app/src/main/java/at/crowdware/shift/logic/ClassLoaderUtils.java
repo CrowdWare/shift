@@ -20,7 +20,6 @@
 package at.crowdware.shift.logic;
 
 import android.content.Context;
-
 import dalvik.system.DexClassLoader;
 
 public class ClassLoaderUtils

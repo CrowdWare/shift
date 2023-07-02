@@ -47,19 +47,23 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shift.ui.widgets.DropDownListbox
 import at.crowdware.shift.ui.widgets.rememberDropDownListboxStateHolder
 import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.Primary
 
 import lib.Lib.createAccount
+import lib.Lib.setUseWebService
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
+    val context = LocalContext.current
     var errorMessage by remember { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var friend by rememberSaveable { mutableStateOf("") }
@@ -133,9 +137,14 @@ fun JoinForm(hasJoined: MutableState<Boolean>, language: String) {
                     if (res == 0L)
                         hasJoined.value = true
                     else {
-                        errorMessage = when(res){
-                            4L -> invalid_invite
-                            else -> internal_error
+                        when (res) {
+                            4L -> errorMessage = invalid_invite
+                            else -> {
+                                errorMessage = internal_error
+                                // switch into offline mode
+                                PersistanceManager.setUseWebservice(context, false)
+                                setUseWebService(false)
+                            }
                         }
                     }
                 }

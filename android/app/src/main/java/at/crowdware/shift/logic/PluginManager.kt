@@ -77,6 +77,9 @@ object PluginManager {
         } catch(e: ClassNotFoundException) {
             println("class not found ${e.message.toString()}")
             e.printStackTrace()
+        } catch (e: Exception) {
+            println("Plugin exception: ${e.message}")
+            e.printStackTrace()
         }
     }
 }

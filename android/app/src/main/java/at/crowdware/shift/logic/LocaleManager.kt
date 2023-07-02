@@ -22,7 +22,6 @@ package at.crowdware.shift.logic
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
-import androidx.compose.ui.platform.LocalContext
 import at.crowdware.shift.R
 import java.util.*
 
@@ -67,7 +66,8 @@ object LocaleManager {
         if (currentLocale == null) {
             language = PersistanceManager.getLanguage(context)
             if(language.isNullOrEmpty())
-                language = Resources.getSystem().configuration.locales[0].language
+                language = Resources.getSystem().configuration.locale.language
+
             index = language_codes.indexOf(language)
             if(!language.isNullOrEmpty()) {
                 currentLocale = Locale(language!!)
@@ -75,7 +75,7 @@ object LocaleManager {
         }
     }
 
-    fun updateResources(context: Context, language: String): Context {
+    private fun updateResources(context: Context, language: String): Context {
         if(language.isEmpty()) // initial no changes
             return context
         val locale = Locale(language)

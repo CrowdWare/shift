@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import at.crowdware.shift.plugin.ui.pages.Chat
 import at.crowdware.shiftapi.ShiftPlugin
+import at.crowdware.shiftapi.PluginPage
 
 
 
@@ -23,11 +24,36 @@ class Plugin : ShiftPlugin {
     }
 
     override fun menuTexts(): List<String> {
-        return listOf("Chat", "Sample Plugin 2", "Sample Plugin 3", "Sample Plugin 4")
+        return listOf("Chat", "Sample Plugin 2", "Sample Plugin 3", "Sample error")
     }
 
-    override fun pages(): List< @Composable () -> Unit> {
-        return listOf( { Chat() }, { Page2() }, { Page3() }, { Page4() } )
+    override fun pages(): List<PluginPage> {
+        return listOf(
+            object : PluginPage {
+                @Composable
+                override fun invoke() {
+                    Chat()
+                }
+            },
+            object : PluginPage {
+                @Composable
+                override fun invoke() {
+                    Page2()
+                }
+            },
+            object : PluginPage {
+                @Composable
+                override fun invoke() {
+                    Page3()
+                }
+            },
+            object : PluginPage {
+                @Composable
+                override fun invoke() {
+                    Page4()
+                }
+            }
+        )
     }
 
     override fun icons(): List<ImageVector> {
@@ -49,6 +75,7 @@ fun Page3() {
 @Composable
 fun Page4() {
     Text("Hello from plugin page 4")
+    throw Exception("This is an error ")
 }
 
 

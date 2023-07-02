@@ -25,6 +25,7 @@ object PersistanceManager{
     private const val LANGUAGE_CODE_PREF = "language_code_pref"
     private const val DELETE_WARNING_SEEN = "delete_warning_seen_pref"
     private const val DISPLAY_SCOOPING = "display_scooping_pref"
+    private const val USE_WEBSERVICE = "use_webservice_pref"
     private const val APP_PREFS = "app_prefs"
 
     fun hasSeenDeleteWarning(context: Context): Boolean {
@@ -55,5 +56,15 @@ object PersistanceManager{
     fun setDisplayScooping(context: Context, displaMillis: Boolean) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putBoolean(DISPLAY_SCOOPING, displaMillis).apply()
+    }
+
+    fun getUseWebservice(context: Context): Boolean {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        return preferences.getBoolean(USE_WEBSERVICE, true)
+    }
+
+    fun setUseWebservice(context: Context, useWebService: Boolean) {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        preferences.edit().putBoolean(USE_WEBSERVICE, useWebService).apply()
     }
 }
