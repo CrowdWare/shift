@@ -37,6 +37,7 @@ import at.crowdware.shift.plugin.logic.MessageManager
 import at.crowdware.shift.plugin.ui.widgets.RoundInitialImage
 import at.crowdware.shiftapi.FriendApi
 import at.crowdware.shiftapi.sendPeerMessage
+import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shiftapi.ui.theme.Secondary
 import kotlinx.coroutines.delay
@@ -88,6 +89,7 @@ fun Chat() {
                 }
             },
             containerColor = Primary,
+            contentColor = OnPrimary,
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier
                 .padding(16.dp)

@@ -20,6 +20,8 @@
 package at.crowdware.shift.ui.widgets
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -66,6 +68,10 @@ import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.viewmodels.GiveViewModel
 import at.crowdware.shift.ui.viewmodels.ReceiveViewModel
 import kotlinx.coroutines.launch
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
@@ -160,14 +166,31 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
 
                             plugin!!.pages()[items[index].index].invoke()
                             }.onFailure { exception ->
-                                val errorMessage = "Plugin ${plugin!!.getName()} has been crashed!"
-                                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                                println("Plugin ${plugin!!.getName()} has been crashed: ${exception.message}")
+                                writeCrashReportToFile(context, exception, plugin!!.getName())
                             }
                         }
                     }
                 }
             }
         }
+    }
+}
+
+fun writeCrashReportToFile(context: Context, exception: Throwable, pluginName: String) {
+    val crashReport = "Crash information for $pluginName: ${exception.message}\n${exception.stackTraceToString()}"
+
+    val crashFile = File(context.filesDir, "crash_report.txt")
+
+    try {
+        val fileWriter = FileWriter(crashFile, true)
+        val bufferedWriter = BufferedWriter(fileWriter)
+        bufferedWriter.append(crashReport)
+        bufferedWriter.newLine()
+        bufferedWriter.close()
+        fileWriter.close()
+    } catch (e: IOException) {
+
     }
 }
 
