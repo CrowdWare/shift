@@ -13,7 +13,13 @@ Represents a friend entity.
 @property FriendsCount The number of friends the friend has.
 @property HasPeerDat Indicates if the public key and Storj access data has been scanned.
  */
-data class Friend(val Name: String, val Scooping: Boolean, val Uuid: String, val Country: String, val FriendsCount: Int, val HasPeerDat: Boolean)
+data class Friend(
+    val Name: String,
+    val Scooping: Boolean,
+    val Uuid: String,
+    val Country: String,
+    val FriendsCount: Int,
+    val HasPeerDat: Boolean)
 
 object FriendApi {
     /**

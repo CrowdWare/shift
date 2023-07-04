@@ -28,7 +28,13 @@ sealed class ApiResponse<out T> {
     data class Error(val error: String) : ApiResponse<Nothing>()
 }
 
-data class Message(val Key: String, val From: String, val PeerUuid: String, val Message: String, val Time: String, val Read: Boolean)
+data class Message(
+    val Key: String,
+    val From: String,
+    val PeerUuid: String,
+    val Message: String,
+    val Time: String,
+    val Read: Boolean)
 
 /**
  * Sends a message to a peer identified by the specified UUID.
