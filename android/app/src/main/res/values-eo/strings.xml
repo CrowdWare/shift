@@ -98,5 +98,8 @@
     <string name="qr_scanned_peer_added">La QR-kodo estis skanita kaj la kunulo estis aldonita.</string>
     <string name="scooping_menuitem">Ladado</string>
     <string name="a_network_error_occurred">Okazis reta eraro, do ni ŝaltiĝas al la senkonekta reĝimo. Bonvolu reprovi.</string>
+    <string name="please_send_plugin_crash_report">Bonvolu sendi ĉi tiun kraŝan raporton al la provizanto de la menciita kromprogramo.</string>
+    <string name="please_send_app_crash_report">Bonvolu sendi ĉi tiun kraŝan raporton al ni.</string>
+    <string name="delete_report_button">Forigi raporton</string>
 
 </resources>

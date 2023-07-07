@@ -97,5 +97,8 @@
     <string name="qr_scanned_peer_added">Der QR-Code wurde gescannt und der Teilnehmer wurde hinzugefügt.</string>
     <string name="scooping_menuitem">Schöpfen</string>
     <string name="a_network_error_occurred">Es ist ein Netzwerkfehler aufgetreten, daher wechseln wir in den Offline-Modus. Bitte versuche es erneut.</string>
+    <string name="please_send_plugin_crash_report">Bitte senden Sie diesen Absturzbericht an den Anbieter des genannten Plugins.</string>
+    <string name="please_send_app_crash_report">Bitte senden Sie diesen Absturzbericht an uns.</string>
+    <string name="delete_report_button">Bericht löschen</string>
 
 </resources>

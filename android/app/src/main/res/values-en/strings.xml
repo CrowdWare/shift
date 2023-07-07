@@ -98,5 +98,8 @@
     <string name="qr_scanned_peer_added">QR-Code has been scanned and peer has been added.</string>
     <string name="scooping_menuitem">Scooping</string>
     <string name="a_network_error_occurred">A network error occurred, so we switch to offline mode. Please try again.</string>
+    <string name="please_send_plugin_crash_report">Please send this crash report to the provider of the mentioned plugin.</string>
+    <string name="please_send_app_crash_report">Please send this crash report to us.</string>
+    <string name="delete_report_button">Delete Report</string>
 
 </resources>

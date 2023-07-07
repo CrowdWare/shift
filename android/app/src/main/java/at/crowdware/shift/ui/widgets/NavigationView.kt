@@ -21,8 +21,6 @@ package at.crowdware.shift.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -85,6 +83,7 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
     val title = remember { mutableStateOf("SHIFT") }
     var navTarget = remember { mutableStateOf("") }
     val context = LocalContext.current
+    val pluginName = remember { mutableStateOf("App") }
 
     NavHost(navController = navController, startDestination = "home") {
         for (index in items.indices) {
@@ -146,31 +145,32 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                         title.value = items[index].text;navTarget.value = ""
                     }
                 }
-                NavigationDrawer(items, selectedItem, title.value, navTarget.value) {
-                    when (items[index].id) {
-                        // have a look at MainActivity for navigation
-                        "home" -> Home()
-                        "scooping" -> ScoopPage()
-                        "friendlist" -> Friendlist()
-                        "settings" -> Settings()
-                        "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
-                        "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
-                        "give_gratitude" -> GiveGratitude(giveViewModel, mainActivity)
-                        "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
-                        "scan_agreement" -> ScanAgreement(giveViewModel, mainActivity)
-                        "plugin_settings" -> PluginSettings()
-                        "add_nearby_friend" -> AddNearbyFriend(mainActivity)
-                        else -> {
-                            val plugin = items[index].plugin
-                            runCatching {
-
-                            plugin!!.pages()[items[index].index].invoke()
-                            }.onFailure { exception ->
-                                println("Plugin ${plugin!!.getName()} has been crashed: ${exception.message}")
-                                writeCrashReportToFile(context, exception, plugin!!.getName())
+                runCatching {
+                    pluginName.value = "App"
+                    NavigationDrawer(items, selectedItem, title.value, navTarget.value) {
+                        when (items[index].id) {
+                            // have a look at MainActivity for navigation
+                            "home" -> Home()
+                            "scooping" -> ScoopPage()
+                            "friendlist" -> Friendlist()
+                            "settings" -> Settings()
+                            "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
+                            "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
+                            "give_gratitude" -> GiveGratitude(giveViewModel, mainActivity)
+                            "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
+                            "scan_agreement" -> ScanAgreement(giveViewModel, mainActivity)
+                            "plugin_settings" -> PluginSettings()
+                            "add_nearby_friend" -> AddNearbyFriend(mainActivity)
+                            else -> {
+                                val plugin = items[index].plugin
+                                pluginName.value = plugin!!.getName()
+                                plugin!!.pages()[items[index].index].invoke()
                             }
                         }
                     }
+                }.onFailure { exception ->
+                    println("${pluginName.value} has crashed: ${exception.message}")
+                    writeCrashReportToFile(context, exception, pluginName.value)
                 }
             }
         }
@@ -178,7 +178,13 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
 }
 
 fun writeCrashReportToFile(context: Context, exception: Throwable, pluginName: String) {
-    val crashReport = "Crash information for $pluginName: ${exception.message}\n${exception.stackTraceToString()}"
+    var crashReport = "Crash information for "
+    if (pluginName == "App") {
+        crashReport += "the app: ${exception.message}\n${exception.stackTraceToString()}"
+    }else {
+        crashReport += "<$pluginName>: ${exception.message}\n${exception.stackTraceToString()}"
+    }
+
 
     val crashFile = File(context.filesDir, "crash_report.txt")
 
@@ -190,7 +196,7 @@ fun writeCrashReportToFile(context: Context, exception: Throwable, pluginName: S
         bufferedWriter.close()
         fileWriter.close()
     } catch (e: IOException) {
-
+        // app is already crashing
     }
 }
 

@@ -98,4 +98,8 @@
     <string name="qr_scanned_peer_added">O código QR foi escaneado e o par foi adicionado.</string>
     <string name="scooping_menuitem">Escavação</string>
     <string name="a_network_error_occurred">Ocorreu um erro de rede, portanto, mudamos para o modo offline. Por favor, tente novamente.</string>
+    <string name="please_send_plugin_crash_report">Por favor, envie este relatório de falhas para o provedor do plugin mencionado.</string>
+    <string name="please_send_app_crash_report">Por favor, envie este relatório de falhas para nós.</string>
+    <string name="delete_report_button">Excluir relatório</string>
+
 </resources>
