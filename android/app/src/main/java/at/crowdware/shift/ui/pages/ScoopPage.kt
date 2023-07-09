@@ -166,13 +166,7 @@ fun ScoopPage(isPreview: Boolean = false) {
                     containerColor = Primary,
                     contentColor = OnPrimary
                 ),
-                onClick = {
-                    val res = startScooping()
-                    when (res) {
-                        0L -> isScooping = true
-                        else -> errorMessage = network_error
-                    }
-                },
+                onClick = {/* breath deeply */},
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
