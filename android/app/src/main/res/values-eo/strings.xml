@@ -101,5 +101,8 @@
     <string name="please_send_plugin_crash_report">Bonvolu sendi ĉi tiun kraŝan raporton al la provizanto de la menciita kromprogramo.</string>
     <string name="please_send_app_crash_report">Bonvolu sendi ĉi tiun kraŝan raporton al ni.</string>
     <string name="delete_report_button">Forigi raporton</string>
+    <string name="read_book_first">Por ebligi la ŝoveladon, vi devus unue legi nian libron. Ĝi klarigos al vi, kiel ebligi ĝin.</string>
+    <string name="wrong_phrase">Malĝusta frazo</string>
+    <string name="book_phrase">Frazo el la libro</string>
 
 </resources>

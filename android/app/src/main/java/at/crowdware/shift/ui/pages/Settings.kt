@@ -49,7 +49,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.graphics.Color
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.Primary
 import at.crowdware.shift.ui.widgets.NavigationManager
@@ -62,16 +64,21 @@ import lib.Lib.setStorj
 
 @Composable
 fun Settings() {
+    val context = LocalContext.current
     val name = remember { mutableStateOf(getName()) }
+    val errorMessage = remember { mutableStateOf("") }
     val bucketName = remember { mutableStateOf(getBucketName()) }
+    val bookPhrase = remember { mutableStateOf("") }
     val accessToken = remember { mutableStateOf(getAccessToken()) }
     var saveButtonEnabled by remember { mutableStateOf(false) }
+    var savePhraseEnabled by remember { mutableStateOf(false) }
+    var hasReadBook by remember { mutableStateOf(PersistanceManager.getHasReadTheBook(context)) }
     var nameChanged = remember { mutableStateOf(false) }
     var storjChanged = remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+    val wrongPhrase = stringResource(id = R.string.wrong_phrase)
 
     //region vars for the DropDownlistbox
-    val context = LocalContext.current
     val languages = LocaleManager.getLanguages()
     val index = LocaleManager.getLanguageIndex()
     val currentActivity = LocalContext.current as? Activity
@@ -147,6 +154,40 @@ fun Settings() {
             saveButtonEnabled = false
         }) {
             Text(stringResource(R.string.save_changes))
+        }
+        if (!hasReadBook) {
+            Spacer(modifier = Modifier.height(32.dp))
+            Text(
+                stringResource(id = R.string.book_phrase), fontWeight = FontWeight.Bold,
+                style = TextStyle(fontSize = 18.sp),
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(value = bookPhrase.value,
+                label = { Text(stringResource(id = R.string.book_phrase)) },
+                onValueChange = { it ->
+                    bookPhrase.value = it
+                    savePhraseEnabled = true
+                })
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(errorMessage.value, color = Color.Red)
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = OnPrimary
+            ), enabled = savePhraseEnabled,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    if (bookPhrase.value.trim() == "I love UBUNTU") {
+                        PersistanceManager.setHasReadTheBook(context, true)
+                        savePhraseEnabled = false
+                        hasReadBook = true
+                    } else {
+                        errorMessage.value = wrongPhrase
+                    }
+                }) {
+                Text(stringResource(R.string.save_changes))
+            }
         }
         Spacer(modifier = Modifier.height(32.dp))
         Button(colors = ButtonDefaults.buttonColors(

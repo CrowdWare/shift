@@ -101,5 +101,8 @@
     <string name="please_send_plugin_crash_report">Veuillez envoyer ce rapport d\'erreur au fournisseur du plugin mentionné.</string>
     <string name="please_send_app_crash_report">Veuillez envoyer ce rapport d\'erreur à nous.</string>
     <string name="delete_report_button">Supprimer le rapport</string>
+    <string name="read_book_first">Pour activer le scooping, vous devriez d\'abord lire notre livre. Il vous expliquera comment l\'activer.</string>
+    <string name="wrong_phrase">Phrase incorrecte</string>
+    <string name="book_phrase">Phrase du livre</string>
 
 </resources>

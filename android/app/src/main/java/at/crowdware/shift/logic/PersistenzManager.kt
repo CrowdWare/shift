@@ -26,6 +26,7 @@ object PersistanceManager{
     private const val DELETE_WARNING_SEEN = "delete_warning_seen_pref"
     private const val DISPLAY_SCOOPING = "display_scooping_pref"
     private const val USE_WEBSERVICE = "use_webservice_pref"
+    private const val HAS_READ_THE_BOOK = "has_read_the_book_pref"
     private const val APP_PREFS = "app_prefs"
 
     fun hasSeenDeleteWarning(context: Context): Boolean {
@@ -66,5 +67,15 @@ object PersistanceManager{
     fun setUseWebservice(context: Context, useWebService: Boolean) {
         val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
         preferences.edit().putBoolean(USE_WEBSERVICE, useWebService).apply()
+    }
+
+    fun getHasReadTheBook(context: Context): Boolean {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        return preferences.getBoolean(HAS_READ_THE_BOOK, false)
+    }
+
+    fun setHasReadTheBook(context: Context, hasReadBook: Boolean) {
+        val preferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
+        preferences.edit().putBoolean(HAS_READ_THE_BOOK, hasReadBook).apply()
     }
 }

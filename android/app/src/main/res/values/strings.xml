@@ -100,5 +100,9 @@
     <string name="please_send_plugin_crash_report">Please send this crash report to the provider of the mentioned plugin.</string>
     <string name="please_send_app_crash_report">Please send this crash report to us.</string>
     <string name="delete_report_button">Delete Report</string>
+    <string name="read_book_first">To enable scooping you should read our book first. It will tell you how to enable it.</string>
+    <string name="wrong_phrase">Wrong phrase</string>
+    <string name="book_phrase">Book phrase</string>
+
 </resources>
 

@@ -100,5 +100,8 @@
     <string name="please_send_plugin_crash_report">Bitte senden Sie diesen Absturzbericht an den Anbieter des genannten Plugins.</string>
     <string name="please_send_app_crash_report">Bitte senden Sie diesen Absturzbericht an uns.</string>
     <string name="delete_report_button">Bericht löschen</string>
+    <string name="read_book_first">Um das Schöpfen zu aktivieren, solltest Du zuerst unser Buch lesen. Es wird Dir zeigen, wie Du es aktivieren kannst.</string>
+    <string name="wrong_phrase">Falsche Phrase</string>
+    <string name="book_phrase">Phrase aus dem Buch</string>
 
 </resources>

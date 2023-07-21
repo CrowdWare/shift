@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.crowdware.shift.ui.widgets.NavigationDrawer
 import at.crowdware.shift.R
+import at.crowdware.shift.logic.PersistanceManager
 import at.crowdware.shift.logic.getTransactionsFromJSON
 import at.crowdware.shiftapi.ui.theme.OnPrimary
 import at.crowdware.shiftapi.ui.theme.OnSecondary
@@ -101,6 +102,8 @@ fun ScoopPage(isPreview: Boolean = false) {
     var isScooping by remember { mutableStateOf(isScooping()) }
     var displayBalanceOnly by remember { mutableStateOf(!isScooping) }
     val network_error = stringResource(R.string.a_network_error_occurred)
+    val hasReadTheBook by remember { mutableStateOf(PersistanceManager.getHasReadTheBook(context)) }
+    val rbf = stringResource(R.string.read_book_first)
 
     if (isPreview) {
         isScooping = true
@@ -167,10 +170,16 @@ fun ScoopPage(isPreview: Boolean = false) {
                     contentColor = OnPrimary
                 ),
                 onClick = {
-                    val res = startScooping()
-                    when (res) {
-                        0L -> isScooping = true
-                        else -> errorMessage = network_error
+                    // users should read the book first to get the idea, why we are doing this at all
+                    // the book (Der Wandel des Geldes) is free of charge
+                    if (hasReadTheBook) {
+                        val res = startScooping()
+                        when (res) {
+                            0L -> isScooping = true
+                            else -> errorMessage = network_error
+                        }
+                    } else {
+                        errorMessage = rbf
                     }
                           },
                 modifier = Modifier.fillMaxWidth()
