@@ -16,7 +16,7 @@ LMC is the abreviation of **Liquid Micro Coins** and represents the gratitude an
 ## ONE
 We are going to create a very simple app to enable the user to scoop new liquid and a function to give gratitude (giving liquid to someone else).   
 There is also the possibility to implement plugins (Android Dynamic Feature), so that we all are able to create new content for a new **time shift**.  
-One feature that I know already is to track empty houses, so that you can find them on a map and occupy them. 
+One feature is to register wood palettes. Make a picture, tag the geo location and display it on the map, so that others can get the wood.  
 Another feature is dating. So you can find musicians, likeminded people or even your soulmate.  
 Maybe we can make automatic gratitute via LMP to musicians downloading their music.
 All these feature are driven by YOU without the idea to make profit at all.
