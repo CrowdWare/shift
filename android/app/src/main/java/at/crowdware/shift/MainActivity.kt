@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     LocaleManager.init(applicationContext, resources)
-                    init(applicationContext.filesDir.absolutePath, PersistanceManager.getUseWebservice(applicationContext))
+                    init(applicationContext.filesDir.absolutePath)
                     val hasJoined = remember { mutableStateOf(hasJoined()) }
                     val hasSeenDeleteWarning = remember { mutableStateOf(false) }
 
@@ -81,7 +81,6 @@ class MainActivity : ComponentActivity() {
                         val list = mutableListOf(
                             NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
                             NavigationItem("scooping", Icons.Default.AttachMoney, stringResource(R.string.scooping_menuitem)),
-                            NavigationItem("friendlist",Icons.Default.Face, stringResource(R.string.navigation_friendlist)),
                             NavigationItem("settings", Icons.Default.Settings, stringResource(R.string.settings)),
                             NavigationItem("divider")
                         )
@@ -93,7 +92,6 @@ class MainActivity : ComponentActivity() {
                         list.add(NavigationItem(id="give_gratitude_qrcode"))
                         list.add(NavigationItem(id="scan_agreement"))
                         list.add(NavigationItem(id="plugin_settings"))
-                        list.add(NavigationItem(id="add_nearby_friend"))
                         NavigationView(list, this)
                     }
                     else

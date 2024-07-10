@@ -155,7 +155,6 @@ fun ReceiveGratitudePreview() {
     val selectedItem = remember { mutableStateOf("Home") }
     val list = mutableListOf(
         NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
-        NavigationItem("friendlist", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
     )
     val receiveViewModel = viewModel<ReceiveViewModel>()
     NavigationDrawer(list, selectedItem, "SHIFT"){ ReceiveGratitude(receiveViewModel) }

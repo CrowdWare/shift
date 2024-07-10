@@ -126,8 +126,7 @@ fun DrawerSheet(drawerState: DrawerState, items: List<NavigationItem>, selectedI
 fun DrawerPreview() {
     val selectedItem = remember { mutableStateOf("Mate list") }
     val list = mutableListOf(
-        NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home)),
-        NavigationItem("", Icons.Default.Face, stringResource(R.string.navigation_friendlist))
+        NavigationItem("home", Icons.Default.Home, stringResource(R.string.navigation_home))
     )
     ShiftComposeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {

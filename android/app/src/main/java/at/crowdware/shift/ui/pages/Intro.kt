@@ -1,5 +1,5 @@
 /****************************************************************************
- * Copyright (C) 2023 CrowdWare
+ * Copyright (C) 2024 CrowdWare
  *
  * This file is part of SHIFT.
  *

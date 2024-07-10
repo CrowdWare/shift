@@ -50,8 +50,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import at.crowdware.shift.MainActivity
 import at.crowdware.shift.R
-import at.crowdware.shift.ui.pages.AddNearbyFriend
-import at.crowdware.shift.ui.pages.Friendlist
 import at.crowdware.shift.ui.pages.GiveGratitude
 import at.crowdware.shift.ui.pages.GiveGratitudeQRCode
 import at.crowdware.shift.ui.pages.Home
@@ -98,10 +96,6 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                             ""
                     }
 
-                    "friendlist" -> {
-                        title.value = stringResource(R.string.friendlist);navTarget.value = ""
-                    }
-
                     "settings" -> {
                         title.value = stringResource(R.string.settings);navTarget.value = ""
                     }
@@ -136,11 +130,6 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                             "settings"
                     }
 
-                    "add_nearby_friend" -> {
-                        title.value = stringResource(R.string.add_nearby_friend);navTarget.value =
-                            "friendlist"
-                    }
-
                     else -> {
                         title.value = items[index].text;navTarget.value = ""
                     }
@@ -152,7 +141,6 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                             // have a look at MainActivity for navigation
                             "home" -> Home()
                             "scooping" -> ScoopPage()
-                            "friendlist" -> Friendlist()
                             "settings" -> Settings()
                             "receive_gratitude" -> ReceiveGratitude(receiveViewModel)
                             "receive_gratitude_qrcode" -> ReceiveGratitudeQRCode(receiveViewModel)
@@ -160,7 +148,6 @@ fun NavigationView(items: MutableList<NavigationItem>, mainActivity: MainActivit
                             "give_gratitude_qrcode" -> GiveGratitudeQRCode(giveViewModel)
                             "scan_agreement" -> ScanAgreement(giveViewModel, mainActivity)
                             "plugin_settings" -> PluginSettings()
-                            "add_nearby_friend" -> AddNearbyFriend(mainActivity)
                             else -> {
                                 val plugin = items[index].plugin
                                 pluginName.value = plugin!!.getName()

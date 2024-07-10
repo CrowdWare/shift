@@ -18,16 +18,12 @@
     <string name="select_preferred_language">Elektu preferatan lingvon</string>
     <string name="button_join_the_shift">ALIGU VIN AL SHIFT</string>
     <string name="bookings">Rezervoj</string>
-    <string name="friendlist">Amiklisto</string>
     <string name="navigation_home">Ĉefpaĝo</string>
-    <string name="navigation_friendlist">Amikolisto</string>
     <string name="navigation_about">Pri ni</string>
     <string name="about_shift">Pri SHIFT</string>
     <string name="is_scooping">kovras</string>
-    <string name="friends_invited"> invitis amikojn</string>
     <string name="bluetooth_rational">Habilitigu Bluetooth-ligilon por sekuraj kaj tuŝrapide fluktuantaj transakcioj!</string>
     <string name="bluetooth_disabled">La Bluetooth-klavilo estas malŝaltita. Se vi ŝanĝas opinion, vi povas aktivigi Bluetooth-on en la agordoj de la aparato.</string>
-    <string name="invite_advertise">Se vi invitas aliajn homojn aliĝi al Shift, vi povas akiri pli da LMC por tago kaj invito. Tio funkcias en tri niveloj. Ni faras tion por rapide disvastigi la aplikaĵon kaj gajni akcepton. Kiu scias, eble vi povos poste eĉ pagi per la aplikaĵo en la supermerkato, ĉar tiu ebleco generas pli da enspezo en la supermerkato.</string>
     <string name="service_description">Memoru, ke la Shift-reto estas senservila kaj pro tio tiu servo konektas uzantojn kaj prilaboras mesaĝojn en la fono.</string>
     <string name="broadcasts_channel">Dissendoj</string>
     <string name="open_link">Malfermi ligilon</string>
@@ -36,8 +32,6 @@
     <string name="button_continue">Daŭrigi</string>
     <string name="transaction_liquid_scooped">Likiton prenitaj</string>
     <string name="transaction_initial_liquid">Enirlikido</string>
-    <string name="please_select_your_continent">Bonvolu elekti vian kontinenton.</string>
-    <string name="please_enter_the_invitation_code">Bonvolu entajpi la invitan kodon.</string>
     <string name="please_enter_your_name">Bonvolu entajpi vian nomon!</string>
     <string name="servive_start_request_message">Vi estas proksima komenci servo, kiu helpos forviŝi likvon en la fono, eĉ kiam vi fermas tiun ĉi aplikaĵon. Bonvolu konscii, ke se vi ĉesigos tiun servon, la viŝprocezo estos paŭzita ĝis vi rekomencos la aplikaĵon.</string>
     <string name="button_read_all">Bonvolu legi ĉion</string>
@@ -80,7 +74,6 @@
     <string name="transaction">Transakcio</string>
     <string name="transaction_not_found">Transakcio ne trovita.</string>
     <string name="transaction_not_lmp">Nur LMP (Liquid Micro Payments) povas esti montritaj ĉi tie.</string>
-    <string name="invalid_inviation_code">Nevalida invita kodo</string>
     <string name="this_agreement_is_for_someone_else">Ĉi tiu interkonsento estis por alia persono.</string>
     <string name="date">Dato</string>
     <string name="to">Al</string>
@@ -88,16 +81,11 @@
     <string name="plugin_settings">Aldonprogramaj agordoj</string>
     <string name="save_changes">Konservi ŝanĝojn</string>
     <string name="personal_data">Persona informo</string>
-    <string name="add_nearby_friend">Aldoni Proksiman Amikon</string>
     <string name="add_remote_friend">Aldoni Malproksiman Amikon</string>
-    <string name="add_nearby_friend_info">Por aldoni proksiman personon, vi devas interŝanĝi publikajn ŝlosilojn kaj Storj-akceskodon enkodigitan kiel QR-kodo.</string>
-    <string name="you_have_not_entered_storj">Ŝajnas, ke vi ankoraŭ ne enigis la Storj-atestilon. Ni bezonas tiun memorejon por konservi mesaĝojn, blogaĵojn, bildojn kaj similajn. Bonvolu iri al la retejo de Storj ĉe </string>
-    <string name="you_have_not_entered_storj_part2">, kreu liberkonton kun 25 GB da spaco, aldonu "bucket"-on, kreu akceskodon kun permeso skribi, listi, forviŝi, kaj enigu tiujn aŭtentigaĵojn en la agordopagxo de tiu ĉi aplikaĵo. Poste revenu ĉi tien.</string>
     <string name="scan_the_qr_code_to_get_the_keys">Skaniu la QR-kodon por ricevi la ŝlosilojn.</string>
     <string name="invite_message" formatted="false">SHIFT estas nova aplikaĵo por mobilaj aparatoj. Nun akiru viajn unuajn likvidajn mikro-monerojn, sekvante ĉi tiun ligilon %s, elŝutu la aplikaĵon, lanĉu ĝin kaj uzu ĉi tiun %s aŭ ĉi tiun %s kiel invitsignokodon.</string>
     <string name="qr_scanned_peer_added">La QR-kodo estis skanita kaj la kunulo estis aldonita.</string>
     <string name="scooping_menuitem">Ladado</string>
-    <string name="a_network_error_occurred">Okazis reta eraro, do ni ŝaltiĝas al la senkonekta reĝimo. Bonvolu reprovi.</string>
     <string name="please_send_plugin_crash_report">Bonvolu sendi ĉi tiun kraŝan raporton al la provizanto de la menciita kromprogramo.</string>
     <string name="please_send_app_crash_report">Bonvolu sendi ĉi tiun kraŝan raporton al ni.</string>
     <string name="delete_report_button">Forigi raporton</string>

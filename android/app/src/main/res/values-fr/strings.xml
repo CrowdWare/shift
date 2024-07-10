@@ -18,16 +18,12 @@
     <string name="select_preferred_language">Sélectionnez votre langue préférée</string>
     <string name="button_join_the_shift">REJOINDRE SHIFT</string>
     <string name="bookings">Réservations</string>
-    <string name="friendlist">Liste d\'amis</string>
     <string name="navigation_home">Accueil</string>
-    <string name="navigation_friendlist">Liste d\'amis</string>
     <string name="navigation_about">À propos</string>
     <string name="about_shift">À propos de SHIFT</string>
     <string name="is_scooping">est en train de collecter</string>
-    <string name="friends_invited"> amis invités</string>
     <string name="bluetooth_rational">Activez la connexion Bluetooth pour des transactions liquides sécurisées et instantanées !</string>
     <string name="bluetooth_disabled">Le Bluetooth est désactivé. Si vous changez d\'avis, vous pouvez activer le Bluetooth dans les paramètres de l\'appareil.</string>
-    <string name="invite_advertise">Si vous invitez d\'autres personnes à rejoindre Shift, vous pouvez obtenir des LMC supplémentaires par jour et par invitation. Cela fonctionne sur trois niveaux. Nous faisons cela pour favoriser la diffusion rapide de l\'application et gagner en acceptation. Qui sait, à l\'avenir, vous pourrez peut-être même payer vos achats avec l\'application au supermarché, car cette fonctionnalité génère davantage de chiffre d\'affaires en magasin.</string>
     <string name="service_description">Gardez à l\'esprit que le réseau Shift est sans serveur, donc ce service connecte les utilisateurs et traite les messages en arrière-plan.</string>
     <string name="broadcasts_channel">Diffusions</string>
     <string name="open_link">Ouvrir le lien</string>
@@ -36,8 +32,6 @@
     <string name="button_continue">Continuer</string>
     <string name="transaction_liquid_scooped">Liquide prélevé</string>
     <string name="transaction_initial_liquid">Liquide initial</string>
-    <string name="please_select_your_continent">Veuillez sélectionner votre continent.</string>
-    <string name="please_enter_the_invitation_code">Veuillez entrer le code d\'invitation.</string>
     <string name="please_enter_your_name">Veuillez entrer votre nom !</string>
     <string name="servive_start_request_message">Vous êtes sur le point de démarrer un service qui va aspirer du liquide en arrière-plan, même lorsque vous fermez cette application. Veuillez noter que lorsque vous arrêterez ce service, le processus d\'aspiration sera mis en pause jusqu\'à ce que vous relanciez l\'application.</string>
     <string name="button_read_all">Veuillez tout lire</string>
@@ -80,7 +74,6 @@
     <string name="transaction">Transaction</string>
     <string name="transaction_not_found">Transaction introuvable.</string>
     <string name="transaction_not_lmp">Seules les LMP (Liquid Micro Payments) peuvent être affichées ici.</string>
-    <string name="invalid_inviation_code">Code d\'invitation invalide</string>
     <string name="this_agreement_is_for_someone_else">Cet accord était pour quelqu\'un d\'autre.</string>
     <string name="date">Date</string>
     <string name="to">À</string>
@@ -88,16 +81,11 @@
     <string name="plugin_settings">Paramètres du plugin</string>
     <string name="save_changes">Enregistrer les modifications</string>
     <string name="personal_data">Données personnelles</string>
-    <string name="add_nearby_friend">Ajouter Ami Proximité</string>
     <string name="add_remote_friend">Ajouter Ami Distant</string>
-    <string name="add_nearby_friend_info">Pour ajouter une personne à proximité, vous devez échanger vos clés publiques respectives ainsi qu\'un jeton d\'accès Storj encodé sous forme de code QR.</string>
-    <string name="you_have_not_entered_storj">Il semble que vous n\'ayez pas encore saisi les informations d\'identification Storj. Nous avons besoin de cet espace de stockage pour stocker les messages, les articles de blog, les images, etc. Veuillez vous rendre sur le site web de Storj à </string>
-    <string name="you_have_not_entered_storj_part2">, créez un compte gratuit avec 25 Go d\'espace libre, ajoutez un compartiment, créez un jeton d\'accès avec les autorisations d\'écriture, de liste et de suppression, puis saisissez ces informations d\'identification dans la page des paramètres de cette application. Revenez ensuite ici.</string>
     <string name="scan_the_qr_code_to_get_the_keys">Scannez le code QR pour obtenir les clés.</string>
     <string name="invite_message" formatted="false">SHIFT est une nouvelle application mobile. Obtenez dès maintenant vos premières micro-coins liquides en suivant ce lien %s, téléchargez l\'application, démarrez-la et utilisez ce code d\'invitation %s ou %s.</string>
     <string name="qr_scanned_peer_added">Le code QR a été scanné et le pair a été ajouté.</string>
     <string name="scooping_menuitem">Prélèvement</string>
-    <string name="a_network_error_occurred">Une erreur réseau s\'est produite, nous passons en mode hors ligne. Veuillez réessayer.</string>
     <string name="please_send_plugin_crash_report">Veuillez envoyer ce rapport d\'erreur au fournisseur du plugin mentionné.</string>
     <string name="please_send_app_crash_report">Veuillez envoyer ce rapport d\'erreur à nous.</string>
     <string name="delete_report_button">Supprimer le rapport</string>
