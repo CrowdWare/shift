@@ -9,6 +9,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -138,8 +139,10 @@ fun OnlineWebView(url: String) {
     AndroidView(
         factory = { context ->
             WebView(context).apply {
+                webViewClient = WebViewClient()
                 val webSettings = settings
                 webSettings.cacheMode = WebSettings.LOAD_DEFAULT
+                webSettings.javaScriptEnabled = true
                 clearCache(true)
                 loadUrl(url)
             }
